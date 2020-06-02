@@ -1,0 +1,3 @@
+<!--pages/commodity.wxml-->
+<text>pages/commodity.wxml</text>
+<text>{{commodity[0].s_id}}</text>

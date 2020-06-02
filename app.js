@@ -1,15 +1,13 @@
 //app.js
 App({
+  globalData:{
+    baseUrl:"http://192.168.1.142:9000/CMTGP/"
+  },
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+       console.info(res)
       }
     })
     // 获取用户信息
@@ -32,8 +30,5 @@ App({
         }
       }
     })
-  },
-  globalData: {
-    userInfo: null
   }
 })
