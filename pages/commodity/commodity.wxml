@@ -1,3 +1,59 @@
 <!--pages/commodity.wxml-->
-<text>pages/commodity.wxml</text>
-<text>{{commodity[0].s_id}}</text>
+<view style="background-color: #FFD52E;height:210.5px">
+  <view style="font-size:14px;margin-left:10px;"><image src="/image/nav_shouye_dizhi@3x.png" style="width:18px;height:18px;"></image>送至：{{address}}</view>
+  <view class="search_arr" style="background-color: #FFFFFF ;">  
+    <icon class="searchcion" size='20' type='search'></icon>  
+    <input bindconfirm="searchByName" type="text" placeholder="搜索商品" value="" confirm-type="search" />  
+  </view>  
+  <view class="carousel" ></view>
+</view>
+<view class="icon">
+  <view class="icon_first">
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_shuiguo@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">水果</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_shucai@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">蔬菜</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_haixian@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">海鲜</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_roulei@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">肉类</view> 
+    </view>
+  </view>
+  <view class="icon_second">
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_ganguo@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">干果</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_direliang@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">低热量</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_lingshi@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">零食</view>
+    </view>
+
+    <view style="margin-left:9%;">
+      <image src="/image/shouye_qita@3x.png" style="height:54px;width:54px;"></image>
+      <view style="width:54px;display: flex;justify-content: center;">其他</view> 
+    </view>
+  </view>
+</view>
+
+
+
+ 
+ 
