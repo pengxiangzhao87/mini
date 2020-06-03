@@ -22,7 +22,6 @@ Page({
         if(res.data.code==200){
           var result = res.data.data;
           if(result.s_address_video!=''){
-            console.info(result.s_address_video.indexOf(".mp4"))
             var urlList=[];
             urlList.push(result.s_address_video);
             var imgList = result.s_address_img.split('~');
@@ -48,5 +47,11 @@ Page({
         })
       }
     })
+  },
+  subtract:function(){
+
+  },
+  add:function(){
+    
   }
 })

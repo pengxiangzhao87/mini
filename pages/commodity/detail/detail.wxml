@@ -1,7 +1,7 @@
 <!--pages/commodity/detail/detail.wxml-->
 
-<swiper class='' indicator-dots='true' autoplay='true' interval='5000' duration='1000' circular='true'>
-  <block wx:for="{{detail.urlList}}" wx:for-index="idx">
+<swiper class='head' indicator-dots='true' autoplay='true' interval='5000' duration='1000' circular='true'>
+  <block wx:for="{{detail.urlList}}" wx:for-index="idx" wx:key="s_id">
     <swiper-item>
       <block wx:if="{{detail.isVideo==1 && idx==0}}">
         <video src="{{baseUrl}}upload/{{item}}" autoplay="true" loop="true" object-fit="fill"></video>
@@ -12,3 +12,16 @@
     </swiper-item>
   </block>
 </swiper>
+<view style="margin-left:10px;margin-top:50px;font-size:20px;">{{detail.s_name}}</view>
+<view class="priceUnit">
+  <view><text style="color:red;font-size:25px;">{{detail.price}}</text>{{detail.unit}}</view>
+  <view style="font-size:15px;color:#999999;margin-right:10px;float:right"><text decode="true">月售&nbsp;{{detail.monthSale}}&nbsp;&nbsp;&nbsp;&nbsp;库存&nbsp;{{detail.stock}}</text></view>
+</view>
+<view class="specification">
+  <view style="margin-left:10px;">规格</view>
+  <view style="display:flex;justify-content: center;margin-right:10px;">
+    <button class="btn" size="mini" hover-class="afterbtn" bindtap="subtract">50</button>
+    <view style="font-size:20px;display:flex;align-items: center;"><text decode="true">{{detail.init_num}}&nbsp;{{detail.init_unit==0?'g':'个'}}</text></view>
+    <button class="btn" size="mini" hover-class="afterbtn" bindtap="add">50</button>
+  </view>
+</view>

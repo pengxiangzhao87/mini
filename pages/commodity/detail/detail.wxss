@@ -1,1 +1,28 @@
 /* pages/commodity/detail/detail.wxss */
+.head{
+  height:300px;
+}
+
+.priceUnit{
+  display: flex;  
+  flex-direction:row ;
+  margin:10px 5px 10px 5px;
+  align-items: center;
+  width:100%;
+}
+
+.specification{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  width:100%;
+}
+
+.btn{
+  background-color:#FFEEAA;
+  border:1px solid #FFD52E;
+}
+
+.afterbtn{
+  border: 0;
+}
