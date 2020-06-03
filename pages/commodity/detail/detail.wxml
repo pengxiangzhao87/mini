@@ -1,0 +1,14 @@
+<!--pages/commodity/detail/detail.wxml-->
+
+<swiper class='' indicator-dots='true' autoplay='true' interval='5000' duration='1000' circular='true'>
+  <block wx:for="{{detail.urlList}}" wx:for-index="idx">
+    <swiper-item>
+      <block wx:if="{{detail.isVideo==1 && idx==0}}">
+        <video src="{{baseUrl}}upload/{{item}}" autoplay="true" loop="true" object-fit="fill"></video>
+      </block>
+      <block wx:elif="{{detail.isVideo==0 || idex!=0}}">
+        <image src='{{baseUrl}}upload/{{item}}' class='u-img-slide' mode='aspectFill'></image>
+      </block>  
+    </swiper-item>
+  </block>
+</swiper>

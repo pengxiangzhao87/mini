@@ -30,12 +30,11 @@
   margin-top:30px;
   margin-left:3%;
   overflow: hidden;
-    position: fixed;
-    z-index: 0;
+  position:relative;
+  z-index: 0;
 }
 
 .icon{
-  
   margin-top:80px;
   height:220px;
 }
@@ -44,3 +43,37 @@
   display: flex;  
   flex-direction: row  ;
 }
+
+.hotTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  height: 100%;
+}
+
+.hotGoods{
+  display: flex;  
+  flex-direction: row  ;
+}
+
+.goods{
+  border-radius: 5px;  
+  width:45%;
+  height:225px;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -webkit-box-orient:vertical;
+  word-break:break-all;
+  box-shadow: 0rpx 10rpx 50rpx 10rpx rgba(73, 73, 73, 0.1);
+  margin-top:10px;
+  margin-left:3%;
+}
+
+.goodsImg{
+  width:100%;
+  height:150px;
+}
+ 
