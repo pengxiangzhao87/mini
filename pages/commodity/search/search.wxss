@@ -1,1 +1,22 @@
 /* pages/commodity/search/search.wxss */
+.search_arr {  
+  border: 1px solid #d0d0d0;  
+  border-radius: 110rpx;  
+  margin-left: 3%;  
+  width:94%;
+  display: flex;  
+  flex-direction: row  ;
+}  
+.search_arr input{  
+  margin-left: 60rpx;  
+  height: 60rpx;  
+  border-radius: 5px;  
+}  
+
+.searchcion {  
+  margin-left:10px;
+  align-items: center ;
+  width: 20px;  
+  height: 20px;  
+  text-align: center;  
+}  

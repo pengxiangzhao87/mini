@@ -1,2 +1,7 @@
 <!--pages/commodity/search/search.wxml-->
-<text>pages/commodity/search/search.wxml</text>
+
+<view class="search_arr" >  
+  <icon class="searchcion" size='20' type='search'></icon>  
+  <input bindconfirm="searchByName" type="text" placeholder="搜索商品" value="{{sName}}" confirm-type="search" />  
+</view>  
+

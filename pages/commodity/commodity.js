@@ -22,21 +22,25 @@ Page({
     if(data.sName!=''){
       paras.sName = data.sName;
     }
-    paras.userId=1;
+    paras.userId=4;
     this.queryCommodity(that,paras,baseUrl);
-    paras.uId=1;
+    paras.uId=4;
     paras.isUsed=1;
     this.queryAddressList(that,paras,baseUrl);
   },
-
+  //跳转到搜索页
   searchByName:function(e){
     var sName = e.detail.value; 
     wx.navigateTo({
       url: 'search/search?sName='+sName
     })
   },
+  //上拉获取新数据
+  onPullDownRefresh:function(){
+    console.info("onPullDownRefresh")
+  },
 
-  //热销商品分页查询/模糊查询/类别查询
+  //热销商品分页查询
   queryCommodity:function(that,data,baseUrl){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
@@ -69,10 +73,12 @@ Page({
       data: data,
       success(res) {
         if(res.data.code==200){
-          var aCity = res.data.data[0].aCity;
-          that.setData({
-            address:aCity
-          })
+          if(res.data.data.length>0){
+            var aCity = res.data.data[0].aCity;
+            that.setData({
+              address:aCity
+            })
+          }
         }else{
           wx.showToast({
             title: res.data.msg
@@ -84,6 +90,13 @@ Page({
           title: "服务器异常"
         })
       }
+    })
+  },
+  //跳转模糊查询
+  searchByName:function(e){
+    var sName = e.detail.value;
+    wx.navigateTo({
+      url: 'search/search?sName='+sName
     })
   },
   //跳转分类
@@ -105,7 +118,7 @@ Page({
     var sid = e.currentTarget.dataset.sid;
     var data={};
     data.sid=sid;
-    data.uid=1;
+    data.uid=4;
     var json = JSON.stringify(data);
     wx.request({
       url: app.globalData.baseUrl+"shoppingCart/addShoppingCart",
@@ -123,6 +136,12 @@ Page({
           title: "服务器异常"
         })
       }
+    })
+  },
+  //回到顶部
+  onTabItemTap:function(){
+    wx.pageScrollTo({
+      scrollTop:0
     })
   }
 })

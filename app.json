@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/commodity/commodity",
-    "pages/logs/logs"
+    "pages/shoppingCar/shoppingCar",
+    "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -10,14 +11,26 @@
     "navigationBarTextStyle":"black"
   },
   "tabBar": {
+    "color":"#333333",
+    "selectedColor":"#333333",
     "list": [
       {
         "pagePath": "pages/commodity/commodity",
+        "iconPath":"image/tab_shouye_default@3x.png",
+        "selectedIconPath":"image/tab_shouye_huidingbu@3x.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "日志"
+        "pagePath": "pages/shoppingCar/shoppingCar",
+        "iconPath":"image/tab_gouwuche_default@3x.png",
+        "selectedIconPath":"image/tab_gouwuche_select@3x.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath":"image/tab_wode_default@3x.png",
+        "selectedIconPath":"image/tab_wode_select@3x.png",
+        "text": "我的"
       }
     ]
   },
