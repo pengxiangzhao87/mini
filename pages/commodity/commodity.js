@@ -2,12 +2,13 @@
 var app = getApp();
 Page({
   data: {
-    address:"",
-    sName:"",    
+    address:"", 
     commodity:[],
     page:1,
-    rows:10,
-    baseUrl:""
+    rows:4,
+    totalPage:0,
+    baseUrl:"",
+    hidden:true
   },
   onLoad:function(){
     var that = this;
@@ -16,12 +17,9 @@ Page({
     that.setData({
       baseUrl:baseUrl
     })
-    var paras = [];
+    var paras = {};
     paras.page=data.page;
     paras.rows=data.rows;
-    if(data.sName!=''){
-      paras.sName = data.sName;
-    }
     paras.userId=4;
     this.queryCommodity(that,paras,baseUrl);
     paras.uId=4;
@@ -36,10 +34,46 @@ Page({
     })
   },
   //上拉获取新数据
-  onPullDownRefresh:function(){
-    console.info("onPullDownRefresh")
+  onReachBottom:function(){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var totalPage = that.data.totalPage;
+    var paras={};
+    paras.page=that.data.page;
+    paras.rows=that.data.rows;
+    paras.userId=4;
+    if(totalPage!=that.data.page){
+      wx.request({
+        url: baseUrl+"commodity/queryCommodityByPage",
+        method: 'get',
+        data: paras,
+        success(res) {
+          if(res.data.code==200){
+            var list = res.data.data.list;
+            var result = that.data.commodity.concat(list);
+            that.setData({
+              commodity:result,
+              page:that.data.page+1
+            })
+          }else{
+            wx.showToast({
+              title: res.data.msg
+            })
+          }
+        },
+        fail(res) {
+          wx.showToast({
+            title: "服务器异常"
+          })
+        }
+      })
+    }else{
+      that.setData({
+        hidden:false
+      })
+    }
+    
   },
-
   //热销商品分页查询
   queryCommodity:function(that,data,baseUrl){
     wx.request({
@@ -49,8 +83,11 @@ Page({
       success(res) {
         if(res.data.code==200){
           var list = res.data.data.list;
+          var totalPage = res.data.data.totalPage;
           that.setData({
-            commodity:list
+            commodity:list,
+            page:that.data.page+1,
+            totalPage:totalPage
           })
         }else{
           wx.showToast({
@@ -143,5 +180,12 @@ Page({
     wx.pageScrollTo({
       scrollTop:0
     })
+  },
+  onPageScroll:function(e){
+    if(e.scrollTop<0){
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    }
   }
 })

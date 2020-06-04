@@ -2,8 +2,8 @@
 <view style="background-color: #FFD52E;height:210.5px">
   <view style="font-size:14px;margin-left:10px;"><image src="/image/nav_shouye_dizhi@3x.png" style="width:18px;height:18px;"></image>送至：{{address}}</view>
   <view class="search_arr" style="background-color: #FFFFFF ;">  
-    <icon class="searchcion" size='20' type='search'></icon>  
-    <input bindconfirm="searchByName" type="text" placeholder="搜索商品" value="" confirm-type="search" />  
+    <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input bindconfirm="searchByName" style="width:60%;" type="text" placeholder="搜索商品" value="" confirm-type="search" /> 
   </view>  
   <view class="carousel" ></view>
 </view>
@@ -59,8 +59,7 @@
   <text style="font-size:25px;" decode="true">&nbsp;&nbsp;热销商品&nbsp;&nbsp;</text>
   <image src="/image/shouye_rexiao@3x.png" style="width:17.6px;height:21px;"/>
 </view>
-
-<view >
+<view>
   <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
     <view class="hotGoods" wx:if="{{idx%2==0}}">
       <view class="goods" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
@@ -90,6 +89,7 @@
   </view>
 </view>
 
+<view hidden="{{hidden}}" style="width:100%;display: flex;justify-content:center;font-size:10px;color:#999999;margin-top:20px;margin-bottom:20px;"><text decode="true">我也是有底线的&nbsp;&nbsp;</text><image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image></view>
 
  
  
