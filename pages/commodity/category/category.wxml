@@ -1,2 +1,10 @@
 <!--pages/commodity/category/category.wxml-->
-<text>pages/commodity/category/category.wxml</text>
+<view class="category">
+  <view wx:for="{{category}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+    <view class="category_item">
+      <image src="/image/shouye_shuiguo@3x.png" style="height:54px;width:54px;"></image>
+      <view>{{item.tName}}</view>
+    </view>
+  </view>
+</view>
+

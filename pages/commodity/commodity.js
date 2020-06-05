@@ -5,7 +5,7 @@ Page({
     address:"", 
     commodity:[],
     page:1,
-    rows:4,
+    rows:10,
     totalPage:0,
     baseUrl:"",
     hidden:true
@@ -14,9 +14,6 @@ Page({
     var that = this;
     var data = that.data;
     var baseUrl = app.globalData.baseUrl;
-    that.setData({
-      baseUrl:baseUrl
-    })
     var paras = {};
     paras.page=data.page;
     paras.rows=data.rows;
@@ -26,23 +23,18 @@ Page({
     paras.isUsed=1;
     this.queryAddressList(that,paras,baseUrl);
   },
-  //跳转到搜索页
-  searchByName:function(e){
-    var sName = e.detail.value; 
-    wx.navigateTo({
-      url: 'search/search?sName='+sName
-    })
-  },
   //上拉获取新数据
   onReachBottom:function(){
     var that = this;
     var baseUrl = that.data.baseUrl;
     var totalPage = that.data.totalPage;
-    var paras={};
-    paras.page=that.data.page;
-    paras.rows=that.data.rows;
-    paras.userId=4;
-    if(totalPage!=that.data.page){
+    var rows = that.data.rows;
+    var page = that.data.page+1;
+    if(totalPage>=page){
+      var paras={};
+      paras.page=page;
+      paras.rows=rows;
+      paras.userId=4;
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',
@@ -53,7 +45,7 @@ Page({
             var result = that.data.commodity.concat(list);
             that.setData({
               commodity:result,
-              page:that.data.page+1
+              page:page
             })
           }else{
             wx.showToast({
@@ -85,8 +77,8 @@ Page({
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
           that.setData({
+            baseUrl:baseUrl,
             commodity:list,
-            page:that.data.page+1,
             totalPage:totalPage
           })
         }else{
@@ -181,6 +173,7 @@ Page({
       scrollTop:0
     })
   },
+  //禁止下拉
   onPageScroll:function(e){
     if(e.scrollTop<0){
       wx.pageScrollTo({

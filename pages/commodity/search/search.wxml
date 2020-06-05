@@ -1,7 +1,46 @@
 <!--pages/commodity/search/search.wxml-->
 
-<view class="search_arr" >  
-  <icon class="searchcion" size='20' type='search'></icon>  
-  <input bindconfirm="searchByName" type="text" placeholder="搜索商品" value="{{sName}}" confirm-type="search" />  
-</view>  
+  <view class="search_arr" style="background-color: #FFFFFF ;" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input style="width:60%;" type="text" value="{{sName}}" confirm-type="search" bindconfirm="toSearch"/> 
+  </view > 
+
+<view>
+  <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
+    <view class="hotGoods" wx:if="{{idx%2==0}}">
+      <view class="goods" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
+        <view class="img-wapper">
+          <image class="goodsImg" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+        </view>
+        <view style="font-size:14px;margin-left:10px;margin-top:5px;">{{commodity[idx].s_name}}</view>
+        <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx].monthSale}}&nbsp;&nbsp;&nbsp;&nbsp;库存&nbsp;{{commodity[idx].stock}}</text></view>
+        <view style="font-size:12px;margin-top:5px;margin-left:10px;">
+          <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+          <image catchtap="addCar" data-sid="{{commodity[idx].s_id}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+        </view>
+      </view>
+      <view class="goods" hidden="{{idx+1>commodity.length-1}}" bindtap="toDetail" data-sid="{{commodity[idx+1].s_id}}">
+          <view class="img-wapper">
+            <image class="goodsImg" src="{{baseUrl}}upload/{{commodity[idx+1].coverUrl}}"></image>
+          </view>
+          
+          <view style="font-size:14px;margin-left:10px;margin-top:5px;">{{commodity[idx+1].s_name}}</view>
+          <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx+1].monthSale}}&nbsp;&nbsp;&nbsp;&nbsp;库存&nbsp;{{commodity[idx+1].stock}}</text></view>
+          <view style="font-size:12px;margin-top:5px;margin-left:10px;">
+            <text style="color:red;font-size:18px;">{{commodity[idx+1].price}}</text>{{commodity[idx+1].unit}}
+            <image catchtap="addCar" data-sid="{{commodity[idx+1].s_id}}" src="{{commodity[idx+1].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+          </view>
+      </view>
+    </view> 
+  </view>
+</view>
+
+<view hidden="{{hidden}}" class="baseLine">
+  <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
+  <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>
+</view>
+
+ 
+ 
+
 

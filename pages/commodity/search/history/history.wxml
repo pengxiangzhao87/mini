@@ -1,0 +1,17 @@
+<!--pages/commodity/search/history/history.wxml-->
+<view class="search">
+  <view class="search_arr" style="background-color: #FFFFFF ;" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input style="width:60%;" type="text" placeholder="搜索商品" value="" focus="true" confirm-type="search" bindconfirm="toSearch"/> 
+  </view >  
+  <navigator class="cancel" open-type="navigateBack" delta="1">取消</navigator>
+</view>
+<view class="title">
+  <view style="margin-left:10px;color:#333333;font-size:16px;">历史搜索</view> 
+  <view style="margin-left:auto;margin-right:12px;color:#FF1F1F;font-size:16px;" bindtap="empty">清空</view>
+</view>
+<view class="history">
+  <view  wx:for="{{searchList}}" wx:for-index="idx" wx:key="idx">
+    <text class="content">{{searchList[idx]}}</text>
+  </view>
+</view>

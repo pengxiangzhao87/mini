@@ -1,1 +1,10 @@
 /* pages/commodity/category/category.wxss */
+.category{
+  display: flex;  
+  flex-direction: row  ;
+}
+
+.category_item{
+  display: flex;  
+  flex-direction: row  ;
+}
