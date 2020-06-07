@@ -33,10 +33,16 @@ Page({
             result.isVideo=0;
           }
           result.urlList=urlList;
-          result.totalPrice = (result.price_unit * result.init_num).toFixed(2);
+          var disabled = false;
+          if(result.init_unit==0 && result.init_num<=50 || result.init_unit==1 && result.init_num==1){
+            disabled = true;
+          }
+          var sum = result.init_unit==0?result.init_num/50:result.init_num;
+          result.totalPrice = (result.price_unit * sum).toFixed(2);
           console.info(result)
           that.setData({
-            detail:result
+            detail:result,
+            disabled:disabled
           })
         }else{
           wx.showToast({
@@ -54,16 +60,20 @@ Page({
   subtract:function(){
     var that = this;
     var detail = that.data.detail;
+    if(detail.init_unit==0 && detail.init_num<=50 || detail.init_unit==1 && detail.init_num==1){
+      return;
+    }
     var num = 0;
     if(detail.init_unit==0){
-      num = 50;
+      num = detail.init_num-50;
     }else{
-      num = 1;
+      num = detail.init_num-1;
     }
-    detail.init_num = detail.init_num-num;
-    detail.totalPrice = (detail.price_unit * detail.init_num).toFixed(2);
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
     var disabled = false;
-    if(detail.init_num==0){
+    if(detail.init_unit==0 && num<=50 || detail.init_unit==1 && num==1){
       disabled = true;
     }
     that.setData({
@@ -76,12 +86,13 @@ Page({
     var detail = that.data.detail;
     var num = 0;
     if(detail.init_unit==0){
-      num = 50;
+      num = detail.init_num+50;
     }else{
-      num = 1;
+      num = detail.init_num+1;
     }
-    detail.init_num = detail.init_num+num;
-    detail.totalPrice = (detail.price_unit * detail.init_num).toFixed(2);
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
     that.setData({
       detail:detail,
       disabled:false
@@ -108,7 +119,6 @@ Page({
       method: 'post',
       data: json,
       success(res) {
-        console.info(res)
         if(res.data.code==200){
            
         }else{

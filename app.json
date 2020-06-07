@@ -1,7 +1,8 @@
 {
   "pages":[
-    "pages/commodity/commodity",
     "pages/shoppingCar/shoppingCar",
+    "pages/commodity/commodity",
+    
     "pages/my/my"
   ],
   "window":{
