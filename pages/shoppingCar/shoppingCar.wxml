@@ -1,7 +1,7 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
 <view class="head">
   <view style="font-weight: bolder;font-size:18px;color:#333333;margin-left:10px;">购物车</view>
-  <view style="font-size:16px;color:#666666;margin-right:10px;margin-left:auto;">管理</view>
+  <view style="font-size:16px;color:#666666;margin-right:10px;margin-left:auto;" bindtap="deleteFn">删除</view>
 </view> 
 
 <view class="postage" hidden="{{hidden}}">
@@ -11,12 +11,12 @@
 
 <view style="background-color:rgb(243, 243, 243);height:100%;padding-top:10px;">
   <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
-    <view class="list">
-      <view bindtap="checkBox"  style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
+    <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
+      <view catchtap="checkBox" data-id="{{item.id}}" style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
         <image style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
       </view>
-      <view style="width:66px;height:66px;border:1px solid red;">
-        <image  src="{{item.imgUrl}}"></image>
+      <view >
+        <image style="width:66px;height:66px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
       </view>
       <view style="height:66px;margin-left:10px;width:100%;">
         <view class="title">
@@ -25,22 +25,23 @@
         </view>
         <view><text style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</text><text style="color:#666666;font-size:14px;"> /{{item.s_num}}{{detail.init_unit==0?'g':'个'}}</text></view>
         <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
-          <view class="btn {{item.disabled?'btn_disabled':''}}" hover-class="afterbtn" bindtap="subtract" data-sid="{{item.s_id}}" disabled="{{item.disabled}}">50</view>
+          <view class="btn {{item.disabled?'btn_disabled':''}}" hover-class="afterbtn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
           <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
           <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{item.s_num}}&nbsp;{{item.init_unit==0?'g':'个'}}</text></view>
           <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
-          <view class="btn" hover-class="afterbtn" bindtap="add" data-sid="{{item.s_id}}">50</view>
+          <view class="btn" hover-class="afterbtn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="1">{{item.init_unit==0?50:1}}</view>
         </view>
       </view>
     </view>
   </view>
 </view>
-<view class="page_bottom">
-  <image style="height:16px;width:16px;margin-left:15px;" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+<view class="page_bottom" >
+  <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
   <view style="margin-left:5px;color:#333333;font-size:14px;">全选</view>
   <view style="margin-right:10px;margin-left:auto;color:#999999 ;">
-    <view hidden="{{restPrice==0?true:false}}" style="font-size:11px;">差<text style="color:#FF1907;">￥{{restPrice}}</text>免配送费</view>
+    <view hidden="{{restPrice==0 || restPrice==30?true:false}}" style="font-size:11px;">差<text style="color:#FF1907;">￥{{restPrice}}</text>免配送费</view>
     <view hidden="{{totalPrice==0?true:false}}" style="font-size:18px;">合计:<text style="color:#FF1907;">￥{{totalPrice}}</text></view>
   </view>
-  <view class="checkOut">结算{{checkOut=='(0)'?'':checkOut}}</view>
+  <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
 </view>   
+
