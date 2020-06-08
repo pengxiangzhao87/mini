@@ -9,7 +9,7 @@
   <image bindtap="closePostage"  src="/image/gouwuche_delete@3x.png" style="width:10px;height:10px;margin-right:10px;margin-left:auto;"></image>
 </view>
 
-<view style="background-color:rgb(243, 243, 243);height:100%;padding-top:10px;">
+<view style="padding-top:10px;">
   <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
     <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
       <view catchtap="checkBox" data-id="{{item.id}}" style="width:16px;height:16px;margin-left:5px;margin-right:5px;">

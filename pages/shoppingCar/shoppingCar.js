@@ -52,7 +52,6 @@ Page({
           if(totalPrice<30 && totalPrice!=0){
             restPrice=30-totalPrice;
           }
-          console.info(list)
           that.setData({
             baseUrl:baseUrl,
             shoppingCar:list,

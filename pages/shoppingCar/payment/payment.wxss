@@ -1,1 +1,22 @@
 /* pages/shoppingCar/payment/payment.wxss */
+page{
+  width:100%;
+  height:100%;
+  background-color: rgb(243, 243, 243);
+}
+.head{
+  margin:10px 10px 10px 10px;
+  height:50px;
+  background-color: #FFFFFF;
+  border:0.5px solid #FFD52E;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.body{
+  margin-left:10px;
+  margin-right:10px;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+}

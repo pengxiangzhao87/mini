@@ -1,10 +1,16 @@
 /* pages/shoppingCar/shoppingCar.wxss */
+page{
+  background-color:rgb(243, 243, 243);
+  height:100%;
+  width:100%;
+}
 .head{
   width:100%;
   display: flex;  
   border-top: 1px solid #F5F5F5;
   padding-top:10px;
   padding-bottom: 10px;
+  background-color: #FFFFFF;
 }
 .postage{
   height:30px;
@@ -50,7 +56,7 @@
   flex-direction: row  ;
   height:94px;
   margin:0px 10px 10px 10px;
-  border-radius: 5px;  
+  border-radius: 4px;  
   background-color: #FFFFFF ;
  
 }
