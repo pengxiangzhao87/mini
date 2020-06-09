@@ -42,7 +42,9 @@
     <image src="/image/gouwuche@3x.png" style="margin-top:5px;width:25px;height:25px;"></image>
     <view class="carSum">{{detail.carSum}}</view>
   </view>
-  <view style="color:#FF1907;margin-right:10px;margin-left:auto;font-size:18px;">￥{{detail.totalPrice}}</view>
-  <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;color:#333333;">加入到购物车</text></view>
+  <view style="margin-right:10px;margin-left:auto;display:flex;align-items: center;justify-content: center;  ">
+    <view style="color:#FF1907;margin-right:10px;font-size:18px;">￥{{detail.totalPrice}}</view>
+    <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;color:#333333;">加入到购物车</text></view>
+  </view>
 </view>   
 

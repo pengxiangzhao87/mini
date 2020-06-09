@@ -325,7 +325,8 @@ Page({
           var detail={};
           detail.sId=item.s_id;
           detail.paymentPrice=item.totalPrice;
-          detail.orderNum=item.s_num
+          detail.orderNum=item.s_num;
+          detail.imgUrl=item.imgUrl;
           detailList[detailList.length]=detail;
         }
       }
@@ -336,8 +337,8 @@ Page({
       }
 
       wx.navigateTo({
-      url: 'payment/payment?json='+json+'&postage='+postage
-    })
+        url: 'payment/payment?json='+json+'&postage='+postage+'&totalPrice='+that.data.totalPrice
+      })
     }
   }
 })
