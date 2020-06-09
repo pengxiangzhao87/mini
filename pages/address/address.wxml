@@ -1,0 +1,15 @@
+<!--pages/shoppingCar/address/address.wxml-->
+<view  wx:for="{{address}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+  <view class="list">
+    <image src="{{item.isUsed==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}" style="width:16px;height:16px;margin-left:10px;" bindtap="check" data-aid="{{item.aId}}"></image>
+    <view style="margin-left:10px;">
+      <view style="color:#333333;font-size:14px;">{{item.aCity}}</view>
+      <view style="color:#666666;font-size:12px;">{{item.name}}<text style="margin-left:10px;">{{item.phone}}</text></view>
+    </view>
+    <image src="/image/gouwuche_bianji@3x.png" style="width:16px;height:16px;margin-right:10px;margin-left:auto;"></image>
+  </view>
+</view>
+
+<view class="page_bottom" >
+  <text style="color:#333333;font-size:16px;">新增收货地址</text>
+</view>   

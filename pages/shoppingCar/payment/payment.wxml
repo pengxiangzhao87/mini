@@ -1,13 +1,16 @@
 <!--pages/shoppingCar/payment/payment.wxml-->
 <view class="head {{address.aId!=null?'head_address':''}}">
-  <view wx:if="{{address.aId!=null}}" >
+  <view wx:if="{{address.aId!=null}}" style="display:flex;align-items: center;width:100%;">
     <view>
-      <image style="width:13px;height:16px;" src="/image/nav_shouye_dizhi@3x.png"></image>
-      <text>{{address.aCity}}</text>
+      <view style="display: flex;align-items: center;">
+        <image style="width:13px;height:16px;margin-left:5px;" src="/image/zhifu_dizhi.png"></image>
+        <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{address.aCity}}</text>
+      </view>
+      <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
+        <text style="color:#333333;" decode="true">{{address.name}}&nbsp;&nbsp;<text style="color:#666666;">{{address.phone}}</text></text>
+      </view>
     </view>
-    <view style="display:flex;align-items: center;width:100%;">
-      <text>{{address.name}}{{address.phone}}</text>
-    </view>
+    <image style="height:11.9px;width:6.9px;margin-right:5px;margin-left:auto;" bindtap="toAddress" src="/image/zhifu_xiayibu@3x.png"></image>
   </view>
   <view wx:elif="{{address.aId==null}}" style="display:flex;align-items: center;width:100%;">
     <image style="width:16px;height:16px;margin-left:5px;" src="/image/zhifu_tianxie@3x.png"></image>

@@ -1,0 +1,27 @@
+/* pages/shoppingCar/address/address.wxss */
+page{
+  background-color:rgb(243, 243, 243);
+  height:100%;
+  width:100%;
+}
+.list{
+  display: flex;  
+  align-items: center;
+  flex-direction: row  ;
+  height:58px;
+  background-color: #FFFFFF;
+  margin-top:10px;
+}
+
+.page_bottom{
+  width:90%;
+  height:45px;
+  margin-left:5%;
+  position:fixed; 
+  bottom:5px;
+  background-color: #FFD52E;
+  display: flex;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+}

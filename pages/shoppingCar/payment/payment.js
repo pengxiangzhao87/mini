@@ -72,7 +72,7 @@ Page({
   },
   toAddress:function(){
     wx.navigateTo({
-      url: '../address/address'
+      url: '/pages/address/address'
     })
   }
 })

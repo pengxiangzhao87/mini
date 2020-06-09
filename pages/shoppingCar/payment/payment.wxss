@@ -13,7 +13,7 @@ page{
   display: flex;
   align-items: center;
 }
-.head_address{
+.head.head_address{
   margin:10px 10px 10px 10px;
   height:70px;
   background-color: #FFFFFF;
