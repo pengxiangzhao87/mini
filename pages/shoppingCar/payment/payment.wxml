@@ -1,6 +1,6 @@
 <!--pages/shoppingCar/payment/payment.wxml-->
 <view class="head {{address.aId!=null?'head_address':''}}">
-  <view wx:if="{{address.aId!=null}}" style="display:flex;align-items: center;width:100%;">
+  <view bindtap="toAddress" wx:if="{{address.aId!=null}}" style="display:flex;align-items: center;width:100%;">
     <view>
       <view style="display: flex;align-items: center;">
         <image style="width:13px;height:16px;margin-left:5px;" src="/image/zhifu_dizhi.png"></image>
@@ -10,22 +10,21 @@
         <text style="color:#333333;" decode="true">{{address.name}}&nbsp;&nbsp;<text style="color:#666666;">{{address.phone}}</text></text>
       </view>
     </view>
-    <image style="height:11.9px;width:6.9px;margin-right:5px;margin-left:auto;" bindtap="toAddress" src="/image/zhifu_xiayibu@3x.png"></image>
+    <image style="height:11.9px;width:6.9px;margin-right:5px;margin-left:auto;" src="/image/zhifu_xiayibu@3x.png"></image>
   </view>
-  <view wx:elif="{{address.aId==null}}" style="display:flex;align-items: center;width:100%;">
+  <view bindtap="toAddress" wx:elif="{{address.aId==null}}" style="display:flex;align-items: center;width:100%;">
     <image style="width:16px;height:16px;margin-left:5px;" src="/image/zhifu_tianxie@3x.png"></image>
     <text style="font-size:16px;color:#333333;margin-left:10px;">请填写收货地址</text>
-    <image style="height:11.9px;width:6.9px;margin-right:5px;margin-left:auto;" bindtap="toAddress" src="/image/zhifu_xiayibu@3x.png"></image>
+    <image style="height:11.9px;width:6.9px;margin-right:5px;margin-left:auto;"  src="/image/zhifu_xiayibu@3x.png"></image>
   </view>
-  
 </view>
 
 <view class="body">
   <view style="display:flex;align-items:center;height:43px;width:100%;">
     <view style="font-size:12px;color:#666666;margin:14px 0px 14px 5px;">预计送达时间</view>
-    <view style="font-size:12px;margin-right:5px;margin-left:auto;">
+    <view style="font-size:12px;margin-right:5px;margin-left:auto;" bindtap="showModal">
       <text style="margin-right:5px;color:#FFD52E;">今天 {{dateRange}}</text>
-      <image style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+      <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
     </view>
   </view>
 
@@ -63,4 +62,29 @@
     <view style="margin-right:10px;font-size:12px;color:#999999 ;">待支付:<text style="font-size:18px;color:#FF1907;">￥{{allPrice}}</text></view>
     <view class="toPayment" bindtap="toPayment">确认支付</view>
   </view>
-</view>   
+</view>
+
+
+<view class="wrap">
+  <!-- modal  -->
+  <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
+    <view class="modal-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+      <view class="modal-head">选择送达时间</view>
+      <view style="width:100%;height:100%;display:flex; flex-direction:row ;align-items: center;">
+        <view style="width:98px;height:100%;background-color:#E5E5E5;">
+          <view style="display:flex; flex-direction:row ;height:40px;width:100%;background-color:#FFFFFF;">
+            <view style="width:10px;"></view>
+            <view style="width:88px;display:flex;align-items: center;justify-content: center;color:#FFD52E;font-size:14px; ">今天</view>
+          </view>
+          <view style="display:flex; flex-direction:row ;height:40px;width:100%;background-color:#E5E5E5;">
+            <view style="width:10px;"></view>
+            <view style="width:88px;display:flex;align-items: center;justify-content: center;color:#333333;font-size:14px; ">明天</view>
+          </view>
+        </view>
+        <view style="width:100%;height:100%;background-color:#FFFFFF;"></view>
+      </view>
+    </view>
+  </view>
+</view>
+
