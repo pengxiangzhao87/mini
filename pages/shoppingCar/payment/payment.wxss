@@ -78,20 +78,7 @@ page{
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
-.Mselect{
-  margin-bottom: 20rpx;
-}
-.Mselect view{
-  padding: 26rpx 0;
-  background: #fff;
-}
-.Mselect view:not(:last-of-type){
-  border-bottom: 1px solid #dfdede;
-}
-.Mcancel{
-  background: #fff;
-  padding: 26rpx 0;
-}
+ 
 
 .modal-head{
   height:43px;
@@ -103,4 +90,12 @@ page{
   border-bottom: 0.5px solid #E5E5E5;
   color:#333333;
   font-size:14px;
+}
+.modal-left{
+  background-color:#FFFFFF;
+  color:#FFD52E;
+}
+.modal-left.modal-left-white{
+  background-color:#E5E5E5;
+  color:#333333;
 }
