@@ -1,0 +1,22 @@
+/* pages/my/editInfo/editInfo.wxss */
+page{
+  background-color:rgb(243, 243, 243);
+  height:100%;
+  width:100%;
+} 
+
+.row{
+  display: flex;  
+  align-items: center;
+  flex-direction: row  ;
+  height:42px;
+  margin-left:10px;
+  margin-right:10px;
+  border-bottom: 0.5px solid #E5E5E5;
+  
+}
+
+.left{
+  display:flex;
+  width:72px;
+}

@@ -231,6 +231,7 @@ Page({
       today:1
     })
   },
+  //选择配送时间
   checkDate:function(e){
     var that = this;
     var date = that.data.today==0?'今天 ':'明天 ';
@@ -238,5 +239,9 @@ Page({
       dateRange:date+e.currentTarget.dataset.time
     })
     that.hideModal();
+  },
+  //下单 TODO
+  toPayment:function(){
+    
   }
 })

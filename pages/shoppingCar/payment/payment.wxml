@@ -57,10 +57,10 @@
   </view>
 </view>
 
-<view class="page_bottom" >
+<view class="page_bottom" bindtap="toPayment">
   <view style="margin-right:5px;margin-left:auto; display: flex;align-items: center;justify-content: center;  color:#333333;font-size:16px;">
     <view style="margin-right:10px;font-size:12px;color:#999999 ;">待支付:<text style="font-size:18px;color:#FF1907;">￥{{allPrice}}</text></view>
-    <view class="toPayment" bindtap="toPayment">确认支付</view>
+    <view class="toPayment" >确认支付</view>
   </view>
 </view>
 

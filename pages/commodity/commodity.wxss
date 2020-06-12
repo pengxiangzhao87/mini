@@ -22,7 +22,7 @@
 }  
 
 .carousel{
-  border-radius: 30rpx;  
+  border-radius: 4px;  
   background-color: black;
   height:170px;
   width:96%;

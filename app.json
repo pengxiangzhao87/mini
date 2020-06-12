@@ -1,9 +1,9 @@
 {
   "pages":[
+    "pages/my/my",
     "pages/shoppingCar/shoppingCar",
-    "pages/commodity/commodity",
+    "pages/commodity/commodity"
     
-    "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",

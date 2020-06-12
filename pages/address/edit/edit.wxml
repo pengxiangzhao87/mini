@@ -1,29 +1,28 @@
 <!--pages/address/edit/edit.wxml-->
 <form bindsubmit="save">
-<view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;">
-  <view class="row">
-    <view class="left">收货人</view>
-    <input name="name" type="text" placeholder="您的姓名" value="{{address.name}}"/>
+  <view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;">
+    <view class="row">
+      <view class="left">收货人</view>
+      <input name="name" type="text" placeholder="您的姓名" placeholder-style="color:#999999;font-size:12px;" value="{{address.name}}"/>
+    </view>
+    <view class="row">
+      <view class="left">手机号</view>
+      <input name="phone" type="text" placeholder="联系您的手机号" placeholder-style="color:#999999;font-size:12px;" value="{{address.phone}}"/>
+    </view>
+    <view class="row">
+      <view class="left">收货地址</view>
+      <image hidden="{{flag==1?true:false}}" style="width:11.5px;height:14px;" src="/image/zhifu_dizhi.png"></image>
+      <input name="aCity" type="text" placeholder="定位收货地址" placeholder-style="color:#999999;font-size:12px;" value="{{address.aCity}}"/>
+      <image style="height:11.9px;width:6.9px;margin-right:0px;margin-left:auto;" src="/image/zhifu_xiayibu@3x.png"></image>
+    </view>
+    <view class="row-end">
+      <view class="left">门牌楼号</view>
+      <input name="aDetail" type="text" placeholder="例如：1号楼12层1201号" placeholder-style="color:#999999;font-size:12px;" value="{{address.aDetail}}"/>
+    </view>
   </view>
-  <view class="row">
-    <view class="left">手机号</view>
-    <input name="phone" type="text" placeholder="联系您的手机号" value="{{address.phone}}"/>
-  </view>
-  <view class="row">
-    <view class="left">收货地址</view>
-    <image hidden="{{flag==1?true:false}}" style="width:11.5px;height:14px;" src="/image/zhifu_dizhi.png"></image>
-    <input name="aCity" type="text" placeholder="定位收货地址" value="{{address.aCity}}"/>
-    <image style="height:11.9px;width:6.9px;margin-right:0px;margin-left:auto;" src="/image/zhifu_xiayibu@3x.png"></image>
-  </view>
-  <view class="row-end">
-    <view class="left">门牌楼号</view>
-    <input name="aDetail" type="text" placeholder="例如：1号楼12层1201号" value="{{address.aDetail}}"/>
-  </view>
-</view>
-
-  <input hidden="true" name="isUsed" value="{{address.isUsed}}"/>
-  <input hidden="true" name="uId" value="{{address.uId}}"/>
-<button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" form-type="submit">保存收货地址</button> 
+    <input hidden="true" name="isUsed" value="{{address.isUsed}}"/>
+    <input hidden="true" name="uId" value="{{address.uId}}"/>
+  <button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" form-type="submit">保存收货地址</button> 
 
 
 </form>
