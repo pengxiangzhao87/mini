@@ -14,24 +14,9 @@
   margin-left: 20px;
   margin-bottom: 20px;
   display: inline-block;
-
 }
-.tname{
-  color:#333333;
-  font-size:13px;
-  height:18px;
-  display: flex;
-  justify-content: center;
-}
-
 .tname.nameChecked{
-  color:#333333;
-  font-size:13px;
-  height:18px;
-  display: flex;
-  justify-content: center;
-  background: -webkit-linear-gradient(top,white,rgb(253, 243, 204)
-  ,#FFD52E);
+  border-bottom: 2px solid #FFD52E ;
 }
 
 

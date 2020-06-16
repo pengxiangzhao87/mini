@@ -33,11 +33,13 @@ Page({
         }
       },fail(res){
         wx.showToast({
+          icon:'none',
           title: '服务器异常'
         })
       }
     })
   },
+
   changeEye:function(){
     var that = this;
     that.setData({
@@ -48,6 +50,19 @@ Page({
     var json = JSON.stringify(this.data.myInfo);
     wx.navigateTo({
       url: 'editInfo/editInfo?json='+json
+    })
+  },
+  //跳转地址管理
+  toAddress:function(){
+    wx.navigateTo({
+      url: '/pages/address/address'
+    })
+  },
+  //跳转地址管理
+  toOrder:function(e){
+    var id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/order/order?id='+id
     })
   },
   withdraw:function(){

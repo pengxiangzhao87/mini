@@ -1,0 +1,10 @@
+<!--pages/my/update/updateNickName/updateNickName.wxml-->
+<form bindsubmit="save">
+  <view style="margin-top:10px;background-color:#FFFFFF;border:none;width:100%; display: flex;align-items: center;flex-direction: row  ;">
+    <input class="row" name="name" focus="true" placeholder="您的昵称" placeholder-style="color:#999999;font-size:12px;" value="{{info.u_nick_name}}"/>
+    
+    <image hidden="{{info.u_nick_name==null || info.u_nick_name==''?true:false}}" style="height:10px;width:10px;margin-left:auto;margin-right:10px;" src="/image/gouwuche_delete@3x.png" bindtap="deleteName"></image>
+  </view>
+
+  <button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" form-type="submit">确认</button> 
+</form>

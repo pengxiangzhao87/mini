@@ -1,0 +1,114 @@
+<!--pages/my/order/order.wxml-->
+<!-- <view class="head">
+  <view class="search_arr" style="background-color: #FFFFFF ;" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input style="width:60%;" placeholder="搜索订单" placeholder-style="color:#666666;font-size:12px;" type="text" value="{{sName}}" confirm-type="search" bindconfirm="toSearch"/> 
+  </view > 
+  <image style="display:flex;height:18px;width:16px;margin-left:auto;margin-right:10px;" src="/image/order_news_none.png"></image>
+</view> -->
+
+<view class="title">
+  <view class="title-item" bindtap="sendOrder"><text class="item {{sendOrder?'checked':''}}">待发货</text></view>
+  <view class="title-item" bindtap="takeOrder"><text class="item {{takeOrder?'checked':''}}">待收货</text></view>
+  <view class="title-item" bindtap="allOrder"><text class="item {{allOrder?'checked':''}}">全部订单</text></view>
+  <image style="display:flex;height:18px;width:16px;margin-left:auto;margin-right:10px;" src="/image/order_news_none.png"></image>
+</view>
+
+<view hidden="{{!sendOrder}}">
+  <view  wx:for="{{sendList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+    <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}">
+      <view class="list-head">
+        <view style="display:flex;color:#666666;margin-left:0px;">订单号: {{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+      </view>
+      <view class="list-body">
+        <scroll-view scroll-x style="width:80%;">
+          <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
+            <image style="height:50px;width:50px;margin-right:5px;" src="{{baseUrl}}upload/{{img}}"></image>
+          </view>
+        </scroll-view>
+        <view style="margin-right:0px;margin-left:auto;">
+          <text style="margin-right:5px;margin-left:auto;font-size:14px;color:#999999;">共{{item.imgUrl.length}}件</text>
+          <image style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+        </view>
+      </view>
+      <view class="list-price {{item.order_status==3?'bottom':''}}">
+        <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
+        </view>
+        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        </view>
+      </view>
+      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
+        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
+        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+
+<view hidden="{{!takeOrder}}">
+  <view  wx:for="{{takeList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+    <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}">
+      <view class="list-head">
+        <view style="display:flex;color:#666666;margin-left:0px;">订单号: {{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+      </view>
+      <view class="list-body">
+        <scroll-view scroll-x style="width:80%;">
+          <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
+            <image style="height:50px;width:50px;margin-right:5px;" src="{{baseUrl}}upload/{{img}}"></image>
+          </view>
+        </scroll-view>
+        <view style="margin-right:0px;margin-left:auto;">
+          <text style="margin-right:5px;margin-left:auto;font-size:14px;color:#999999;">共{{item.imgUrl.length}}件</text>
+          <image style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+        </view>
+      </view>
+      <view class="list-price {{item.order_status==3?'bottom':''}}">
+        <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
+        </view>
+        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        </view>
+      </view>
+      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
+        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
+        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view hidden="{{!allOrder}}">
+  <view  wx:for="{{allList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+    <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}">
+      <view class="list-head">
+        <view style="display:flex;color:#666666;margin-left:0px;">订单号: {{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+      </view>
+      <view class="list-body">
+        <scroll-view scroll-x style="width:80%;">
+          <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
+            <image style="height:50px;width:50px;margin-right:5px;" src="{{baseUrl}}upload/{{img}}"></image>
+          </view>
+        </scroll-view>
+        <view style="margin-right:0px;margin-left:auto;">
+          <text style="margin-right:5px;margin-left:auto;font-size:14px;color:#999999;">共{{item.imgUrl.length}}件</text>
+          <image style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+        </view>
+      </view>
+      <view class="list-price {{item.order_status==3?'bottom':''}}">
+        <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
+        </view>
+        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        </view>
+      </view>
+      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
+        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
+        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
+      </view>
+    </view>
+  </view>
+</view>

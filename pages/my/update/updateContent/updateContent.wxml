@@ -1,0 +1,10 @@
+<!--pages/my/update/updateContent/updateContent.wxml-->
+<form bindsubmit="save">
+  <view style="display:flex;margin-top:10px;background-color:#FFFFFF;border:none;width:100%;">
+    <textarea class="row" name="content"  focus="true" auto-focus="true" placeholder="请添加介绍说明内容，不超过300字" placeholder-style="color:#999999;font-size:12px;" value="{{info.u_content}}" maxlength="300"/>
+
+  </view>
+
+  <button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" form-type="submit">确认</button> 
+</form>
+

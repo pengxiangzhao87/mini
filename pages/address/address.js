@@ -33,7 +33,8 @@ Page({
         }
       },fail(res){
         wx.showToast({
-          title: 'server fail!'
+          icon:'none',
+          title: '服务器异常'
         })
       }
     })
@@ -75,7 +76,8 @@ Page({
         }
       },fail(res){
         wx.showToast({
-          title: 'server fail!'
+          icon:'none',
+          title: '服务器异常'
         })
       }
     })

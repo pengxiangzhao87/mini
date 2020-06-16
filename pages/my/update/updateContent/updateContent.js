@@ -1,34 +1,28 @@
-// pages/address/edit/edit.js
+// pages/my/update/updateContent/updateContent.js
 var app = getApp();
 Page({
   data: {
-    address:{},
-    baseUrl:'',
-    //0:新增，1:修改
-    flag:0
+    info:{},
+    baseUrl:''
   },
 
   onLoad:function(e) {
-    var flag = e.flag;
-    var that =  this;
+    var info = JSON.parse(e.json);
     var baseUrl = app.globalData.baseUrl;
-    that.setData({
-      address:JSON.parse(e.json),
-      baseUrl:baseUrl,
-      flag:flag
+    this.setData({
+      info:info,
+      baseUrl:baseUrl
     })
   },
-  //保存
   save:function(e){
     var that = this;
     var baseUrl = that.data.baseUrl;
-    var address = e.detail.value;
-    if(that.data.flag==1){
-      address.aId=that.data.address.aId;
-    }
-    var json = JSON.stringify(address);
+    var content = e.detail.value.content;
+    var info = that.data.info;
+    info.u_content=content;
+    var json = JSON.stringify(info);
     wx.request({
-      url: baseUrl+"user/saveAddress",
+      url: baseUrl+"user/updateUserSetting",
       method: 'post',
       data: json,
       success(res) {
@@ -40,7 +34,8 @@ Page({
               var prevPage = pages[ pages.length - 2 ];  
               //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
               prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-                nextFlag:1
+                nextFlag:1,
+                info:info
               })
               //延时2秒
               setTimeout(function () {
@@ -55,13 +50,14 @@ Page({
             title: res.data.msg
           })
         }
-      },fail(res){
+      },
+      fail:function(res){
         wx.showToast({
-          icon:'none',
           title: '服务器异常'
         })
       }
     })
-
+ 
+     
   }
 })

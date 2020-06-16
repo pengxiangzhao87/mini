@@ -3,7 +3,6 @@
     "pages/my/my",
     "pages/shoppingCar/shoppingCar",
     "pages/commodity/commodity"
-    
   ],
   "window":{
     "backgroundTextStyle":"light",

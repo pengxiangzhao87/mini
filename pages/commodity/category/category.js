@@ -42,6 +42,7 @@ Page({
               item.selected = false;
             }
           }
+          console.info(list)
           that.setData({
             baseUrl:baseUrl,
             category:list,
@@ -55,7 +56,8 @@ Page({
       },
       fail(res) {
         wx.showToast({
-          title: "服务器异常"
+          icon:'none',
+          title: '服务器异常'
         })
       }
     })
@@ -81,7 +83,8 @@ Page({
       },
       fail(res) {
         wx.showToast({
-          title: "服务器异常"
+          icon:'none',
+          title: '服务器异常'
         })
       }
     })
@@ -120,7 +123,8 @@ Page({
         },
         fail(res) {
           wx.showToast({
-            title: "服务器异常"
+            icon:'none',
+            title: '服务器异常'
           })
         }
       })
@@ -184,7 +188,8 @@ Page({
       },
       fail(res) {
         wx.showToast({
-          title: "服务器异常"
+          icon:'none',
+          title: '服务器异常'
         })
       }
     })
