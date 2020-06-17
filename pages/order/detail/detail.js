@@ -3,7 +3,10 @@ var app = getApp();
 Page({
   data: {
     baseUrl:'',
-    detail:[]
+    detailList:[],
+    info:{},
+    totalPrice:0
+
   },
   onLoad:function(e) {
     var that = this;
@@ -15,11 +18,27 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
+        
         if(res.data.code==200){
+          var detailList = res.data.data.detailList;
+          var totalPrice = parseFloat(0);
+          for(var idx in detailList){
+            var item = detailList[idx]
+            item.extraUrl = item.extra_img_url.split('~');
+            console.info(item.extra_price);
+            if(item.is_extra==2){
+              totalPrice += parseFloat((item.extra_price).toFixed(2));
+              console.info(totalPrice);
+            }
+          }
+          console.info(detailList)
+          console.info(totalPrice)
+          console.info(totalPrice==0)
           that.setData({
-            detail:res.data.data,
-            baseUrl:baseUrl
+            detailList:detailList,
+            info:res.data.data.info,
+            baseUrl:baseUrl,
+            totalPrice:totalPrice
           })
         }
       }

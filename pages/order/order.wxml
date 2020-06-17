@@ -35,7 +35,7 @@
       <view class="list-price {{item.order_status==3?'bottom':''}}">
         <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
         </view>
-        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
       </view>
       <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
@@ -69,7 +69,7 @@
       <view class="list-price {{item.order_status==3?'bottom':''}}">
         <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
         </view>
-        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
       </view>
       <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
@@ -102,7 +102,7 @@
       <view class="list-price {{item.order_status==3?'bottom':''}}">
         <view hidden="{{item.msg==null?true:false}}" style="margin-left:5px;color:#FF982E;">{{item.msg}}
         </view>
-        <view style="margin-right:0px;margin-left:auto;color:#333333;">总计: ￥{{item.total_price}}
+        <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
       </view>
       <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">

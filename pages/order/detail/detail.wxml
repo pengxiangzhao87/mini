@@ -1,2 +1,41 @@
 <!--pages/my/order/detail/detail.wxml-->
-<text>pages/my/order/detail/detail.wxml</text>
+<view class="head">
+  <view>
+    <view style="display: flex;align-items: center;">
+      <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
+      <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{info.consigneeAddress}}</text>
+    </view>
+    <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
+      <text style="color:#333333;" decode="true">{{info.consigneeName}}&nbsp;&nbsp;<text style="color:#666666;">{{info.consigneePhone}}</text></text>
+    </view>
+  </view>
+</view>
+
+<view class="body">
+  <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
+    <view class="list-item {{item.is_extra==0?'':'bottom'}}">
+      <image style="width:66px;height:66px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+      <view style="margin-left:14px;width:100%;">
+        <view style="display:flex;flex-direction:row;align-items: center;">
+          <view style="font-size:14px;color:#333333;margin-right:14px;">{{item.name}}</view>
+            <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+        </view>
+        <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
+        <view><text style="color:#666666;font-size:12px;">单号: {{item.id}}</text></view>
+      </view>
+    </view>
+    <view class="extra-list" hidden="{{item.is_extra==0}}">
+      <view class="extra-price {{item.is_extra==2?'':'red'}}" >{{item.msg}}</view>
+      <view class="extra-pic">
+        <view  wx:for="{{item.extraUrl}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
+          <image style="width:50px;height:50px;border:1px solid red;margin-right:10px;" src="{{baseUrl}}upload/{{pic}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="page_bottom" bindtap="add" hidden="{{totalPrice==0}}">
+  <text style="color:#333333;font-size:16px;font-weight: bolder;">补差价￥{{totalPrice}}</text>
+</view>   

@@ -3,7 +3,7 @@
   <view bindtap="toAddress" wx:if="{{address.aId!=null}}" style="display:flex;align-items: center;width:100%;">
     <view>
       <view style="display: flex;align-items: center;">
-        <image style="width:13px;height:16px;margin-left:5px;" src="/image/zhifu_dizhi.png"></image>
+        <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
         <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{address.aCity}}</text>
       </view>
       <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">

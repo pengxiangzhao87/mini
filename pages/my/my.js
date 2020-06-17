@@ -21,7 +21,6 @@ Page({
           if(myInfo.imgUrl!=''){
             myInfo.imgList = myInfo.imgUrl.split('~');
           }
-          console.info(myInfo)
           that.setData({
             baseUrl:baseUrl,
             myInfo:myInfo
