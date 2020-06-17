@@ -3,10 +3,10 @@
   <view>
     <view style="display: flex;align-items: center;">
       <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
-      <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{info.consigneeAddress}}</text>
+      <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{info.consignee_address}}</text>
     </view>
     <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
-      <text style="color:#333333;" decode="true">{{info.consigneeName}}&nbsp;&nbsp;<text style="color:#666666;">{{info.consigneePhone}}</text></text>
+      <text style="color:#333333;" decode="true">{{info.consignee_name}}&nbsp;&nbsp;<text style="color:#666666;">{{info.consignee_phone}}</text></text>
     </view>
   </view>
 </view>
@@ -36,6 +36,6 @@
 </view>
 
 
-<view class="page_bottom" bindtap="add" hidden="{{totalPrice==0}}">
-  <text style="color:#333333;font-size:16px;font-weight: bolder;">补差价￥{{totalPrice}}</text>
+<view class="page_bottom" bindtap="add" hidden="{{info.payPrice==0}}">
+  <text style="color:#333333;font-size:16px;font-weight: bolder;">补差价￥{{info.payPrice}}</text>
 </view>   
