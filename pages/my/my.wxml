@@ -71,7 +71,7 @@
 
   <view class="button-main">
     <view class="button-left" bindtap="withdraw">提现</view>
-    <view class="button-right" bindtap="detail">明细</view>
+    <view class="button-right" bindtap="toDeal">明细</view>
   </view>
   
 </view>

@@ -67,8 +67,10 @@ Page({
   withdraw:function(){
 
   },
-  detail:function(){
-    
+  toDeal:function(){
+    wx.navigateTo({
+      url: 'deal/deal'
+    })
   }
 
 })
