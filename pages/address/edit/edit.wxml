@@ -1,6 +1,6 @@
 <!--pages/address/edit/edit.wxml-->
 <form bindsubmit="save">
-  <view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;">
+  <view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;margin-bottom:70px;">
     <view class="row">
       <view class="left">收货人</view>
       <input name="name" type="text" placeholder="您的姓名" placeholder-style="color:#999999;font-size:12px;" value="{{address.name}}"/>

@@ -13,19 +13,21 @@
 
 <view class="body">
   <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
-    <view class="list-item {{item.is_extra==0?'':'bottom'}}">
-      <image style="width:66px;height:66px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+    <view class="list-item {{item.is_extra==0?'':'line'}}">
+      <view style="width:66px;height:66px;">
+        <image style="width:66px;height:66px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+      </view>
       <view style="margin-left:14px;width:100%;">
         <view style="display:flex;flex-direction:row;align-items: center;">
           <view style="font-size:14px;color:#333333;margin-right:14px;">{{item.name}}</view>
-            <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+            <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
         </view>
         <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
-        <view><text style="color:#666666;font-size:12px;">单号: {{item.id}}</text></view>
+        <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
       </view>
     </view>
     <view class="extra-list" hidden="{{item.is_extra==0}}">
-      <view class="extra-price {{item.is_extra==2?'':'red'}}" >{{item.msg}}</view>
+      <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
       <view class="extra-pic">
         <view  wx:for="{{item.extraUrl}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
           <image style="width:50px;height:50px;border:1px solid red;margin-right:10px;" src="{{baseUrl}}upload/{{pic}}"></image>
@@ -35,7 +37,53 @@
   </view>
 </view>
 
+<view class="foot">
+  <view style="display: flex; flex-direction: row ; align-items: center;margin-left:10px;margin-right:10px;margin-bottom:10px;">
+    <view style="margin-top:10px;display:flex;"><text>订单号: {{info.o_id}}</text></view>
+    <view style="display:flex;margin-left:auto;margin-right:10px;height:18px;width:40px;border:1px solid #CCCCCC;align-items: center;margin-top:10px;justify-content: center; border-radius: 2px;">复制</view>
+  </view>  
+  <view class="foot-item">支付方式：{{info.payment_channel==1?'微信':(info.payment_channel==2?'支付宝':'我的账户')}}</view>
+  <view class="foot-item">下单时间：{{info.order_time}}</view>
+  <view class="foot-item" hidden="{{info.last_time==null}}">送达时间：{{info.last_time}}</view>
+  <view hidden="{{info.extra_channel==null}}">
+    <view class="foot-item">差价支付方式：{{info.extra_channel==1?'微信':(info.extra_channel==2?'支付宝':'我的账户')}}</view>
+    <view class="foot-item">差价支付金额：￥{{info.extra_payment}}</view>
+  </view>
+  
+</view>
 
-<view class="page_bottom" bindtap="add" hidden="{{info.payPrice==0}}">
-  <text style="color:#333333;font-size:16px;font-weight: bolder;">补差价￥{{info.payPrice}}</text>
+
+<view class="page_bottom" bindtap="showModal" hidden="{{info.payPrice==0 || info.extra_channel!=null}}" >
+  <text style="color:#333333;font-size:16px;">补差价￥{{info.payPrice}}</text>
 </view>   
+
+
+<view class="wrap">
+  <!-- modal  -->
+  <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
+    <view class="modal-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+        <view class="modal-head">选择付款方式</view>
+        <view>
+          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="1">
+            <image src="/image/weixin@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
+            <text style="margin-left:15px;color:#333333;font-size:14px;">微信支付</text>
+            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==0?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+          </view>   
+          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="2">
+            <image src="/image/zhifu_zhifubao@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
+            <text style="margin-left:15px;color:#333333;font-size:14px;">支付宝支付</text>
+            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+          </view> 
+          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="3">
+            <image src="/image/zhifu_yue@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
+            <text style="margin-left:15px;color:#333333;font-size:14px;">账户余额 ￥{{info.accountPrice}}</text>
+            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==2?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+          </view>  
+        </view>
+        <view class="page_bottom" bindtap="payment" >
+          <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.payPrice}}</text>
+        </view>   
+    </view>
+  </view>
+</view>

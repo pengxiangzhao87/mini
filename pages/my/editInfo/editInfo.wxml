@@ -1,6 +1,6 @@
 <!--pages/my/editInfo/editInfo.wxml-->
 
-  <view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;width:100%;">
+  <view style="margin-top:10px;background-color:#FFFFFF;border:none;color:#333333;font-size:14px;width:100%;margin-bottom:65px;">
     <view class="row" style="height:62px;">
       <view class="left" >头像</view>
       <image style="height:42px;width:42px;margin-left:auto;margin-right:15.8px;border-radius: 100px;" src="{{baseUrl}}upload/{{info.u_avatar_url}}" bindtap="chooseImg"></image>
