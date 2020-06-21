@@ -40,6 +40,8 @@
   </view>
 </view>
 
+<view class="floorstatus" hidden="{{floorstatus}}" bindtap="goTop">回到顶部</view>
+
 <view hidden="{{hidden}}" class="baseLine">
   <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
   <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>

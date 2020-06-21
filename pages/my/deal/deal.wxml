@@ -1,7 +1,7 @@
 <!--pages/my/deal/deal.wxml-->
 <view style="background-color:#FFFFFF;margin-top:10px;">
   <view  wx:for="{{dealList}}" wx:for-index="idx" wx:key="ac_id" wx:for-item="item">
-    <view class="list-item" bindtap="toDetail" data-ids="{{item.ids}}">
+    <view class="list-item" bindtap="toDetail" data-oid="{{item.o_id}}" data-direction="{{item.deal_direction}}">
       <view>
         <view style="color:#333333;font-size:16px;">{{item.deal_direction==1?'提现':(item.deal_direction==2?'下单支付':(item.deal_direction==3?'差价支付':'退款'))}}</view>
         <view style="color:#999999;font-size:14px;margin-top:5px;">{{item.create_time}}</view>

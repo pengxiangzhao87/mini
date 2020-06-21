@@ -48,6 +48,12 @@
   </view>
 </view>
 
+<view class="QR-code">
+  <text style="display:flex;color:#333333;font-size:16px;font-weight:bold;">下载app，使用完整版</text>
+  <view style="display:flex;justify-content: center;">
+    <image style="width:200px;height:200px;margin-top:10px;" src="{{baseUrl}}upload/weixin-code.jpg" object-fit="fill"></image>
+  </view>
+</view>
 
 <view class="myAccount">
   <text style="display:flex;color:#333333;font-size:16px;font-weight:bold;">我的账户</text>
@@ -68,7 +74,6 @@
       <view style="display:flex;font-size:12px;color:#333333;width:68px;margin-left:10px;">余额(元)</view>
     </view>
   </view>
-
   <view class="button-main">
     <view class="button-left" bindtap="withdraw">提现</view>
     <view class="button-right" bindtap="toDeal">明细</view>

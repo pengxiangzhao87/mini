@@ -18,6 +18,7 @@ Page({
     paras.page=data.page;
     paras.rows=data.rows;
     paras.userId=4;
+    paras.tId=-1;
     this.queryCommodity(that,paras,baseUrl);
     paras.uId=4;
     paras.isUsed=1;
@@ -35,6 +36,7 @@ Page({
       paras.page=page;
       paras.rows=rows;
       paras.userId=4;
+      paras.tId=-1;
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',

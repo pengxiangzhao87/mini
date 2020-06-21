@@ -2,7 +2,8 @@
 var app = getApp();
 Page({
   data: {
-    searchList:[]
+    searchList:[],
+    name:''
   },
   onLoad:function() {
     this.setData({
@@ -12,14 +13,22 @@ Page({
   toSearch:function(e){
     var that = this;
     var sName = e.detail.value;
-    var searchList=that.data.searchList;
-    searchList.unshift(sName);
-    that.setData({
-      searchList:searchList
-    })
-    app.globalData.searchList=searchList;
+    if(sName!=''){
+      var searchList=that.data.searchList;
+      searchList.unshift(sName);
+      that.setData({
+        searchList:searchList
+      })
+      app.globalData.searchList=searchList;
+    }
     wx.navigateTo({
       url: '../search?sName='+sName
+    })
+  },
+  checkItem:function(e){
+    var name = e.currentTarget.dataset.name;
+    wx.navigateTo({
+      url: '../search?sName='+name
     })
   },
   //清空

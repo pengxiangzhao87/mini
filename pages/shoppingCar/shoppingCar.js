@@ -17,64 +17,86 @@ Page({
     checkNum:0
   },
   onLoad: function(){
-    var that = this;
-    var baseUrl = app.globalData.baseUrl;
-    var paras=[];
-    paras.userId = 1;
-    wx.request({
-      url: baseUrl+"shoppingCart/queryShoppingCartList",
-      method: 'get',
-      data: paras,
-      success(res) {
-        if(res.data.code==200){
-          var list = res.data.data;
-          var totalPrice = parseFloat(0);
-          var checkNum = parseInt(0);
-          var selectedAll = true;
-          var isDelete = false;
-          for(var idx in list){
-            var item = list[idx];
-            if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
-              item.disabled = true;
-            }else{
-              item.disabled = false;
+    // wx.getSetting({
+    //   success: res => {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       console.info('yes')
+          var that = this;
+          var baseUrl = app.globalData.baseUrl;
+          var paras=[];
+          paras.userId = 4;
+          wx.request({
+            url: baseUrl+"shoppingCart/queryShoppingCartList",
+            method: 'get',
+            data: paras,
+            success(res) {
+              if(res.data.code==200){
+                var list = res.data.data;
+                var totalPrice = parseFloat(0);
+                var checkNum = parseInt(0);
+                var selectedAll = true;
+                var isDelete = false;
+                for(var idx in list){
+                  var item = list[idx];
+                  if(item.isDele==1){
+                    if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
+                      item.disabled = true;
+                    }else{
+                      item.disabled = false;
+                    }
+                    if(item.is_check==1){
+                      var sum = item.init_unit==0?item.s_num/50:item.s_num;
+                      totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
+                      ++checkNum;
+                      isDelete = true;
+                    }else{
+                      selectedAll = false;
+                    }
+                  }
+                }
+                var restPrice = parseFloat(that.data.restPrice);
+                if(totalPrice<30 && totalPrice!=0){
+                  restPrice=30-totalPrice;
+                }
+                console.info(list)
+                that.setData({
+                  baseUrl:baseUrl,
+                  shoppingCar:list,
+                  totalPrice:totalPrice.toFixed(2),
+                  restPrice:restPrice.toFixed(2),
+                  checkNum:checkNum,
+                  selectedAll:selectedAll,
+                  isDelete:isDelete
+                })
+              }else{
+                wx.showToast({
+                  title: res.data.msg
+                })
+              }
+            },
+            fail(res) {
+              wx.showToast({
+                title: "服务器异常"
+              })
             }
-            if(item.is_check==1){
-              var sum = item.init_unit==0?item.s_num/50:item.s_num;
-              totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-              ++checkNum;
-              isDelete = true;
-            }else{
-              selectedAll = false;
-            }
-          }
-          var restPrice = parseFloat(that.data.restPrice);
-          if(totalPrice<30 && totalPrice!=0){
-            restPrice=30-totalPrice;
-          }
-          console.info(list)
-          that.setData({
-            baseUrl:baseUrl,
-            shoppingCar:list,
-            totalPrice:totalPrice.toFixed(2),
-            restPrice:restPrice.toFixed(2),
-            checkNum:checkNum,
-            selectedAll:selectedAll,
-            isDelete:isDelete
           })
-        }else{
-          wx.showToast({
-            title: res.data.msg
-          })
-        }
-      },
-      fail(res) {
-        wx.showToast({
-          title: "服务器异常"
-        })
-      }
-    })
+    //     }
+    //   }
+    // })
+    
   },
+  // onShow:function(){
+  //   console.info('show')
+  //   wx.getSetting({
+  //     success: res => {
+  //       if (!res.authSetting['scope.userInfo']) {
+  //         wx.navigateTo({
+  //           url: '/pages/login/login'
+  //         })
+  //       }
+  //     }
+  //   })
+  // },
   closePostage:function(){
     this.setData({
       hidden:true
@@ -214,23 +236,24 @@ Page({
     var id = '';
     for(var idx in list){
       var item = list[idx];
-      id += item.id+',';
-      var isCheck = item.is_check;
-      var itemTotalPrice = parseFloat(item.totalPrice);
-      if(selectedAll){
-        //变更后为：全不选
-        checkNum = isCheck==1?checkNum-1:checkNum;
-        totalPrice = parseFloat(isCheck==1?(totalPrice - itemTotalPrice).toFixed(2):totalPrice);
-        restPrice = parseFloat(totalPrice>30?0:(isCheck==1?(restPrice + itemTotalPrice).toFixed(2):restPrice));
-      }else{
-        //变更后为：全选
-        checkNum = isCheck==0?checkNum+1:checkNum;
-        totalPrice = parseFloat(isCheck==0?(totalPrice + itemTotalPrice).toFixed(2):totalPrice);
-        restPrice = parseFloat(totalPrice>30?0:(isCheck==0?(restPrice - itemTotalPrice).toFixed(2):restPrice));
-        isDelete = true;
+      if(item.isDele==1){
+        id += item.id+',';
+        var isCheck = item.is_check;
+        var itemTotalPrice = parseFloat(item.totalPrice);
+        if(selectedAll){
+          //变更后为：全不选
+          checkNum = isCheck==1?checkNum-1:checkNum;
+          totalPrice = parseFloat(isCheck==1?(totalPrice - itemTotalPrice).toFixed(2):totalPrice);
+          restPrice = parseFloat(totalPrice>30?0:(isCheck==1?(restPrice + itemTotalPrice).toFixed(2):restPrice));
+        }else{
+          //变更后为：全选
+          checkNum = isCheck==0?checkNum+1:checkNum;
+          totalPrice = parseFloat(isCheck==0?(totalPrice + itemTotalPrice).toFixed(2):totalPrice);
+          restPrice = parseFloat(totalPrice>30?0:(isCheck==0?(restPrice - itemTotalPrice).toFixed(2):restPrice));
+          isDelete = true;
+        }
+        item.is_check=isCheck==0?1:0;
       }
-      item.is_check=isCheck==0?1:0;
-      
     }
     var paras = [];
     paras.id=id.substring(0,id.length-1);
@@ -345,5 +368,8 @@ Page({
         url: 'payment/payment?json='+json+'&postage='+postage+'&totalPrice='+that.data.totalPrice
       })
     }
+  },
+  deleteLose:function(){
+
   }
 })

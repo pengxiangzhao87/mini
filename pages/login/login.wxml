@@ -1,0 +1,4 @@
+<!--pages/login/login.wxml-->
+<button open-type="getPhoneNumber">手机号一键登录</button>
+
+<button open-type="getUserInfo" type="primary" data-role="0" style="width:300rpx;padding-left:0;padding-right:0;margin-top:120rpx;border-radius: 50px;" lang="zh_CN" data-role="0" bindgetuserinfo="userEnter">用户登录</button>  

@@ -37,9 +37,15 @@ Page({
     })
   },
   toDetail:function(e){
-    var ids = e.currentTarget.dataset.ids;
-    wx.navigateTo({
-      url: 'detail/detail?ids='+ids
-    })
+    var direction = e.currentTarget.dataset.direction;
+    console.info(direction)
+    if(direction!=1){
+      var oid = e.currentTarget.dataset.oid;
+      
+      console.info(oid)
+      wx.navigateTo({
+        url: '/pages/order/detail/detail?oid='+oid
+      })
+    }
   }
 })

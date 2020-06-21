@@ -24,6 +24,7 @@ Page({
     paras.sName = sName;
     paras.page=that.data.page;
     paras.rows=that.data.rows;
+    paras.tId=-1;
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -102,6 +103,47 @@ Page({
     var sid = e.currentTarget.dataset.sid;
     wx.navigateTo({
       url: '../detail/detail?sid='+sid
+    })
+  },
+  searchName:function(e){
+    var that = this;
+    var sName = e.detail.value;
+    var baseUrl = app.globalData.baseUrl;
+    that.setData({
+      sName:sName,
+      baseUrl:baseUrl
+    })
+    var paras={};
+    paras.userId=4;
+    paras.sName = sName;
+    paras.page=that.data.page;
+    paras.rows=that.data.rows;
+    paras.tId=-1;
+    wx.request({
+      url: baseUrl+"commodity/queryCommodityByPage",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data.list;
+          var totalPage = res.data.data.totalPage;
+          console.info(res)
+          that.setData({
+            commodity:list,
+            totalPage:totalPage
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
     })
   },
   //禁止下拉

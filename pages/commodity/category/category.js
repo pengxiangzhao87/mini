@@ -9,7 +9,8 @@ Page({
     rows:10,
     baseUrl:"",
     totalPage:0,
-    hidden:true
+    hidden:true,
+    floorstatus:true
   },
 
   onLoad:function(e) {
@@ -42,7 +43,6 @@ Page({
               item.selected = false;
             }
           }
-          console.info(list)
           that.setData({
             baseUrl:baseUrl,
             category:list,
@@ -202,14 +202,14 @@ Page({
   },
   // 获取滚动条当前位置
   onPageScroll: function (e) {
-    console.log(e)
-    if (e.scrollTop > 100) {
+    console.info(e)
+    if (e.scrollTop > 800) {
       this.setData({
-        floorstatus: true
+        floorstatus: false
       });
     } else {
       this.setData({
-        floorstatus: false
+        floorstatus: true
       });
     }
   }

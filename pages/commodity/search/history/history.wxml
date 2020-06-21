@@ -2,7 +2,7 @@
 <view class="search">
   <view class="search_arr" style="background-color: #FFFFFF ;" >  
     <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
-    <input style="width:60%;" type="text" placeholder="搜索商品" value="" focus="true" confirm-type="search" bindconfirm="toSearch"/> 
+    <input style="width:60%;" type="text" placeholder="搜索商品" value="{{name}}" focus="true" confirm-type="search" bindconfirm="toSearch"/> 
   </view >  
   <navigator class="cancel" open-type="navigateBack" delta="1">取消</navigator>
 </view>
@@ -12,6 +12,6 @@
 </view>
 <view class="history">
   <view  wx:for="{{searchList}}" wx:for-index="idx" wx:key="idx">
-    <text class="content">{{searchList[idx]}}</text>
+    <text class="content" bindtap="checkItem" data-name="{{searchList[idx]}}">{{searchList[idx]}}</text>
   </view>
 </view>
