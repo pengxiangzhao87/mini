@@ -23,7 +23,7 @@ Page({
         if(res.data.code==200){
           var result = res.data.data;
           var urlList=[];
-          if(result.s_address_video!=''){
+          if(result.s_address_video!='' && result.s_address_video!=undefined){
             urlList.push(result.s_address_video);
             var imgList = result.s_address_img.split('~');
             urlList = urlList.concat(imgList);

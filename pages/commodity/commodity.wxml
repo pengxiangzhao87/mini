@@ -99,3 +99,14 @@
 </view>
  
  
+<view class="wrap">
+  <!-- modal  -->
+  <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
+    <view class="modal-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+      <view class="modal-head">授权登录</view>
+      <button open-type="getPhoneNumber" type="primary" style="margin-top:30px;width:60%;height:35px;display:flex; align-items: center;justify-content: center;font-size:14px; ">微信手机号一键登录</button>
+      <button bindtap="toLogin" type="primary" style="margin-top:30px;width:60%;height:35px;display:flex; align-items: center;justify-content: center;font-size:14px;">使用其他手机号登录</button>
+    </view>
+  </view>
+</view>
