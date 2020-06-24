@@ -6,7 +6,7 @@
   width:100%;
 }
 .search_arr {  
-  border: 1px solid #d0d0d0;  
+
   border-radius: 110rpx;  
   margin-left: 10px;  
   margin-top:10px;
@@ -30,10 +30,11 @@
 
 .cancel{
   color:rgb(92, 91, 91);
-  font-size: 16px;
+  font-size: 14px;
   margin-left:auto;
   margin-right:12px;
   align-items: center;
+  color:#333333;
 }
 
 .title{
@@ -54,7 +55,7 @@
 
 .content{
   color:#666666;
-  font-size:14px;
+  font-size:12px;
   border: 1px solid #DDDDDD;
   background-color: #FFFFFF;
   box-sizing: border-box; 

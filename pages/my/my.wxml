@@ -24,26 +24,26 @@
       <view style="display:flex;justify-content: center;">
         <image style="width:20px;height:20px;" src="/image/daifahuo@3x.png"></image>
       </view>
-      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;">待发货</view>
+      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;margin-top:10px;">待发货</view>
     </view>
     <view style="margin-left:11%;width:36px;" bindtap="toOrder" data-id="2">
       <view style="display:flex;justify-content: center;">
         <image style="width:20px;height:20px;" src="/image/daishouhuo@3x.png"></image>
       </view>
-      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;">待收货</view>
+      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;margin-top:10px;">待收货</view>
     </view>
     <view style="margin-left:11%;width:48px;" bindtap="toOrder" data-id="3">
       <view style="display:flex;justify-content: center;">
         <image style="width:23px;height:19px;" src="/image/my_order@3x.png"></image>
       </view>
-      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;">全部订单</view>
+      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;margin-top:10px;">全部订单</view>
     </view>
     <view style="background-color:#E5E5E5;width:2px; height:62px;margin-left:7%;"></view>
     <view style="margin-left:7%;width:48px;" bindtap="toAddress">
       <view style="display:flex;justify-content: center;">
         <image style="width:16.8px;height:20px;" src="/image/dizhi_mng@3x.png"></image>
       </view>
-      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;">地址管理</view>
+      <view style="color:#333333;font-size:12px;display:flex;justify-content: center;margin-top:10px;">地址管理</view>
     </view>
   </view>
 </view>

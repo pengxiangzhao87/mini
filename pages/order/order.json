@@ -1,5 +1,7 @@
 {
   "component": true,
   "usingComponents": {},
-  "onReachBottomDistance":10
+  "onReachBottomDistance":10,
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTitleText": "订单"
 }

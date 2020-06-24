@@ -7,13 +7,14 @@ Page({
     sName:"",
     commodity:[],
     page:1,
-    rows:6,
+    rows:10,
     totalPage:0,
     hidden:true
   },
   onLoad:function(e){
     var that = this;
     var sName = e.sName; 
+    var inputName = sName.replace(/\s*/g,"");
     var baseUrl = app.globalData.baseUrl;
     that.setData({
       sName:sName,
@@ -21,7 +22,7 @@ Page({
     })
     var paras={};
     paras.userId=4;
-    paras.sName = sName;
+    paras.sName = inputName;
     paras.page=that.data.page;
     paras.rows=that.data.rows;
     paras.tId=-1;
@@ -33,7 +34,6 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
-          console.info(res)
           that.setData({
             commodity:list,
             totalPage:totalPage
@@ -58,14 +58,16 @@ Page({
     var page = that.data.page+1;
     var rows = that.data.rows;
     var sName = that.data.sName;
+    var inputName = sName.replace(/\s*/g,"");
     var totalPage = that.data.totalPage;
     var baseUrl = that.data.baseUrl;
     if(totalPage>=page){
       var paras={};
       paras.userId=4;
-      paras.sName = sName;
+      paras.sName = inputName;
       paras.page=page;
       paras.rows=rows;
+      paras.tId=-1;
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',
@@ -74,7 +76,6 @@ Page({
           if(res.data.code==200){
             var list = res.data.data.list;
             var result = that.data.commodity.concat(list);
-            console.info(res)
             that.setData({
               commodity:result,
               page:page
@@ -108,6 +109,7 @@ Page({
   searchName:function(e){
     var that = this;
     var sName = e.detail.value;
+    var inputName = sName.replace(/\s*/g,"");
     var baseUrl = app.globalData.baseUrl;
     that.setData({
       sName:sName,
@@ -115,7 +117,7 @@ Page({
     })
     var paras={};
     paras.userId=4;
-    paras.sName = sName;
+    paras.sName = inputName;
     paras.page=that.data.page;
     paras.rows=that.data.rows;
     paras.tId=-1;
@@ -127,11 +129,25 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
-          console.info(res)
           that.setData({
             commodity:list,
             totalPage:totalPage
           })
+          if(inputName!=''){
+            var searchList=app.globalData.searchList;
+            var can = true;
+            for(var idx in searchList){
+              var item = searchList[idx];
+              if(item==inputName){
+                can = false;
+              }
+            }
+            if(can){
+              searchList.unshift(inputName);
+              app.globalData.searchList=searchList;
+            }
+            
+          }
         }else{
           wx.showToast({
             title: res.data.msg

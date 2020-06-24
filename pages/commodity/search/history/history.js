@@ -6,6 +6,9 @@ Page({
     name:''
   },
   onLoad:function() {
+    
+  },
+  onShow:function(){
     this.setData({
       searchList:app.globalData.searchList
     })
@@ -13,13 +16,21 @@ Page({
   toSearch:function(e){
     var that = this;
     var sName = e.detail.value;
-    if(sName!=''){
+    var inputName = sName.replace(/\s*/g,"");
+    if(inputName!=''){
       var searchList=that.data.searchList;
-      searchList.unshift(sName);
-      that.setData({
-        searchList:searchList
-      })
-      app.globalData.searchList=searchList;
+      var can = true;
+      for(var idx in searchList){
+        var item = searchList[idx];
+        if(item==inputName){
+          can = false;
+        }
+      }
+      if(can){
+        searchList.unshift(inputName);
+        app.globalData.searchList=searchList;
+      }
+      
     }
     wx.navigateTo({
       url: '../search?sName='+sName

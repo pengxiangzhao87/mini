@@ -19,7 +19,6 @@
   border-bottom: 2px solid #FFD52E ;
 }
 
-
 .hotGoods{
   display: flex;  
   flex-direction: row  ;
@@ -27,8 +26,8 @@
 
 .goods{
   border-radius: 5px;  
-  width:45%;
-  height:270px;
+  width:48%;
+  height:260px;
   display:-webkit-box;
   -webkit-line-clamp:1;
   overflow:hidden;
@@ -36,8 +35,8 @@
   -webkit-box-orient:vertical;
   word-break:break-all;
   box-shadow: 0rpx 10rpx 50rpx 10rpx rgba(73, 73, 73, 0.1);
-  margin-top:10px;
-  margin-left:3%;
+  margin-top:5px;
+  margin-left:5px;
 }
 
 .img-wapper{

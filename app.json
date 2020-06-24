@@ -1,8 +1,18 @@
 {
   "pages":[
     "pages/commodity/commodity",
+    "pages/commodity/category/category",
+    "pages/commodity/search/search",
+    "pages/commodity/search/history/history",
     "pages/my/my",
-    "pages/shoppingCar/shoppingCar"
+    "pages/shoppingCar/shoppingCar",
+    "pages/shoppingCar/payment/payment",
+    "pages/commodity/detail/detail",
+    "pages/order/order",
+    "pages/order/detail/detail",
+    "pages/address/address",
+    "pages/address/edit/edit",
+    "pages/my/deal/deal"
    
   ],
   "window":{

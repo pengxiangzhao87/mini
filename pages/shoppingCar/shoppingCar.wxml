@@ -3,13 +3,11 @@
   <view style="font-weight: bolder;font-size:18px;color:#333333;margin-left:10px;">购物车</view>
   <view style="font-size:16px;color:#666666;margin-right:10px;margin-left:auto;" bindtap="deleteFn">删除</view>
 </view> 
-
-<view class="postage" hidden="{{hidden}}">
-  <view style="margin-left:30%;">配送费4元，满30元免配送费</view>
-  <image bindtap="closePostage"  src="/image/gouwuche_delete@3x.png" style="width:10px;height:10px;margin-right:10px;margin-left:auto;"></image>
-</view>
-
-<view style="padding-top:10px;">
+<view style="padding-top:5px;">
+  <view class="postage" hidden="{{hidden}}">
+    <view style="margin-left:30%;">配送费4元，满30元免配送费</view>
+    <image bindtap="closePostage"  src="/image/gouwuche_delete@3x.png" style="width:10px;height:10px;margin-right:10px;margin-left:auto;"></image>
+  </view>
   <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
     <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
       <view style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
@@ -29,7 +27,7 @@
             <view style="color:#333333;font-size:14px;">{{item.s_name}}</view>
             <view style="margin-right:10px;margin-left:auto;color:#666666;font-size:12px;">{{item.sell}}</view>
           </view>
-          <view><text style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</text><text style="color:#666666;font-size:14px;"> /{{item.s_num}}{{detail.init_unit==0?'g':'个'}}</text></view>
+          <view style="margin-top:5px;"><text style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</text><text style="color:#666666;font-size:14px;"> /{{item.s_num}}{{detail.init_unit==0?'g':'个'}}</text></view>
           <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
             <view class="btn {{item.disabled?'btn_disabled':''}}" hover-class="afterbtn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
             <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
@@ -49,9 +47,12 @@
     </view>
   </view>
 </view>
-<view style="display:flex;width:100%;align-items: center;justify-content: center;" bindtap="deleteLose">
-  <view style="display:flex;background-color: #FFFFFF ;border-radius: 100px; align-items: center;justify-content: center;width:130px;height:30px;font-size:14px;color:#999999">删除失效商品</view>
+<view hidden="{{hideLose}}">
+  <view style="display:flex;width:100%;align-items: center;justify-content: center;" bindtap="deleteLose">
+    <view style="display:flex;background-color: #FFFFFF ;border-radius: 100px; align-items: center;justify-content: center;width:130px;height:30px;font-size:14px;color:#999999">删除失效商品</view>
+  </view>
 </view>
+
 
 <view class="page_bottom" >
   <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>

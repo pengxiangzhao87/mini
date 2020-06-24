@@ -55,7 +55,7 @@ page{
   align-items: center;
   flex-direction: row  ;
   height:94px;
-  margin:0px 10px 10px 10px;
+  margin:0px 5px 5px 5px;
   border-radius: 4px;  
   background-color: #FFFFFF ;
  

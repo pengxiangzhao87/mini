@@ -1,5 +1,6 @@
 {
   "component": true,
   "usingComponents": {},
-  "navigationBarBackgroundColor": "#FFFFFF"
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTitleText": "结算"
 }

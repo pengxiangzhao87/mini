@@ -121,7 +121,13 @@ Page({
       data: json,
       success(res) {
         if(res.data.code==200){
-           
+          detail.carSum = detail.carSum+1;
+          wx.showToast({
+            title: '添加成功'
+          })
+          that.setData({
+            detail:detail
+          })
         }else{
           wx.showToast({
             title: "服务器异常"
