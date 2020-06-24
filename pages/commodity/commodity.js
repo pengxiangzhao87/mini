@@ -83,7 +83,7 @@ Page({
           that.setData({
             baseUrl:baseUrl,
             commodity:list,
-            totalPage:totalPage
+            totalPage:totalPage,
           })
         }else{
           wx.showToast({
