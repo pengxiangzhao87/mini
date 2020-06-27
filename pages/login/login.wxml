@@ -3,7 +3,7 @@
 <form >
   <view class="body">
     <view class="class-row">
-      <input placeholder="请输入手机号" placeholder-style="color:#999999;font-size:12px;" type="text" style="margin-left:10px;width:100%;"></input>
+      <input bindinput="getPhone" placeholder="请输入手机号" type="number" confirm-type="done" maxlength="11" placeholder-style="color:#999999;font-size:12px;" type="text" style="margin-left:10px;width:100%;"></input>
     </view>
     <view class="class-row">
       <input placeholder="请输入验证码" placeholder-style="color:#999999;font-size:12px;" type="text" style="margin-left:10px;width:100%;margin-right:5px;"></input>

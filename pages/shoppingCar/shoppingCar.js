@@ -23,7 +23,14 @@ Page({
     //   success: res => {
     //     if (res.authSetting['scope.userInfo']) {
     //       console.info('yes')
-          var that = this;
+          
+    //     }
+    //   }
+    // })
+    
+  },
+  onShow:function(){
+    var that = this;
           var baseUrl = app.globalData.baseUrl;
           var paras=[];
           paras.userId = 4;
@@ -85,23 +92,7 @@ Page({
               })
             }
           })
-    //     }
-    //   }
-    // })
-    
   },
-  // onShow:function(){
-  //   console.info('show')
-  //   wx.getSetting({
-  //     success: res => {
-  //       if (!res.authSetting['scope.userInfo']) {
-  //         wx.navigateTo({
-  //           url: '/pages/login/login'
-  //         })
-  //       }
-  //     }
-  //   })
-  // },
   closePostage:function(){
     this.setData({
       hidden:true

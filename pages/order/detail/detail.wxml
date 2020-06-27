@@ -15,7 +15,7 @@
   <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
     <view class="list-item {{item.is_extra==0?'':'line'}}">
       <view style="width:66px;height:66px;">
-        <image style="width:66px;height:66px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+        <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
       </view>
       <view style="margin-left:14px;width:100%;">
         <view style="display:flex;flex-direction:row;align-items: center;">
@@ -30,7 +30,7 @@
       <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
       <view class="extra-pic">
         <view  wx:for="{{item.extraUrl}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
-          <image style="width:50px;height:50px;border:1px solid red;margin-right:10px;" src="{{baseUrl}}upload/{{pic}}"></image>
+          <image style="width:50px;height:50px;margin-right:10px;" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
         </view>
       </view>
     </view>

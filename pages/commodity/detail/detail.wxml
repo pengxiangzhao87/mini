@@ -7,7 +7,7 @@
         <video style="width:100%;height:100%;" src="{{baseUrl}}upload/{{item}}" muted="true" show-mute-btn="true" autoplay="false" loop="true" object-fit="fill"></video>
       </block>
       <block wx:elif="{{detail.isVideo==0 || idex!=0}}">
-        <image style="height: 100%;width:100%;" src='{{baseUrl}}upload/{{item}}' mode='scaleToFill'></image> 
+        <image style="height: 100%;width:100%;" src='{{baseUrl}}upload/{{item}}' mode="aspectFit"></image> 
       </block>  
     </swiper-item>
   </block>
