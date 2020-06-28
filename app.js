@@ -2,7 +2,8 @@
 App({
   globalData:{
     baseUrl:"http://192.168.1.142:9000/CMTGP/",
-    searchList:['橘子','苹果','火龙果','榴莲','西红柿','昌平桃子','大西瓜','香蕉']
+    //baseUrl:"http://47.104.197.255:8080/CMTGP/",
+    searchList:[]
   },
   onLaunch: function () {
     // 登录

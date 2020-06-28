@@ -20,7 +20,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           that.setData({
@@ -52,7 +51,6 @@ Page({
               method: 'get',
               data: paras,
               success(res) {
-                console.info(res)
                 if(res.data.code==200){
                   that.onLoad();
                 }
@@ -122,5 +120,53 @@ Page({
     this.setData({
       method:method
     })
+  },
+  copy:function(e){
+    var oid = e.currentTarget.dataset.oid+'';
+    wx.setClipboardData({
+      data: oid,
+      success (res) {}
+    })
+  },
+  //二次支付
+  payment:function(){
+    var that = this;
+    var method = that.data.method;
+    var info = that.data.info;
+    if(method==3 && info.payPrice>info.accountPrice){
+      return;
+    }else{
+      var baseUrl = that.data.baseUrl;
+      var info = that.data.info;
+      var orderBasic = {};
+      orderBasic.oId = info.o_id
+      orderBasic.extra_payment = info.payPrice;
+      orderBasic.extra_status=1;
+      orderBasic.extra_channel=method;
+      wx.request({
+        url: baseUrl+"order/extraOrder",
+        method: 'post',
+        data: orderBasic,
+        success(res) {
+          if(res.data.code==200){
+            that.hideModal();
+            wx.showToast({
+              title: '支付成功',
+              success:function(){ }
+            })
+            that.onLoad();
+          }else{
+            wx.showToast({
+              title: res.data.msg
+            })
+          }
+        },fail(res){
+          wx.showToast({
+            icon:'none',
+            title: '服务器异常'
+          })
+        }
+      })
+    }
   }
 })

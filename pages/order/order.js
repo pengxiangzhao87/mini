@@ -28,7 +28,7 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.userId=1;
+    paras.userId=4;
     paras.page=1;
     paras.rows=that.data.rows;
     if(id==1){
@@ -48,7 +48,6 @@ Page({
             var item = data[idx];
             item.imgUrl = item.imgUrl.split('~');
           }
-          console.info(data)
           if(id==1){
             that.setData({
               baseUrl:baseUrl,
@@ -101,7 +100,7 @@ Page({
       var page = that.data.allPage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=1;
+      paras.userId=4;
       paras.page=page;
       paras.rows=rows;
       wx.request({
@@ -153,7 +152,7 @@ Page({
       var page = that.data.sendPage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=1;
+      paras.userId=4;
       paras.page=page;
       paras.rows=rows;
       paras.status=1;
@@ -206,7 +205,7 @@ Page({
       var page = that.data.takePage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=1;
+      paras.userId=4;
       paras.page=page;
       paras.rows=rows;
       paras.status=2;
@@ -275,7 +274,7 @@ Page({
     var baseUrl = app.globalData.baseUrl;
     var rows = that.data.rows;
     var paras={};
-    paras.userId=1;
+    paras.userId=4;
     paras.page=page;
     paras.rows=rows;
     if(that.data.sendOrder){

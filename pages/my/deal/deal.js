@@ -11,14 +11,13 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras = {};
-    paras.uId=1;
+    paras.uId=4;
     wx.request({
       url: baseUrl+"user/queryAccountDetail",
       method: 'get',
       data: paras,
       success(res) {
         if(res.data.code==200){
- 
           that.setData({
             baseUrl:baseUrl,
             dealList:res.data.data
@@ -41,8 +40,6 @@ Page({
     console.info(direction)
     if(direction!=1){
       var oid = e.currentTarget.dataset.oid;
-      
-      console.info(oid)
       wx.navigateTo({
         url: '/pages/order/detail/detail?oid='+oid
       })

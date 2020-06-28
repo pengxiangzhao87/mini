@@ -13,7 +13,7 @@ Page({
     var that =  this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.uId=1;
+    paras.uId=4;
     wx.request({
       url: baseUrl+"user/queryAddressList",
       method: 'get',
@@ -52,7 +52,7 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var paras={};
-    paras.uId=1;
+    paras.uId=4;
     paras.aId=aId;
     wx.request({
       url: baseUrl+"user/checkAddress",
@@ -104,7 +104,7 @@ Page({
   add:function(){
     var address = {};
     address.isUsed=0;
-    address.uId=1;
+    address.uId=4;
     wx.navigateTo({
       url: 'edit/edit?flag=0&json='+JSON.stringify(address)
     })

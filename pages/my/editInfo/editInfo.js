@@ -23,7 +23,6 @@ Page({
        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
        success: function (res) {
         var tempFilePaths = res.tempFilePaths;
-        console.info(tempFilePaths)
         wx.showToast({
           icon: "loading",
           title: "正在上传"
@@ -32,7 +31,7 @@ Page({
           url: baseUrl+"user/uploadAvatar",
           filePath: tempFilePaths[0], 
           name: 'file',
-          formData:{'uId':1},
+          formData:{'uId':4},
           success:function(res){
             var data = JSON.parse(res.data);
             if(data.code==200){

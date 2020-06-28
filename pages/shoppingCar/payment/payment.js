@@ -38,13 +38,14 @@ Page({
       if(now.getTime()<startTime.getTime()){
         now = startTime;
       }
-      var startDate = this.getDateRange(now);
+      var prDate = now.getFullYear()+'-'+month+'-'+day;
+      var startDate = this.getDateRange(now,prDate);
       var endDate = new Date(startDate.getTime()+1000*60*30);
       dateRange = '今天 '+startDate.getHours()+':'+(startDate.getMinutes()==0?'00':startDate.getMinutes())+' - '+endDate.getHours()+':'+(endDate.getMinutes()==0?'00':endDate.getMinutes());
     }
     
     var paras={};
-    paras.uId=1;
+    paras.uId=4;
     paras.isUsed=1;
     wx.request({
       url: baseUrl+"user/queryAddressList",
@@ -82,7 +83,7 @@ Page({
     if(that.data.nextFlag==1){
       var baseUrl = that.data.baseUrl;
       var paras={};
-      paras.uId=1;
+      paras.uId=4;
       paras.isUsed=1;
       wx.request({
         url: baseUrl+"user/queryAddressList",
@@ -107,7 +108,7 @@ Page({
       })
     }
   },
-  getDateRange:function(now){
+  getDateRange:function(now,prDate){
     var time = now.getTime() + 1000*60*15;
     var afterDate = new Date(time);
     var afterHour = afterDate.getHours();
@@ -122,12 +123,15 @@ Page({
     }else if(afterMinute>=50 || afterMinute<5){
       endMinute = '00';
     }
-    return new Date(afterDate.getFullYear()+'-'+afterDate.getMonth()+'-'+afterDate.getDay()+' '+afterHour+':'+endMinute);
+    return new Date(prDate+' '+afterHour+':'+endMinute);
 
   },
   getRangeList:function(now){
     var rangeList=[];
-    var startDate = this.getDateRange(now);
+    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+    var prDate = now.getFullYear()+'-'+month+'-'+day;
+    var startDate = this.getDateRange(now,prDate);
     for(var i=0;i<100;){
       var endDate = new Date(startDate.getTime()+1000*60*30);
       var dateRange = startDate.getHours()+':'+(startDate.getMinutes()==0?'00':startDate.getMinutes())+' - '+endDate.getHours()+':'+(endDate.getMinutes()==0?'00':endDate.getMinutes());
@@ -146,8 +150,6 @@ Page({
       url: '/pages/address/address'
     })
   },
-
-
 
   // 显示遮罩层
   showModal: function () {
@@ -244,6 +246,60 @@ Page({
   },
   //下单 TODO
   toPayment:function(){
-    
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var list = that.data.detailList;
+    var allPrice = that.data.allPrice;
+    var address = that.data.address;
+    var postage = that.data.postage;
+    var dateRange = that.data.dateRange;
+    var today = that.data.today;
+    var now = new Date();
+    if(today==1){
+      now.setTime(now.getTime()+24*60*60*1000);
+    }
+    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+    var range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange;
+    var data = {};
+    data.rangeTime = range;
+    data.uId=4;
+    data.totalPrice = allPrice;
+    data.name = address.name;
+    data.phone = address.phone;
+    data.address = address.aCity;
+    data.status = 1;
+    data.channel = 1;
+    data.postCost = postage;
+    data.details = list;
+    wx.request({
+      url: baseUrl+"order/addOrder",
+      method: 'post',
+      data: data,
+      success(res) {
+        if(res.data.code==200){
+          wx.showToast({
+            title: '下单成功',
+            success:function(){
+              //延时2秒
+              setTimeout(function () {
+                wx.redirectTo({
+                  url: '/pages/order/order?id=1',
+                })
+              }, 1000);
+            }
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg
+          })
+        }
+      },fail(res){
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
   }
 })

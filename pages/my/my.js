@@ -10,7 +10,7 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.uId=2;
+    paras.uId=4;
     wx.request({
       url: baseUrl+"user/queryMyInfo",
       method: 'get',
@@ -18,10 +18,9 @@ Page({
       success(res) {
         if(res.data.code==200){
           var myInfo = res.data.data;
-          if(myInfo.imgUrl!=''){
+          if(myInfo.imgUrl!='' && myInfo.imgUrl!=undefined){
             myInfo.imgList = myInfo.imgUrl.split('~');
           }
-          console.info(myInfo)
           that.setData({
             baseUrl:baseUrl,
             myInfo:myInfo

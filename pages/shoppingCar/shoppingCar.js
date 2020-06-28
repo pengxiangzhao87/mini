@@ -31,67 +31,67 @@ Page({
   },
   onShow:function(){
     var that = this;
-          var baseUrl = app.globalData.baseUrl;
-          var paras=[];
-          paras.userId = 4;
-          wx.request({
-            url: baseUrl+"shoppingCart/queryShoppingCartList",
-            method: 'get',
-            data: paras,
-            success(res) {
-              if(res.data.code==200){
-                var list = res.data.data;
-                var totalPrice = parseFloat(0);
-                var checkNum = parseInt(0);
-                var selectedAll = true;
-                var isDelete = false;
-                var hideLose = true;
-                for(var idx in list){
-                  var item = list[idx];
-                  if(item.isDele==1){
-                    if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
-                      item.disabled = true;
-                    }else{
-                      item.disabled = false;
-                    }
-                    if(item.is_check==1){
-                      var sum = item.init_unit==0?item.s_num/50:item.s_num;
-                      totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-                      ++checkNum;
-                      isDelete = true;
-                    }else{
-                      selectedAll = false;
-                    }
-                  }else{
-                    hideLose = false;
-                  }
-                }
-                var restPrice = parseFloat(that.data.restPrice);
-                if(totalPrice<30 && totalPrice!=0){
-                  restPrice=30-totalPrice;
-                }
-                that.setData({
-                  baseUrl:baseUrl,
-                  shoppingCar:list,
-                  totalPrice:totalPrice.toFixed(2),
-                  restPrice:restPrice.toFixed(2),
-                  checkNum:checkNum,
-                  selectedAll:selectedAll,
-                  isDelete:isDelete,
-                  hideLose:hideLose
-                })
+    var baseUrl = app.globalData.baseUrl;
+    var paras=[];
+    paras.userId = 4;
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data;
+          var totalPrice = parseFloat(0);
+          var checkNum = parseInt(0);
+          var selectedAll = true;
+          var isDelete = false;
+          var hideLose = true;
+          for(var idx in list){
+            var item = list[idx];
+            if(item.isDele==1){
+              if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
+                item.disabled = true;
               }else{
-                wx.showToast({
-                  title: res.data.msg
-                })
+                item.disabled = false;
               }
-            },
-            fail(res) {
-              wx.showToast({
-                title: "服务器异常"
-              })
+              if(item.is_check==1){
+                var sum = item.init_unit==0?item.s_num/50:item.s_num;
+                totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
+                ++checkNum;
+                isDelete = true;
+              }else{
+                selectedAll = false;
+              }
+            }else{
+              hideLose = false;
             }
+          }
+          var restPrice = parseFloat(30);
+          if(totalPrice<30 && totalPrice!=0){
+            restPrice=restPrice-totalPrice;
+          }
+          that.setData({
+            baseUrl:baseUrl,
+            shoppingCar:list,
+            totalPrice:totalPrice.toFixed(2),
+            restPrice:restPrice.toFixed(2),
+            checkNum:checkNum,
+            selectedAll:selectedAll,
+            isDelete:isDelete,
+            hideLose:hideLose
           })
+        }else{
+          wx.showToast({
+            title: res.data.msg
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          title: "服务器异常"
+        })
+      }
+    })
   },
   closePostage:function(){
     this.setData({
@@ -315,7 +315,7 @@ Page({
                   wx.showToast({
                     title: '删除成功'
                   })
-                  that.onLoad();
+                  that.onShow();
                 }else{
                   wx.showToast({
                     title: res.data.msg
@@ -370,6 +370,7 @@ Page({
   },
   deleteLose:function(){
     var that = this;
+    var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
     var ids = '';
     for(var idx in list){
@@ -386,6 +387,7 @@ Page({
         method: 'get',
         data: paras,
         success(res) {
+          that.onShow();
         },fail(res){
           wx.showToast({
             icon:'none',
