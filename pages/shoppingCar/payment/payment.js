@@ -247,6 +247,14 @@ Page({
   //下单 TODO
   toPayment:function(){
     var that = this;
+    var dateRange = that.data.dateRange;
+    if(dateRange=='选择时间'){
+      wx.showToast({
+        title: '请选择送达时间',
+        icon:'none'
+      })
+      return;
+    }
     var baseUrl = that.data.baseUrl;
     var list = that.data.detailList;
     var allPrice = that.data.allPrice;

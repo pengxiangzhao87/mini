@@ -227,6 +227,9 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
+    if(list.length==0){
+      return;
+    }
     var checkNum = that.data.checkNum;
     var totalPrice = parseFloat(that.data.totalPrice);
     var restPrice = parseFloat(that.data.restPrice);

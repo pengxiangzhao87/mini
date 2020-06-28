@@ -65,6 +65,7 @@ page{
   display: flex;  
   align-items: center;
   flex-direction: row  ;
+  margin-top:0px;
 }
 
 .page_bottom{
