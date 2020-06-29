@@ -96,9 +96,23 @@ page{
   font-size:12px;
 }
 .foot-item{
-  display: flex;
-  margin-bottom:12px;
+  display: flex; 
+  flex-direction: row ; 
+  align-items: center;
   margin-left:10px;
+  margin-right:10px;
+  margin-bottom:10px;
+}
+
+.foot-item-left{
+  display:flex;
+}
+
+.foot-item-right{
+  display:flex;
+  margin-left:auto;
+  margin-right:10px;
+  align-items: center;
 }
 
 .page_bottom{

@@ -14,7 +14,9 @@ Page({
     today:0,
     todayHide:false,
     hideFlag: true,//true-隐藏  false-显示
-    animationData: {}
+    animationData: {},
+    method:1,
+    accountPrice:0
   },
   onLoad:function(e) {
     var that = this;
@@ -43,7 +45,6 @@ Page({
       var endDate = new Date(startDate.getTime()+1000*60*30);
       dateRange = '今天 '+startDate.getHours()+':'+(startDate.getMinutes()==0?'00':startDate.getMinutes())+' - '+endDate.getHours()+':'+(endDate.getMinutes()==0?'00':endDate.getMinutes());
     }
-    
     var paras={};
     paras.uId=4;
     paras.isUsed=1;
@@ -59,10 +60,32 @@ Page({
             baseUrl:baseUrl,
             postage:postage,
             totalPrice:totalPrice,
-            allPrice:postage==1?parseFloat(totalPrice)+parseInt(4):totalPrice,
+            allPrice:postage==1?(parseFloat(totalPrice)+4).toFixed(2):totalPrice,
             address:res.data.data[0],
             todayHide:todayHide,
             today:today
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg
+          })
+        }
+      },fail(res){
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
+    wx.request({
+      url: baseUrl+"user/queryAccount",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          console.info(res)
+          that.setData({
+            accountPrice:res.data.data
           })
         }else{
           wx.showToast({
@@ -244,6 +267,12 @@ Page({
     })
     that.hideModal();
   },
+  chechMethod:function(e){
+    var method = e.currentTarget.dataset.method;
+    this.setData({
+      method:method
+    })
+  },
   //下单 TODO
   toPayment:function(){
     var that = this;
@@ -255,9 +284,14 @@ Page({
       })
       return;
     }
+    var allPrice = that.data.allPrice;
+    var method = that.data.method;
+    var accountPrice = that.data.accountPrice;
+    if(method==3 && allPrice>accountPrice){
+      return;
+    }
     var baseUrl = that.data.baseUrl;
     var list = that.data.detailList;
-    var allPrice = that.data.allPrice;
     var address = that.data.address;
     var postage = that.data.postage;
     var dateRange = that.data.dateRange;
@@ -268,7 +302,7 @@ Page({
     }
     var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
     var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-    var range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange;
+    var range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
     var data = {};
     data.rangeTime = range;
     data.uId=4;
@@ -277,7 +311,7 @@ Page({
     data.phone = address.phone;
     data.address = address.aCity;
     data.status = 1;
-    data.channel = 1;
+    data.channel = method;
     data.postCost = postage;
     data.details = list;
     wx.request({

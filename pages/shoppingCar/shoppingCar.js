@@ -365,7 +365,6 @@ Page({
       if(restPrice==0 || restPrice==30){
         postage = 0;
       }
-
       wx.navigateTo({
         url: 'payment/payment?json='+json+'&postage='+postage+'&totalPrice='+that.data.totalPrice
       })

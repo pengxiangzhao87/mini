@@ -38,24 +38,64 @@
 </view>
 
 <view class="foot">
-  <view style="display: flex; flex-direction: row ; align-items: center;margin-left:10px;margin-right:10px;margin-bottom:10px;">
-    <view style="margin-top:10px;display:flex;"><text>订单号: {{info.o_id}}</text></view>
-    <view style="display:flex;margin-left:auto;margin-right:10px;height:18px;width:40px;border:1px solid #CCCCCC;align-items: center;margin-top:10px;justify-content: center; border-radius: 2px;" bindtap="copy" data-oid="{{info.o_id}}">复制</view>
+  <view class="foot-item">
+    <view class="foot-item-left" style="margin-top:10px;">订单号</view>
+    <view class="foot-item-right" style="margin-top:10px;"><text decode="true">{{info.o_id}}&nbsp;</text><text bindtap="copy" data-oid="{{info.o_id}}" style="color:#FFD52E;">复制</text></view>
   </view>  
-  <view class="foot-item">支付方式：{{info.payment_channel==1?'微信':(info.payment_channel==2?'支付宝':'我的账户')}}</view>
-  <view class="foot-item">下单时间：{{info.order_time}}</view>
-  <view class="foot-item" hidden="{{info.last_time==null}}">送达时间：{{info.last_time}}</view>
+  <view class="foot-item">
+    <view class="foot-item-left">支付方式</view>
+    <view class="foot-item-right">{{info.payment_channel==1?'微信':(info.payment_channel==2?'支付宝':'我的账户')}}</view>
+  </view>
+  <view class="foot-item">
+    <view class="foot-item-left">支付金额</view>
+    <view class="foot-item-right">￥{{info.total_price}}</view>
+  </view>
+  <view class="foot-item">
+    <view class="foot-item-left">下单时间</view>
+    <view class="foot-item-right">{{info.order_time}}</view>
+  </view>
+  <view class="foot-item" hidden="{{info.last_time==null}}">
+    <view class="foot-item-left">送达时间</view>
+    <view class="foot-item-right">{{info.last_time}}</view>
+  </view>
   <view hidden="{{info.extra_channel==null}}">
-    <view class="foot-item">差价支付方式：{{info.extra_channel==1?'微信':(info.extra_channel==2?'支付宝':'我的账户')}}</view>
-    <view class="foot-item">差价支付金额：￥{{info.extra_payment}}</view>
-    <view class="foot-item">差价支付时间：{{info.extra_time}}</view>
+    <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;margin-bottom:10px;"></view>
+    <view class="foot-item">
+      <view class="foot-item-left">差价支付方式</view>
+      <view class="foot-item-right">{{info.extra_channel==1?'微信':(info.extra_channel==2?'支付宝':'我的账户')}}</view>
+    </view>
+    <view class="foot-item">
+      <view class="foot-item-left">差价支付金额</view>
+      <view class="foot-item-right">￥{{info.extra_payment}}</view>
+    </view>
+    <view class="foot-item">
+      <view class="foot-item-left">差价支付时间</view>
+      <view class="foot-item-right">{{info.extra_time}}</view>
+    </view>
+  </view>
+  <view hidden="{{deal.length==0}}">
+  <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;margin-bottom:10px;"></view>
+    <view  wx:for="{{deal}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
+      <view class="foot-item">
+        <view class="foot-item-left">退款</view>
+        <view class="foot-item-right">我的账户</view>
+      </view>
+      <view class="foot-item">
+        <view class="foot-item-left">退款金额</view>
+        <view class="foot-item-right">￥{{item.deal_price}}</view>
+      </view>
+      <view class="foot-item">
+        <view class="foot-item-left">到账时间</view>
+        <view class="foot-item-right">{{item.createTime}}</view>
+      </view>
+    </view>
   </view>
   
 </view>
 
 
-<view class="page_bottom" bindtap="showModal" hidden="{{info.payPrice==0 || info.extra_channel!=null}}" >
-  <text style="color:#333333;font-size:16px;">补差价￥{{info.payPrice}}</text>
+<view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
+  <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
 </view>   
 
 
@@ -64,7 +104,7 @@
   <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
     <view class="modal-cancel" bindtap="hideModal"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
-        <view class="modal-head">选择付款方式</view>
+        <view class="modal-head">支付方式</view>
         <view style="margin-top:15px;">
           <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="1">
             <image src="/image/weixin@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
@@ -83,7 +123,7 @@
           </view>  
         </view>
         <view class="page_bottom {{method==3 && info.payPrice>info.accountPrice?'gray':''}}" bindtap="payment" >
-          <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.payPrice}}</text>
+          <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.extraPrice}}</text>
         </view>   
     </view>
   </view>

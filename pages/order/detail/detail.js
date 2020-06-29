@@ -5,6 +5,7 @@ Page({
     baseUrl:'',
     detailList:[],
     info:{},
+    deal:[],
     oid:0,
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
@@ -26,6 +27,7 @@ Page({
             detailList:detailList,
             info:res.data.data.info,
             baseUrl:baseUrl,
+            deal:res.data.data.deal,
             oid:e==undefined?that.data.oid:e.oid
           })
         }
@@ -133,14 +135,15 @@ Page({
     var that = this;
     var method = that.data.method;
     var info = that.data.info;
-    if(method==3 && info.payPrice>info.accountPrice){
+    if(method==3 && info.extraPrice>info.accountPrice){
       return;
     }else{
       var baseUrl = that.data.baseUrl;
       var info = that.data.info;
       var orderBasic = {};
       orderBasic.oId = info.o_id
-      orderBasic.extra_payment = info.payPrice;
+      orderBasic.uid = 4;
+      orderBasic.extra_payment = info.extraPrice;
       orderBasic.extra_status=1;
       orderBasic.extra_channel=method;
       wx.request({
