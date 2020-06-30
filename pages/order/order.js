@@ -123,6 +123,7 @@ Page({
       paras.userId=4;
       paras.page=page;
       paras.rows=rows;
+      paras.status=-1;
       wx.request({
         url: baseUrl+"order/queryOrderBasicByPage",
         method: 'get',

@@ -285,6 +285,7 @@ Page({
       return;
     }
     var allPrice = that.data.allPrice;
+    var totalPrice = that.data.totalPrice;
     var method = that.data.method;
     var accountPrice = that.data.accountPrice;
     if(method==3 && allPrice>accountPrice){
@@ -306,7 +307,7 @@ Page({
     var data = {};
     data.rangeTime = range;
     data.uId=4;
-    data.totalPrice = allPrice;
+    data.totalPrice = postage==0?allPrice:totalPrice;
     data.name = address.name;
     data.phone = address.phone;
     data.address = address.aCity;

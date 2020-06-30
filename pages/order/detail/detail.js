@@ -12,12 +12,17 @@ Page({
     status:1,
     method:1
   },
-  onLoad:function(e) {
+  onLoad:function(e){
+    this.setData({
+      oid:e.oid,
+      baseUrl:app.globalData.baseUrl
+    })
+  },
+  onShow:function() {
     var that = this;
-    console.info(e)
-    var baseUrl = app.globalData.baseUrl;
+    var baseUrl = that.data.baseUrl;
     var paras={};
-    paras.oId=e==undefined?that.data.oid:e.oid;
+    paras.oId=that.data.oid;
     wx.request({
       url: baseUrl+"order/queryOrderDetail",
       method: 'get',
@@ -25,6 +30,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
+          var info = res.data.data.info;
           for(var idx in detailList){
             var item = detailList[idx];
             if(item.extra_img_url!=''){
@@ -33,12 +39,13 @@ Page({
           }
           that.setData({
             detailList:detailList,
-            info:res.data.data.info,
-            baseUrl:baseUrl,
+            info:info,
             deal:res.data.data.deal,
-            status:e.status,
-            oid:e==undefined?that.data.oid:e.oid
+            status:info.order_status
           })
+          if(info.order_status==5 && info.payment_channel==null){
+            that.showModal();
+          }
         }
       }
     })
@@ -46,8 +53,8 @@ Page({
   //退款
   refund:function(e){
     var id = e.currentTarget.dataset.id;
-    var status = e.currentTarget.dataset.status;
     var that = this;
+    var status = that.data.info.order_status;
     if(status==1){
       wx.showModal({
         title: '提示',
@@ -63,7 +70,7 @@ Page({
               data: paras,
               success(res) {
                 if(res.data.code==200){
-                  that.onLoad();
+                  that.onShow();
                 }
               }
             })
@@ -139,8 +146,47 @@ Page({
       success (res) {}
     })
   },
-  //二次支付
   payment:function(){
+    var that = this;
+    var method = that.data.method;
+    var info = that.data.info;
+    if(method==3 && (info.post_cost==0?info.total_price:info.total_price+4)>info.accountPrice){
+      return;
+    }else{
+      var baseUrl = that.data.baseUrl;
+      var orderBasic = {};
+      orderBasic.oId=info.o_id
+      orderBasic.paymentChannel=method;
+      orderBasic.uId=4;
+      orderBasic.totalPrice=info.post_cost==0?info.total_price:info.total_price+4
+      wx.request({
+        url: baseUrl+"order/payment",
+        method: 'post',
+        data: orderBasic,
+        success(res) {
+          if(res.data.code==200){
+            that.hideModal();
+            wx.showToast({
+              title: '支付成功',
+              success:function(){ }
+            })
+            that.onShow();
+          }else{
+            wx.showToast({
+              title: res.data.msg
+            })
+          }
+        },fail(res){
+          wx.showToast({
+            icon:'none',
+            title: '服务器异常'
+          })
+        }
+      })
+    }
+  },
+  //二次支付
+  extraPayment:function(){
     var that = this;
     var method = that.data.method;
     var info = that.data.info;
@@ -148,7 +194,6 @@ Page({
       return;
     }else{
       var baseUrl = that.data.baseUrl;
-      var info = that.data.info;
       var orderBasic = {};
       orderBasic.oId = info.o_id
       orderBasic.uid = 4;
@@ -166,7 +211,7 @@ Page({
               title: '支付成功',
               success:function(){ }
             })
-            that.onLoad();
+            that.onShow();
           }else{
             wx.showToast({
               title: res.data.msg
