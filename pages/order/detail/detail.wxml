@@ -20,7 +20,7 @@
       <view style="margin-left:14px;width:100%;">
         <view style="display:flex;flex-direction:row;align-items: center;">
           <view style="font-size:14px;color:#333333;margin-right:14px;">{{item.name}}</view>
-          <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+          <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{status==5}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
         </view>
         <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
         <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
@@ -29,7 +29,7 @@
 
     <view class="extra-list" hidden="{{item.is_extra==0}}">
       <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
-      <view class="extra-pic" hidden="{{item.extra_img_url.length==''}}">
+      <view class="extra-pic" hidden="{{item.extra_img_url==''}}">
         <view  wx:for="{{item.extra_img_url}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
           <image style="width:50px;height:50px;margin-right:10px;" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
         </view>
@@ -43,15 +43,19 @@
     <view class="foot-item-left" style="margin-top:10px;">订单号</view>
     <view class="foot-item-right" style="margin-top:10px;"><text decode="true">{{info.o_id}}&nbsp;</text><text bindtap="copy" data-oid="{{info.o_id}}" style="color:#FFD52E;">复制</text></view>
   </view>  
-  <view class="foot-item">
+  <view class="foot-item" hidden="{{status==5}}">
     <view class="foot-item-left">支付方式</view>
     <view class="foot-item-right">{{info.payment_channel==1?'微信':(info.payment_channel==2?'支付宝':'我的账户')}}</view>
   </view>
   <view class="foot-item">
-    <view class="foot-item-left">支付金额</view>
+    <view class="foot-item-left">商品金额</view>
     <view class="foot-item-right">￥{{info.total_price}}</view>
   </view>
-  <view class="foot-item">
+  <view class="foot-item" hidden="{{info.post_cost==0}}">
+    <view class="foot-item-left">配送费</view>
+    <view class="foot-item-right">￥4</view>
+  </view>
+  <view class="foot-item" >
     <view class="foot-item-left">下单时间</view>
     <view class="foot-item-right">{{info.order_time}}</view>
   </view>
@@ -91,13 +95,20 @@
       </view>
     </view>
   </view>
-  
 </view>
 
-
-<view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
-  <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
-</view>   
+<view wx:if="{{status==5}}">
+  <view class="page_bottom_pay" >
+    <view class="cancel">取消订单</view>
+    <view class="continue" bindtap="showModal">继续支付</view>
+  </view>   
+</view>
+<view wx:if="{{status!=5}}">
+  <view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
+    <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
+  </view>
+</view>
+   
 
 
 <view class="wrap">

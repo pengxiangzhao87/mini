@@ -7,10 +7,10 @@ Page({
     baseUrl:'',
     rows:10,
 
-    allOrder:true,
-    allList:[],
-    allPage:1,
-    allTotalPage:0,
+    payOrder:true,
+    payList:[],
+    payPage:1,
+    payTotalPage:0,
 
     sendOrder:false,
     sendList:[],
@@ -20,7 +20,12 @@ Page({
     takeOrder:false,
     takeList:[],
     takePage:1,
-    takeTotalPage:0
+    takeTotalPage:0,
+
+    allOrder:false,
+    allList:[],
+    allPage:1,
+    allTotalPage:0
   },
  
   onLoad:function(e) {
@@ -35,6 +40,8 @@ Page({
       paras.status=1
     }else if(id==2){
       paras.status=2
+    }else if(id==5){
+      paras.status=5
     }
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
@@ -53,6 +60,7 @@ Page({
               baseUrl:baseUrl,
               sendList:data,
               sendTotalPage:totalPage,
+              payOrder:false,
               allOrder:false,
               sendOrder:true,
               takeOrder:false
@@ -62,15 +70,27 @@ Page({
               baseUrl:baseUrl,
               takeList:data,
               takeTotalPage:totalPage,
+              payOrder:false,
               allOrder:false,
               sendOrder:false,
               takeOrder:true
+            })
+          }else if(id==5){
+            that.setData({
+              baseUrl:baseUrl,
+              payList:data,
+              payTotalPage:totalPage,
+              payOrder:true,
+              allOrder:false,
+              sendOrder:false,
+              takeOrder:false
             })
           }else{
             that.setData({
               baseUrl:baseUrl,
               allList:data,
               allTotalPage:totalPage,
+              payOrder:false,
               allOrder:true,
               sendOrder:false,
               takeOrder:false
@@ -118,6 +138,7 @@ Page({
             that.setData({
               allList:data,
               allTotalPage:totalPage,
+              payOrder:false,
               allOrder:true,
               sendOrder:false,
               takeOrder:false
@@ -137,6 +158,7 @@ Page({
       })
     }else{
       that.setData({
+        payOrder:false,
         allOrder:true,
         sendOrder:false,
         takeOrder:false
@@ -171,6 +193,7 @@ Page({
             that.setData({
               sendList:data,
               sendTotalPage:totalPage,
+              payOrder:false,
               allOrder:false,
               sendOrder:true,
               takeOrder:false
@@ -190,6 +213,7 @@ Page({
       })
     }else{
       that.setData({
+        payOrder:false,
         allOrder:false,
         sendOrder:true,
         takeOrder:false
@@ -224,6 +248,7 @@ Page({
             that.setData({
               takeList:data,
               takeTotalPage:totalPage,
+              payOrder:false,
               allOrder:false,
               sendOrder:false,
               takeOrder:true
@@ -243,9 +268,65 @@ Page({
       })
     }else{
       that.setData({
+        payOrder:false,
         allOrder:false,
         sendOrder:false,
         takeOrder:true
+      })
+    } 
+  },
+  //待支付
+  payOrder:function(){
+    var that = this;
+    var list = that.data.payList;
+    if(list.length==0){
+      var baseUrl = app.globalData.baseUrl;
+      var page = that.data.payPage;
+      var rows = that.data.rows;
+      var paras={};
+      paras.userId=4;
+      paras.page=page;
+      paras.rows=rows;
+      paras.status=5;
+      wx.request({
+        url: baseUrl+"order/queryOrderBasicByPage",
+        method: 'get',
+        data: paras,
+        success(res) {
+          if(res.data.code==200){
+            var data = res.data.data.list;
+            var totalPage = res.data.data.totalPage;
+            for(var idx in data){
+              var item = data[idx];
+              item.imgUrl = item.imgUrl.split('~');
+            }
+            that.setData({
+              payList:data,
+              payTotalPage:totalPage,
+              payOrder:true,
+              allOrder:false,
+              sendOrder:false,
+              takeOrder:false
+            })
+          }else{
+            wx.showToast({
+              title: res.data.msg
+            })
+          }
+        },
+        fail:function(){
+          wx.showToast({
+            icon:'none',
+            title: '服务器异常'
+          })
+        }
+      })
+    }else{
+      that.setData({
+        payOrder:true,
+        allOrder:false,
+        sendOrder:false,
+        takeOrder:false
       })
     } 
   },
@@ -263,6 +344,10 @@ Page({
       list = that.data.takeList;
       totalPage = that.data.takeTotalPage;
       page = that.data.takePage+1;
+    }else if(that.data.payOrder){
+      list = that.data.payList;
+      totalPage = that.data.payTotalPage;
+      page = that.data.payPage+1;
     }else{
       list = that.data.allList;
       totalPage = that.data.allTotalPage;
@@ -281,6 +366,8 @@ Page({
       paras.status=1;
     }else if(that.data.takeOrder){
       paras.status=2;
+    }else if(that.data.payOrder){
+      paras.status=5;
     }
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
@@ -302,6 +389,11 @@ Page({
             that.setData({
               takeList:list.concat(data),
               takePage:page
+            })
+          }else if(that.data.payOrder){
+            that.setData({
+              payList:list.concat(data),
+              payPage:page
             })
           }else{
             that.setData({
@@ -325,18 +417,9 @@ Page({
   },
   toDetail:function(e){
     var oid = e.currentTarget.dataset.oid;
+    var status = e.currentTarget.dataset.status;
     wx.navigateTo({
-      url: 'detail/detail?oid='+oid
-    })
-  },
-  toFeedBack:function(){
-    wx.navigateTo({
-      url: 'feedBack/feedBack'
-    })
-  },
-  toAgain:function(){
-    wx.navigateTo({
-      url: 'again/again'
+      url: 'detail/detail?oid='+oid+'&status='+status
     })
   },
   // 显示遮罩层

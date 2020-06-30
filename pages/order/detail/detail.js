@@ -9,10 +9,12 @@ Page({
     oid:0,
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
+    status:1,
     method:1
   },
   onLoad:function(e) {
     var that = this;
+    console.info(e)
     var baseUrl = app.globalData.baseUrl;
     var paras={};
     paras.oId=e==undefined?that.data.oid:e.oid;
@@ -25,7 +27,6 @@ Page({
           var detailList = res.data.data.detailList;
           for(var idx in detailList){
             var item = detailList[idx];
-            console.info(item.extra_img_url)
             if(item.extra_img_url!=''){
               item.extra_img_url=item.extra_img_url.split('~');
             }
@@ -35,6 +36,7 @@ Page({
             info:res.data.data.info,
             baseUrl:baseUrl,
             deal:res.data.data.deal,
+            status:e.status,
             oid:e==undefined?that.data.oid:e.oid
           })
         }

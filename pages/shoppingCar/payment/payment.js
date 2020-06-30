@@ -310,7 +310,6 @@ Page({
     data.name = address.name;
     data.phone = address.phone;
     data.address = address.aCity;
-    data.status = 1;
     data.channel = method;
     data.postCost = postage;
     data.details = list;
@@ -320,16 +319,8 @@ Page({
       data: data,
       success(res) {
         if(res.data.code==200){
-          wx.showToast({
-            title: '下单成功',
-            success:function(){
-              //延时2秒
-              setTimeout(function () {
-                wx.redirectTo({
-                  url: '/pages/order/order?id=1',
-                })
-              }, 1000);
-            }
+          wx.redirectTo({
+            url: '/pages/order/detail/detail?oid='+res.data.data+'&status=5'
           })
         }else{
           wx.showToast({

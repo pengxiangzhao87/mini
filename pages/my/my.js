@@ -64,9 +64,6 @@ Page({
       url: '/pages/order/order?id='+id
     })
   },
-  withdraw:function(){
-
-  },
   toDeal:function(){
     wx.navigateTo({
       url: 'deal/deal'
