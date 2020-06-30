@@ -23,6 +23,13 @@ Page({
       success(res) {
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
+          for(var idx in detailList){
+            var item = detailList[idx];
+            console.info(item.extra_img_url)
+            if(item.extra_img_url!=''){
+              item.extra_img_url=item.extra_img_url.split('~');
+            }
+          }
           that.setData({
             detailList:detailList,
             info:res.data.data.info,

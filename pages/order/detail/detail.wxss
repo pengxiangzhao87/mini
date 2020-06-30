@@ -32,6 +32,8 @@ page{
   margin-left:10px;
   margin-right:10px;
   height:96px;
+  border-bottom:none;
+
 }
 .list-canFeed{
   width:60px;
@@ -60,7 +62,7 @@ page{
   margin-right:0px;
 }
 .extra-list{
-  height:100px;
+  padding-bottom:10px;
   margin-left:10px;
   margin-right:10px;
   border-bottom:0.5px solid #E5E5E5;
@@ -71,6 +73,8 @@ page{
   font-size:12px;
   display: flex;
   align-items: center;
+  margin-left:10px;
+  margin-right:10px;
 }
 .extra-price.red{
   color:#FF1F1F ;
@@ -78,17 +82,17 @@ page{
   align-items: center;
   height:20px;
   font-size:12px;
+  margin-left:10px;
+  margin-right:10px;
 }
 .extra-pic{
   height:80px;
   display: flex;  
   flex-direction: row  ;
   align-items: center;
-
 }
 
 .foot{
-  margin-top:10px;
   margin-bottom:70px;
   padding-bottom: 10px;
   background-color: #FFFFFF;
