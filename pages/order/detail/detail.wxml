@@ -59,6 +59,10 @@
     <view class="foot-item-left">配送费</view>
     <view class="foot-item-right">￥4</view>
   </view>
+  <view class="foot-item" hidden="{{info.order_status==5}}">
+    <view class="foot-item-left">实付金额</view>
+    <view class="foot-item-right">￥{{info.order_status==6?0:allPrice}}</view>
+  </view>
   <view class="foot-item" hidden="{{info.last_time==null}}">
     <view class="foot-item-left">送达时间</view>
     <view class="foot-item-right">{{info.last_time}}</view>
@@ -97,15 +101,17 @@
   </view>
 </view>
 
-<view wx:if="{{info.order_status==5}}">
-  <view class="page_bottom_pay" >
-    <view class="cancel">取消订单</view>
-    <view class="continue" bindtap="showModal">继续支付</view>
-  </view>   
-</view>
-<view wx:if="{{info.order_status!=5}}">
-  <view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
-    <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
+<view wx:if="{{info.order_status!=6}}">
+  <view wx:if="{{info.order_status==5}}">
+    <view class="page_bottom_pay" >
+      <view class="cancel">取消订单</view>
+      <view class="continue" bindtap="showModal">继续支付 {{countDown}}</view>
+    </view>   
+  </view>
+  <view wx:if="{{info.order_status!=5}}">
+    <view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
+      <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
+    </view>
   </view>
 </view>
    
@@ -137,8 +143,8 @@
         <view hidden="{{info.order_status==5}}" class="page_bottom {{method==3 && info.payPrice>info.accountPrice?'gray':''}}" bindtap="extraPayment" >
           <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.extraPrice}}</text>
         </view>   
-        <view hidden="{{info.order_status!=5}}" class="page_bottom {{method==3 && (info.post_cost==0?info.total_price:info.total_price+4)>info.accountPrice?'gray':''}}" bindtap="payment" >
-          <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.post_cost==0?info.total_price:info.total_price+4}}</text>
+        <view hidden="{{info.order_status!=5}}" class="page_bottom {{method==3 && allPrice>info.accountPrice?'gray':''}}" bindtap="payment" >
+          <text style="color:#333333;font-size:16px;">确认支付 ￥{{allPrice}}</text>
         </view>  
     </view>
   </view>

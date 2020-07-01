@@ -6,23 +6,19 @@ Page({
     detailList:[],
     info:{},
     deal:[],
+    allPrice:0,
     oid:0,
+    countDown:'',
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     status:1,
     method:1
   },
   onLoad:function(e){
-    this.setData({
-      oid:e.oid,
-      baseUrl:app.globalData.baseUrl
-    })
-  },
-  onShow:function() {
     var that = this;
-    var baseUrl = that.data.baseUrl;
+    var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.oId=that.data.oid;
+    paras.oId=e==undefined?that.data.oid:e.oid;
     wx.request({
       url: baseUrl+"order/queryOrderDetail",
       method: 'get',
@@ -31,6 +27,7 @@ Page({
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           var info = res.data.data.info;
+          console.info(info)
           for(var idx in detailList){
             var item = detailList[idx];
             if(item.extra_img_url!=''){
@@ -41,14 +38,52 @@ Page({
             detailList:detailList,
             info:info,
             deal:res.data.data.deal,
-            status:info.order_status
+            status:info.order_status,
+            allPrice:(info.post_cost==0?info.total_price:info.total_price+4).toFixed(2),
+            oid:e==undefined?that.data.oid:e.oid,
+            baseUrl:app.globalData.baseUrl
           })
-          if(info.order_status==5 && info.payment_channel==null){
-            that.showModal();
+          if(info.order_status==5){
+            that.countDown();
           }
         }
       }
     })
+  },
+  //倒计时
+  countDown:function(){
+    var that = this;
+    var info = that.data.info;
+    var start = new Date(info.order_time).getTime()
+    var now = new Date().getTime();//现在时间（时间戳）
+    var value = (now-start)/1000;
+    console.info(value>=300)
+    if(value>=300){
+    
+      var baseUrl = that.data.baseUrl;
+      var paras={};
+      paras.oId=that.data.oid;
+      wx.request({
+        url: baseUrl+"order/closeOrder",
+        method: 'get',
+        data: paras,
+        success(res) {
+          if(res.data.code==200){
+            that.onLoad();
+          }
+        }
+      })
+    }else{
+      console.info(value)
+      var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
+      var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
+      that.setData({
+        countDown: min+':'+sec
+      })
+      setTimeout(that.countDown(), 1000);
+    }
+ 
+ 
   },
   //退款
   refund:function(e){
@@ -70,7 +105,7 @@ Page({
               data: paras,
               success(res) {
                 if(res.data.code==200){
-                  that.onShow();
+                  that.onLoad();
                 }
               }
             })
@@ -146,6 +181,7 @@ Page({
       success (res) {}
     })
   },
+  //支付订单
   payment:function(){
     var that = this;
     var method = that.data.method;
@@ -170,7 +206,7 @@ Page({
               title: '支付成功',
               success:function(){ }
             })
-            that.onShow();
+            that.onLoad();
           }else{
             wx.showToast({
               title: res.data.msg
@@ -211,7 +247,7 @@ Page({
               title: '支付成功',
               success:function(){ }
             })
-            that.onShow();
+            that.onLoad();
           }else{
             wx.showToast({
               title: res.data.msg
