@@ -27,7 +27,6 @@ Page({
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           var info = res.data.data.info;
-          console.info(info)
           for(var idx in detailList){
             var item = detailList[idx];
             if(item.extra_img_url!=''){
@@ -57,9 +56,7 @@ Page({
     var start = new Date(info.order_time).getTime()
     var now = new Date().getTime();//现在时间（时间戳）
     var value = (now-start)/1000;
-    console.info(value>=300)
     if(value>=300){
-    
       var baseUrl = that.data.baseUrl;
       var paras={};
       paras.oId=that.data.oid;
@@ -74,7 +71,6 @@ Page({
         }
       })
     }else{
-      console.info(value)
       var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
       var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
       that.setData({

@@ -86,7 +86,7 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          console.info(res)
+
           that.setData({
             accountPrice:res.data.data
           })
@@ -261,7 +261,7 @@ Page({
       time1 = null;
     }, 220)//先执行下滑动画，再隐藏模块
     wx.redirectTo({
-      url: '/pages/order/detail/detail?oid=1'+that.data.oId,
+      url: '/pages/order/detail/detail?oid='+that.data.oId,
     })
   },
   //动画 -- 滑入
@@ -405,15 +405,19 @@ Page({
         method: 'post',
         data: orderBasic,
         success(res) {
+          console.info(res)
           if(res.data.code==200){
-            that.hidePayModal();
             wx.showToast({
               title: '支付成功',
-              success:function(){ }
+              success:function(){
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '/pages/order/order?id=1',
+                  })
+                }, 1000);
+              }
             })
-            wx.redirectTo({
-              url: '/pages/order/order?id=1',
-            })
+            
           }else{
             wx.showToast({
               title: res.data.msg

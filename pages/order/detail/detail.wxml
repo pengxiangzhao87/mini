@@ -20,7 +20,7 @@
       <view style="margin-left:14px;width:100%;">
         <view style="display:flex;flex-direction:row;align-items: center;">
           <view style="font-size:14px;color:#333333;margin-right:14px;">{{item.name}}</view>
-          <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{info.order_status==5}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+          <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{info.order_status==5 || info.order_status==6}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
         </view>
         <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
         <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
