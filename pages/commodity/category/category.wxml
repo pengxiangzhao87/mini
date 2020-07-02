@@ -10,15 +10,15 @@
   </scroll-view>
 </view>
 
-<view style="background-color:rgb(243, 243, 243);height:100%;">
+<view style="background-color:rgb(248, 248, 248);height:100%;">
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:5px;background-color: #FFFFFF ;border-radius: 5px;  ">
             <image style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
             <view style="display:flex;font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
-            <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx].monthSale}}&nbsp;&nbsp;&nbsp;&nbsp;库存&nbsp;{{commodity[idx].stock}}</text></view>
-            <view style="font-size:12px;margin-top:5px;margin-left:10px;">
+            <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx].monthSale}}</text></view>
+            <view style="font-size:16px;margin-top:5px;margin-left:10px;">
               <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
               <image catchtap="addCar" data-sid="{{commodity[idx].s_id}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
             </view>
@@ -30,8 +30,8 @@
         <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:5px;  background-color: #FFFFFF ;border-radius: 5px;  ">
           <image class="goodsImg" style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
             <view style="font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
-            <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx].monthSale}}&nbsp;&nbsp;&nbsp;&nbsp;库存&nbsp;{{commodity[idx].stock}}</text></view>
-            <view style="font-size:12px;margin-top:5px;margin-left:10px;">
+            <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;"><text decode="true">月售&nbsp;{{commodity[idx].monthSale}}</text></view>
+            <view style="font-size:16px;margin-top:5px;margin-left:10px;">
             <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
             <image catchtap="addCar" data-sid="{{commodity[idx].s_id}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
           </view>
