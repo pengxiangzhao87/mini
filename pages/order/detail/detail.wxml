@@ -12,26 +12,29 @@
 </view>
 
 <view class="body">
-  <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
-    <view class="list-item {{item.is_extra==0?'':'line'}}">
-      <view style="width:66px;height:66px;">
-        <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
-      </view>
-      <view style="margin-left:14px;width:100%;">
-        <view style="display:flex;flex-direction:row;align-items: center;">
-          <view style="font-size:14px;color:#333333;margin-right:14px;">{{item.name}}</view>
-          <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{info.order_status==5 || info.order_status==6}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+  <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="detail">
+    <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;">{{detail.supplier}}</view>
+    <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
+      <view class="list-item {{item.is_extra==0?'':'line'}}">
+        <view style="width:66px;height:66px;">
+          <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
         </view>
-        <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
-        <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
+        <view style="margin-left:14px;width:100%;">
+          <view style="display:flex;flex-direction:row;align-items: center;">
+            <view style="font-size:14px;color:#333333;margin-right:5px;margin-top:10px;width:80%">{{item.name}}</view>
+            <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{info.order_status==5 || info.order_status==6}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+          </view>
+          <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
+          <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
+        </view>
       </view>
-    </view>
 
-    <view class="extra-list" hidden="{{item.is_extra==0}}">
-      <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
-      <view class="extra-pic" hidden="{{item.extra_img_url==''}}">
-        <view  wx:for="{{item.extra_img_url}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
-          <image style="width:50px;height:50px;margin-right:10px;" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
+      <view class="extra-list" hidden="{{item.is_extra==0}}">
+        <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
+        <view class="extra-pic" hidden="{{item.extra_img_url==''}}">
+          <view  wx:for="{{item.extra_img_url}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
+            <image style="width:50px;height:50px;margin-right:10px;" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
+          </view>
         </view>
       </view>
     </view>

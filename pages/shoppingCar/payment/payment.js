@@ -27,6 +27,7 @@ Page({
     var postage = e.postage;
     var totalPrice = e.totalPrice;
     var detailList = JSON.parse(e.json);
+    console.info(detailList)
     var now = new Date();
     var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
     var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
@@ -354,7 +355,8 @@ Page({
     data.address = address.aCity;
     data.channel = 1;
     data.postCost = postage;
-    data.details = list;that.showPayModal();
+    data.details = list;
+    that.showPayModal();
     wx.request({
       url: baseUrl+"order/addOrder",
       method: 'post',

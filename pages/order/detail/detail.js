@@ -27,12 +27,7 @@ Page({
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           var info = res.data.data.info;
-          for(var idx in detailList){
-            var item = detailList[idx];
-            if(item.extra_img_url!=''){
-              item.extra_img_url=item.extra_img_url.split('~');
-            }
-          }
+          console.info(detailList)
           that.setData({
             detailList:detailList,
             info:info,

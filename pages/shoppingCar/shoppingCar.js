@@ -19,15 +19,7 @@ Page({
     hideLose:true
   },
   onLoad: function(){
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       console.info('yes')
-          
-    //     }
-    //   }
-    // })
-    
+
   },
   onShow:function(){
     var that = this;
@@ -47,23 +39,26 @@ Page({
           var isDelete = false;
           var hideLose = true;
           for(var idx in list){
-            var item = list[idx];
-            if(item.isDele==1){
-              if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
-                item.disabled = true;
+            var detail = list[idx];
+            for(var index in detail.goods){
+              var item = detail.goods[index];
+              if(item.isDele==1){
+                if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
+                  item.disabled = true;
+                }else{
+                  item.disabled = false;
+                }
+                if(item.is_check==1){
+                  var sum = item.init_unit==0?item.s_num/50:item.s_num;
+                  totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
+                  ++checkNum;
+                  isDelete = true;
+                }else{
+                  selectedAll = false;
+                }
               }else{
-                item.disabled = false;
+                hideLose = false;
               }
-              if(item.is_check==1){
-                var sum = item.init_unit==0?item.s_num/50:item.s_num;
-                totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-                ++checkNum;
-                isDelete = true;
-              }else{
-                selectedAll = false;
-              }
-            }else{
-              hideLose = false;
             }
           }
           var restPrice = parseFloat(30);
@@ -107,30 +102,23 @@ Page({
     var that = this;
     var list = that.data.shoppingCar;
     var baseUrl = that.data.baseUrl;
-    var totalPrice = parseFloat(that.data.totalPrice);
-    var restPrice = parseFloat(that.data.restPrice);
     var paras = [];
     paras.id=id;
     for(var idx in list){
-      var item = list[idx];
-      if(id==item.id){
-        if(flag==0 && item.disabled){
-          return;
-        }else{
-          item.disabled=false;
+      var detail = list[idx];
+      for(var index in detail.goods){
+        var item = detail.goods[index];
+        if(id==item.id){
+          if(flag==0 && item.disabled){
+            return;
+          }else{
+            item.disabled=false;
+          }
+          item.s_num = item.init_unit==0?(flag==0?item.s_num-50:item.s_num+50):(flag==0?item.s_num-1:item.s_num+1);
+          paras.sId=item.s_id;
+          paras.number=item.s_num;
+          break;
         }
-        item.s_num = item.init_unit==0?(flag==0?item.s_num-50:item.s_num+50):(flag==0?item.s_num-1:item.s_num+1);
-        if(item.init_unit==0 && item.s_num==50 || item.init_unit==1 && item.s_num==1){
-          item.disabled=true;
-        }
-        item.totalPrice = (item.price_unit*(item.init_unit==0?item.s_num/50:item.s_num)).toFixed(2);
-        if(item.is_check==1){
-          totalPrice = (flag==0?totalPrice-item.price_unit:totalPrice+item.price_unit).toFixed(2);
-          restPrice = totalPrice>30?0:(flag==0?restPrice+parseFloat(item.price_unit):restPrice-parseFloat(item.price_unit)).toFixed(2);
-        }
-        paras.sId=item.s_id;
-        paras.number=item.s_num;
-        break;
       }
     }
     wx.request({
@@ -139,11 +127,7 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          that.setData({
-            shoppingCar:list,
-            totalPrice:totalPrice,
-            restPrice:restPrice
-          })
+          that.onShow();
         }else{
           wx.showToast({
             title: res.data.msg
@@ -161,47 +145,19 @@ Page({
   checkBox:function(e){
     //购物车ID
     var id = e.currentTarget.dataset.id;
+    var check = e.currentTarget.dataset.check;
     var that = this;
-    var list = that.data.shoppingCar;
     var baseUrl = that.data.baseUrl;
-    var checkNum = that.data.checkNum;
-    var totalPrice = parseFloat(that.data.totalPrice);
-    var restPrice = parseFloat(that.data.restPrice);
     var paras = [];
     paras.id=id;
-    var selectedAll = true;
-    var isDelete = false;
-    for(var idx in list){
-      var item = list[idx];
-      if(item.isDele==1){
-        if(id==item.id){
-          item.is_check=item.is_check==0?1:0;
-          selectedAll = selectedAll==false?false:(item.is_check==0?false:true);
-          paras.isCheck=item.is_check;
-          checkNum = item.is_check==0?checkNum-1:checkNum+1;
-          totalPrice = item.is_check==0?(totalPrice - parseFloat(item.totalPrice)).toFixed(2):(totalPrice + parseFloat(item.totalPrice)).toFixed(2);
-          restPrice = totalPrice>30?0:(item.is_check==0?(restPrice+parseFloat(item.totalPrice)).toFixed(2):(restPrice-parseFloat(item.totalPrice)).toFixed(2));
-        }else{
-          selectedAll = selectedAll==false?false:(item.is_check==0?false:true); 
-        }
-        isDelete = item.is_check==1?true:false;
-      }
-   
-    }
+    paras.isCheck=check==0?1:0;
     wx.request({
       url: baseUrl+"shoppingCart/checkCommodity",
       method: 'get',
       data: paras,
       success(res) {
         if(res.data.code==200){
-          that.setData({
-            shoppingCar:list,
-            totalPrice:totalPrice,
-            restPrice:restPrice,
-            checkNum:checkNum,
-            selectedAll:selectedAll,
-            isDelete:isDelete
-          })
+          that.onShow();
         }else{
           wx.showToast({
             title: res.data.msg
@@ -230,31 +186,15 @@ Page({
     if(list.length==0){
       return;
     }
-    var checkNum = that.data.checkNum;
-    var totalPrice = parseFloat(that.data.totalPrice);
-    var restPrice = parseFloat(that.data.restPrice);
     var selectedAll = that.data.selectedAll;
-    var isDelete = false;
     var id = '';
     for(var idx in list){
-      var item = list[idx];
-      if(item.isDele==1){
-        id += item.id+',';
-        var isCheck = item.is_check;
-        var itemTotalPrice = parseFloat(item.totalPrice);
-        if(selectedAll){
-          //变更后为：全不选
-          checkNum = isCheck==1?checkNum-1:checkNum;
-          totalPrice = parseFloat(isCheck==1?(totalPrice - itemTotalPrice).toFixed(2):totalPrice);
-          restPrice = parseFloat(totalPrice>30?0:(isCheck==1?(restPrice + itemTotalPrice).toFixed(2):restPrice));
-        }else{
-          //变更后为：全选
-          checkNum = isCheck==0?checkNum+1:checkNum;
-          totalPrice = parseFloat(isCheck==0?(totalPrice + itemTotalPrice).toFixed(2):totalPrice);
-          restPrice = parseFloat(totalPrice>30?0:(isCheck==0?(restPrice - itemTotalPrice).toFixed(2):restPrice));
-          isDelete = true;
+      var detail = list[idx];
+      for(var index in detail.goods){
+        var item = detail.goods[index];
+        if(item.isDele==1){
+          id += item.id+',';
         }
-        item.is_check=isCheck==0?1:0;
       }
     }
     var paras = [];
@@ -266,14 +206,7 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          that.setData({
-            shoppingCar:list,
-            totalPrice:totalPrice.toFixed(2),
-            restPrice:restPrice.toFixed(2),
-            checkNum:checkNum,
-            selectedAll:!selectedAll,
-            isDelete:isDelete
-          })
+          that.onShow();
         }else{
           wx.showToast({
             title: res.data.msg
@@ -302,9 +235,12 @@ Page({
           if (sm.confirm) {
             var ids = '';
             for(var idx in list){
-              var item = list[idx];
-              if(item.is_check==1){
-                ids += item.id+',';
+              var detail = list[idx];
+              for(var index in detail.goods){
+                var item = detail.goods[index];
+                if(item.is_check==1){
+                  ids += item.id+',';
+                }
               }
             }
             var paras = [];
@@ -349,16 +285,23 @@ Page({
     }else{
       var list = that.data.shoppingCar;
       var detailList=[];
+      detailList.a=1;
       for(var idx in list){
-        var item = list[idx];
-        if(item.is_check==1){
-          var detail={};
-          detail.sId=item.s_id;
-          detail.paymentPrice=item.totalPrice;
-          detail.orderNum=item.s_num;
-          detail.imgUrl=item.imgUrl;
-          detailList[detailList.length]=detail;
+        var supplier = list[idx].supplier;
+        var goods = list[idx].goods
+        var detail = [];
+        for(var index in goods){
+          var item = goods[index];
+          if(item.is_check==1){
+            detail[detail.length] = item;
+          }
         }
+        if(detail.length>0){
+          var result={};
+          result.supplier = supplier;
+          result.goods = detail;
+          detailList.push(result);
+        } 
       }
       var json = JSON.stringify(detailList);
       var postage = 1;
@@ -376,9 +319,12 @@ Page({
     var list = that.data.shoppingCar;
     var ids = '';
     for(var idx in list){
-      var item = list[idx]
-      if(item.isDele==0){
-        ids += item.id+',';
+      var detail = list[idx];
+      for(var index in detail.goods){
+        var item = detail.goods[index];
+        if(item.isDele==0){
+          ids += item.id+',';
+        }
       }
     }
     if(ids.length>0){
