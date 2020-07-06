@@ -6,7 +6,7 @@ Page({
     detailList:[],
     info:{},
     deal:[],
-    allPrice:0,
+    goodsPrice:0,
     oid:0,
     countDown:'',
     hideFlag: true,//true-隐藏  false-显示
@@ -27,13 +27,12 @@ Page({
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           var info = res.data.data.info;
-          console.info(detailList)
           that.setData({
             detailList:detailList,
             info:info,
             deal:res.data.data.deal,
             status:info.order_status,
-            allPrice:(info.post_cost==0?info.total_price:info.total_price+4).toFixed(2),
+            goodsPrice:(info.post_cost==0?info.total_price:info.total_price-4).toFixed(2),
             oid:e==undefined?that.data.oid:e.oid,
             baseUrl:app.globalData.baseUrl
           })

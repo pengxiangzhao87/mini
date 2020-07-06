@@ -19,7 +19,8 @@ Page({
     accountPrice:0,
     hidePay:true,
     method:1,
-    oId:0
+    oId:0,
+    check:false
   },
   onLoad:function(e) {
     var that = this;
@@ -27,7 +28,6 @@ Page({
     var postage = e.postage;
     var totalPrice = e.totalPrice;
     var detailList = JSON.parse(e.json);
-    console.info(detailList)
     var now = new Date();
     var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
     var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
@@ -321,13 +321,25 @@ Page({
   //下单 TODO
   toPayment:function(){
     var that = this;
-    var dateRange = that.data.dateRange;
-    if(dateRange=='选择时间'){
-      wx.showToast({
-        title: '请选择送达时间',
-        icon:'none'
-      })
-      return;
+    var check = that.data.check;
+    var range = '';
+    if(check){
+      var dateRange = that.data.dateRange;
+      if(dateRange=='选择时间'){
+        wx.showToast({
+          title: '请选择送达时间',
+          icon:'none'
+        })
+        return;
+      }
+      var today = that.data.today;
+      var now = new Date();
+      if(today==1){
+        now.setTime(now.getTime()+24*60*60*1000);
+      }
+      var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+      var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+      range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
     }
     wx.showLoading({
       title: '生成订单中',
@@ -338,14 +350,6 @@ Page({
     var address = that.data.address;
     var postage = that.data.postage;
     var dateRange = that.data.dateRange;
-    var today = that.data.today;
-    var now = new Date();
-    if(today==1){
-      now.setTime(now.getTime()+24*60*60*1000);
-    }
-    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
-    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-    var range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
     var data = {};
     data.rangeTime = range;
     data.uId=4;
@@ -355,7 +359,20 @@ Page({
     data.address = address.aCity;
     data.channel = 1;
     data.postCost = postage;
-    data.details = list;
+    var detail = [];
+    for(var idx in list){
+      var goods = list[idx].goods;
+      for(var index in goods){
+        var item = goods[index];
+        var result = {};
+
+        result.sId=item.s_id;
+        result.paymentPrice=item.totalPrice;
+        result.orderNum=item.s_num;
+        detail[detail.length]=result;
+      }
+    }
+    data.details = detail;
     that.showPayModal();
     wx.request({
       url: baseUrl+"order/addOrder",
@@ -384,12 +401,20 @@ Page({
       }
     })
   },
+  //选择支付方式
   chechMethod:function(e){
     var method = e.currentTarget.dataset.method;
     this.setData({
       method:method
     })
   },
+  //选择配送方式
+  checkDelivery:function(){
+    this.setData({
+      check:!this.data.check
+    })
+  },
+  //支付
   payment:function(){
     var that = this;
     var method = that.data.method;

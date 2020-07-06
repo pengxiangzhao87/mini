@@ -50,13 +50,21 @@
     <view class="foot-item-left">下单时间</view>
     <view class="foot-item-right">{{info.order_time}}</view>
   </view>
+  <view class="foot-item" >
+    <view class="foot-item-left">配送方式</view>
+    <view class="foot-item-right">{{info.consignee_range_time==''?'自提':'配送'}}</view>
+  </view>
+   <view class="foot-item" hidden="{{info.consignee_range_time==''}}">
+    <view class="foot-item-left">配送时间</view>
+    <view class="foot-item-right">{{info.consignee_range_time}}</view>
+  </view>
   <view class="foot-item" hidden="{{info.order_status==5}}">
     <view class="foot-item-left">支付方式</view>
     <view class="foot-item-right">{{info.payment_channel==1?'微信':(info.payment_channel==2?'支付宝':'我的账户')}}</view>
   </view>
   <view class="foot-item">
     <view class="foot-item-left">商品金额</view>
-    <view class="foot-item-right">￥{{info.total_price}}</view>
+    <view class="foot-item-right">￥{{goodsPrice}}</view>
   </view>
   <view class="foot-item" hidden="{{info.post_cost==0}}">
     <view class="foot-item-left">配送费</view>
@@ -64,7 +72,7 @@
   </view>
   <view class="foot-item" hidden="{{info.order_status==5}}">
     <view class="foot-item-left">实付金额</view>
-    <view class="foot-item-right">￥{{info.order_status==6?0:allPrice}}</view>
+    <view class="foot-item-right">￥{{info.order_status==6?0:info.total_price}}</view>
   </view>
   <view class="foot-item" hidden="{{info.last_time==null}}">
     <view class="foot-item-left">送达时间</view>
