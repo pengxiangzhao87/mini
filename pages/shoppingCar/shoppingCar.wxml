@@ -5,12 +5,12 @@
 </view> 
 <view style="margin-bottom:100px;height:100%;">
   <view style="padding-top:5px;">
-    <view class="postage" hidden="{{hidden}}">
+    <!-- <view class="postage" hidden="{{hidden}}">
       <view style="margin-left:30%;">配送费4元，满30元免配送费</view>
       <image bindtap="closePostage"  src="/image/gouwuche_delete@3x.png" style="width:10px;height:10px;margin-right:10px;margin-left:auto;"></image>
-    </view>
+    </view> -->
     <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
-      <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;margin-bottom:5px;">{{detail.supplier}}</view>
+      <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#FFD52E;margin-bottom:5px;">{{detail.supplier}}</view>
       <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
         <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
           <view style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
@@ -66,7 +66,7 @@
   <view style="margin-left:5px;color:#333333;font-size:14px;">全选</view>
   <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
     <view style="margin-right:10px;color:#999999 ;">
-      <view hidden="{{restPrice==0 || restPrice==30?true:false}}" style="font-size:10px;">差<text style="color:#FF1907;">￥{{restPrice}}</text>免配送费</view>
+      <!-- <view hidden="{{restPrice==0 || restPrice==30?true:false}}" style="font-size:10px;">差<text style="color:#FF1907;">￥{{restPrice}}</text>免配送费</view> -->
       <view hidden="{{totalPrice==0?true:false}}" style="font-size:18px;color:#666666">合计:<text style="color:#FF1907;">￥{{totalPrice}}</text></view>
     </view>
     <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>

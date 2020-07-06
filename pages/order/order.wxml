@@ -39,10 +39,6 @@
         <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
       </view>
-      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
-        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
-        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
-      </view>
     </view>
   </view>
 </view>
@@ -70,10 +66,6 @@
         </view>
         <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
-      </view>
-      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
-        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
-        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
       </view>
     </view>
   </view>
@@ -105,10 +97,6 @@
         <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
       </view>
-      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
-        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
-        <view catchtap="toAgain" class="list-bottom-button" style="background-color:#FFD52E;color:#333333;">再来一单</view>
-      </view>
     </view>
   </view>
 </view>
@@ -137,9 +125,6 @@
         </view>
         <view style="margin-right:0px;margin-left:auto;color:#333333;font-weight: bolder;">总计: ￥{{item.total_price}}
         </view>
-      </view>
-      <view class="list-bottom" hidden="{{item.order_status==3?false:true}}">
-        <view catchtap="toFeedBack" class="list-bottom-button" style="border:1px solid #FFD52E;color:#FFD52E;margin-left:auto;margin-right:10px;">反馈</view>
       </view>
     </view>
   </view>

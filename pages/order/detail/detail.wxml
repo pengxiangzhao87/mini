@@ -66,10 +66,10 @@
     <view class="foot-item-left">商品金额</view>
     <view class="foot-item-right">￥{{goodsPrice}}</view>
   </view>
-  <view class="foot-item" hidden="{{info.post_cost==0}}">
+  <!-- <view class="foot-item" hidden="{{info.post_cost==0}}">
     <view class="foot-item-left">配送费</view>
     <view class="foot-item-right">￥4</view>
-  </view>
+  </view> -->
   <view class="foot-item" hidden="{{info.order_status==5}}">
     <view class="foot-item-left">实付金额</view>
     <view class="foot-item-right">￥{{info.order_status==6?0:info.total_price}}</view>

@@ -64,7 +64,7 @@ Page({
             baseUrl:baseUrl,
             postage:postage,
             totalPrice:totalPrice,
-            allPrice:postage==1?(parseFloat(totalPrice)+4).toFixed(2):totalPrice,
+            allPrice:totalPrice,
             address:res.data.data[0],
             todayHide:todayHide,
             today:today
@@ -87,7 +87,6 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-
           that.setData({
             accountPrice:res.data.data
           })
@@ -358,14 +357,12 @@ Page({
     data.phone = address.phone;
     data.address = address.aCity;
     data.channel = 1;
-    data.postCost = postage;
     var detail = [];
     for(var idx in list){
       var goods = list[idx].goods;
       for(var index in goods){
         var item = goods[index];
         var result = {};
-
         result.sId=item.s_id;
         result.paymentPrice=item.totalPrice;
         result.orderNum=item.s_num;
@@ -432,7 +429,7 @@ Page({
         method: 'post',
         data: orderBasic,
         success(res) {
-          console.info(res)
+
           if(res.data.code==200){
             wx.showToast({
               title: '支付成功',

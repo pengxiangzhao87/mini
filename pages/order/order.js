@@ -29,7 +29,6 @@ Page({
   },
  
   onLoad:function(e) {
-    console.info(e)
     var id = e.id;
     var that = this;
     var baseUrl = app.globalData.baseUrl;

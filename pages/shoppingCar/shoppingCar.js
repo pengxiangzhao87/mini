@@ -9,9 +9,9 @@ Page({
     //选择的总价
     totalPrice:0,
     //差价免配送费
-    restPrice:30,
+    //restPrice:30,
     //隐藏配送费提醒
-    hidden:false,
+    //hidden:false,
     isDelete:false,
     //已选择商品数量
     checkNum:0,
@@ -61,15 +61,14 @@ Page({
               }
             }
           }
-          var restPrice = parseFloat(30);
-          if(totalPrice<30 && totalPrice!=0){
-            restPrice=restPrice-totalPrice;
-          }
+          // var restPrice = parseFloat(30);
+          // if(totalPrice<30 && totalPrice!=0){
+          //   restPrice=restPrice-totalPrice;
+          // }
           that.setData({
             baseUrl:baseUrl,
             shoppingCar:list,
             totalPrice:totalPrice.toFixed(2),
-            restPrice:restPrice.toFixed(2),
             checkNum:checkNum,
             selectedAll:selectedAll,
             isDelete:isDelete,

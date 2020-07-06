@@ -32,7 +32,7 @@ Page({
             info:info,
             deal:res.data.data.deal,
             status:info.order_status,
-            goodsPrice:(info.post_cost==0?info.total_price:info.total_price-4).toFixed(2),
+            goodsPrice:(info.total_price).toFixed(2),
             oid:e==undefined?that.data.oid:e.oid,
             baseUrl:app.globalData.baseUrl
           })
@@ -184,7 +184,7 @@ Page({
       orderBasic.oId=info.o_id
       orderBasic.paymentChannel=method;
       orderBasic.uId=4;
-      orderBasic.totalPrice=info.post_cost==0?info.total_price:info.total_price+4
+      orderBasic.totalPrice=info.total_price;
       wx.request({
         url: baseUrl+"order/payment",
         method: 'post',
