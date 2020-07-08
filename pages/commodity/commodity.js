@@ -108,8 +108,9 @@ Page({
         if(res.data.code==200){
           if(res.data.data.length>0){
             var aCity = res.data.data[0].aCity;
+            var aDetail = res.data.data[0].aDetail;
             that.setData({
-              address:aCity
+              address:aCity+aDetail
             })
           }
         }else{

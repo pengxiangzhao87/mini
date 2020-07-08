@@ -4,7 +4,7 @@
     <view>
       <view style="display: flex;align-items: center;">
         <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
-        <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{address.aCity}}</text>
+        <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{address.aCity+address.aDetail}}</text>
       </view>
       <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
         <text style="color:#333333;" decode="true">{{address.name}}&nbsp;&nbsp;<text style="color:#666666;">{{address.phone}}</text></text>
@@ -42,7 +42,7 @@
   <view hidden="{{!check}}" style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
 
   <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
-    <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;padding-bottom:3px;border-bottom:0.5px solid #FFD52E;width:auto; display:inline-block !important; display:inline; ">{{detail.supplier}}</view>
+    <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;padding-bottom:3px;">{{detail.supplier}}</view>
     <view style="height:70px;display:flex;align-items: center; white-space: nowrap;">
       <scroll-view scroll-x style="width:85%;">
         <view wx:for="{{detail.goods}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
@@ -68,7 +68,7 @@
   <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
 
   <view style="height:44px;width:100%;display:flex;align-items: center;">
-    <text style="margin-right:5px;margin-left:auto;font-size:14px;color:#FF1907;">总计:￥{{allPrice}}</text>
+    <text style="margin-right:5px;margin-left:auto;font-size:12px;color:#FF1907;">总计：<text style="font-size:14px;">￥{{allPrice}}</text></text>
   </view>
 </view>
 

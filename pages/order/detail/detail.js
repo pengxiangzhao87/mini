@@ -12,7 +12,8 @@ Page({
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     status:1,
-    method:1
+    method:1,
+    urls:[]
   },
   onLoad:function(e){
     var that = this;
@@ -26,6 +27,19 @@ Page({
       success(res) {
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
+          var urls = [];
+          for(var idx in detailList){
+            var goods = detailList[idx].goods;
+            for(var index in goods){
+              var imgUrlList = goods[index].extra_img_url
+              if(imgUrlList!=''){
+                var imgList = {};
+                imgList.id=goods[index].id;
+                imgList.urlList=imgUrlList;
+                urls.push(imgList);
+              }
+            }
+          }
           var info = res.data.data.info;
           that.setData({
             detailList:detailList,
@@ -34,7 +48,8 @@ Page({
             status:info.order_status,
             goodsPrice:(info.total_price).toFixed(2),
             oid:e==undefined?that.data.oid:e.oid,
-            baseUrl:app.globalData.baseUrl
+            baseUrl:app.globalData.baseUrl,
+            urls:urls
           })
           if(info.order_status==5){
             that.countDown();
@@ -251,5 +266,27 @@ Page({
         }
       })
     }
+  },
+  enlargement:function(e){
+    var id = e.currentTarget.dataset.id;
+    var pic = e.currentTarget.dataset.pic;
+    var that = this;
+    var urls = that.data.urls;
+    var baseUrl = that.data.baseUrl;
+    var preUrl = baseUrl+'upload/';
+    var urlList = [];
+    for(var idx in urls){
+      var item = urls[idx];
+      if(item.id==id){
+        for(var index in item.urlList){
+          urlList.push(preUrl+item.urlList[index]);
+        }
+       
+      }
+    }
+    wx.previewImage({
+      current: preUrl+pic, // 当前显示图片的http链接
+      urls: urlList // 需要预览的图片http链接列表
+    })
   }
 })

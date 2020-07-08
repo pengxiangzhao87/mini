@@ -1,4 +1,5 @@
 <!--pages/commodity/category/category.wxml-->
+
 <view class="scroll_box"> 
   <scroll-view scroll-x>
     <view wx:for="{{category}}" class="item_list" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
@@ -9,6 +10,7 @@
     </view>
   </scroll-view>
 </view>
+
 
 <view style="background-color:rgb(248, 248, 248);height:100%;">
   <view class="hotGoods" >

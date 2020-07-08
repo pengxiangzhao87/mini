@@ -5,11 +5,11 @@ Page({
     address:{},
     baseUrl:'',
     //0:新增，1:修改
-    flag:0
+    flag:false
   },
 
   onLoad:function(e) {
-    var flag = e.flag;
+    var flag = e.flag==1?true:false;
     var that =  this;
     var baseUrl = app.globalData.baseUrl;
     that.setData({
@@ -23,7 +23,7 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var address = e.detail.value;
-    if(that.data.flag==1){
+    if(that.data.flag){
       address.aId=that.data.address.aId;
     }
     var json = JSON.stringify(address);
@@ -63,5 +63,22 @@ Page({
       }
     })
 
+  },
+  focusValue:function(){
+    this.setData({
+      flag:true
+    })
+  },
+  changeValue:function(e){
+    var that = this;
+    if(e.detail.value==''){
+      that.setData({
+        flag:false
+      })
+    }else{
+      that.setData({
+        flag:true
+      })
+    }
   }
 })

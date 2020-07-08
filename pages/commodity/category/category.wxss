@@ -3,7 +3,7 @@
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  }
+}
 .scroll_box scroll-view{
   height: 100%;
   width: auto;

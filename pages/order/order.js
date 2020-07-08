@@ -37,11 +37,11 @@ Page({
     paras.page=1;
     paras.rows=that.data.rows;
     if(id==1){
-      paras.status=1
+      paras.status=1;
     }else if(id==2){
-      paras.status=2
+      paras.status=2;
     }else if(id==5){
-      paras.status=5
+      paras.status=5;
     }
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
@@ -136,6 +136,7 @@ Page({
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
+            console.info(data)
             that.setData({
               allList:data,
               allTotalPage:totalPage,
@@ -224,7 +225,7 @@ Page({
   //待收货
   takeOrder:function(){
     var that = this;
-    var list = that.data.sendList;
+    var list = that.data.takeList;
     if(list.length==0){
       var baseUrl = app.globalData.baseUrl;
       var page = that.data.takePage;
@@ -369,6 +370,8 @@ Page({
       paras.status=2;
     }else if(that.data.payOrder){
       paras.status=5;
+    }else{
+      paras.status=-1;
     }
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",

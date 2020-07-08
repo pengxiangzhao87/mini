@@ -25,7 +25,6 @@ page{
 }
 .btn{
   background-color:#FFEEAA;
-  border:1px solid #FFD52E;
   width:31px;
   height:22px;
   font-size:11px;
@@ -46,9 +45,7 @@ page{
   align-items: center;
   justify-content: center;  
 }
-.afterbtn{
-  border: 0;
-}
+
 
 .list{
   display: flex;  
@@ -73,7 +70,8 @@ page{
   height:55px;
   position:fixed; 
   bottom:0;
-  border-top: 1px solid #D9D9D9;
+  border-top: 1px solid rgb(245, 245, 245);
+  border-bottom: 1px solid rgb(245, 245, 245);
   background-color: #FFFFFF;
   display: flex;  
   flex-direction:row ;
