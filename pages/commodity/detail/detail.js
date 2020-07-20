@@ -4,16 +4,22 @@ Page({
   data: {
     disabled:false,
     baseUrl:"",
-    detail:{}
+    detail:{},
+    sid:0
   },
   onLoad:function(e) {
-    var that = this;
     var baseUrl = app.globalData.baseUrl;
-    that.setData({
-      baseUrl:baseUrl
+    this.setData({
+      baseUrl:baseUrl,
+      sid:e.sid
     })
+  },
+  onShow:function(){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var sId = that.data.sid;
     var data={};
-    data.sId=e.sid;
+    data.sId=sId;
     data.userId=4;
     wx.request({
       url: baseUrl+"commodity/queryCollage",
@@ -39,7 +45,6 @@ Page({
           }
           var sum = result.init_unit==0?result.init_num/50:result.init_num;
           result.totalPrice = (result.price_unit * sum).toFixed(2);
-          console.info(result)
           that.setData({
             detail:result,
             disabled:disabled
@@ -121,13 +126,10 @@ Page({
       data: json,
       success(res) {
         if(res.data.code==200){
-          detail.carSum = detail.carSum+1;
           wx.showToast({
             title: '添加成功'
           })
-          that.setData({
-            detail:detail
-          })
+          that.onShow();
         }else{
           wx.showToast({
             title: "服务器异常"

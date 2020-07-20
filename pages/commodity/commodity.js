@@ -10,21 +10,63 @@ Page({
     baseUrl:"",
     hidden:true,
     hideFlag: true,//true-隐藏  false-显示
-    animationData: {}
+    addFlag:true,
+    animationData: {},
+    idxFlag:0,
+    disabled:false,
   },
   onLoad:function(){
+    this.setData({
+      baseUrl:app.globalData.baseUrl
+    })
+
+  },
+  onShow(){
     var that = this;
     var data = that.data;
-    var baseUrl = app.globalData.baseUrl;
+    var baseUrl = data.baseUrl;
     var paras = {};
     paras.page=data.page;
     paras.rows=data.rows;
     paras.userId=4;
     paras.tId=-1;
     this.queryCommodity(that,paras,baseUrl);
+    this.getCarNum(paras,baseUrl);
     paras.uId=4;
     paras.isUsed=1;
     this.queryAddressList(that,paras,baseUrl);
+
+    
+  },
+  getCarNum:function(paras,baseUrl){
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data;
+          var checkNum = parseInt(0);
+          for(var idx in list){
+            var detail = list[idx];
+            for(var index in detail.goods){
+              var item = detail.goods[index];
+              if(item.isDele==1){
+                if(item.is_check==1){
+                  ++checkNum;
+                }
+              }
+            }
+          }
+          if(checkNum!=0){
+            wx.setTabBarBadge({//tabbar右上角添加文本
+              index: 1,//tabbar下标
+              text: checkNum+'' //显示的内容,必须为字符串
+            })
+          }
+        }
+      }
+    })
   },
   //上拉获取新数据
   onReachBottom:function(){
@@ -79,6 +121,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           var list = res.data.data.list;
+          console.info(list)
           var totalPage = res.data.data.totalPage;
           that.setData({
             baseUrl:baseUrl,
@@ -149,37 +192,42 @@ Page({
   },
   //加入购物车
   addCar:function(e){
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          var sid = e.currentTarget.dataset.sid;
-          var data={};
-          data.sid=sid;
-          data.uid=4;
-          var json = JSON.stringify(data);
-          wx.request({
-            url: app.globalData.baseUrl+"shoppingCart/addShoppingCart",
-            method: 'post',
-            data: json,
-            success(res) {
-              if(res.data.code!=200){
-                wx.showToast({
-                  title: "服务器异常"
-                })
-              }
-            },
-            fail(res) {
-              wx.showToast({
-                title: "服务器异常"
-              })
-            }
-          })
-        }else{
-          this.showModal();
-        }
-      }
+    // wx.getSetting({
+    //   success: res => {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       var sid = e.currentTarget.dataset.sid;
+    //       var data={};
+    //       data.sid=sid;
+    //       data.uid=4;
+    //       var json = JSON.stringify(data);
+    //       wx.request({
+    //         url: app.globalData.baseUrl+"shoppingCart/addShoppingCart",
+    //         method: 'post',
+    //         data: json,
+    //         success(res) {
+    //           if(res.data.code!=200){
+    //             wx.showToast({
+    //               title: "服务器异常"
+    //             })
+    //           }
+    //         },
+    //         fail(res) {
+    //           wx.showToast({
+    //             title: "服务器异常"
+    //           })
+    //         }
+    //       })
+    //     }else{
+    //       this.showModal();
+    //     }
+    //   }
+    // })
+    var that = this;
+    var idx = e.currentTarget.dataset.idx;
+    that.setData({
+      idxFlag:idx
     })
-    
+    that.showAddModal();
   },
   //回到顶部
   onTabItemTap:function(){
@@ -195,8 +243,43 @@ Page({
       })
     }
   },
+  showAddModal:function(){
+    var that = this;
+    that.setData({
+      addFlag: false,
+    })
+    // 创建动画实例
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间
+      timingFunction: 'ease',//动画的效果 默认值是linear->匀速，ease->动画以低速开始，然后加快，在结束前变慢
+    })
+    this.animation = animation; //将animation变量赋值给当前动画
+    var time1 = setTimeout(function () {
+      that.slideIn();//调用动画--滑入
+      clearTimeout(time1);
+      time1 = null;
+    }, 100)
+  },
+  // 隐藏遮罩层
+  hideAddModal:function() {
+    var that = this;
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间 默认400ms
+      timingFunction: 'ease',//动画的效果 默认值是linear
+    })
+    this.animation = animation
+    that.slideDown();//调用动画--滑出
+    var time1 = setTimeout(function () {
+      that.setData({
+        addFlag: true
+      })
+      clearTimeout(time1);
+      time1 = null;
+    }, 220)//先执行下滑动画，再隐藏模块
+    
+  },
   // 显示遮罩层
-  showModal: function () {
+  showModal:function () {
     var that = this;
     that.setData({
       hideFlag: false,
@@ -251,5 +334,47 @@ Page({
     wx.navigateTo({
       url: '/pages/login/login'
     })
-  }
+  },
+  subtract:function(){
+    var that = this;
+    var detail = that.data.detail;
+    if(detail.init_unit==0 && detail.init_num<=50 || detail.init_unit==1 && detail.init_num==1){
+      return;
+    }
+    var num = 0;
+    if(detail.init_unit==0){
+      num = detail.init_num-50;
+    }else{
+      num = detail.init_num-1;
+    }
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
+    var disabled = false;
+    if(detail.init_unit==0 && num<=50 || detail.init_unit==1 && num==1){
+      disabled = true;
+    }
+    that.setData({
+      detail:detail,
+      disabled:disabled
+    })
+  },
+  add:function(){
+    var that = this;
+    var detail = that.data.detail;
+    var num = 0;
+    if(detail.init_unit==0){
+      num = detail.init_num+50;
+    }else{
+      num = detail.init_num+1;
+    }
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
+    that.setData({
+      detail:detail,
+      disabled:false
+    })
+  },
+
 })
