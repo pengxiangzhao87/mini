@@ -53,9 +53,9 @@
     <view class="foot-item-left">配送方式</view>
     <view class="foot-item-right">{{info.consignee_range_time==''?'自提':'配送'}}</view>
   </view>
-   <view class="foot-item" hidden="{{info.consignee_range_time==''}}">
-    <view class="foot-item-left">配送时间</view>
-    <view class="foot-item-right">{{info.consignee_range_time}}</view>
+   <view class="foot-item" hidden="{{info.order_status!=3}}">
+    <view class="foot-item-left">送达时间</view>
+    <view class="foot-item-right">{{info.last_time}}</view>
   </view>
   <view class="foot-item" hidden="{{info.order_status==5}}">
     <view class="foot-item-left">支付方式</view>
@@ -110,7 +110,7 @@
 <view wx:if="{{info.order_status!=6}}">
   <view wx:if="{{info.order_status==5}}">
     <view class="page_bottom_pay" >
-      <view class="cancel">取消订单</view>
+      <view class="cancel" bindtap="closeOrder">取消订单</view>
       <view class="continue" bindtap="showModal">继续支付 {{countDown}}</view>
     </view>   
   </view>

@@ -19,25 +19,16 @@
   </view>
 </view>
 
-<view class="delivery">
-  <view style="margin-left:5px;">配送方式</view>
-  <view class="delivery_row">
-    <view bindtap="checkDelivery" style="display:flex;margin-right:40px;align-items:center;">自提<image style="width:16px;height:16px;margin-left:10px;" src="{{check?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image></view>
-    <view bindtap="checkDelivery" style="display:flex;align-items:center;">配送<image style="width:16px;height:16px;margin-left:10px;" src="{{!check?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image></view> 
-  </view>
-</view>
-
 <view class="body">
 
-  <view hidden="{{!check}}">
-    <view style="display:flex;align-items:center;height:43px;width:100%;" >
-      <view style="font-size:12px;color:#666666;margin:14px 0px 14px 5px;">预计送达时间</view>
-      <view style="font-size:12px;margin-right:5px;margin-left:auto;" bindtap="showModal">
-        <text style="margin-right:5px;color:#FFD52E;">{{dateRange}}</text>
-        <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
-      </view>
+  <view style="display:flex;align-items:center;height:43px;width:100%;" >
+    <view style="font-size:12px;color:#666666;margin:14px 0px 14px 5px;">预计送达时间</view>
+    <view style="font-size:12px;margin-right:5px;margin-left:auto;" bindtap="showModal">
+      <text style="margin-right:5px;color:#FFD52E;">{{dateRange}}</text>
+      <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
     </view>
   </view>
+
 
   <view hidden="{{!check}}" style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
 
@@ -82,7 +73,7 @@
 
 <view class="wrap">
   <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
-    <view class="modal-cancel" bindtap="hideModal"></view>
+    <view class="modal-cancel" bindtap="hideModal" catchtouchmove="disableRoll"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
       <view class="modal-head">选择送达时间</view>
       <view style="width:100%;height:100%;display:flex; flex-direction:row ;align-items: center;">

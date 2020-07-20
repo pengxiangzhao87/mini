@@ -22,7 +22,7 @@
 
 .btn{
   background-color:#FFEEAA;
-  border:1px solid #FFD52E;
+   
   width:31px;
   height:22px;
   font-size:11px;

@@ -61,10 +61,6 @@ Page({
               }
             }
           }
-          // var restPrice = parseFloat(30);
-          // if(totalPrice<30 && totalPrice!=0){
-          //   restPrice=restPrice-totalPrice;
-          // }
           that.setData({
             baseUrl:baseUrl,
             shoppingCar:list,
@@ -74,6 +70,7 @@ Page({
             isDelete:isDelete,
             hideLose:hideLose
           })
+          that.getCarNum(baseUrl);
         }else{
           wx.showToast({
             title: res.data.msg
@@ -84,6 +81,42 @@ Page({
         wx.showToast({
           title: "服务器异常"
         })
+      }
+    })
+  },
+  getCarNum:function(baseUrl){
+    var paras = {};
+    paras.userId=4;
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data;
+          var checkNum = parseInt(0);
+          for(var idx in list){
+            var detail = list[idx];
+            for(var index in detail.goods){
+              var item = detail.goods[index];
+              if(item.isDele==1){
+                if(item.is_check==1){
+                  ++checkNum;
+                }
+              }
+            }
+          }
+          if(checkNum!=0){
+            wx.setTabBarBadge({//tabbar右上角添加文本
+              index: 1,//tabbar下标
+              text: checkNum+'' //显示的内容,必须为字符串
+            })
+          }else{
+            wx.removeTabBarBadge({
+              index: 1,
+            })
+          }
+        }
       }
     })
   },

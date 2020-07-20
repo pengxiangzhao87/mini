@@ -99,7 +99,7 @@
   display: flex;
   align-items: center;
   justify-content: center; 
-  border-bottom: 0.5px solid #E5E5E5;
+  border-bottom: 0.5px soli #E5E5E5;
   color:#333333;
   font-size:14px;
 }
@@ -109,11 +109,11 @@
   flex-direction:row ;
   align-items: center;
   width:100%;
+  margin-top:10px;
 }
 
 .btn{
   background-color:#FFEEAA;
-  border:1px solid #FFD52E;
   width:31px;
   height:22px;
   font-size:11px;
@@ -133,4 +133,29 @@
   display: flex;  
   align-items: center;
   justify-content: center;  
+}
+ 
+.page_bottom{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  position:fixed; 
+  bottom:0;
+  align-items: center;
+  margin-left:auto;
+  margin-right:20px;
+  width:100%;
+  height:25px;
+}
+.addShoppingCar{
+  width:100px;
+  height:25px;
+  background-color:#FFD52E;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  margin-bottom:10px;
+
+ 
 }

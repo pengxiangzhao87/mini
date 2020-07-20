@@ -18,8 +18,7 @@ Page({
     animationData: {},
     hidePay:true,
     method:1,
-    oId:0,
-    check:false
+    oId:0
   },
   onLoad:function(e) {
     var that = this;
@@ -227,26 +226,23 @@ Page({
   //下单 TODO
   toPayment:function(){
     var that = this;
-    var check = that.data.check;
     var range = '';
-    if(check){
-      var dateRange = that.data.dateRange;
-      if(dateRange=='选择时间'){
-        wx.showToast({
-          title: '请选择送达时间',
-          icon:'none'
-        })
-        return;
-      }
-      var today = that.data.today;
-      var now = new Date();
-      if(today==1){
-        now.setTime(now.getTime()+24*60*60*1000);
-      }
-      var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
-      var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-      range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
+    var dateRange = that.data.dateRange;
+    if(dateRange=='选择时间'){
+      wx.showToast({
+        title: '请选择送达时间',
+        icon:'none'
+      })
+      return;
     }
+    var today = that.data.today;
+    var now = new Date();
+    if(today==1){
+      now.setTime(now.getTime()+24*60*60*1000);
+    }
+    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+    range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
     wx.showLoading({
       title: '生成订单中',
     })
@@ -254,7 +250,6 @@ Page({
     var baseUrl = that.data.baseUrl;
     var list = that.data.detailList;
     var address = that.data.address;
-    var postage = that.data.postage;
     var dateRange = that.data.dateRange;
     var data = {};
     data.rangeTime = range;
@@ -302,12 +297,6 @@ Page({
       }
     })
   },
-  //选择配送方式
-  checkDelivery:function(){
-    this.setData({
-      check:!this.data.check
-    })
-  },
   //支付
   payment:function(){
     var that = this;
@@ -326,7 +315,6 @@ Page({
         method: 'post',
         data: orderBasic,
         success(res) {
-
           if(res.data.code==200){
             wx.showToast({
               title: '支付成功',
@@ -338,7 +326,6 @@ Page({
                 }, 1000);
               }
             })
-            
           }else{
             wx.showToast({
               title: res.data.msg
@@ -352,5 +339,7 @@ Page({
         }
       })
     }
-  }
+  },
+  disableRoll:function(){}
+
 })

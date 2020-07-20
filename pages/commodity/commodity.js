@@ -14,6 +14,8 @@ Page({
     animationData: {},
     idxFlag:0,
     disabled:false,
+    totalPrice:0,
+    totalSum:0
   },
   onLoad:function(){
     this.setData({
@@ -62,6 +64,10 @@ Page({
             wx.setTabBarBadge({//tabbar右上角添加文本
               index: 1,//tabbar下标
               text: checkNum+'' //显示的内容,必须为字符串
+            })
+          }else{
+            wx.removeTabBarBadge({
+              index: 1,
             })
           }
         }
@@ -224,8 +230,13 @@ Page({
     // })
     var that = this;
     var idx = e.currentTarget.dataset.idx;
+    var detail = that.data.commodity[idx];
+    var sum = detail.init_num;
+    var totalPrice = (detail.price_unit * sum).toFixed(2);
     that.setData({
-      idxFlag:idx
+      idxFlag:idx,
+      totalSum:sum,
+      totalPrice:totalPrice
     })
     that.showAddModal();
   },
@@ -337,7 +348,9 @@ Page({
   },
   subtract:function(){
     var that = this;
-    var detail = that.data.detail;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
     if(detail.init_unit==0 && detail.init_num<=50 || detail.init_unit==1 && detail.init_num==1){
       return;
     }
@@ -349,19 +362,22 @@ Page({
     }
     detail.init_num = num;
     var sum = detail.init_unit==0?num/50:num;
-    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
+    var totalPrice = (detail.price_unit * sum).toFixed(2);
     var disabled = false;
     if(detail.init_unit==0 && num<=50 || detail.init_unit==1 && num==1){
       disabled = true;
     }
     that.setData({
-      detail:detail,
+      totalPrice:totalPrice,
+      totalSum:num,
       disabled:disabled
     })
   },
   add:function(){
     var that = this;
-    var detail = that.data.detail;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
     var num = 0;
     if(detail.init_unit==0){
       num = detail.init_num+50;
@@ -370,11 +386,49 @@ Page({
     }
     detail.init_num = num;
     var sum = detail.init_unit==0?num/50:num;
-    detail.totalPrice = (detail.price_unit * sum).toFixed(2);
+    var totalPrice = (detail.price_unit * sum).toFixed(2);
     that.setData({
-      detail:detail,
+      totalPrice:totalPrice,
+      totalSum:num,
       disabled:false
     })
   },
-
+  addShoppingCar:function(){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var sum = that.data.totalSum;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
+    var shoppingInfo = {};
+    shoppingInfo.uId=4;
+    shoppingInfo.sId=detail.s_id;
+    shoppingInfo.sNum=sum;
+    var json = JSON.stringify(shoppingInfo);
+    wx.request({
+      url: baseUrl+"shoppingCart/addShoppingCart",
+      method: 'post',
+      data: json,
+      success(res) {
+        if(res.data.code==200){
+          wx.showToast({
+            title: '添加成功'
+          })
+          that.hideAddModal();
+          that.onShow();
+        }else{
+          wx.showToast({
+            title: "服务器异常"
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
+  },
+  disableRoll:function(){}
 })

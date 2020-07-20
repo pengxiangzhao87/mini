@@ -51,9 +51,9 @@ Page({
             baseUrl:app.globalData.baseUrl,
             urls:urls
           })
-          if(info.order_status==5){
-            that.countDown();
-          }
+          // if(info.order_status==5){
+          //   that.countDown();
+          // }
         }
       }
     })
@@ -95,7 +95,19 @@ Page({
     var id = e.currentTarget.dataset.id;
     var that = this;
     var status = that.data.info.order_status;
-    if(status==1){
+    if(status==1 || status==3){
+      if(status == 3){
+        var lastTime = that.data.info.last_time;
+        var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
+        if(new Date().getTime()>limitTime){
+          wx.showToast({
+            icon:'none',
+            title: '收到商品24小时后，不受理退款',
+            duration:3000
+          })
+          return;
+        }
+      }
       wx.showModal({
         title: '提示',
         content: '确定申请退款吗？',
@@ -117,7 +129,12 @@ Page({
           }
         }
       })
-      
+    }else if(status==2){
+      wx.showToast({
+        icon:'none',
+        title: '配送中，无法申请退款',
+        duration:3000
+      })
     }
   },
   
@@ -288,5 +305,49 @@ Page({
       current: preUrl+pic, // 当前显示图片的http链接
       urls: urlList // 需要预览的图片http链接列表
     })
+  },
+  closeOrder:function(){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    wx.showModal({
+      title: '提示',
+      content: '确定取消订单吗？',
+      success: function (sm) {
+        var param = {};
+        param.oId=that.data.oid;
+        console.info(param)
+        wx.request({
+          url: baseUrl+"order/closeOrder",
+          method: 'get',
+          data: param,
+          success(res) {
+            if(res.data.code==200){
+              wx.showToast({
+                icon:'none',
+                title: '取消成功',
+                success:function(){
+                  setTimeout(function () {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }, 1000);
+                  
+                }
+              })
+            }else{
+              wx.showToast({
+                title: res.data.msg
+              })
+            }
+          },fail(res){
+            wx.showToast({
+              icon:'none',
+              title: '服务器异常'
+            })
+          }
+        })
+      }
+    })
+    
   }
 })
