@@ -15,30 +15,33 @@ Page({
     idxFlag:0,
     disabled:false,
     totalPrice:0,
-    totalSum:0
+    totalSum:0,
+    back:0
   },
   onLoad:function(){
-    this.setData({
-      baseUrl:app.globalData.baseUrl
-    })
-
-  },
-  onShow(){
     var that = this;
     var data = that.data;
-    var baseUrl = data.baseUrl;
+    var baseUrl = app.globalData.baseUrl;
     var paras = {};
     paras.page=data.page;
     paras.rows=data.rows;
     paras.userId=4;
     paras.tId=-1;
-    this.queryCommodity(that,paras,baseUrl);
-    this.getCarNum(paras,baseUrl);
+    that.queryCommodity(that,paras,baseUrl);
     paras.uId=4;
     paras.isUsed=1;
-    this.queryAddressList(that,paras,baseUrl);
-
-    
+    that.queryAddressList(that,paras,baseUrl);
+  },
+  onShow:function(){
+    var that = this;
+    that.setData({
+      back:0
+    })
+    var data = that.data;
+    var baseUrl = data.baseUrl;
+    var paras = {};
+    paras.userId=4;
+    this.getCarNum(paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -127,12 +130,11 @@ Page({
       success(res) {
         if(res.data.code==200){
           var list = res.data.data.list;
-          console.info(list)
           var totalPage = res.data.data.totalPage;
           that.setData({
             baseUrl:baseUrl,
             commodity:list,
-            totalPage:totalPage,
+            totalPage:totalPage
           })
         }else{
           wx.showToast({
@@ -241,10 +243,19 @@ Page({
     that.showAddModal();
   },
   //回到顶部
-  onTabItemTap:function(){
-    wx.pageScrollTo({
-      scrollTop:0
-    })
+  onTabItemTap:function(e){
+    var that = this;
+    var back = that.data.back;
+    if(back>0){
+      wx.pageScrollTo({
+        scrollTop:0
+      })
+    }else{
+      that.setData({
+        back:1
+      })
+    }
+
   },
   //禁止下拉
   onPageScroll:function(e){
@@ -430,5 +441,11 @@ Page({
       }
     })
   },
-  disableRoll:function(){}
+  disableRoll:function(){},
+  toGroup:function(){
+    wx.navigateTo({
+      url: '/pages/group/group'
+    })
+  }
+
 })

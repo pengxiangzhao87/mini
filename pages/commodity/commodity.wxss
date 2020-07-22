@@ -21,7 +21,6 @@
 
 .carousel{
   border-radius: 10px;  
-  background-color: black;
   height:170px;
   width:96%;
   margin-top:10px;
