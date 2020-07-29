@@ -157,3 +157,11 @@
   margin-bottom:10px;
 }
 
+.addImg{
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
+
+}

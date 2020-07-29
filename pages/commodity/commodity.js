@@ -16,7 +16,13 @@ Page({
     disabled:false,
     totalPrice:0,
     totalSum:0,
-    back:0
+    back:0,
+    addImg:'',
+    addAni:null,
+    bus_x:0,
+    bus_y:0,
+    busPos:[],
+    move:0
   },
   onLoad:function(){
     var that = this;
@@ -41,6 +47,11 @@ Page({
     var paras = {};
     paras.userId=4;
     that.getCarNum(paras,baseUrl);
+    //首先计算购物车的位置
+    this.busPos = {};
+    this.busPos['x'] = app.globalData.ww*0.5;
+    this.busPos['y'] = app.globalData.hh;
+    console.info(this.busPos)
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -198,6 +209,8 @@ Page({
   //加入购物车
   addCar:function(e){
     var that = this;
+    var img = e.currentTarget.dataset.img;
+    var addImg = that.data.baseUrl+"upload/"+img;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
     var sum = detail.init_num;
@@ -206,10 +219,58 @@ Page({
     that.setData({
       idxFlag:idx,
       totalSum:sum,
-      totalPrice:totalPrice
+      totalPrice:totalPrice,
+      addImg:addImg
     })
-    that.showAddModal();
+    that.touchOnGoods(e);
+    // that.showAddModal();
   },
+  touchOnGoods: function(e) {
+    // 如果good_box正在运动
+    //当前点击位置的x，y坐标
+    this.finger = {};
+    var topPoint = {};
+    this.finger['x'] = e.touches["0"].clientX;
+    this.finger['y'] = e.touches["0"].clientY+this.data.move;
+    // if (this.finger['y'] < this.busPos['y']) {
+    //     topPoint['y'] = this.finger['y'] - 150;
+    // } else {
+    //     topPoint['y'] = this.busPos['y'] - 150;
+    // }
+    topPoint['y'] = this.finger['y'] - 150;
+    if (this.finger['x'] < this.busPos['x']) {
+        topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
+    } else {
+        topPoint['x'] = this.busPos['x'];
+        this.finger['x'] = this.busPos['x']
+    }
+    this.linePos = app.bezier([this.finger, topPoint, this.busPos], 50);
+    this.startAnimation();
+
+},
+//开始动画
+startAnimation: function() {
+    var index = 0,
+        that = this,
+        bezier_points = that.linePos['bezier_points'];
+    this.setData({
+        hide_good_box: false,
+        bus_x: that.finger['x'],
+        bus_y: that.finger['y']
+    })
+    this.timer = setInterval(function() {
+        index++;
+        if (index==49) {
+          clearInterval(that.timer);
+        }
+        that.setData({
+            bus_x: bezier_points[index]['x'],
+            bus_y: bezier_points[index]['y']
+        })
+        
+    }, 50);
+},
+
   //回到顶部
   onTabItemTap:function(e){
     var that = this;
@@ -227,6 +288,11 @@ Page({
   },
   //禁止下拉
   onPageScroll:function(e){
+    this.busPos['y'] = this.busPos['y']+e.scrollTop
+    this.setData({
+      bus_y:e.scrollTop,
+      move:e.scrollTop
+    })
     if(e.scrollTop<0){
       wx.pageScrollTo({
         scrollTop: 0
@@ -374,42 +440,44 @@ Page({
   },
   addShoppingCar:function(e){
     var that = this;
-    var baseUrl = that.data.baseUrl;
-    var sum = that.data.totalSum;
-    var idx = that.data.idxFlag;
-    var commodity = that.data.commodity;
-    var detail = commodity[idx];
-    var shoppingInfo = {};
-    shoppingInfo.uId=4;
-    shoppingInfo.sId=detail.s_id;
-    shoppingInfo.sNum=sum;
-    var json = JSON.stringify(shoppingInfo);
-    wx.request({
-      url: baseUrl+"shoppingCart/addShoppingCart",
-      method: 'post',
-      data: json,
-      success(res) {
-        if(res.data.code==200){
-          wx.showToast({
-            title: '添加成功'
-          })
-          that.hideAddModal();
-          that.onShow();
-        }else{
-          wx.showToast({
-            title: "服务器异常"
-          })
-        }
-      },
-      fail(res) {
-        wx.showToast({
-          icon:'none',
-          title: '服务器异常'
-        })
-      }
-    })
+   
+    that.imgPosit(that,e);
+    that.hideAddModal();
+    // var baseUrl = that.data.baseUrl;
+    // var sum = that.data.totalSum;
+    // var idx = that.data.idxFlag;
+    // var commodity = that.data.commodity;
+    // var detail = commodity[idx];
+    // var shoppingInfo = {};
+    // shoppingInfo.uId=4;
+    // shoppingInfo.sId=detail.s_id;
+    // shoppingInfo.sNum=sum;
+    // var json = JSON.stringify(shoppingInfo);
+    // wx.request({
+    //   url: baseUrl+"shoppingCart/addShoppingCart",
+    //   method: 'post',
+    //   data: json,
+    //   success(res) {
+    //     if(res.data.code==200){
+    //       wx.showToast({
+    //         title: '添加成功'
+    //       })
+    //       that.hideAddModal();
+    //       that.onShow();
+    //     }else{
+    //       wx.showToast({
+    //         title: "服务器异常"
+    //       })
+    //     }
+    //   },
+    //   fail(res) {
+    //     wx.showToast({
+    //       icon:'none',
+    //       title: '服务器异常'
+    //     })
+    //   }
+    // })
   },
-  
   disableRoll:function(){}
 
 })
