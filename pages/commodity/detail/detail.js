@@ -125,6 +125,7 @@ Page({
       method: 'post',
       data: json,
       success(res) {
+        console.info(res)
         if(res.data.code==200){
           wx.showToast({
             title: '添加成功'

@@ -37,11 +37,10 @@ Page({
     that.setData({
       back:0
     })
-    var data = that.data;
-    var baseUrl = data.baseUrl;
+    var baseUrl = app.globalData.baseUrl;
     var paras = {};
     paras.userId=4;
-    this.getCarNum(paras,baseUrl);
+    that.getCarNum(paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -56,10 +55,8 @@ Page({
             var detail = list[idx];
             for(var index in detail.goods){
               var item = detail.goods[index];
-              if(item.isDele==1){
-                if(item.is_check==1){
-                  ++checkNum;
-                }
+              if(item.is_check==1){
+                ++checkNum;
               }
             }
           }
@@ -200,41 +197,12 @@ Page({
   },
   //加入购物车
   addCar:function(e){
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       var sid = e.currentTarget.dataset.sid;
-    //       var data={};
-    //       data.sid=sid;
-    //       data.uid=4;
-    //       var json = JSON.stringify(data);
-    //       wx.request({
-    //         url: app.globalData.baseUrl+"shoppingCart/addShoppingCart",
-    //         method: 'post',
-    //         data: json,
-    //         success(res) {
-    //           if(res.data.code!=200){
-    //             wx.showToast({
-    //               title: "服务器异常"
-    //             })
-    //           }
-    //         },
-    //         fail(res) {
-    //           wx.showToast({
-    //             title: "服务器异常"
-    //           })
-    //         }
-    //       })
-    //     }else{
-    //       this.showModal();
-    //     }
-    //   }
-    // })
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
     var sum = detail.init_num;
-    var totalPrice = (detail.price_unit * sum).toFixed(2);
+    var unit = detail.init_unit;
+    var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
     that.setData({
       idxFlag:idx,
       totalSum:sum,
@@ -404,7 +372,7 @@ Page({
       disabled:false
     })
   },
-  addShoppingCar:function(){
+  addShoppingCar:function(e){
     var that = this;
     var baseUrl = that.data.baseUrl;
     var sum = that.data.totalSum;
@@ -441,11 +409,7 @@ Page({
       }
     })
   },
-  disableRoll:function(){},
-  toGroup:function(){
-    wx.navigateTo({
-      url: '/pages/group/group'
-    })
-  }
+  
+  disableRoll:function(){}
 
 })

@@ -22,7 +22,7 @@
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
               <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-              <image catchtap="addCar" data-sid="{{commodity[idx].s_id}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
             </view>
         </view>
       </view>
@@ -35,7 +35,7 @@
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
             <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-            <image catchtap="addCar" data-sid="{{commodity[idx].s_id}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
           </view>
         </view>
       </view> 
@@ -49,4 +49,37 @@
 
 <view class="floorstatus" hidden="{{floorstatus}}" bindtap="goTop">回到顶部</view>
  
- 
+ <view class="wrap">
+  <!-- modal  -->
+  <view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+    <view class="modal-cancel" bindtap="hideAddModal" catchtouchmove="disableRoll"></view>
+    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+      <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
+        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
+        <view>
+          <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
+          <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
+          <view style="margin-left:10px;margin-top:10px;"><text style="color:red;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+        </view>
+      </view>
+      <view class="specification">
+        <view style="margin-left:20px;color:#999999;font-size:14px;">规格</view>
+        <view style="display:flex;flex-direction:row;align-items: center;margin-right:20px;margin-left:auto;">
+          <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{commodity[idxFlag].init_unit==0?50:1}}</view>
+          <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
+          <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{totalSum}}&nbsp;{{commodity[idxFlag].init_unit==0?'g':'个'}}</text></view>
+          <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
+          <view class="btn"  bindtap="add">{{commodity[idxFlag].init_unit==0?50:1}}</view>
+        </view>
+      </view>
+      <view class="page_bottom">
+        <view style="margin-right:10px;margin-left:auto;">
+          <view style="display:flex;align-items: center;justify-content: center;  ">
+            <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;">￥{{totalPrice}}</view>
+            <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;">加入购物车</text></view>
+          </view>
+        </view>
+      </view>   
+    </view>
+  </view>
+</view>

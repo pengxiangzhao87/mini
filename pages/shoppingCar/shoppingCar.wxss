@@ -12,6 +12,18 @@ page{
   padding-bottom: 10px;
   background-color: #FFFFFF;
 }
+.deleteFn{
+  font-size:16px;
+  color:#666666;
+  margin-right:10px;
+  margin-left:auto;
+}
+.deleteFn.disabled{
+  font-size:16px;
+  color:#999999;
+  margin-right:10px;
+  margin-left:auto;
+}
 .postage{
   height:30px;
   width:100%;

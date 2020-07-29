@@ -8,15 +8,10 @@ Page({
     selectedAll:false,
     //选择的总价
     totalPrice:0,
-    //差价免配送费
-    //restPrice:30,
-    //隐藏配送费提醒
-    //hidden:false,
+    //是否可以删除
     isDelete:false,
     //已选择商品数量
     checkNum:0,
-    //隐藏失效按钮
-    hideLose:true
   },
   onLoad: function(){
 
@@ -37,27 +32,22 @@ Page({
           var checkNum = parseInt(0);
           var selectedAll = true;
           var isDelete = false;
-          var hideLose = true;
           for(var idx in list){
             var detail = list[idx];
             for(var index in detail.goods){
               var item = detail.goods[index];
-              if(item.isDele==1){
-                if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
-                  item.disabled = true;
-                }else{
-                  item.disabled = false;
-                }
-                if(item.is_check==1){
-                  var sum = item.init_unit==0?item.s_num/50:item.s_num;
-                  totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-                  ++checkNum;
-                  isDelete = true;
-                }else{
-                  selectedAll = false;
-                }
+              if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
+                item.disabled = true;
               }else{
-                hideLose = false;
+                item.disabled = false;
+              }
+              if(item.is_check==1){
+                var sum = item.init_unit==0?item.s_num/50:item.s_num;
+                totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
+                ++checkNum;
+                isDelete = true;
+              }else{
+                selectedAll = false;
               }
             }
           }
@@ -67,8 +57,7 @@ Page({
             totalPrice:totalPrice.toFixed(2),
             checkNum:checkNum,
             selectedAll:selectedAll,
-            isDelete:isDelete,
-            hideLose:hideLose
+            isDelete:isDelete
           })
           that.getCarNum(baseUrl);
         }else{
@@ -99,10 +88,8 @@ Page({
             var detail = list[idx];
             for(var index in detail.goods){
               var item = detail.goods[index];
-              if(item.isDele==1){
-                if(item.is_check==1){
-                  ++checkNum;
-                }
+              if(item.is_check==1){
+                ++checkNum;
               }
             }
           }
@@ -215,6 +202,7 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
+    console.info(list)
     if(list.length==0){
       return;
     }
@@ -224,9 +212,7 @@ Page({
       var detail = list[idx];
       for(var index in detail.goods){
         var item = detail.goods[index];
-        if(item.isDele==1){
-          id += item.id+',';
-        }
+        id += item.id+',';
       }
     }
     var paras = [];
@@ -354,9 +340,7 @@ Page({
       var detail = list[idx];
       for(var index in detail.goods){
         var item = detail.goods[index];
-        if(item.isDele==0){
-          ids += item.id+',';
-        }
+        ids += item.id+',';
       }
     }
     if(ids.length>0){

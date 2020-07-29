@@ -281,6 +281,10 @@ Page({
           wx.hideLoading({
             complete: (res) => {},
           })
+          wx.showToast({
+            icon:'none',
+            title: '待开发'
+          })
           that.setData({
             oId:res.data.data
           })

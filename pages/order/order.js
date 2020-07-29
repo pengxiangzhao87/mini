@@ -2,6 +2,7 @@
 var app = getApp();
 Page({
   data: {
+    back:false,
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     baseUrl:'',
@@ -32,17 +33,56 @@ Page({
     var id = e.id;
     var that = this;
     var baseUrl = app.globalData.baseUrl;
+    if(id==1){
+      that.setData({
+        baseUrl:baseUrl,
+        payOrder:false,
+        allOrder:false,
+        sendOrder:true,
+        takeOrder:false
+      })
+    }else if(id==2){
+      that.setData({
+        baseUrl:baseUrl,
+        payOrder:false,
+        allOrder:false,
+        sendOrder:false,
+        takeOrder:true
+      })
+    }else if(id==5){
+      that.setData({
+        baseUrl:baseUrl,
+        payOrder:true,
+        allOrder:false,
+        sendOrder:false,
+        takeOrder:false
+      })
+    }else{
+      that.setData({
+        baseUrl:baseUrl,
+        payOrder:false,
+        allOrder:true,
+        sendOrder:false,
+        takeOrder:false
+      })
+    }
+  },
+  onShow:function(){
+    var that = this;
+    //是否返回页
+    if(that.data.back){
+      that.setData({
+        back:false
+      })
+      return;
+    }
+    var baseUrl = that.data.baseUrl;
+    var status =that.data.payOrder?5:(that.data.sendOrder?1:(that.data.takeOrder?2:-1));
     var paras={};
     paras.userId=4;
     paras.page=1;
     paras.rows=that.data.rows;
-    if(id==1){
-      paras.status=1;
-    }else if(id==2){
-      paras.status=2;
-    }else if(id==5){
-      paras.status=5;
-    }
+    paras.status=status;
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
       method: 'get',
@@ -55,45 +95,25 @@ Page({
             var item = data[idx];
             item.imgUrl = item.imgUrl.split('~');
           }
-          if(id==1){
+          if(status==1){
             that.setData({
-              baseUrl:baseUrl,
               sendList:data,
-              sendTotalPage:totalPage,
-              payOrder:false,
-              allOrder:false,
-              sendOrder:true,
-              takeOrder:false
+              sendTotalPage:totalPage
             })
-          }else if(id==2){
+          }else if(status==2){
             that.setData({
-              baseUrl:baseUrl,
               takeList:data,
-              takeTotalPage:totalPage,
-              payOrder:false,
-              allOrder:false,
-              sendOrder:false,
-              takeOrder:true
+              takeTotalPage:totalPage
             })
-          }else if(id==5){
+          }else if(status==5){
             that.setData({
-              baseUrl:baseUrl,
               payList:data,
-              payTotalPage:totalPage,
-              payOrder:true,
-              allOrder:false,
-              sendOrder:false,
-              takeOrder:false
+              payTotalPage:totalPage
             })
           }else{
             that.setData({
-              baseUrl:baseUrl,
               allList:data,
-              allTotalPage:totalPage,
-              payOrder:false,
-              allOrder:true,
-              sendOrder:false,
-              takeOrder:false
+              allTotalPage:totalPage
             })
           }
           
@@ -136,7 +156,6 @@ Page({
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
-            console.info(data)
             that.setData({
               allList:data,
               allTotalPage:totalPage,

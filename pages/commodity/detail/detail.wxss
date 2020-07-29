@@ -1,4 +1,8 @@
 /* pages/commodity/detail/detail.wxss */
+.contain{
+  width: 100%;
+  overflow-x: hidden;
+}
 .head{
   width: 100%;
   height: 100vw;

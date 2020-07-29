@@ -1,69 +1,45 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
 <view class="head">
   <view style="font-weight: bolder;font-size:18px;color:#333333;margin-left:10px;">购物车</view>
-  <view style="font-size:16px;color:#666666;margin-right:10px;margin-left:auto;" bindtap="deleteFn">删除</view>
+  <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
 </view> 
 <view style="margin-bottom:100px;height:100%;">
   <view style="padding-top:5px;">
-    <!-- <view class="postage" hidden="{{hidden}}">
-      <view style="margin-left:30%;">配送费4元，满30元免配送费</view>
-      <image bindtap="closePostage"  src="/image/gouwuche_delete@3x.png" style="width:10px;height:10px;margin-right:10px;margin-left:auto;"></image>
-    </view> -->
     <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
       <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;margin-bottom:5px;">{{detail.supplier}}</view>
       <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
         <view class="list">
           <view style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
-            <view wx:if="{{item.isDele==1}}">
-              <image catchtap="checkBox" data-id="{{item.id}}" data-check="{{item.is_check}}" style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
-            </view>
-            <view wx:elif="{{item.isDele==0}}">
-              <view style="width:20px;height:14px;color:#FFFFFF;font-size:10px;background-color:#CCCCCC;">失效</view>
-            </view>
+            <image catchtap="checkBox" data-id="{{item.id}}" data-check="{{item.is_check}}" style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
           </view>
           <view bindtap="toDetail" data-sid="{{item.s_id}}">
             <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
           </view>
           <view style="height:66px;margin-left:10px;width:100%;">
-            <view wx:if="{{item.isDele==1}}" style="height:100%;">
-              <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">
-                <view style="color:#333333;font-size:14px;">{{item.s_name}}</view>
-                <view style="margin-right:10px;margin-left:auto;color:#666666;font-size:12px;">{{item.sell}}</view>
-              </view>
-              <view style="display:flex;flex-direction:row;height:22px;margin-top:20px;">
-                <view style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</view>
-                <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
-                  <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
-                  <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
-                  <view style="font-size:14px;color:#333333;display:flex;align-items: center;justify-content: center;width:47px;"><text decode="true">{{item.s_num}}&nbsp;{{item.init_unit==0?'g':'个'}}</text></view>
-                  <image src="/image/shouye_xq_add@3x.png" style="margin-left:5px;margin-right:5px;height:10px;width:10px"></image>
-                  <view class="btn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="1">{{item.init_unit==0?50:1}}</view>
-                </view>
+            <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">
+              <view style="color:#333333;font-size:14px;">{{item.s_name}}</view>
+              <view style="margin-right:10px;margin-left:auto;color:#666666;font-size:12px;">{{item.sell}}</view>
+            </view>
+            <view style="display:flex;flex-direction:row;height:22px;margin-top:20px;">
+              <view style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</view>
+              <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
+                <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
+                <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
+                <view style="font-size:14px;color:#333333;display:flex;align-items: center;justify-content: center;width:47px;"><text decode="true">{{item.s_num}}&nbsp;{{item.init_unit==0?'g':'个'}}</text></view>
+                <image src="/image/shouye_xq_add@3x.png" style="margin-left:5px;margin-right:5px;height:10px;width:10px"></image>
+                <view class="btn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="1">{{item.init_unit==0?50:1}}</view>
               </view>
             </view>
-            <view wx:elif="{{item.isDele==0}}">
-              <view class="title">
-                <view style="color:#999999;font-size:14px;">{{item.s_name}}</view>
-                <view style="margin-right:10px;margin-left:auto;color:#999999;font-size:12px;">{{item.sell}}</view>
-              </view>
-              <view style="font-size:12px;color:#666666 ;height:52px;align-items: center;display:flex;font-weight:border;">商品已失效</view>
-            </view>       
           </view>
         </view>
       </view> 
-      
-    </view>
-  </view>
-  <view hidden="{{hideLose}}">
-    <view style="display:flex;width:100%;align-items: center;justify-content: center;" bindtap="deleteLose">
-      <view style="display:flex;background-color: #FFFFFF ;border-radius: 100px; align-items: center;justify-content: center;width:130px;height:30px;font-size:14px;color:#999999">删除失效商品</view>
     </view>
   </view>
 </view>
 
 <view class="page_bottom" >
   <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-  <view style="margin-left:5px;color:#333333;font-size:14px;">全选</view>
+  <view style="margin-left:5px;color:#333333;font-size:14px;" bindtap="checkAll">全选</view>
   <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
     <view style="margin-right:10px;color:#999999 ;">
       <!-- <view hidden="{{restPrice==0 || restPrice==30?true:false}}" style="font-size:10px;">差<text style="color:#FF1907;">￥{{restPrice}}</text>免配送费</view> -->

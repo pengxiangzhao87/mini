@@ -10,7 +10,13 @@ Page({
     baseUrl:"",
     totalPage:0,
     hidden:true,
-    floorstatus:true
+    floorstatus:true,
+    totalPrice:0,
+    totalSum:0,
+    idxFlag:0,
+    disabled:false,
+    hideFlag: true,//true-隐藏  false-显示
+    addFlag:true
   },
 
   onLoad:function(e) {
@@ -170,17 +176,195 @@ Page({
   },
   //加入购物车
   addCar:function(e){
-    var sid = e.currentTarget.dataset.sid;
-    var data={};
-    data.sid=sid;
-    data.uid=4;
-    var json = JSON.stringify(data);
+    var that = this;
+    var idx = e.currentTarget.dataset.idx;
+    var detail = that.data.commodity[idx];
+    var sum = detail.init_num;
+    var unit = detail.init_unit;
+    var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
+    that.setData({
+      idxFlag:idx,
+      totalSum:sum,
+      totalPrice:totalPrice
+    })
+    that.showAddModal();
+  },
+  //回到顶部
+  goTop:function(){
+    wx.pageScrollTo({
+      scrollTop:0
+    })
+  },
+  // 获取滚动条当前位置
+  onPageScroll: function (e) {
+    if (e.scrollTop > 800) {
+      this.setData({
+        floorstatus: false
+      });
+    } else {
+      this.setData({
+        floorstatus: true
+      });
+    }
+  },
+  showAddModal:function(){
+    var that = this;
+    that.setData({
+      addFlag: false,
+    })
+    // 创建动画实例
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间
+      timingFunction: 'ease',//动画的效果 默认值是linear->匀速，ease->动画以低速开始，然后加快，在结束前变慢
+    })
+    this.animation = animation; //将animation变量赋值给当前动画
+    var time1 = setTimeout(function () {
+      that.slideIn();//调用动画--滑入
+      clearTimeout(time1);
+      time1 = null;
+    }, 100)
+  },
+  // 隐藏遮罩层
+  hideAddModal:function() {
+    var that = this;
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间 默认400ms
+      timingFunction: 'ease',//动画的效果 默认值是linear
+    })
+    this.animation = animation
+    that.slideDown();//调用动画--滑出
+    var time1 = setTimeout(function () {
+      that.setData({
+        addFlag: true
+      })
+      clearTimeout(time1);
+      time1 = null;
+    }, 220)//先执行下滑动画，再隐藏模块
+    
+  },
+  // 显示遮罩层
+  showModal:function () {
+    var that = this;
+    that.setData({
+      hideFlag: false,
+    })
+    // 创建动画实例
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间
+      timingFunction: 'ease',//动画的效果 默认值是linear->匀速，ease->动画以低速开始，然后加快，在结束前变慢
+    })
+    this.animation = animation; //将animation变量赋值给当前动画
+    var time1 = setTimeout(function () {
+      that.slideIn();//调用动画--滑入
+      clearTimeout(time1);
+      time1 = null;
+    }, 100)
+  },
+
+  // 隐藏遮罩层
+  hideModal:function() {
+    var that = this;
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间 默认400ms
+      timingFunction: 'ease',//动画的效果 默认值是linear
+    })
+    this.animation = animation
+    that.slideDown();//调用动画--滑出
+    var time1 = setTimeout(function () {
+      that.setData({
+        hideFlag: true
+      })
+      clearTimeout(time1);
+      time1 = null;
+    }, 220)//先执行下滑动画，再隐藏模块
+    
+  },
+  //动画 -- 滑入
+  slideIn: function () {
+    this.animation.translateY(0).step() // 在y轴偏移，然后用step()完成一个动画
+    this.setData({
+      //动画实例的export方法导出动画数据传递给组件的animation属性
+      animationData: this.animation.export()
+    })
+  },
+  //动画 -- 滑出
+  slideDown: function () {
+    this.animation.translateY(300).step()
+    this.setData({
+      animationData: this.animation.export(),
+    })
+  },
+  subtract:function(){
+    var that = this;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
+    if(detail.init_unit==0 && detail.init_num<=50 || detail.init_unit==1 && detail.init_num==1){
+      return;
+    }
+    var num = 0;
+    if(detail.init_unit==0){
+      num = detail.init_num-50;
+    }else{
+      num = detail.init_num-1;
+    }
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    var totalPrice = (detail.price_unit * sum).toFixed(2);
+    var disabled = false;
+    if(detail.init_unit==0 && num<=50 || detail.init_unit==1 && num==1){
+      disabled = true;
+    }
+    that.setData({
+      totalPrice:totalPrice,
+      totalSum:num,
+      disabled:disabled
+    })
+  },
+  add:function(){
+    var that = this;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
+    var num = 0;
+    if(detail.init_unit==0){
+      num = detail.init_num+50;
+    }else{
+      num = detail.init_num+1;
+    }
+    detail.init_num = num;
+    var sum = detail.init_unit==0?num/50:num;
+    var totalPrice = (detail.price_unit * sum).toFixed(2);
+    that.setData({
+      totalPrice:totalPrice,
+      totalSum:num,
+      disabled:false
+    })
+  },
+  addShoppingCar:function(){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var sum = that.data.totalSum;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
+    var shoppingInfo = {};
+    shoppingInfo.uId=4;
+    shoppingInfo.sId=detail.s_id;
+    shoppingInfo.sNum=sum;
+    var json = JSON.stringify(shoppingInfo);
     wx.request({
-      url: app.globalData.baseUrl+"shoppingCart/addShoppingCart",
+      url: baseUrl+"shoppingCart/addShoppingCart",
       method: 'post',
       data: json,
       success(res) {
-        if(res.data.code!=200){
+        if(res.data.code==200){
+          wx.showToast({
+            title: '添加成功'
+          })
+          that.hideAddModal();
+          that.onShow();
+        }else{
           wx.showToast({
             title: "服务器异常"
           })
@@ -194,24 +378,5 @@ Page({
       }
     })
   },
-  //回到顶部
-  goTop:function(){
-    wx.pageScrollTo({
-      scrollTop:0
-    })
-  },
-  // 获取滚动条当前位置
-  onPageScroll: function (e) {
-    console.info(e.scrollTop)
-    if (e.scrollTop > 800) {
-      this.setData({
-        floorstatus: false
-      });
-    } else {
-      this.setData({
-        floorstatus: true
-      });
-    }
-  }
 
 })

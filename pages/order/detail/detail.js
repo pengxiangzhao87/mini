@@ -15,6 +15,14 @@ Page({
     method:1,
     urls:[]
   },
+  onUnload:function(){
+    var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+    var prevPage = pages[ pages.length - 2 ];  
+    //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+      back:true
+    })
+  },
   onLoad:function(e){
     var that = this;
     var baseUrl = app.globalData.baseUrl;
@@ -51,9 +59,9 @@ Page({
             baseUrl:app.globalData.baseUrl,
             urls:urls
           })
-          // if(info.order_status==5){
-          //   that.countDown();
-          // }
+          if(info.order_status==5){
+            that.countDown();
+          }
         }
       }
     })
@@ -75,7 +83,22 @@ Page({
         data: paras,
         success(res) {
           if(res.data.code==200){
-            that.onLoad();
+            wx.showToast({
+              title: '订单超时，已自动取消',
+              success:function(){
+                var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+                var prevPage = pages[ pages.length - 2 ];  
+                //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+                prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+                  back:true
+                })
+                setTimeout(function () {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }, 1500);
+              }
+            })
           }
         }
       })
@@ -313,6 +336,9 @@ Page({
       title: '提示',
       content: '确定取消订单吗？',
       success: function (sm) {
+        if(sm.cancel){
+          return;
+        }
         var param = {};
         param.oId=that.data.oid;
         console.info(param)

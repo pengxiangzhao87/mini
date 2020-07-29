@@ -19,7 +19,6 @@
       </swiper-item>
     </swiper >
   </view>
-
 </view>
 
 <view class="icon">
@@ -104,12 +103,14 @@
     </view>
   </view> 
 
+
   <view hidden="{{hidden}}" class="baseLine">
     <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
     <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>
   </view>
 </view>
- 
+
+
  
 <view class="wrap">
   <!-- modal  -->
