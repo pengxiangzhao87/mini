@@ -20,27 +20,73 @@ Page({
     bus_x:0,
     bus_y:0,
     busPos:[],
-    pointHid:false
+    pointHid:true,
+    carSum:0,
+    back:false
   },
 
   onLoad:function(e) {
     var tid = e.tid;
-    var that = this;
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = 40;
     busPos['y'] = app.globalData.hh-120;
     var baseUrl = app.globalData.baseUrl;
-    //获取所有类别
+    this.setData({
+      busPos:busPos,
+      baseUrl:baseUrl,
+      tid:tid
+    })
+  },
+  onShow:function(){
+    var that = this;
+    var data = that.data;
+    var baseUrl = data.baseUrl;
+    var paras={};
+    paras.userId=4
+    that.getCarNum(that,paras,baseUrl);
+    if(data.back){
+      that.setData({
+        back:false
+      })
+      return;
+    }
+    console.info(data.back)
+    var tid = data.tid;
     that.getCategory(that,baseUrl,tid);
     //获取类别下的商品
-    var data = that.data;
-    var paras={};
-    paras.tId=tid;
-    paras.userId=4
+    paras.tId=data.tid;
     paras.page=data.page;
     paras.rows=data.rows;
-    that.getCommodity(that,baseUrl,paras,busPos);
+    that.getCommodity(that,baseUrl,paras);
+    
+  },
+  getCarNum:function(that,paras,baseUrl){
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data;
+          var checkNum = parseInt(0);
+          for(var idx in list){
+            var detail = list[idx];
+            for(var index in detail.goods){
+              var item = detail.goods[index];
+              if(item.is_check==1){
+                ++checkNum;
+              }
+            }
+          }
+          if(checkNum!=0){
+            that.setData({
+              carSum:checkNum
+            })
+          }
+        }
+      }
+    })
   },
   getCategory(that,baseUrl,tid){
     wx.request({
@@ -76,7 +122,7 @@ Page({
       }
     })
   },
-  getCommodity(that,baseUrl,data,busPos){
+  getCommodity(that,baseUrl,data){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -87,8 +133,7 @@ Page({
           var totalPage = res.data.data.totalPage;
           that.setData({
             commodity:list,
-            totalPage:totalPage,
-            busPos:busPos
+            totalPage:totalPage
           })
         }else{
           wx.showToast({
@@ -380,7 +425,6 @@ Page({
         if(res.data.code==200){
           that.hideAddModal();
           that.touchOnGoods();
-          that.onShow();
         }else{
           wx.showToast({
             title: "服务器异常"
@@ -429,8 +473,10 @@ Page({
           if(index==bezier_points.length-1){
             clearInterval(that.timer);
             that.setData({
-              pointHid:true
+              pointHid:true,
+              back:true
             })
+            that.onShow();
           }
         }
       }

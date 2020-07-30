@@ -23,31 +23,32 @@ Page({
     pointHid:true
   },
   onLoad:function(){
-    var that = this;
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = app.globalData.ww*0.5;
     busPos['y'] = app.globalData.hh;
-    var data = that.data;
     var baseUrl = app.globalData.baseUrl;
-    var paras = {};
-    paras.page=data.page;
-    paras.rows=data.rows;
-    paras.userId=4;
-    paras.tId=-1;
-    that.queryCommodity(that,paras,baseUrl,busPos);
-    paras.uId=4;
-    paras.isUsed=1;
-    that.queryAddressList(that,paras,baseUrl);
+    this.setData({
+      busPos:busPos,
+      baseUrl:baseUrl
+    })
   },
   onShow:function(){
     var that = this;
     that.setData({
       back:0
     })
-    var baseUrl = app.globalData.baseUrl;
+    var data = that.data;
+    var baseUrl = data.baseUrl;
     var paras = {};
+    paras.page=data.page;
+    paras.rows=data.rows;
     paras.userId=4;
+    paras.tId=-1;
+    that.queryCommodity(that,paras,baseUrl);
+    paras.uId=4;
+    paras.isUsed=1;
+    that.queryAddressList(that,paras,baseUrl);
     that.getCarNum(paras,baseUrl);
     
   },
@@ -140,8 +141,7 @@ Page({
           that.setData({
             baseUrl:baseUrl,
             commodity:list,
-            totalPage:totalPage,
-            busPos:busPos
+            totalPage:totalPage
           })
         }else{
           wx.showToast({
@@ -286,7 +286,6 @@ Page({
       clearTimeout(time1);
       time1 = null;
     }, 220)//先执行下滑动画，再隐藏模块
-    
   },
   // 显示遮罩层
   showModal:function () {
@@ -396,7 +395,6 @@ Page({
     var that = this;
    
     // that.imgPosit(that,e);
-    that.hideAddModal();
     var baseUrl = that.data.baseUrl;
     var sum = that.data.totalSum;
     var idx = that.data.idxFlag;

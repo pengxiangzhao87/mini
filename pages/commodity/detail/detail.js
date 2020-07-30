@@ -7,6 +7,14 @@ Page({
     detail:{},
     sid:0
   },
+  onUnload:function(){
+    var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+    var prevPage = pages[ pages.length - 2 ];  
+    //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+      back:true
+    })
+  },
   onLoad:function(e) {
     var baseUrl = app.globalData.baseUrl;
     this.setData({

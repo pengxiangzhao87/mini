@@ -51,8 +51,8 @@
 
 <view class="carImg">
     <image src="/image/carIcon.png" style="margin-left:8px;width:21px;height:16px;"></image>
-    <view >
-        <view class="carSum" >2</view>
+    <view hidden="{{carSum==0}}">
+        <view class="carSum" >{{carSum}}</view>
       </view>
 </view>
 
@@ -64,7 +64,7 @@
     <view class="modal-cancel" bindtap="hideAddModal" catchtouchmove="disableRoll"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
       <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
-        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
+        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
         <view>
           <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>

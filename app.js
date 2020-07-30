@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData:{
-    baseUrl:"http://192.168.1.142:9000/CMTGP/",
+    baseUrl:"http://192.168.1.4:9000/CMTGP/",
     //baseUrl:"https://www.sotardust.cn/CMTGP/",
     searchList:[],
     ww:0,
