@@ -21,7 +21,7 @@
             <view style="display:flex;font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-              <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+              <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
               <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
             </view>
         </view>
@@ -34,7 +34,7 @@
             <view style="font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-            <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+            <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
             <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
           </view>
         </view>
@@ -45,6 +45,15 @@
     <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
     <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>
   </view>
+</view>
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
+
+<view class="carImg">
+    <image src="/image/carIcon.png" style="margin-left:8px;width:21px;height:16px;"></image>
+    <view >
+        <view class="carSum" >2</view>
+      </view>
 </view>
 
 <view class="floorstatus" hidden="{{floorstatus}}" bindtap="goTop">回到顶部</view>
@@ -59,7 +68,7 @@
         <view>
           <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
-          <view style="margin-left:10px;margin-top:10px;"><text style="color:red;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+          <view style="margin-left:10px;margin-top:10px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
         </view>
       </view>
       <view class="specification">

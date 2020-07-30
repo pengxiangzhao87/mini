@@ -17,15 +17,17 @@ Page({
     totalPrice:0,
     totalSum:0,
     back:0,
-    addImg:'',
-    addAni:null,
     bus_x:0,
     bus_y:0,
     busPos:[],
-    move:0
+    pointHid:true
   },
   onLoad:function(){
     var that = this;
+    //首先计算购物车的位置
+    var busPos = [];
+    busPos['x'] = app.globalData.ww*0.5;
+    busPos['y'] = app.globalData.hh;
     var data = that.data;
     var baseUrl = app.globalData.baseUrl;
     var paras = {};
@@ -33,7 +35,7 @@ Page({
     paras.rows=data.rows;
     paras.userId=4;
     paras.tId=-1;
-    that.queryCommodity(that,paras,baseUrl);
+    that.queryCommodity(that,paras,baseUrl,busPos);
     paras.uId=4;
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
@@ -47,11 +49,7 @@ Page({
     var paras = {};
     paras.userId=4;
     that.getCarNum(paras,baseUrl);
-    //首先计算购物车的位置
-    this.busPos = {};
-    this.busPos['x'] = app.globalData.ww*0.5;
-    this.busPos['y'] = app.globalData.hh;
-    console.info(this.busPos)
+    
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -130,7 +128,7 @@ Page({
     
   },
   //热销商品分页查询
-  queryCommodity:function(that,data,baseUrl){
+  queryCommodity:function(that,data,baseUrl,busPos){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -142,7 +140,8 @@ Page({
           that.setData({
             baseUrl:baseUrl,
             commodity:list,
-            totalPage:totalPage
+            totalPage:totalPage,
+            busPos:busPos
           })
         }else{
           wx.showToast({
@@ -209,8 +208,6 @@ Page({
   //加入购物车
   addCar:function(e){
     var that = this;
-    var img = e.currentTarget.dataset.img;
-    var addImg = that.data.baseUrl+"upload/"+img;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
     var sum = detail.init_num;
@@ -219,57 +216,13 @@ Page({
     that.setData({
       idxFlag:idx,
       totalSum:sum,
-      totalPrice:totalPrice,
-      addImg:addImg
+      totalPrice:totalPrice
     })
-    that.touchOnGoods(e);
-    // that.showAddModal();
-  },
-  touchOnGoods: function(e) {
-    // 如果good_box正在运动
-    //当前点击位置的x，y坐标
     this.finger = {};
-    var topPoint = {};
-    this.finger['x'] = e.touches["0"].clientX;
-    this.finger['y'] = e.touches["0"].clientY+this.data.move;
-    // if (this.finger['y'] < this.busPos['y']) {
-    //     topPoint['y'] = this.finger['y'] - 150;
-    // } else {
-    //     topPoint['y'] = this.busPos['y'] - 150;
-    // }
-    topPoint['y'] = this.finger['y'] - 150;
-    if (this.finger['x'] < this.busPos['x']) {
-        topPoint['x'] = Math.abs(this.finger['x'] - this.busPos['x']) / 2 + this.finger['x'];
-    } else {
-        topPoint['x'] = this.busPos['x'];
-        this.finger['x'] = this.busPos['x']
-    }
-    this.linePos = app.bezier([this.finger, topPoint, this.busPos], 50);
-    this.startAnimation();
-
-},
-//开始动画
-startAnimation: function() {
-    var index = 0,
-        that = this,
-        bezier_points = that.linePos['bezier_points'];
-    this.setData({
-        hide_good_box: false,
-        bus_x: that.finger['x'],
-        bus_y: that.finger['y']
-    })
-    this.timer = setInterval(function() {
-        index++;
-        if (index==49) {
-          clearInterval(that.timer);
-        }
-        that.setData({
-            bus_x: bezier_points[index]['x'],
-            bus_y: bezier_points[index]['y']
-        })
-        
-    }, 50);
-},
+    this.finger['x'] = e.detail.x;
+    this.finger['y'] = e.detail.y;
+    that.showAddModal();
+  },
 
   //回到顶部
   onTabItemTap:function(e){
@@ -288,10 +241,11 @@ startAnimation: function() {
   },
   //禁止下拉
   onPageScroll:function(e){
-    this.busPos['y'] = this.busPos['y']+e.scrollTop
-    this.setData({
-      bus_y:e.scrollTop,
-      move:e.scrollTop
+    var that = this;
+    var busPos = that.data.busPos;
+    busPos['y'] = busPos['y']+e.scrollTop;
+    that.setData({
+      busPos:busPos
     })
     if(e.scrollTop<0){
       wx.pageScrollTo({
@@ -441,42 +395,80 @@ startAnimation: function() {
   addShoppingCar:function(e){
     var that = this;
    
-    that.imgPosit(that,e);
+    // that.imgPosit(that,e);
     that.hideAddModal();
-    // var baseUrl = that.data.baseUrl;
-    // var sum = that.data.totalSum;
-    // var idx = that.data.idxFlag;
-    // var commodity = that.data.commodity;
-    // var detail = commodity[idx];
-    // var shoppingInfo = {};
-    // shoppingInfo.uId=4;
-    // shoppingInfo.sId=detail.s_id;
-    // shoppingInfo.sNum=sum;
-    // var json = JSON.stringify(shoppingInfo);
-    // wx.request({
-    //   url: baseUrl+"shoppingCart/addShoppingCart",
-    //   method: 'post',
-    //   data: json,
-    //   success(res) {
-    //     if(res.data.code==200){
-    //       wx.showToast({
-    //         title: '添加成功'
-    //       })
-    //       that.hideAddModal();
-    //       that.onShow();
-    //     }else{
-    //       wx.showToast({
-    //         title: "服务器异常"
-    //       })
-    //     }
-    //   },
-    //   fail(res) {
-    //     wx.showToast({
-    //       icon:'none',
-    //       title: '服务器异常'
-    //     })
-    //   }
-    // })
+    var baseUrl = that.data.baseUrl;
+    var sum = that.data.totalSum;
+    var idx = that.data.idxFlag;
+    var commodity = that.data.commodity;
+    var detail = commodity[idx];
+    var shoppingInfo = {};
+    shoppingInfo.uId=4;
+    shoppingInfo.sId=detail.s_id;
+    shoppingInfo.sNum=sum;
+    var json = JSON.stringify(shoppingInfo);
+    wx.request({
+      url: baseUrl+"shoppingCart/addShoppingCart",
+      method: 'post',
+      data: json,
+      success(res) {
+        if(res.data.code==200){
+          that.hideAddModal();
+          that.touchOnGoods();
+          that.onShow();
+        }else{
+          wx.showToast({
+            title: "服务器异常"
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
+  },
+  touchOnGoods: function() {
+    // 如果good_box正在运动
+    //当前点击位置的x，y坐标
+    var that = this;
+    var busPos = that.data.busPos;
+    var topPoint = {};
+    topPoint['y'] = this.finger['y']-50;
+    if (this.finger['x'] < busPos['x']) {
+        topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + this.finger['x'];
+    } else {
+        topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
+    }
+    this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
+    this.startAnimation();
+  },
+  //开始动画
+  startAnimation:function() {
+      var that = this;
+      var bezier_points = that.linePos['bezier_points'];
+      this.setData({
+          pointHid:false,
+          bus_x: that.finger['x'],
+          bus_y: that.finger['y']
+      })
+      this.timer = setInterval(bus_set,30);
+      function bus_set(){
+        for(var index=0;index<bezier_points.length;index++){
+          that.setData({
+              bus_x: bezier_points[index]['x'],
+              bus_y: bezier_points[index]['y']
+          })
+          if(index==bezier_points.length-1){
+            clearInterval(that.timer);
+            that.setData({
+              pointHid:true
+            })
+          }
+        }
+      }
   },
   disableRoll:function(){}
 

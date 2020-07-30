@@ -143,9 +143,43 @@
   margin-bottom:10px;
 }
 
+.addImg{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
 
-  
+}
 
 
+.carImg{
+  width: 40px;
+  height: 40px;
+  border:1px solid white;
+  background-color:rgba(0, 0, 0, 0.6);
+  border-radius: 50px;
+  position:fixed; 
+  left:20px;
+  bottom:120px;
+  display: flex;
+  align-items: center;
+}
+
+.carSum{
+  width:16px;
+  height:16px;
+  background-color:#FF1907;
+  border:1px solid white;
+  color:white;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;  
+  font-size:10px;
+  top:0px;
+  right:-4px;
+  display: flex;
+  position: absolute;
+}
 
  

@@ -21,7 +21,7 @@
   </view>
 </view>
 
-<image class="addImg" src="http://192.168.1.142:9000/CMTGP/upload/微信图片_2020062214035513.jpg"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
 
 <view class="icon">
   <view class="icon_first">
@@ -84,8 +84,8 @@
             <view style="display:flex;font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-              <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-              <image catchtap="addCar" data-idx="{{idx}}" data-img="{{commodity[idx].coverUrl}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+              <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
             </view>
         </view>
       </view>
@@ -97,8 +97,8 @@
           <view style="font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
           <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-            <text style="color:red;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-            <image catchtap="addCar" data-idx="{{idx}}" data-img="{{commodity[idx].coverUrl}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+            <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
           </view>
         </view>
       </view> 
@@ -113,9 +113,7 @@
 </view>
 
 
- 
 <view class="wrap">
-  <!-- modal  -->
   <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
     <view class="modal-cancel" bindtap="hideModal"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
@@ -128,7 +126,6 @@
 
 
 <view class="wrap">
-  <!-- modal  -->
   <view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
     <view class="modal-cancel" bindtap="hideAddModal" catchtouchmove="disableRoll"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
@@ -137,7 +134,7 @@
         <view>
           <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
-          <view style="margin-left:10px;margin-top:10px;"><text style="color:red;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+          <view style="margin-left:10px;margin-top:10px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
         </view>
       </view>
       <view class="specification">

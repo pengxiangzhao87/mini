@@ -50,22 +50,25 @@ App({
   },
 
   bezier: function (points, times) {
+    
     // 0、以3个控制点为例，点A,B,C,AB上设置点D,BC上设置点E,DE连线上设置点F,则最终的贝塞尔曲线是点F的坐标轨迹。
     // 1、计算相邻控制点间距。
     // 2、根据完成时间,计算每次执行时D在AB方向上移动的距离，E在BC方向上移动的距离。
     // 3、时间每递增100ms，则D,E在指定方向上发生位移, F在DE上的位移则可通过AD/AB = DF/DE得出。
     // 4、根据DE的正余弦值和DE的值计算出F的坐标。
-    // 邻控制AB点间距
+    
     var bezier_points = [];
     var points_D = [];
     var points_E = [];
+    //[this.finger, topPoint, this.busPos]
+    // 邻控制AB点间距
     const DIST_AB = Math.sqrt(Math.pow(points[1]['x'] - points[0]['x'], 2) + Math.pow(points[1]['y'] - points[0]['y'], 2));
     // 邻控制BC点间距
     const DIST_BC = Math.sqrt(Math.pow(points[2]['x'] - points[1]['x'], 2) + Math.pow(points[2]['y'] - points[1]['y'], 2));
     // D每次在AB方向上移动的距离
-    const EACH_MOVE_AD = DIST_AB / times;
+    const EACH_MOVE_AD = points[0]['x']>points[1]['x']?(0-DIST_AB / times):DIST_AB / times;
     // E每次在BC方向上移动的距离 
-    const EACH_MOVE_BE = DIST_BC / times;
+    const EACH_MOVE_BE = points[0]['x']>points[1]['x']?(0-DIST_BC / times):DIST_BC / times;
     // 点AB的正切
     const TAN_AB = (points[1]['y'] - points[0]['y']) / (points[1]['x'] - points[0]['x']);
     // 点BC的正切

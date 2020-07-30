@@ -16,12 +16,20 @@ Page({
     idxFlag:0,
     disabled:false,
     hideFlag: true,//true-隐藏  false-显示
-    addFlag:true
+    addFlag:true,
+    bus_x:0,
+    bus_y:0,
+    busPos:[],
+    pointHid:false
   },
 
   onLoad:function(e) {
     var tid = e.tid;
     var that = this;
+    //首先计算购物车的位置
+    var busPos = [];
+    busPos['x'] = 40;
+    busPos['y'] = app.globalData.hh-120;
     var baseUrl = app.globalData.baseUrl;
     //获取所有类别
     that.getCategory(that,baseUrl,tid);
@@ -32,7 +40,7 @@ Page({
     paras.userId=4
     paras.page=data.page;
     paras.rows=data.rows;
-    that.getCommodity(that,baseUrl,paras);
+    that.getCommodity(that,baseUrl,paras,busPos);
   },
   getCategory(that,baseUrl,tid){
     wx.request({
@@ -68,7 +76,7 @@ Page({
       }
     })
   },
-  getCommodity(that,baseUrl,data){
+  getCommodity(that,baseUrl,data,busPos){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -79,7 +87,8 @@ Page({
           var totalPage = res.data.data.totalPage;
           that.setData({
             commodity:list,
-            totalPage:totalPage
+            totalPage:totalPage,
+            busPos:busPos
           })
         }else{
           wx.showToast({
@@ -187,8 +196,13 @@ Page({
       totalSum:sum,
       totalPrice:totalPrice
     })
+    this.finger = {};
+    this.finger['x'] = e.detail.x;
+    this.finger['y'] = e.detail.y;
+
     that.showAddModal();
   },
+
   //回到顶部
   goTop:function(){
     wx.pageScrollTo({
@@ -197,13 +211,18 @@ Page({
   },
   // 获取滚动条当前位置
   onPageScroll: function (e) {
+    var that = this;
+    var busPos = that.data.busPos;
+    busPos['y'] = busPos['y']+e.scrollTop;
     if (e.scrollTop > 800) {
-      this.setData({
-        floorstatus: false
+      that.setData({
+        floorstatus: false,
+        busPos:busPos
       });
     } else {
-      this.setData({
-        floorstatus: true
+      that.setData({
+        floorstatus: true,
+        busPos:busPos
       });
     }
   },
@@ -359,10 +378,8 @@ Page({
       data: json,
       success(res) {
         if(res.data.code==200){
-          wx.showToast({
-            title: '添加成功'
-          })
           that.hideAddModal();
+          that.touchOnGoods();
           that.onShow();
         }else{
           wx.showToast({
@@ -378,5 +395,44 @@ Page({
       }
     })
   },
-
+  touchOnGoods: function() {
+    // 如果good_box正在运动
+    //当前点击位置的x，y坐标
+    var that = this;
+    var busPos = that.data.busPos;
+    var topPoint = {};
+    topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
+    if(this.finger['y']>busPos['y']){
+      topPoint['y'] = busPos['y']-50;
+    }else{
+      topPoint['y'] = this.finger['y']-50;
+    }
+    this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
+    this.startAnimation();
+  },
+  //开始动画
+  startAnimation:function() {
+      var that = this;
+      var bezier_points = that.linePos['bezier_points'];
+      this.setData({
+          pointHid:false,
+          bus_x: that.finger['x'],
+          bus_y: that.finger['y']
+      })
+      this.timer = setInterval(bus_set,30);
+      function bus_set(){
+        for(var index=0;index<bezier_points.length;index++){
+          that.setData({
+              bus_x: bezier_points[index]['x'],
+              bus_y: bezier_points[index]['y']
+          })
+          if(index==bezier_points.length-1){
+            clearInterval(that.timer);
+            that.setData({
+              pointHid:true
+            })
+          }
+        }
+      }
+  },
 })

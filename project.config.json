@@ -28,7 +28,7 @@
 		"useIsolateContext": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.2",
+	"libVersion": "2.11.3",
 	"appid": "wx73415b963d21e2f4",
 	"projectname": "mini",
 	"debugOptions": {
