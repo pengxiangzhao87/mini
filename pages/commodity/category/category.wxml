@@ -49,7 +49,7 @@
 
 <image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
 
-<view class="carImg">
+<view class="carImg" bindtap="toShoppingCar">
     <image src="/image/carIcon.png" style="margin-left:8px;width:21px;height:16px;"></image>
     <view hidden="{{carSum==0}}">
         <view class="carSum" >{{carSum}}</view>

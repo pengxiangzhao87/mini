@@ -16,7 +16,8 @@ Page({
     disabled:false,
     totalPrice:0,
     totalSum:0,
-    back:0,
+    back:false,
+    topFlag:0,
     bus_x:0,
     bus_y:0,
     busPos:[],
@@ -35,10 +36,17 @@ Page({
   },
   onShow:function(){
     var that = this;
-    that.setData({
-      back:0
-    })
     var data = that.data;
+    if(data.back){
+      that.setData({
+        back:false
+      })
+      return;
+    }else{
+      that.setData({
+        topFlag:0
+      })
+    }
     var baseUrl = data.baseUrl;
     var paras = {};
     paras.page=data.page;
@@ -227,14 +235,14 @@ Page({
   //回到顶部
   onTabItemTap:function(e){
     var that = this;
-    var back = that.data.back;
-    if(back>0){
+    var topFlag = that.data.topFlag;
+    if(topFlag>0){
       wx.pageScrollTo({
         scrollTop:0
       })
     }else{
       that.setData({
-        back:1
+        topFlag:1
       })
     }
 

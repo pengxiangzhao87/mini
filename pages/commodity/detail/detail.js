@@ -5,7 +5,8 @@ Page({
     disabled:false,
     baseUrl:"",
     detail:{},
-    sid:0
+    sid:0,
+    shareUrl:''
   },
   onUnload:function(){
     var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
@@ -36,6 +37,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           var result = res.data.data;
+          that.cropImg(that,baseUrl+'upload/202006221056246.jpg')
           var urlList=[];
           if(result.s_address_video!='' && result.s_address_video!=undefined){
             urlList.push(result.s_address_video);
@@ -152,5 +154,58 @@ Page({
         })
       }
     })
+  },
+  onShareAppMessage: (e) => {
+    // if (res.from === 'button') {
+    //   console.log("来自页面内转发按钮");
+    //   console.log(res.target);
+    // }
+    // else {
+    //   console.log("来自右上角转发菜单")
+    // }
+    var sid = e.target.dataset.id;
+    var img = e.target.dataset.img;
+    console.info(img)
+     
+
+    return {
+      title: '食朝夕推荐',
+      path: '/pages/commodity/detail/detail?sid='+sid,
+    
+      success: (res) => {
+        console.log("转发成功", res);
+      },
+      fail: (res) => {
+        console.log("转发失败", res);
+      }
+    }
+  },
+  cropImg:function(that,url){
+    wx.getImageInfo({
+      src: url,
+      success: function(ret) {
+        console.info(ret)
+        var orWidth = ret.width
+        var orHeight = ret.height     
+        var ctx = wx.createCanvasContext('share')
+        ctx.drawImage(ret.path, 0, 0, orWidth, orHeight);     
+        ctx.draw(false, function(res) {     
+          console.info(res)
+          wx.canvasToTempFilePath({      
+            canvasId: 'share',
+            fileType: 'jpeg',
+            success: function(resl) {
+              var shareUrl = resl.tempFilePath
+              console.info(resl)
+              that.setData({
+                shareUrl: shareUrl
+              })
+            },
+            fail: function(res) {console.info(res)}
+          })
+        })
+      }
+    })
   }
+
 })

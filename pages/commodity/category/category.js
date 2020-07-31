@@ -51,7 +51,6 @@ Page({
       })
       return;
     }
-    console.info(data.back)
     var tid = data.tid;
     that.getCategory(that,baseUrl,tid);
     //获取类别下的商品
@@ -241,10 +240,10 @@ Page({
       totalSum:sum,
       totalPrice:totalPrice
     })
+
     this.finger = {};
     this.finger['x'] = e.detail.x;
     this.finger['y'] = e.detail.y;
-
     that.showAddModal();
   },
 
@@ -258,7 +257,7 @@ Page({
   onPageScroll: function (e) {
     var that = this;
     var busPos = that.data.busPos;
-    busPos['y'] = busPos['y']+e.scrollTop;
+    busPos['y'] = app.globalData.hh+e.scrollTop-120;
     if (e.scrollTop > 800) {
       that.setData({
         floorstatus: false,
@@ -445,14 +444,14 @@ Page({
     var that = this;
     var busPos = that.data.busPos;
     var topPoint = {};
-    topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
-    if(this.finger['y']>busPos['y']){
+    topPoint['x'] = Math.abs(that.finger['x'] - busPos['x'])/2 + busPos['x'];
+    if(that.finger['y']>busPos['y']){
       topPoint['y'] = busPos['y']-50;
     }else{
-      topPoint['y'] = this.finger['y']-50;
+      topPoint['y'] = that.finger['y']-50;
     }
-    this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
-    this.startAnimation();
+    that.linePos = app.bezier([that.finger, topPoint, busPos], 150);
+    that.startAnimation();
   },
   //开始动画
   startAnimation:function() {
@@ -481,4 +480,9 @@ Page({
         }
       }
   },
+  toShoppingCar:function(e){
+    wx.switchTab({
+      url: '/pages/shoppingCar/shoppingCar'
+    })
+  }
 })
