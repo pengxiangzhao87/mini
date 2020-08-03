@@ -37,7 +37,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           var result = res.data.data;
-          that.cropImg(that,baseUrl+'upload/202006221056246.jpg')
+          that.cropImg(that,baseUrl+'upload/1590560923(1).jpg')
           var urlList=[];
           if(result.s_address_video!='' && result.s_address_video!=undefined){
             urlList.push(result.s_address_video);
@@ -184,10 +184,10 @@ Page({
     wx.getImageInfo({
       src: url,
       success: function(ret) {
-        console.info(ret)
+        console.info('ret',ret)
         var orWidth = ret.width
         var orHeight = ret.height     
-        var ctx = wx.createCanvasContext('share')
+        var ctx = wx.createCanvasContext('myShare')
         ctx.drawImage(ret.path, 0, 0, orWidth, orHeight);     
         ctx.draw(false, function(res) {     
           console.info(res)

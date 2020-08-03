@@ -17,7 +17,7 @@
     <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button>
   </view>
 
-<canvas id="share"></canvas>
+<canvas id="myShare"></canvas>
 
   <view class="priceUnit">
     <view><text style="color:#FF1907 ;font-size:16px;">{{detail.price}}</text>{{detail.unit}}</view>

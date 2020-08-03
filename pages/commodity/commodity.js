@@ -419,9 +419,15 @@ Page({
       data: json,
       success(res) {
         if(res.data.code==200){
+          
           that.hideAddModal();
-          that.touchOnGoods();
-          that.onShow();
+          setTimeout(function () {
+            that.touchOnGoods();
+            setTimeout(function () {
+              that.onShow();
+            }, 400)
+          }, 300)
+          
         }else{
           wx.showToast({
             title: "服务器异常"
@@ -448,7 +454,7 @@ Page({
     } else {
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
     }
-    this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
+    this.linePos = app.bezier([this.finger, topPoint, busPos], 500);
     this.startAnimation();
   },
   //开始动画
@@ -470,7 +476,8 @@ Page({
           if(index==bezier_points.length-1){
             clearInterval(that.timer);
             that.setData({
-              pointHid:true
+              pointHid:true,
+              back:true
             })
           }
         }
