@@ -82,8 +82,8 @@
   margin-left:20px;
 }
 .carSum{
-  width:12px;
-  height:12px;
+  width:14px;
+  height:14px;
   background-color:#FF1907;
   color:white;
   border-radius: 50px;

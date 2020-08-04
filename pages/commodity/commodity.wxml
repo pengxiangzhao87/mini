@@ -85,7 +85,7 @@
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
               <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
             </view>
         </view>
       </view>
@@ -98,7 +98,7 @@
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
           <view style="font-size:16px;margin-top:5px;margin-left:10px;">
             <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
           </view>
         </view>
       </view> 
@@ -129,9 +129,9 @@
   <view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
     <view class="modal-cancel" bindtap="hideAddModal" catchtouchmove="disableRoll"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
-      <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
+      <view class="hotGoods" style="margin-left:10px;margin-top:10px;">
         <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
-        <view>
+        <view style="width:100%;">
           <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
           <view style="margin-left:10px;margin-top:10px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>

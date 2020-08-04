@@ -22,7 +22,7 @@
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
               <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
             </view>
         </view>
       </view>
@@ -35,7 +35,7 @@
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
             <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:18px;height:18px;margin-right:10px;float:right;margin-top:5px;"></image>
+            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
           </view>
         </view>
       </view> 

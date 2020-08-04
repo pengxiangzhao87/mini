@@ -37,6 +37,10 @@ Page({
   onShow:function(){
     var that = this;
     var data = that.data;
+    var baseUrl = data.baseUrl;
+    var paras = {};
+    paras.userId=4;
+    that.getCarNum(paras,baseUrl);
     if(data.back){
       that.setData({
         back:false
@@ -47,18 +51,13 @@ Page({
         topFlag:0
       })
     }
-    var baseUrl = data.baseUrl;
-    var paras = {};
     paras.page=data.page;
     paras.rows=data.rows;
-    paras.userId=4;
     paras.tId=-1;
     that.queryCommodity(that,paras,baseUrl);
     paras.uId=4;
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
-    that.getCarNum(paras,baseUrl);
-    
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -229,6 +228,9 @@ Page({
     this.finger = {};
     this.finger['x'] = e.detail.x;
     this.finger['y'] = e.detail.y;
+    wx.hideTabBar({
+      animation: true,
+    })
     that.showAddModal();
   },
 
@@ -251,7 +253,7 @@ Page({
   onPageScroll:function(e){
     var that = this;
     var busPos = that.data.busPos;
-    busPos['y'] = busPos['y']+e.scrollTop;
+    busPos['y'] = app.globalData.hh+e.scrollTop;
     that.setData({
       busPos:busPos
     })
@@ -284,6 +286,9 @@ Page({
     var animation = wx.createAnimation({
       duration: 400,//动画的持续时间 默认400ms
       timingFunction: 'ease',//动画的效果 默认值是linear
+    })
+    wx.showTabBar({
+      animation: true,
     })
     this.animation = animation
     that.slideDown();//调用动画--滑出
@@ -419,13 +424,12 @@ Page({
       data: json,
       success(res) {
         if(res.data.code==200){
-          
           that.hideAddModal();
           setTimeout(function () {
             that.touchOnGoods();
             setTimeout(function () {
               that.onShow();
-            }, 400)
+            }, 600)
           }, 300)
           
         }else{
@@ -454,7 +458,7 @@ Page({
     } else {
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
     }
-    this.linePos = app.bezier([this.finger, topPoint, busPos], 500);
+    this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
     this.startAnimation();
   },
   //开始动画

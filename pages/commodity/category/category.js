@@ -446,7 +446,7 @@ Page({
     var topPoint = {};
     topPoint['x'] = Math.abs(that.finger['x'] - busPos['x'])/2 + busPos['x'];
     if(that.finger['y']>busPos['y']){
-      topPoint['y'] = busPos['y']-50;
+      topPoint['y'] = busPos['y']-100;
     }else{
       topPoint['y'] = that.finger['y']-50;
     }
