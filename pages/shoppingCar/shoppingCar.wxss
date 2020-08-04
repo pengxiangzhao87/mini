@@ -20,7 +20,7 @@ page{
 }
 .deleteFn.disabled{
   font-size:16px;
-  color:#999999;
+  color:#bebebe;
   margin-right:10px;
   margin-left:auto;
 }

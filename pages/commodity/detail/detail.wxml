@@ -14,10 +14,8 @@
   </swiper>
   <view style="display: flex;  flex-direction:row ;align-items: center;margin-top:10px;">
     <view style="margin-left:10px;font-size:16px;width:70%;">{{detail.s_name}}</view>
-    <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button>
+    <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button>
   </view>
-
-<canvas id="myShare"></canvas>
 
   <view class="priceUnit">
     <view><text style="color:#FF1907 ;font-size:16px;">{{detail.price}}</text>{{detail.unit}}</view>

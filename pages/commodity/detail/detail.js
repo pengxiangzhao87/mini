@@ -37,7 +37,6 @@ Page({
       success(res) {
         if(res.data.code==200){
           var result = res.data.data;
-          that.cropImg(that,baseUrl+'upload/1590560923(1).jpg')
           var urlList=[];
           if(result.s_address_video!='' && result.s_address_video!=undefined){
             urlList.push(result.s_address_video);
@@ -57,7 +56,8 @@ Page({
           result.totalPrice = (result.price_unit * sum).toFixed(2);
           that.setData({
             detail:result,
-            disabled:disabled
+            disabled:disabled,
+            shareUrl:baseUrl+'upload/'+result.s_address_img.split('~')[0]
           })
         }else{
           wx.showToast({
@@ -164,48 +164,16 @@ Page({
     //   console.log("来自右上角转发菜单")
     // }
     var sid = e.target.dataset.id;
+    var name = e.target.dataset.name;
     var img = e.target.dataset.img;
-    console.info(img)
-     
-
     return {
-      title: '食朝夕推荐',
+      title: name,
+      imageUrl:img,
       path: '/pages/commodity/detail/detail?sid='+sid,
-    
-      success: (res) => {
-        console.log("转发成功", res);
-      },
-      fail: (res) => {
-        console.log("转发失败", res);
-      }
+      success: (res) => {},
+      fail: (res) => {}
     }
-  },
-  cropImg:function(that,url){
-    wx.getImageInfo({
-      src: url,
-      success: function(ret) {
-        console.info('ret',ret)
-        var orWidth = ret.width
-        var orHeight = ret.height     
-        var ctx = wx.createCanvasContext('myShare')
-        ctx.drawImage(ret.path, 0, 0, orWidth, orHeight);     
-        ctx.draw(false, function(res) {     
-          console.info(res)
-          wx.canvasToTempFilePath({      
-            canvasId: 'share',
-            fileType: 'jpeg',
-            success: function(resl) {
-              var shareUrl = resl.tempFilePath
-              console.info(resl)
-              that.setData({
-                shareUrl: shareUrl
-              })
-            },
-            fail: function(res) {console.info(res)}
-          })
-        })
-      }
-    })
   }
+   
 
 })
