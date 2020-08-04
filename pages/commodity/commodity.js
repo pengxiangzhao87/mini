@@ -226,8 +226,9 @@ Page({
       totalPrice:totalPrice
     })
     this.finger = {};
-    this.finger['x'] = e.detail.x;
-    this.finger['y'] = e.detail.y;
+    //点击位置有偏移
+    this.finger['x'] = e.detail.x-10;
+    this.finger['y'] = e.detail.y-30;
     wx.hideTabBar({
       animation: true,
     })

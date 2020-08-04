@@ -242,8 +242,8 @@ Page({
     })
 
     this.finger = {};
-    this.finger['x'] = e.detail.x;
-    this.finger['y'] = e.detail.y;
+    this.finger['x'] = e.detail.x-10;
+    this.finger['y'] = e.detail.y-30;
     that.showAddModal();
   },
 
