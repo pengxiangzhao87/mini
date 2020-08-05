@@ -21,8 +21,7 @@ Page({
     bus_y:0,
     busPos:[],
     pointHid:true,
-    carSum:0,
-    back:false
+    carSum:0
   },
 
   onLoad:function(e) {
@@ -32,11 +31,20 @@ Page({
     busPos['x'] = 40;
     busPos['y'] = app.globalData.hh-120;
     var baseUrl = app.globalData.baseUrl;
-    this.setData({
+    var that = this;
+    that.setData({
       busPos:busPos,
       baseUrl:baseUrl,
       tid:tid
     })
+    var paras={};
+    paras.userId=4
+    that.getCategory(that,baseUrl,tid);
+    //获取类别下的商品
+    paras.tId=tid;
+    paras.page=that.data.page;
+    paras.rows=that.data.rows;
+    that.getCommodity(that,baseUrl,paras);
   },
   onShow:function(){
     var that = this;
@@ -45,20 +53,6 @@ Page({
     var paras={};
     paras.userId=4
     that.getCarNum(that,paras,baseUrl);
-    if(data.back){
-      that.setData({
-        back:false
-      })
-      return;
-    }
-    var tid = data.tid;
-    that.getCategory(that,baseUrl,tid);
-    //获取类别下的商品
-    paras.tId=data.tid;
-    paras.page=data.page;
-    paras.rows=data.rows;
-    that.getCommodity(that,baseUrl,paras);
-    
   },
   getCarNum:function(that,paras,baseUrl){
     wx.request({
@@ -421,16 +415,19 @@ Page({
       method: 'post',
       data: json,
       success(res) {
-        if(res.data.code==200){
-          that.hideAddModal();
-          that.touchOnGoods();
-        }else{
-          wx.showToast({
-            title: "服务器异常"
-          })
-        }
+        that.hideAddModal();
+        setTimeout(function () {
+          if(res.data.code==200){
+            that.touchOnGoods();
+          }else{
+            wx.showToast({
+              title: "服务器异常"
+            })
+          }
+        }, 300)
       },
       fail(res) {
+        that.hideAddModal();
         wx.showToast({
           icon:'none',
           title: '服务器异常'
@@ -472,8 +469,7 @@ Page({
           if(index==bezier_points.length-1){
             clearInterval(that.timer);
             that.setData({
-              pointHid:true,
-              back:true
+              pointHid:true
             })
             that.onShow();
           }

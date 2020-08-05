@@ -16,7 +16,6 @@ Page({
     disabled:false,
     totalPrice:0,
     totalSum:0,
-    back:false,
     topFlag:0,
     bus_x:0,
     bus_y:0,
@@ -24,33 +23,19 @@ Page({
     pointHid:true
   },
   onLoad:function(){
+    var that = this;
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = app.globalData.ww*0.5;
     busPos['y'] = app.globalData.hh;
     var baseUrl = app.globalData.baseUrl;
-    this.setData({
+    that.setData({
       busPos:busPos,
       baseUrl:baseUrl
     })
-  },
-  onShow:function(){
-    var that = this;
     var data = that.data;
-    var baseUrl = data.baseUrl;
     var paras = {};
     paras.userId=4;
-    that.getCarNum(paras,baseUrl);
-    if(data.back){
-      that.setData({
-        back:false
-      })
-      return;
-    }else{
-      that.setData({
-        topFlag:0
-      })
-    }
     paras.page=data.page;
     paras.rows=data.rows;
     paras.tId=-1;
@@ -58,6 +43,17 @@ Page({
     paras.uId=4;
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
+  },
+  onShow:function(){
+    var that = this;
+    that.setData({
+      topFlag:0
+    })
+    var data = that.data;
+    var baseUrl = data.baseUrl;
+    var paras = {};
+    paras.userId=4;
+    that.getCarNum(paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -235,13 +231,16 @@ Page({
     that.showAddModal();
   },
 
-  //回到顶部
+  //双击回到顶部
   onTabItemTap:function(e){
     var that = this;
     var topFlag = that.data.topFlag;
     if(topFlag>0){
       wx.pageScrollTo({
         scrollTop:0
+      })
+      that.setData({
+        topFlag:0
       })
     }else{
       that.setData({
@@ -250,7 +249,6 @@ Page({
     }
 
   },
-  //禁止下拉
   onPageScroll:function(e){
     var that = this;
     var busPos = that.data.busPos;
@@ -258,11 +256,6 @@ Page({
     that.setData({
       busPos:busPos
     })
-    if(e.scrollTop<0){
-      wx.pageScrollTo({
-        scrollTop: 0
-      })
-    }
   },
   showAddModal:function(){
     var that = this;
@@ -424,22 +417,22 @@ Page({
       method: 'post',
       data: json,
       success(res) {
-        if(res.data.code==200){
-          that.hideAddModal();
-          setTimeout(function () {
-            that.touchOnGoods();
+        that.hideAddModal();
+        setTimeout(function () {
+          if(res.data.code==200){
+            that.touchOnGoods(detail.s_id);
             setTimeout(function () {
               that.onShow();
             }, 600)
-          }, 300)
-          
-        }else{
-          wx.showToast({
-            title: "服务器异常"
-          })
-        }
+          }else{
+            wx.showToast({
+              title: "服务器异常"
+            })
+          }
+        }, 300)
       },
       fail(res) {
+        that.hideAddModal();
         wx.showToast({
           icon:'none',
           title: '服务器异常'
@@ -447,7 +440,7 @@ Page({
       }
     })
   },
-  touchOnGoods: function() {
+  touchOnGoods: function(sid) {
     // 如果good_box正在运动
     //当前点击位置的x，y坐标
     var that = this;
@@ -460,13 +453,13 @@ Page({
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + busPos['x'];
     }
     this.linePos = app.bezier([this.finger, topPoint, busPos], 150);
-    this.startAnimation();
+    this.startAnimation(sid);
   },
   //开始动画
-  startAnimation:function() {
+  startAnimation:function(sid) {
       var that = this;
       var bezier_points = that.linePos['bezier_points'];
-      this.setData({
+      that.setData({
           pointHid:false,
           bus_x: that.finger['x'],
           bus_y: that.finger['y']
@@ -480,9 +473,17 @@ Page({
           })
           if(index==bezier_points.length-1){
             clearInterval(that.timer);
+            var commodity = that.data.commodity;
+            for(var idx in commodity){
+              var item = commodity[idx];
+              if(item.s_id=sid){
+                item.isCar=1;
+                break;
+              }
+            }
             that.setData({
-              pointHid:true,
-              back:true
+              commodity:commodity,
+              pointHid:true
             })
           }
         }

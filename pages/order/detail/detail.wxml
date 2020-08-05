@@ -2,7 +2,7 @@
 <view class="head">
   <view>
     <view style="display: flex;align-items: center;">
-      <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
+      <image style="width:13px;height:16px;margin-left:10px;" src="/image/address@3x.png"></image>
       <text style="margin-left:10px;color:#333333;font-size:16px;font-weight: bolder;">{{info.consignee_address}}</text>
     </view>
     <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
@@ -111,7 +111,7 @@
   <view wx:if="{{info.order_status==5}}">
     <view class="page_bottom_pay" >
       <view class="cancel" bindtap="closeOrder">取消订单</view>
-      <view class="continue" bindtap="showModal">继续支付 {{countDown}}</view>
+      <view class="continue" bindtap="showModal"><view style="width:60px;">继续支付</view><view style="width:30px;">{{countDown}}</view></view>
     </view>   
   </view>
   <view wx:if="{{info.order_status!=5}}">

@@ -4,7 +4,7 @@
     <view>
       <view style="display: flex;align-items: center;">
         <image style="width:13px;height:16px;margin-left:5px;" src="/image/address@3x.png"></image>
-        <text style="margin-left:10px;color:#333333;font-size:14px;">{{address.aCity+address.aDetail}}</text>
+        <text style="margin-left:10px;color:#333333;font-size:14px;font-weight: bolder;">{{address.aCity+address.aDetail}}</text>
       </view>
       <view style="display:flex;align-items: center;width:100%;margin-left:28px;margin-top:7px;font-size:14px;">
         <text style="color:#333333;" decode="true">{{address.name}}&nbsp;&nbsp;<text style="color:#666666;">{{address.phone}}</text></text>
@@ -21,17 +21,15 @@
 
 <view class="body">
 
-  <view style="display:flex;align-items:center;height:43px;width:100%;" >
-    <view style="font-size:12px;color:#666666;margin:14px 0px 14px 5px;">预计送达时间</view>
-    <view style="font-size:12px;margin-right:5px;margin-left:auto;" bindtap="showModal">
-      <text style="margin-right:5px;color:#FFD52E;">{{dateRange}}</text>
+  <view style="display:flex;align-items:center;height:43px;width:100%;border-bottom: 0.5px solid #E5E5E5;" >
+    <view style="font-size:14px;color:#333333;margin:14px 0px 14px 5px;">预计送达时间</view>
+    <view style="font-size:14px;margin-right:5px;margin-left:auto;" bindtap="showModal">
+      <text style="margin-right:5px;font-weight: bolder;color:#FFD52E;">{{dateRange}}</text>
       <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
     </view>
   </view>
 
-
-  <view hidden="{{!check}}" style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
-
+<view style="border-bottom: 0.5px solid #E5E5E5;">
   <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
     <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;padding-bottom:3px;">{{detail.supplier}}</view>
     <view style="height:70px;display:flex;align-items: center; white-space: nowrap;">
@@ -42,25 +40,23 @@
       </scroll-view>
       <view style="margin-right:16.9px;margin-left:auto;font-size:14px;color:#999999;">共{{detail.goods.length}}件</view>
     </view>
-    
   </view>
+</view>
 
-  <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
 
-  <view style="height:61px;width:100%;font-size:12px;color:#333333;">
+
+  <view style="height:61px;width:100%;font-size:14px;color:#333333;">
     <view style="  display: flex;align-items: center;justify-content: center;margin-top:10px; ">
-      <view style="margin-left:5px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;">￥{{totalPrice}}</text>
+      <view style="margin-left:5px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;">￥{{totalPrice}}</text>
     </view>
-    <!-- <view hidden="{{postage==1?false:true}}" style="  display: flex;align-items: center;justify-content: center;margin-top:10px; ">
-      <view style="margin-left:5px;">基础配送费<text style="color:#999999;" decode="true">&nbsp;&nbsp;实付不满￥30</text></view><text style="margin-right:5px;margin-left:auto;">￥4</text>
-    </view> -->
+ 
   </view>
 
-  <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
+  <!-- <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;"></view>
 
   <view style="height:44px;width:100%;display:flex;align-items: center;">
     <text style="margin-right:5px;margin-left:auto;font-size:12px;color:#FF1907;">总计：<text style="font-size:14px;">￥{{allPrice}}</text></text>
-  </view>
+  </view> -->
 </view>
 
 <view class="page_bottom" bindtap="toPayment">

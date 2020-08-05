@@ -16,6 +16,7 @@ Page({
     urls:[]
   },
   onUnload:function(){
+    clearInterval(this.timer);
     var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
     var prevPage = pages[ pages.length - 2 ];  
     //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
@@ -70,48 +71,63 @@ Page({
   countDown:function(){
     var that = this;
     var info = that.data.info;
-    var start = new Date(info.order_time).getTime()
-    var now = new Date().getTime();//现在时间（时间戳）
-    var value = (now-start)/1000;
-    if(value>=300){
-      var baseUrl = that.data.baseUrl;
-      var paras={};
-      paras.oId=that.data.oid;
-      wx.request({
-        url: baseUrl+"order/closeOrder",
-        method: 'get',
-        data: paras,
-        success(res) {
-          if(res.data.code==200){
-            wx.showToast({
-              title: '订单超时，已自动取消',
-              success:function(){
-                var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
-                var prevPage = pages[ pages.length - 2 ];  
-                //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
-                prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-                  back:true
-                })
-                setTimeout(function () {
-                  wx.navigateBack({
-                    delta: 1
-                  })
-                }, 1500);
-              }
-            })
-          }
-        }
-      })
-    }else{
-      var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
-      var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
-      that.setData({
-        countDown: min+':'+sec
-      })
-      setTimeout(that.countDown(), 1000);
+    var orderTime = info.order_time;
+    var now = Date.parse(new Date());//现在时间（时间戳）
+    var res = wx.getSystemInfoSync()
+    if(res.platform=='ios'){
+      orderTime = orderTime.replace(/\-/g,'/');
     }
- 
- 
+    var start = Date.parse(new Date(orderTime));//现在时间（时间戳）
+    var value = (now-start)/1000;
+    var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60)+'';
+    var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60)+'';
+    that.setData({
+      countDown: min+':'+sec
+    })
+    this.timer = setInterval(calculate,1000);
+    function calculate(){
+      var now = Date.parse(new Date());//现在时间（时间戳）
+      var value = (now-start)/1000;
+      if(value>=300){
+        clearInterval(this.timer);
+        var baseUrl = that.data.baseUrl;
+        var paras={};
+        paras.oId=that.data.oid;
+        wx.request({
+          url: baseUrl+"order/closeOrder",
+          method: 'get',
+          data: paras,
+          success(res) {
+            if(res.data.code==200){
+              wx.showToast({
+                icon:'none',
+                title: '订单超时，已自动取消',
+                success:function(){
+                  var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+                  var prevPage = pages[ pages.length - 2 ];  
+                  //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+                  prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+                    back:true
+                  })
+                  setTimeout(function () {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }, 1500);
+                }
+              })
+            }
+          }
+        })
+      }else{
+        var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
+        var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
+        that.setData({
+          countDown: min+':'+sec
+        })
+      }
+    }
+    
   },
   //退款
   refund:function(e){
@@ -341,7 +357,6 @@ Page({
         }
         var param = {};
         param.oId=that.data.oid;
-        console.info(param)
         wx.request({
           url: baseUrl+"order/closeOrder",
           method: 'get',
@@ -352,6 +367,7 @@ Page({
                 icon:'none',
                 title: '取消成功',
                 success:function(){
+                  clearInterval(this.timer);
                   setTimeout(function () {
                     wx.navigateBack({
                       delta: 1

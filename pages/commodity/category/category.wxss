@@ -42,14 +42,14 @@
 }
 
 .floorstatus{
-  width:80px;
+  width:70px;
   height:27px;
   border-top-left-radius: 13px;
   border-bottom-left-radius: 13px;
   background: linear-gradient(to right, #FFD32E , #FF992E);
   position:fixed; 
   right:0;
-  bottom:250px;
+  bottom:110px;
   font-size: 12px;
   color:#FFFFFF;
   display:flex;

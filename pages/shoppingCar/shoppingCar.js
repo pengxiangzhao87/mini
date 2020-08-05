@@ -13,6 +13,9 @@ Page({
     //已选择商品数量
     checkNum:0,
   },
+  onUnload:function(){
+    console.info('shaop')
+  },
   onLoad: function(){
 
   },

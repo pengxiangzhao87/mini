@@ -75,7 +75,7 @@
   <image src="/image/shouye_rexiao@3x.png" style="width:17.6px;height:21px;"/>
 </view>
 
-<view style="background-color:rgb(248, 248, 248);height:100%;">
+<view style="background-color:rgb(240, 240, 240);height:100%;">
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
