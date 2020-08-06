@@ -18,23 +18,12 @@ page{
 .list-item{
   display: flex;  
   flex-direction: row  ;
-  align-items: center;
   margin-top:5px;
   margin-left:10px;
   margin-right:10px;
-  border-bottom:0.5px solid #E5E5E5;
-  padding-bottom: 10px;
+  height:95px;
 }
-.list-item.line{
-  display: flex;  
-  flex-direction: row  ;
-  align-items: center;
-  margin-top:5px;
-  margin-left:10px;
-  margin-right:10px;
-  border-bottom:none;
-  padding-bottom: 10px;
-}
+
 .list-canFeed{
   width:60px;
   height:24px;
@@ -47,24 +36,11 @@ page{
   justify-content: center;
   margin-left:auto;
   margin-right:0px;
-}
-.list-canFeed.no{
-  width:60px;
-  height:24px;
-  border:solid 0.5px #999999;
-  border-radius: 200px;
-  color:#666666;
-  display: flex;
-  font-size: 11px;
-  align-items: center;
-  justify-content: center;
-  margin-left:auto;
-  margin-right:0px;
+  margin-top:5px;
 }
 .extra-list{
-  margin-left:10px;
+  margin-left:86px;
   margin-right:10px;
-  border-bottom:0.5px solid #E5E5E5;
 }
 .extra-price{
   color:green;
@@ -72,7 +48,7 @@ page{
   font-size:12px;
   display: flex;
   align-items: center;
-  margin-left:10px;
+
   margin-right:10px;
 }
 .extra-price.red{
@@ -81,7 +57,7 @@ page{
   align-items: center;
   height:20px;
   font-size:12px;
-  margin-left:10px;
+
   margin-right:10px;
 }
 .extra-pic{
@@ -171,7 +147,7 @@ page{
 .continue{
   margin-left:auto;
   margin-right:10px;
-  width:110px;
+  width:120px;
   height:35px;
   border-radius: 100px;
   background-color:#FFD52E;

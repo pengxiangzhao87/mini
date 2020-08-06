@@ -1,24 +1,10 @@
 <!--pages/my/my.wxml-->
 <view class="head">
   <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" bindtap="toEditInfo">
-    <image style="height:64px;width:64px;border-radius: 130px;margin-left:10px;" src="{{baseUrl}}upload/{{myInfo.u_avatar_url}}"></image>
+    <image mode="aspectFill" style="height:64px;width:64px;border-radius: 130px;margin-left:10px;" src="{{baseUrl}}upload/{{myInfo.u_avatar_url}}"></image>
     <view style="color:#333333;font-size:18px;font-weight: bolder;margin-left:14px;">{{myInfo.u_nick_name}}</view>
     <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;"  src="/image/zhifu_xiayibu@3x.png"></image>
   </view>
-  <!-- <view style="display:flex;align-items: center;flex-direction:row;justify-content: center;color:#333333;">
-    <view style="width:25%;">
-      <view style="font-size:15px;display:flex;justify-content: center;">{{myInfo.u_concern}}</view>
-      <view style="font-size:11px;display:flex;justify-content: center;color:rgba(51,51,51,0.8);">关注</view>
-    </view>
-    <view style="width:25%;">
-      <view style="font-size:15px;display:flex;justify-content: center;">{{myInfo.u_fans}}</view>
-      <view style="font-size:11px;display:flex;justify-content: center;color:rgba(51,51,51,0.8);">被关注</view>
-    </view>
-    <view style="width:25%;">
-      <view style="font-size:15px;display:flex;justify-content: center;">{{myInfo.u_liked}}</view>
-      <view style="font-size:11px;display:flex;justify-content: center;color:rgba(51,51,51,0.8);">喜欢</view>
-    </view>
-  </view> -->
   <view class="orderBox" >
    <view style="margin-left:11%;width:48px;" bindtap="toOrder" data-id="5">
       <view style="display:flex;justify-content: center;">

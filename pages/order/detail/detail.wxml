@@ -12,17 +12,19 @@
 </view>
 
 <view class="body">
-  <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="id" wx:for-item="detail">
+  <view  wx:for="{{detailList}}" wx:for-index="idxx" wx:key="id" wx:for-item="detail">
     <view style="margin-left:10px;padding-top:5px;font-size:12px;color:#666666;">{{detail.supplier}}</view>
     <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
-      <view class="list-item {{item.is_extra==0?'':'line'}}">
+      <view class="list-item">
         <view style="width:66px;height:66px;">
           <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
         </view>
-        <view style="margin-left:14px;width:100%;">
-          <view style="display:flex;flex-direction:row;align-items: center;">
-            <view style="align-items: center;height:24px;font-size:14px;color:#333333;margin-right:5px;margin-top:10px;width:80%">{{item.name}}</view>
-            <view class="list-canFeed {{item.chargeback_status==null?'':'no'}}" hidden="{{info.order_status==5 || info.order_status==6}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?1:0}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+        <view style="margin-left:14px;width:100%;height:90px;">
+          <view style="display:flex;flex-direction:row;">
+            <view style="height:43px;width:100%;">
+              <view style="align-items: center;height:24px;font-size:14px;color:#333333;margin-right:5px;margin-top:5px;">{{item.name}}</view>
+            </view>
+            <view class="list-canFeed" hidden="{{info.order_status==5 || info.order_status==6}}" bindtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?3:item.chargeback_status}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
           </view>
           <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
           <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
@@ -35,6 +37,9 @@
             <image style="width:50px;height:50px;margin-right:10px;" bindtap="enlargement" data-id="{{item.id}}" data-pic="{{pic}}" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
           </view>
         </view>
+      </view>
+      <view wx:if="{{!(idxx==detailList.length-1 && idx==detail.goods.length-1)}}">
+        <view style="background-color:#E5E5E5;height:0.5px;margin-left:86px;margin-right:10px;"></view>
       </view>
     </view>
   </view>

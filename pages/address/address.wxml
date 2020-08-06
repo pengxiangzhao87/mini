@@ -6,7 +6,7 @@
       <view style="color:#333333;font-size:14px;">{{item.aCity}}</view>
       <view style="color:#666666;font-size:12px;">{{item.name}}<text style="margin-left:10px;">{{item.phone}}</text></view>
     </view>
-    <image src="/image/gouwuche_bianji@3x.png" style="width:16px;height:16px;margin-right:10px;margin-left:auto;" catchtap="toEdit" data-aid="{{item.aId}}"></image>
+    <image src="/image/gouwuche_bianji@3x.png" style="width:16px;height:16px;margin-right:15px;margin-left:auto;" catchtap="toEdit" data-aid="{{item.aId}}"></image>
   </view>
 </view>
 

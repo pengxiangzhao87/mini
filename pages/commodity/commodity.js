@@ -40,9 +40,6 @@ Page({
     paras.rows=data.rows;
     paras.tId=-1;
     that.queryCommodity(that,paras,baseUrl);
-    paras.uId=4;
-    paras.isUsed=1;
-    that.queryAddressList(that,paras,baseUrl);
   },
   onShow:function(){
     var that = this;
@@ -54,6 +51,9 @@ Page({
     var paras = {};
     paras.userId=4;
     that.getCarNum(paras,baseUrl);
+    paras.uId=4;
+    paras.isUsed=1;
+    that.queryAddressList(that,paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -213,6 +213,14 @@ Page({
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
+    if(detail.state==0){
+      wx.showToast({
+        icon:'none',
+        title: '补货中',
+        duration:2000
+      })
+      return;
+    }
     var sum = detail.init_num;
     var unit = detail.init_unit;
     var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);

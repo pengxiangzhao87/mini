@@ -66,11 +66,20 @@ Page({
           prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
             nextFlag:1
           })
-          wx.navigateBack({
-            delta: 1
+          wx.showToast({
+            icon:'none',
+            title: '变更成功',
+            success:function(){
+              setTimeout(function () {
+                wx.navigateBack({
+                  delta: 1
+                })
+              }, 1000);
+            }
           })
         }else{
           wx.showToast({
+            icon:'none',
             title: res.data.msg
           })
         }

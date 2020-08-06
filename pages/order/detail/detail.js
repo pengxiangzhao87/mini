@@ -73,14 +73,17 @@ Page({
     var info = that.data.info;
     var orderTime = info.order_time;
     var now = Date.parse(new Date());//现在时间（时间戳）
-    var res = wx.getSystemInfoSync()
-    if(res.platform=='ios'){
+    var system = wx.getSystemInfoSync()
+    if(system.platform=='ios'){
       orderTime = orderTime.replace(/\-/g,'/');
     }
     var start = Date.parse(new Date(orderTime));//现在时间（时间戳）
     var value = (now-start)/1000;
-    var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60)+'';
-    var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60)+'';
+    var min = '0'+parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
+    var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
+    if(sec>=0 && sec<10){
+      sec = '0'+sec;
+    }
     that.setData({
       countDown: min+':'+sec
     })
@@ -120,8 +123,11 @@ Page({
           }
         })
       }else{
-        var min = parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
+        var min = '0'+parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
         var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
+        if(sec>=0 && sec<10){
+          sec = '0'+sec;
+        }
         that.setData({
           countDown: min+':'+sec
         })
@@ -133,20 +139,33 @@ Page({
   refund:function(e){
     var id = e.currentTarget.dataset.id;
     var that = this;
-    var status = that.data.info.order_status;
-    if(status==1 || status==3){
-      if(status == 3){
-        var lastTime = that.data.info.last_time;
-        var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
-        if(new Date().getTime()>limitTime){
-          wx.showToast({
-            icon:'none',
-            title: '收到商品24小时后，不受理退款',
-            duration:3000
-          })
-          return;
-        }
+    var orderStatus = that.data.info.order_status;
+    var status = e.currentTarget.dataset.status;
+    if(orderStatus==2){
+      wx.showToast({
+        icon:'none',
+        title: '配送中，无法申请退款',
+        duration:3000
+      })
+      return;
+    }
+    if(orderStatus==3){
+      var lastTime = that.data.info.last_time;
+      var system = wx.getSystemInfoSync()
+      if(system.platform=='ios'){
+        lastTime = lastTime.replace(/\-/g,'/');
       }
+      var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
+      if(new Date().getTime()>limitTime){
+        wx.showToast({
+          icon:'none',
+          title: '收到商品24小时后，不受理退款',
+          duration:3000
+        })
+        return;
+      }
+    }
+    if(status==3){
       wx.showModal({
         title: '提示',
         content: '确定申请退款吗？',
@@ -168,13 +187,14 @@ Page({
           }
         }
       })
-    }else if(status==2){
+    }else if(status==1){
       wx.showToast({
         icon:'none',
-        title: '配送中，无法申请退款',
-        duration:3000
+        title: '待商家处理',
+        duration:1500
       })
-    }
+      return;
+    } 
   },
   
   // 显示遮罩层
@@ -367,13 +387,50 @@ Page({
                 icon:'none',
                 title: '取消成功',
                 success:function(){
-                  clearInterval(this.timer);
+                  var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+                  var prevPage = pages[ pages.length - 2 ];  
+                  //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+                  var payList = prevPage.data.payList;
+                  var result = {};
+                  var index = 0;
+                  for(var idx in payList){
+                    var item = payList[idx];
+                    if(item.o_id==that.data.oid){
+                      result = item;
+                      index = idx;
+                      break;
+                    }
+                  }
+                  payList.splice(index,1);
+                  var allList = prevPage.data.allList;
+                  if(allList.length>0){
+                    var indexx = 0
+                    for(var idx in allList){
+                      var item = payList[idx];
+                      if(item.o_id==that.data.oid){
+                        indexx = idx;
+                        break;
+                      }
+                    }
+                    allList.splice(indexx,1);
+                    allList.reverse();
+                    allList.push(result);
+                    allList.reverse();
+                    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+                      payList:payList,
+                      allList:allList
+                    })
+                  }else{
+                    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+                      payList:payList
+                    })
+                  }
                   setTimeout(function () {
+                    clearInterval(this.timer);
                     wx.navigateBack({
                       delta: 1
                     })
                   }, 1000);
-                  
                 }
               })
             }else{
