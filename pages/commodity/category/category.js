@@ -41,45 +41,7 @@ Page({
     paras.userId=4
     that.getCategory(that,baseUrl,tid);
     //获取类别下的商品
-    paras.tId=tid;
-    paras.page=that.data.page;
-    paras.rows=that.data.rows;
-    that.getCommodity(that,baseUrl,paras);
-  },
-  onShow:function(){
-    var that = this;
-    var data = that.data;
-    var baseUrl = data.baseUrl;
-    var paras={};
-    paras.userId=4
-    that.getCarNum(that,paras,baseUrl);
-  },
-  getCarNum:function(that,paras,baseUrl){
-    wx.request({
-      url: baseUrl+"shoppingCart/queryShoppingCartList",
-      method: 'get',
-      data: paras,
-      success(res) {
-        if(res.data.code==200){
-          var list = res.data.data;
-          var checkNum = parseInt(0);
-          for(var idx in list){
-            var detail = list[idx];
-            for(var index in detail.goods){
-              var item = detail.goods[index];
-              if(item.is_check==1){
-                ++checkNum;
-              }
-            }
-          }
-          if(checkNum!=0){
-            that.setData({
-              carSum:checkNum
-            })
-          }
-        }
-      }
-    })
+    
   },
   getCategory(that,baseUrl,tid){
     wx.request({
@@ -115,6 +77,46 @@ Page({
       }
     })
   },
+  onShow:function(){
+    var that = this;
+    var data = that.data;
+    var baseUrl = data.baseUrl;
+    var paras={};
+    paras.userId=4
+    that.getCarNum(that,paras,baseUrl);
+    var page = data.page;
+    paras.page=1;
+    paras.rows=data.rows*page;
+    paras.tId=data.tid;
+    that.getCommodity(that,baseUrl,paras);
+  },
+  getCarNum:function(that,paras,baseUrl){
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data;
+          var checkNum = parseInt(0);
+          for(var idx in list){
+            var detail = list[idx];
+            for(var index in detail.goods){
+              var item = detail.goods[index];
+              if(item.is_check==1){
+                ++checkNum;
+              }
+            }
+          }
+          if(checkNum!=0){
+            that.setData({
+              carSum:checkNum
+            })
+          }
+        }
+      }
+    })
+  },
   getCommodity(that,baseUrl,data){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
@@ -124,9 +126,11 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
+          var total = that.data.totalPrice;
+          var pageAll = total==0?totalPage:total;
           that.setData({
             commodity:list,
-            totalPage:totalPage
+            totalPage:pageAll
           })
         }else{
           wx.showToast({
@@ -202,17 +206,40 @@ Page({
         item.selected = false;
       }
     }
-    that.setData({
-      category:category,
-      tid:tid,
-      page:1
-    })
     var paras={};
     paras.tId=tid;
     paras.userId=4
     paras.page=1;
     paras.rows=data.rows;
-    this.getCommodity(that,baseUrl,paras);
+    wx.request({
+      url: baseUrl+"commodity/queryCommodityByPage",
+      method: 'get',
+      data: paras,
+      success(res) {
+        if(res.data.code==200){
+          var list = res.data.data.list;
+          var totalPage = res.data.data.totalPage;
+          that.setData({
+            commodity:list,
+            totalPage:totalPage,
+            category:category,
+            tid:tid,
+            page:1
+          })
+        }else{
+          wx.showToast({
+            icon:'none',
+            title: '服务器异常'
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
   },
   //跳转详情
   toDetail:function(e){

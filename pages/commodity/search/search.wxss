@@ -27,27 +27,15 @@
 }
 
 .goods{
-  border-radius: 5px;  
-  width:48%;
-  height:260px;
-  display:-webkit-box;
-  -webkit-line-clamp:1;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  -webkit-box-orient:vertical;
-  word-break:break-all;
-  box-shadow: 0rpx 10rpx 50rpx 10rpx rgba(73, 73, 73, 0.1);
+  width:47.8%;
   margin-top:5px;
-  margin-left:5px;
+  margin-left:1.5%;
 }
 
 .img-wapper{
   width: 100%;height: 0;padding-bottom: 100%;position: relative;
 }
 
-.goodsImg{
-  width: 100%;height: 100%;position: absolute;
-}
 .baseLine{
   display:flex;
   align-items: center;
@@ -57,4 +45,145 @@
   margin-top:20px;
   margin-bottom:20px;
 }
+
+
+.floorstatus{
+  width:70px;
+  height:27px;
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+  background: linear-gradient(to right, #FFD32E , #FF992E);
+  position:fixed; 
+  right:0;
+  bottom:110px;
+  font-size: 12px;
+  color:#FFFFFF;
+  display:flex;
+  align-items: center;
+  justify-content:center;
+}
+
+
+
+/* ---------------------------- */
+/*模态框*/
+.modal{position:fixed; top:0; right:0; bottom:0; left:0; z-index:1000;}
+.modal-cancel{position:absolute; z-index:2000; top:0; right:0; bottom: 0; left:0; background:rgba(0,0,0,0.7);}
+.bottom-dialog-body{width:100%; position:absolute; z-index:3000; bottom:0; left:0;background:#dfdede;}
+/*动画前初始位置*/
+.bottom-positon{-webkit-transform:translateY(100%);transform:translateY(100%);}
  
+ 
+/* 底部弹出框 */
+.bottom-positon{
+  height:40%;
+  background-color: #FFFFFF;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+ 
+
+.modal-head{
+  height:43px;
+  margin-left:10px;
+  margin-right:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  border-bottom: 0.5px soli #E5E5E5;
+  color:#333333;
+  font-size:14px;
+}
+
+.specification{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  width:100%;
+  margin-top:10px;
+}
+
+.btn{
+  background-color:#FFEEAA;
+  width:31px;
+  height:22px;
+  font-size:11px;
+  color:#333333;
+  display: flex;  
+  align-items: center;
+  justify-content: center;  
+}
+
+.btn.btn_disabled{
+  background-color:#D9D9D9;
+  border:0;
+  width:31px;
+  height:22px;
+  font-size:11px;
+  color:#333333;
+  display: flex;  
+  align-items: center;
+  justify-content: center;  
+}
+ 
+.page_bottom{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  position:fixed; 
+  bottom:0;
+  align-items: center;
+  margin-left:auto;
+  margin-right:20px;
+  width:100%;
+  height:25px;
+}
+.addShoppingCar{
+  width:100px;
+  height:25px;
+  background-color:#FFD52E;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  margin-bottom:10px;
+}
+
+.addImg{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
+
+}
+
+
+.carImg{
+  width: 40px;
+  height: 40px;
+  border:1px solid white;
+  background-color:rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
+  position:fixed; 
+  left:10px;
+  bottom:80px;
+  display: flex;
+  align-items: center;
+}
+
+.carSum{
+  width:16px;
+  height:16px;
+  background-color:#FF1907;
+  border:1px solid white;
+  color:white;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;  
+  font-size:10px;
+  top:0px;
+  right:-4px;
+  display: flex;
+  position: absolute;
+}

@@ -33,13 +33,6 @@ Page({
       busPos:busPos,
       baseUrl:baseUrl
     })
-    var data = that.data;
-    var paras = {};
-    paras.userId=4;
-    paras.page=data.page;
-    paras.rows=data.rows;
-    paras.tId=-1;
-    that.queryCommodity(that,paras,baseUrl);
   },
   onShow:function(){
     var that = this;
@@ -54,6 +47,11 @@ Page({
     paras.uId=4;
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
+    var page = that.data.page;
+    paras.page=1;
+    paras.rows=data.rows*page;
+    paras.tId=-1;
+    that.queryCommodity(that,paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
     wx.request({
@@ -141,10 +139,11 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
+          var total = that.data.totalPrice;
+          var pageAll = total==0?totalPage:total;
           that.setData({
-            baseUrl:baseUrl,
             commodity:list,
-            totalPage:totalPage
+            totalPage:pageAll
           })
         }else{
           wx.showToast({
@@ -481,16 +480,7 @@ Page({
           })
           if(index==bezier_points.length-1){
             clearInterval(that.timer);
-            var commodity = that.data.commodity;
-            for(var idx in commodity){
-              var item = commodity[idx];
-              if(item.s_id=sid){
-                item.isCar=1;
-                break;
-              }
-            }
             that.setData({
-              commodity:commodity,
               pointHid:true
             })
           }

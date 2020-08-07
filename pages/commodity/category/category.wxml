@@ -30,7 +30,7 @@
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:5px;  background-color: #FFFFFF ;border-radius: 5px;  ">
-          <image class="goodsImg" style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+          <image style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
             <view style="font-size:14px;margin-left:10px;margin-top:5px;color:#33333;">{{commodity[idx].s_name}}</view>
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
