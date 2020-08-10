@@ -24,6 +24,21 @@ page{
   height:95px;
 }
 
+.goods-name{
+  align-items: center;
+  height:40px;
+  font-size:14px;
+  color:#333333;
+  margin-right:5px;
+  margin-top:5px;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .list-canFeed{
   width:60px;
   height:24px;
