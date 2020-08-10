@@ -448,5 +448,12 @@ Page({
       }
     })
     
+  },
+  //跳转详情
+  toDetail:function(e){
+    var sid = e.currentTarget.dataset.sid;
+    wx.navigateTo({
+      url: '/pages/commodity/detail/detail?sid='+sid
+    })
   }
 })

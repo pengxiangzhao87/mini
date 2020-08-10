@@ -12,7 +12,7 @@
     </view>
     <view class="row">
       <view class="left">收货地址</view>
-      <input style="width:100%;" name="aCity" type="text" placeholder="例如：北京XX区XX街道XX社区" placeholder-style="color:#999999;font-size:12px;" bindinput="changeValue" bindfocus="focusValue" value="{{address.aCity}}"/>
+      <input style="width:100%;" name="aCity" type="text" placeholder="例如：北京XX区XX街道XX社区" placeholder-style="color:#999999;font-size:12px;" bindinput="changeValue" bindfocus="focusValue" value="{{address.aCity==undefined?'北京丰台区大成南里':address.aCity}}"/>
     </view>
     <view class="row-end">
       <view class="left">门牌楼号</view>
