@@ -1,0 +1,8 @@
+<!--pages/avtive/season/season.wxml-->
+
+<view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
+  <view class="row">
+    <image style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+  </view>
+  
+</view>

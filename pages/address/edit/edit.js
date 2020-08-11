@@ -10,6 +10,10 @@ Page({
 
   onLoad:function(e) {
     var flag = e.flag==1?true:false;
+    var text = e.flag==1?'编辑地址':'新增地址';
+    wx.setNavigationBarTitle({
+      title: text,
+    })
     var that =  this;
     var baseUrl = app.globalData.baseUrl;
     that.setData({

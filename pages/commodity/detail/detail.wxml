@@ -14,7 +14,8 @@
   </swiper>
   <view style="display: flex;  flex-direction:row ;align-items: center;margin-top:10px;">
     <view style="margin-left:10px;font-size:16px;width:70%;">{{detail.s_name}}</view>
-    <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button>
+    <!-- <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button> -->
+    <image src="/image/fenxiang.png" style="width:20px;height:20px;margin-left:auto;margin-right:10px;" bindtap="toShare"></image>
   </view>
 
   <view class="priceUnit">
@@ -62,4 +63,23 @@
       </view>
     </view>
   </view>   
+</view>
+
+
+
+
+<view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{hideFlag}}">
+  <view class="modal-cancel" bindtap="hideModal" catchtouchmove="disableRoll"></view>
+  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+    <view style="display:flex;flex-direction:row;align-items: center;">
+      <button data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share" style="width:100px;padding:0 0 0 0;background-color:#FFFFFF;margin-right:0px;">
+        <view style="display:flex;width:100px;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_weixin.png"></image></view>
+        <view style="display:flex;width:100px;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享给好友</view>
+      </button>
+      <view style="margin-left:10%;" bindtap="shareToCircle">
+        <view style="display: flex;width:100px;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_friends.png"></image></view>
+        <view style="width:100px;display: flex;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享到朋友圈</view>
+      </view> 
+    </view>
+  </view>
 </view>

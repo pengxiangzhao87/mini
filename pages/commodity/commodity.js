@@ -112,7 +112,7 @@ Page({
             })
           }else{
             wx.showToast({
-              title: res.data.msg
+              title: "服务器异常"
             })
           }
         },
@@ -147,7 +147,7 @@ Page({
           })
         }else{
           wx.showToast({
-            title: res.data.msg
+            title: "服务器异常"
           })
         }
       },
@@ -175,7 +175,7 @@ Page({
           }
         }else{
           wx.showToast({
-            title: res.data.msg
+            title: "服务器异常"
           })
         }
       },
@@ -487,6 +487,11 @@ Page({
         }
       }
   },
-  disableRoll:function(){}
+  disableRoll:function(){},
+  toSeason:function(){
+    wx.redirectTo({
+      url: '/pages/active/season/season',
+    })
+  }
 
 })

@@ -1,0 +1,12 @@
+/* pages/avtive/season/season.wxss */
+page{
+  background-color:rgb(198, 224, 253);
+}
+
+.row{
+  display:flex;  
+  flex-direction:row;
+  width:96%;
+  margin-left:2%;
+  border-radius: 5px;
+}
