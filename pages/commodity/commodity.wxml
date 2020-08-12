@@ -12,6 +12,9 @@
   <view class="carousel" >
     <swiper autoplay="true" interval="3000">
       <swiper-item>
+        <image mode="aspectFit" bindtap="toGroup" src="{{baseUrl}}upload/qr_user.jpg"></image>
+      </swiper-item>
+      <swiper-item>
         <image bindtap="toSeason" mode="aspectFit" src="{{baseUrl}}upload/sales_desc.jpg"></image>
       </swiper-item>
       <swiper-item>

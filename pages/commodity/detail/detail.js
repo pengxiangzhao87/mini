@@ -9,6 +9,8 @@ Page({
     shareUrl:'',
     hideFlag: true,
     animationData: {},
+    qrPic:'qr_user.jpg',
+    fxBg:'fx_bg.png'
   },
   onLoad:function(e) {
     var baseUrl = app.globalData.baseUrl;
@@ -17,6 +19,7 @@ Page({
       sid:e.sid
     })
   },
+  
   onShow:function(){
     var that = this;
     var baseUrl = that.data.baseUrl;
@@ -53,6 +56,7 @@ Page({
             disabled:disabled,
             shareUrl:baseUrl+'upload/'+result.s_address_img.split('~')[0]
           })
+          var price = result.price+result.unit;
         }else{
           wx.showToast({
             title: "服务器异常"
@@ -67,6 +71,7 @@ Page({
       }
     })
   },
+   
   subtract:function(){
     var that = this;
     var detail = that.data.detail;
@@ -224,7 +229,89 @@ Page({
     }
   },
   shareToCircle:function(){
-    
+    wx.showLoading({
+      title: 'title',
+    })
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var detail = that.data.detail;
+    var qrPic = baseUrl + 'upload/' + that.data.qrPic;
+    var fxBg = baseUrl + 'upload/' + that.data.fxBg;
+    var shareUrl = that.data.shareUrl;
+    Promise.all([
+      wx.getImageInfo({
+        src: fxBg
+      }),
+      wx.getImageInfo({
+        src: shareUrl
+      }),
+      wx.getImageInfo({
+          src: qrPic
+      })
+    ]).then(res => {
+        const ctx = wx.createCanvasContext('shareCanvas')
+        var width = res[1].width;
+        var height = res[1].height;
+        var ww = 255;
+        var hh = 255;
+        var diff=0;
+        if(width>height){
+          hh =  ww*height/width;
+          diff=Math.abs(hh-255);
+        }else if(width<height){
+          ww = width/height*hh;
+        }
+        var pageHH = 500-diff;
+        // 底图
+        ctx.drawImage(res[0].path, 0, 0, 300, pageHH);
+        
+        //头像
+        ctx.drawImage(res[2].path, 38, 35, 40, 40);
+
+        //图片
+        ctx.drawImage(res[1].path, 22, 100, ww, hh);
+
+        //QR
+        ctx.drawImage(res[2].path, 200, pageHH-100, 60, 60);
+
+        //标题
+        ctx.setFillStyle('#000000')  
+        ctx.setFontSize(14)         
+        ctx.fillText('“ 这里有好物，快来看 ”', 88, 60)
+        
+        //价格
+        ctx.setFontSize(18)        
+        ctx.fillText(detail.price+detail.unit, 38, pageHH-110)
+ 
+        //名称
+        ctx.setFontSize(14)    
+        var name = detail.s_name;    
+        var len = name.length;
+        ctx.fillText(name.substring(0,10), 38, pageHH-80)
+        if(len>10){
+          if(len>20){
+            name = name.substring(10,19)+'...';
+          }else{
+            name = name.substring(10,20);
+          }
+          ctx.fillText(name, 38, pageHH-55)
+        }
+      
+        ctx.stroke()
+        ctx.draw()
+
+        wx.canvasToTempFilePath({
+          canvasId: 'shareCanvas'
+        }, this).then(res => {
+            return wx.saveImageToPhotosAlbum({
+                filePath: res.tempFilePath
+            })
+        }).then(res => {
+            wx.showToast({
+                title: '已保存到相册'
+            })
+        })
+    })
   }
    
 
