@@ -1,6 +1,6 @@
 /* pages/shoppingCar/shoppingCar.wxss */
 page{
-  background-color:rgb(240, 240, 240);
+  background-color:rgb(245, 245, 245);
   height:100%;
   width:100%;
 }

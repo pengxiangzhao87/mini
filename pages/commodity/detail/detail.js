@@ -209,6 +209,7 @@ Page({
       animationData: this.animation.export(),
     })
   },
+  disableRoll:function(){},
   onShareAppMessage: (e) => {
     // if (res.from === 'button') {
     //   console.log("来自页面内转发按钮");
@@ -229,9 +230,26 @@ Page({
     }
   },
   shareToCircle:function(){
-    wx.showLoading({
-      title: 'title',
+    var that = this;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success () {
+              that.producePic();
+            }
+          })
+        }else{
+          that.producePic();
+        }
+      }
     })
+  },
+  producePic:function(){
+    // wx.showLoading({
+    //   title: '生成照片中...',
+    // })
     var that = this;
     var baseUrl = that.data.baseUrl;
     var detail = that.data.detail;
@@ -252,67 +270,69 @@ Page({
         const ctx = wx.createCanvasContext('shareCanvas')
         var width = res[1].width;
         var height = res[1].height;
-        var ww = 255;
-        var hh = 255;
-        var diff=0;
+        var ww = 100;
+        var hh = 100;
         if(width>height){
           hh =  ww*height/width;
-          diff=Math.abs(hh-255);
-        }else if(width<height){
-          ww = width/height*hh;
         }
-        var pageHH = 500-diff;
+
         // 底图
-        ctx.drawImage(res[0].path, 0, 0, 300, pageHH);
+        ctx.drawImage(res[0].path, 0, 0, 120, 200);
         
         //头像
-        ctx.drawImage(res[2].path, 38, 35, 40, 40);
+        ctx.drawImage(res[2].path, 15, 15, 15, 15);
 
         //图片
-        ctx.drawImage(res[1].path, 22, 100, ww, hh);
+        ctx.drawImage(res[1].path, 10, 35, ww, hh);
 
         //QR
-        ctx.drawImage(res[2].path, 200, pageHH-100, 60, 60);
+        ctx.drawImage(res[2].path, 75, 155, 30, 30);
 
         //标题
-        ctx.setFillStyle('#000000')  
-        ctx.setFontSize(14)         
-        ctx.fillText('“ 这里有好物，快来看 ”', 88, 60)
+        ctx.setFontSize(6)         
+        ctx.fillText('“这里有好物，快来看”', 35, 25)
         
         //价格
-        ctx.setFontSize(18)        
-        ctx.fillText(detail.price+detail.unit, 38, pageHH-110)
+        ctx.setFontSize(10)        
+        ctx.fillText(detail.price+detail.unit, 15, 148)
  
         //名称
-        ctx.setFontSize(14)    
+        ctx.setFontSize(6)    
         var name = detail.s_name;    
         var len = name.length;
-        ctx.fillText(name.substring(0,10), 38, pageHH-80)
+        ctx.fillText(name.substring(0,10), 15, 155)
         if(len>10){
           if(len>20){
             name = name.substring(10,19)+'...';
           }else{
             name = name.substring(10,20);
           }
-          ctx.fillText(name, 38, pageHH-55)
+          ctx.fillText(name, 15, 160)
         }
       
         ctx.stroke()
         ctx.draw()
-
-        wx.canvasToTempFilePath({
-          canvasId: 'shareCanvas'
-        }, this).then(res => {
-            return wx.saveImageToPhotosAlbum({
-                filePath: res.tempFilePath
-            })
-        }).then(res => {
-            wx.showToast({
-                title: '已保存到相册'
-            })
-        })
+        // setTimeout(function () {
+        //   wx.hideLoading({
+        //     success: (res) => {
+        //       wx.canvasToTempFilePath({
+        //         canvasId: 'shareCanvas'
+        //       }, this).then(res => {
+        //           return wx.saveImageToPhotosAlbum({
+        //               filePath: res.tempFilePath
+        //           })
+        //       }).then(res => {
+        //           wx.showToast({
+        //               icon:'none',
+        //               title: '已保存到相册'
+        //           })
+        //       })
+        //     },
+        //   })
+          
+        // },1000);
+        
     })
   }
-   
 
 })

@@ -20,6 +20,9 @@
       <swiper-item>
         <image mode="aspectFit" bindtap="toGroup" src="{{baseUrl}}upload/pt1.jpg"></image>
       </swiper-item>
+      <swiper-item>
+        <image mode="aspectFit" bindtap="toGroup" src="{{baseUrl}}upload/qr_user.jpg"></image>
+      </swiper-item>
     </swiper >
   </view>
 </view>
@@ -78,12 +81,12 @@
   <image src="/image/shouye_rexiao@3x.png" style="width:17.6px;height:21px;"/>
 </view>
 
-<view style="background-color:rgb(240, 240, 240);height:100%;">
+<view style="background-color:rgb(245, 245, 245);height:100%;">
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 5px;  ">
-            <image style="width:100%;border-top-left-radius:1px ;border-top-right-radius:10px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+        <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;  ">
+            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
             <view class="goods-name">{{commodity[idx].s_name}}</view>
             <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
             <view style="font-size:16px;margin-top:5px;margin-left:10px;">
@@ -95,8 +98,8 @@
     </view>
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 5px;  ">
-          <image style="width:100%;border-top-left-radius:10px ;border-top-right-radius:10px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+        <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
+          <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
           <view class="goods-name">{{commodity[idx].s_name}}</view>
           <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
           <view style="font-size:16px;margin-top:5px;margin-left:10px;">
