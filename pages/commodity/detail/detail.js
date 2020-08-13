@@ -307,34 +307,34 @@ Page({
         ctx.drawImage(res[1].path, 25, yy , ww, hh);
 
         //QR
-        ctx.drawImage(res[2].path, 165, 315, 50, 50);
+        ctx.drawImage(res[2].path, 135, 285, 80, 80);
 
         //标题
         ctx.setFontSize(10)         
-        ctx.fillText('“这里有好物，快来看”', 70, 53)
+        ctx.fillText('“这里有好物，快来看”', 80, 53)
         
         //价格
         ctx.setFontSize(16)        
         ctx.setFillStyle('red')
-        ctx.fillText(detail.price, 35, 305)
+        ctx.fillText(detail.price, 35, 285)
         //单位
         ctx.setFontSize(14)        
         ctx.setFillStyle('#666666')
-        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 305)
+        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 285)
  
         //名称
         ctx.setFontSize(12);
         ctx.setFillStyle('black')    
         var name = detail.s_name;    
         var len = name.length;
-        ctx.fillText(name.substring(0,8), 35, len>8?335:345)
+        ctx.fillText(name.substring(0,8), 35,318);
         if(len>8){
           if(len>16){
             name = name.substring(8,15)+'...';
           }else{
             name = name.substring(8,len-1);
           }
-          ctx.fillText(name, 35, 355)
+          ctx.fillText(name, 35, 335)
         }
       
         ctx.stroke()

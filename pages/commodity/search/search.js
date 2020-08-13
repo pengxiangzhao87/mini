@@ -7,7 +7,7 @@ Page({
     sName:"",
     commodity:[],
     page:1,
-    rows:10,
+    rows:20,
     totalPage:0,
     hidden:true,
     floorstatus:true,

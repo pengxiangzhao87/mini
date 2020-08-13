@@ -6,7 +6,7 @@ Page({
     commodity:[],
     category:[],
     page:1,
-    rows:10,
+    rows:20,
     baseUrl:"",
     totalPage:0,
     hidden:true,

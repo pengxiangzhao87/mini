@@ -6,7 +6,7 @@ Page({
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     baseUrl:'',
-    rows:10,
+    rows:20,
 
     payOrder:true,
     payList:[],

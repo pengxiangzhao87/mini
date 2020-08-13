@@ -72,12 +72,12 @@
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view style="display:flex;flex-direction:row;align-items: center;">
       <button data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share" style="width:100px;padding:0 0 0 0;background-color:#FFFFFF;margin-right:0px;">
-        <view style="display:flex;width:100px;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_weixin.png"></image></view>
-        <view style="display:flex;width:100px;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享给好友</view>
+        <view style="display:flex;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_weixin.png"></image></view>
+        <view style="display:flex;justify-content: center;font-size:13px;color:#666666;font-weight: normal;margin-top:5px;">分享给好友</view>
       </button>
-      <view style="margin-left:10%;" bindtap="shareToCircle">
-        <view style="display: flex;width:100px;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_friends.png"></image></view>
-        <view style="width:100px;display: flex;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享到朋友圈</view>
+      <view style="margin-left:10%;width:100px;" bindtap="shareToCircle">
+        <view style="display: flex;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_friends.png"></image></view>
+        <view style="display: flex;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享朋友圈</view>
       </view> 
     </view>
   </view>
