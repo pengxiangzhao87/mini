@@ -8,6 +8,7 @@ Page({
     sid:0,
     shareUrl:'',
     hideFlag: true,
+    hideShareFlag:true,
     animationData: {},
     qrPic:'qr_user.jpg',
     fxBg:'fx_bg.png'
@@ -175,7 +176,25 @@ Page({
       time1 = null;
     }, 100)
   },
-
+  // 显示遮罩层
+  showShareModal:function () {
+    var that = this;
+    that.slideDown();//调用动画--滑出
+    that.setData({
+      hideShareFlag: false,
+    })
+    // 创建动画实例
+    var animation = wx.createAnimation({
+      duration: 400,//动画的持续时间
+      timingFunction: 'ease',//动画的效果 默认值是linear->匀速，ease->动画以低速开始，然后加快，在结束前变慢
+    })
+    this.animation = animation; //将animation变量赋值给当前动画
+    var time1 = setTimeout(function () {
+      that.slideIn();//调用动画--滑入
+      clearTimeout(time1);
+      time1 = null;
+    }, 100)
+  },
   // 隐藏遮罩层
   hideModal:function() {
     var that = this;
@@ -187,7 +206,8 @@ Page({
     that.slideDown();//调用动画--滑出
     var time1 = setTimeout(function () {
       that.setData({
-        hideFlag: true
+        hideFlag: true,
+        hideShareFlag:true
       })
       clearTimeout(time1);
       time1 = null;
@@ -238,18 +258,17 @@ Page({
             scope: 'scope.writePhotosAlbum',
             success () {
               that.producePic();
+              that.showShareModal();
             }
           })
         }else{
           that.producePic();
+          that.showShareModal();
         }
       }
     })
   },
   producePic:function(){
-    // wx.showLoading({
-    //   title: '生成照片中...',
-    // })
     var that = this;
     var baseUrl = that.data.baseUrl;
     var detail = that.data.detail;
@@ -270,68 +289,75 @@ Page({
         const ctx = wx.createCanvasContext('shareCanvas')
         var width = res[1].width;
         var height = res[1].height;
-        var ww = 100;
-        var hh = 100;
+        var ww = 200;
+        var hh = 200;
+        var yy = 75;
         if(width>height){
           hh =  ww*height/width;
+          yy = 75+(200-hh)/2;
         }
 
         // 底图
-        ctx.drawImage(res[0].path, 0, 0, 120, 200);
+        ctx.drawImage(res[0].path, 0, 0, 250, 400);
         
         //头像
-        ctx.drawImage(res[2].path, 15, 15, 15, 15);
+        ctx.drawImage(res[2].path, 35, 35, 30, 30);
 
         //图片
-        ctx.drawImage(res[1].path, 10, 35, ww, hh);
+        ctx.drawImage(res[1].path, 25, yy , ww, hh);
 
         //QR
-        ctx.drawImage(res[2].path, 75, 155, 30, 30);
+        ctx.drawImage(res[2].path, 165, 315, 50, 50);
 
         //标题
-        ctx.setFontSize(6)         
-        ctx.fillText('“这里有好物，快来看”', 35, 25)
+        ctx.setFontSize(10)         
+        ctx.fillText('“这里有好物，快来看”', 70, 53)
         
         //价格
-        ctx.setFontSize(10)        
-        ctx.fillText(detail.price+detail.unit, 15, 148)
+        ctx.setFontSize(16)        
+        ctx.setFillStyle('red')
+        ctx.fillText(detail.price, 35, 305)
+        //单位
+        ctx.setFontSize(14)        
+        ctx.setFillStyle('#666666')
+        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 305)
  
         //名称
-        ctx.setFontSize(6)    
+        ctx.setFontSize(12);
+        ctx.setFillStyle('black')    
         var name = detail.s_name;    
         var len = name.length;
-        ctx.fillText(name.substring(0,10), 15, 155)
-        if(len>10){
-          if(len>20){
-            name = name.substring(10,19)+'...';
+        ctx.fillText(name.substring(0,8), 35, len>8?335:345)
+        if(len>8){
+          if(len>16){
+            name = name.substring(8,15)+'...';
           }else{
-            name = name.substring(10,20);
+            name = name.substring(8,len-1);
           }
-          ctx.fillText(name, 15, 160)
+          ctx.fillText(name, 35, 355)
         }
       
         ctx.stroke()
         ctx.draw()
-        // setTimeout(function () {
-        //   wx.hideLoading({
-        //     success: (res) => {
-        //       wx.canvasToTempFilePath({
-        //         canvasId: 'shareCanvas'
-        //       }, this).then(res => {
-        //           return wx.saveImageToPhotosAlbum({
-        //               filePath: res.tempFilePath
-        //           })
-        //       }).then(res => {
-        //           wx.showToast({
-        //               icon:'none',
-        //               title: '已保存到相册'
-        //           })
-        //       })
-        //     },
-        //   })
-          
-        // },1000);
-        
+
+    })
+  },
+  saveToPhoto:function(){
+    wx.showLoading({
+      title: '保存中...',
+    })
+    wx.canvasToTempFilePath({
+      canvasId: 'shareCanvas'
+    }, this).then(res => {
+        return wx.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath
+        })
+    }).then(res => {
+        wx.showToast({
+            icon:'none',
+            title: '已保存到相册',
+            duration:2000
+        })
     })
   }
 

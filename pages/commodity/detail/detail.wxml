@@ -19,10 +19,8 @@
   </view>
 
 
-<canvas canvas-id="shareCanvas" style="position:flex;border:1px solid red;width:120px;height:200px;"></canvas>
-
   <view class="priceUnit">
-    <view><text style="color:#FF1907 ;font-size:16px;">{{detail.price}}</text>{{detail.unit}}</view>
+    <view><text style="color:#FF1907 ;font-size:18px;">{{detail.price}}</text>{{detail.unit}}</view><text hidden="{{detail.on_sale==1}}" style="color:#666666;text-decoration:line-through;margin-left:10px;">￥{{detail.original_price}}</text>
   </view>
   <view class="specification">
     <view style="margin-left:10px;color:#999999;font-size:14px;">规格</view>
@@ -69,10 +67,8 @@
 </view>
 
 
-
-
-<view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{hideFlag}}">
-  <view class="modal-cancel" bindtap="hideModal" catchtouchmove="disableRoll"></view>
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" hidden="{{hideFlag}}">
+  <view class="modal-cancel" bindtap="hideModal" ></view>
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view style="display:flex;flex-direction:row;align-items: center;">
       <button data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share" style="width:100px;padding:0 0 0 0;background-color:#FFFFFF;margin-right:0px;">
@@ -83,6 +79,24 @@
         <view style="display: flex;width:100px;justify-content: center;"><image style="width:35px;height:35px;" src="/image/fx_friends.png"></image></view>
         <view style="width:100px;display: flex;justify-content: center;font-size:13px;color:#666666 ;margin-top:5px;">分享到朋友圈</view>
       </view> 
+    </view>
+  </view>
+</view>
+
+
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" hidden="{{hideShareFlag}}">
+  <view class="modal-cancel" bindtap="hideModal"></view>
+  <view class="bottom-dialog-body bottom-positon" style="height:480px;" animation="{{animationData}}">
+    <view>
+      <canvas canvas-id="shareCanvas" style="width:250px;height:400px;"></canvas>
+    </view>
+    <view class="share_bottom">
+      <view style="margin-left:10px;margin-right:10px;">
+        <view style="display:flex;align-items: center;justify-content: center;  ">
+          <view style=" display:flex;justify-content: center;align-items: center;width:100%;height:35px;border-radius: 5px;background-color:#FFD52E;" bindtap="saveToPhoto">保存图片</view>
+        </view>
+        <view style="display:flex;justify-content: center;margin-top:10px;width:100%;font-size:14px;color:#666666">保存图片到手机相册后,将图片分享到您的圈子</view>
+      </view>  
     </view>
   </view>
 </view>

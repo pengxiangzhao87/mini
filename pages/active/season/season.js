@@ -30,7 +30,7 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          var list = res.data.data.list;
+          var list = res.data.data;
           console.info(list)
           that.setData({
             commodity:list

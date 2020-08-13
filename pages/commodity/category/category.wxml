@@ -60,8 +60,8 @@
  
  <view class="wrap">
   <!-- modal  -->
-  <view class="modal modal-bottom-dialog" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
-    <view class="modal-cancel" bindtap="hideAddModal" catchtouchmove="disableRoll"></view>
+  <view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+    <view class="modal-cancel" bindtap="hideAddModal" ></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
       <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
         <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>

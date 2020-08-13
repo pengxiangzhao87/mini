@@ -130,7 +130,7 @@
 
 <view class="wrap">
   <!-- modal  -->
-  <view class="modal modal-bottom-dialog" hidden="{{hideFlag}}">
+  <view class="modal modal-bottom-dialog"  hidden="{{hideFlag}}">
     <view class="modal-cancel" bindtap="hideModal"></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
         <view class="modal-head">支付方式</view>

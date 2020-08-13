@@ -489,7 +489,7 @@ Page({
   },
   disableRoll:function(){},
   toSeason:function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/active/season/season',
     })
   }
