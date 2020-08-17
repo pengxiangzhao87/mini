@@ -1,8 +1,8 @@
 /* pages/avtive/season/season.wxss */
 page{
-  background-color:rgb(198, 224, 253);
+  /* background-color:#ffffff; */
+  background-color:#47C7FF;
 }
-
 .row{
   display:flex;  
   flex-direction:row;

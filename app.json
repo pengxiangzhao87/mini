@@ -12,7 +12,10 @@
     "pages/order/detail/detail",
     "pages/address/address",
     "pages/address/edit/edit",
-    "pages/my/deal/deal"
+    "pages/my/deal/deal",
+    "pages/active/season/season",
+    "pages/active/news/news",
+    "pages/active/sales/sales"
    
   ],
   "window":{

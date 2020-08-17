@@ -7,16 +7,19 @@ Page({
    */
   data: {
     baseUrl:'',
-    commodity:[]
+    commodity:[],
+    bannerH:0
   },
 
   /**
    * 组件的方法列表
    */
   onLoad: function(){
+    var bannerH = app.globalData.ww*1080/435;
     var baseUrl = app.globalData.baseUrl;
     this.setData({
-      baseUrl:baseUrl
+      baseUrl:baseUrl,
+      bannerH:bannerH
     })
   },
   onShow:function(){

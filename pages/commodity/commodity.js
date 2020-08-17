@@ -20,7 +20,9 @@ Page({
     bus_x:0,
     bus_y:0,
     busPos:[],
-    pointHid:true
+    pointHid:true,
+    bannerH:110,
+    topH:150
   },
   onLoad:function(){
     var that = this;
@@ -29,9 +31,12 @@ Page({
     busPos['x'] = app.globalData.ww*0.5;
     busPos['y'] = app.globalData.hh;
     var baseUrl = app.globalData.baseUrl;
+    var bannerH = app.globalData.ww*0.94*495/1530;
     that.setData({
       busPos:busPos,
-      baseUrl:baseUrl
+      baseUrl:baseUrl,
+      bannerH:bannerH,
+      topH:bannerH+40
     })
   },
   onShow:function(){
@@ -491,6 +496,16 @@ Page({
   toSeason:function(){
     wx.navigateTo({
       url: '/pages/active/season/season',
+    })
+  },
+  toNews:function(){
+    wx.navigateTo({
+      url: '/pages/active/news/news',
+    })
+  },
+  toSale:function(){
+    wx.navigateTo({
+      url: '/pages/active/sales/sales',
     })
   }
 

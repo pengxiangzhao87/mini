@@ -1,0 +1,4 @@
+/* pages/active/sales/sales.wxss */
+page{
+  background-color:#FEA33B;
+}

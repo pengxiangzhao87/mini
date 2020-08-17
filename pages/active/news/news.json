@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {},
+  "navigationBarBackgroundColor":"#FF6065",
+  "navigationBarTitleText": "新品上市",
+  "navigationBarTextStyle":"white"
+}

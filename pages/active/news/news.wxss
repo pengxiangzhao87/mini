@@ -1,0 +1,4 @@
+/* pages/active/news/news.wxss */
+page{
+  background-color:#FF6065;
+}

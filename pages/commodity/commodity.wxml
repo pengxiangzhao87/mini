@@ -1,24 +1,27 @@
 <!--pages/commodity.wxml-->
-<view style="background-color: #FFD52E;padding-bottom:10px;">
+<view style="background-color: #FFD52E;padding-bottom:10px;height:{{topH}}px;">
   <view style="font-size:14px;margin-left:10px;display:flex; align-items: center;margin-bottom:5px;">
     <image src="/image/nav_shouye_dizhi@3x.png" style="width:16px;height:18px;"></image>
     <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;">送至：{{address}}</text>
   </view>
-  <navigator  class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history">  
+  <navigator class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history">  
     <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
     <input style="width:60%;" type="text" placeholder="搜索商品" placeholder-style="color:#999999;font-size:12px;" value="" disabled="true"/> 
   </navigator >  
  
   <view class="carousel" >
-    <swiper autoplay="true" interval="3000">
+    <swiper autoplay="true" interval="3000" style="width:100%;height:{{bannerH}}px;">
       <swiper-item>
-        <image mode="aspectFit" bindtap="toSeason" src="{{baseUrl}}upload/qr_user.jpg"></image>
+        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/qr_user.jpg"></image>
       </swiper-item>
       <swiper-item>
-        <image mode="aspectFit" bindtap="toSeason" src="{{baseUrl}}upload/sales_desc.jpg"></image>
+        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite3x.png"></image>
       </swiper-item>
       <swiper-item>
-        <image mode="aspectFit" bindtap="toSeason" src="{{baseUrl}}upload/pt1.jpg"></image>
+        <image mode="aspectFit" bindtap="toNews" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-news@3x.png"></image>
+      </swiper-item>
+      <swiper-item>
+        <image mode="aspectFit" bindtap="toSale" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-sale@3x.png"></image>
       </swiper-item>
     </swiper >
   </view>

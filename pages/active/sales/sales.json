@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {},
+  "navigationBarBackgroundColor":"#FEA33B",
+  "navigationBarTitleText": "折扣回馈",
+  "navigationBarTextStyle":"white"
+}

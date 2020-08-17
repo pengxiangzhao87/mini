@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarBackgroundColor":"#47C7FF",
+  "navigationBarTitleText": "时令水果",
+  "navigationBarTextStyle":"white"
 }

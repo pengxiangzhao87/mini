@@ -1,8 +1,11 @@
 <!--pages/avtive/season/season.wxml-->
+<image mode="aspectFit" style="width:{{bannerH}}px;" src="{{baseUrl}}upload/fruite@3x.png">></image>
+
+
 
 <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
   <view class="row">
-    <image style="width:100%;border-top-left-radius:5px ;border-top-right-radius:5px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+    <image style="width:100px;height:100px;;border-top-left-radius:5px ;border-top-right-radius:5px;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
   </view>
   
 </view>
