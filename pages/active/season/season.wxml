@@ -1,11 +1,22 @@
 <!--pages/avtive/season/season.wxml-->
-<image mode="aspectFit" style="width:{{bannerH}}px;" src="{{baseUrl}}upload/fruite@3x.png">></image>
+<image mode="widthFix" style="width:100%;" src="{{baseUrl}}upload/fruite@3x.png">></image>
 
-
-
-<view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-  <view class="row">
-    <image style="width:100px;height:100px;;border-top-left-radius:5px ;border-top-right-radius:5px;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+<view style="display:flex;justify-content:center;">
+  <view style="display:flex;flex-direction:row;margin-top:10px;">
+    <image style="width:14px;height:14px;margin-top:2px;" src="/image/fruite.png"></image>
+    <text style="font-size:14px;color:#ffffff;margin-left:10px;">最新鲜的水果</text>
+    <image style="width:14px;height:14px;margin-top:2px;margin-left:10px;" src="/image/fruite.png"></image>
   </view>
-  
+
+  <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
+    <view class="row">
+      <image style="width:100px;height:100px;;border-top-left-radius:5px ;border-top-right-radius:5px;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+    </view>
+    
+  </view>
+
+
 </view>
+
+
+

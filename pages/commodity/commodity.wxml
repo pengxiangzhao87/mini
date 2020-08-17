@@ -15,7 +15,7 @@
         <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/qr_user.jpg"></image>
       </swiper-item>
       <swiper-item>
-        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite3x.png"></image>
+        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite@3x.png"></image>
       </swiper-item>
       <swiper-item>
         <image mode="aspectFit" bindtap="toNews" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-news@3x.png"></image>

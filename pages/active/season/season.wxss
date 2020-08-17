@@ -1,6 +1,5 @@
 /* pages/avtive/season/season.wxss */
 page{
-  /* background-color:#ffffff; */
   background-color:#47C7FF;
 }
 .row{
