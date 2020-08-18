@@ -62,15 +62,14 @@
         <view style="width:100px;height:100px;">
           <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
         </view>
-        <view style="width:100%;">
-          <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
-          <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
-          <view style="margin-left:10px;margin-top:10px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+        <view style="width:100%;margin-right:10px;">
+          <view class="page_bottom_name">{{commodity[idxFlag].s_name}}</view>
+          <view style="margin-left:10px;margin-top:20px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
         </view>
       </view>
       <view class="specification">
         <view style="margin-left:20px;color:#999999;font-size:14px;">规格</view>
-        <view style="display:flex;flex-direction:row;align-items: center;margin-right:20px;margin-left:auto;">
+        <view style="display:flex;flex-direction:row;align-items: center;margin-right:10px;margin-left:auto;">
           <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{commodity[idxFlag].init_unit==0?50:1}}</view>
           <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
           <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{totalSum}}&nbsp;{{commodity[idxFlag].init_unit==0?'g':'个'}}</text></view>

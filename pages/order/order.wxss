@@ -144,3 +144,33 @@ page{
   color:#333333;
   font-size:14px;
 }
+
+
+
+
+
+
+.scroll_box{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+ 
+  background: #fff;
+  white-space: nowrap;
+  border: 1px solid red;
+  }
+  .scroll_box scroll-view{
+    height: 100%;
+    width: auto;
+    overflow:hidden;
+  }
+  .item_list{
+  width: 375px;
+  height: 100%;
+  margin-right: 23rpx;
+  display: inline-block;
+  margin-left: 10px;
+ 
+   
+  }
+  

@@ -100,6 +100,14 @@ Page({
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
+    if(detail.state==0){
+      wx.showToast({
+        icon:'none',
+        title: '补货中',
+        duration:2000
+      })
+      return;
+    }
     var sum = detail.init_num;
     var unit = detail.init_unit;
     var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
@@ -297,5 +305,18 @@ Page({
           }
         }
       }
+  },
+  disableRoll:function(){},
+  //跳转详情
+  toDetail:function(e){
+    var sid = e.currentTarget.dataset.sid;
+    wx.navigateTo({
+      url: '/pages/commodity/detail/detail?sid='+sid
+    })
+  },
+  toShoppingCar:function(e){
+    wx.switchTab({
+      url: '/pages/shoppingCar/shoppingCar'
+    })
   }
 })
