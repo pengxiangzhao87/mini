@@ -15,12 +15,12 @@
           <view bindtap="toDetail" data-sid="{{item.s_id}}">
             <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
           </view>
-          <view style="height:66px;margin-left:10px;width:100%;">
+          <view style="height:94px;margin-left:10px;width:100%;">
             <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">
-              <view style="color:#333333;font-size:14px;">{{item.s_name}}</view>
-              <view style="margin-right:10px;margin-left:auto;color:#666666;font-size:12px;">{{item.sell}}</view>
+              <view class="title_name">{{item.s_name}}</view>
+              <view style="margin-right:10px;margin-left:auto;color:#333333;font-size:12px;height:40px;padding-top:0px;">{{item.sell}}</view>
             </view>
-            <view style="display:flex;flex-direction:row;height:22px;margin-top:20px;">
+            <view style="display:flex;flex-direction:row;height:22px;margin-top:10px;">
               <view style="font-size:16px;color:#FF1907;">￥{{item.totalPrice}}</view>
               <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
                 <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>

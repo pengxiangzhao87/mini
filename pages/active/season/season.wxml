@@ -7,16 +7,73 @@
     <text style="font-size:14px;color:#ffffff;margin-left:10px;">最新鲜的水果</text>
     <image style="width:14px;height:14px;margin-top:2px;margin-left:10px;" src="/image/fruite.png"></image>
   </view>
-
-  <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-    <view class="row">
-      <image style="width:100px;height:100px;;border-top-left-radius:5px ;border-top-right-radius:5px;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
-    </view>
-    
-  </view>
-
-
 </view>
+
+
+
+<view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+  <view class="row">
+    <view style="width:140px;height:128px;">
+      <image style="width:140px;height:128px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.coverUrl}}"></image>
+    </view>
+    <view style="margin-left:10px;margin-right:10px;width:100%;height:128px;">
+      <view style="font-size:12px;color:#666666;margin-top:10px;">田园生鲜</view>
+      <view class="row_name">{{item.s_name}}</view>
+      <view style="margin-top:15px;">
+        <text style="font-size:22px;color:#FF1907;">{{item.price}}</text><text style="font-size:18px;color:#666666;margin-top:5px;">{{item.unit}}</text>
+        <image catchtap="addCar" data-idx="{{idx}}" src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:30px;height:30px;margin-right:0px;float:right;"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
+
+<view class="carImg" bindtap="toShoppingCar">
+    <image src="/image/carIcon.png" style="margin-left:8px;width:21px;height:16px;"></image>
+    <view hidden="{{carSum==0}}">
+        <view class="carSum" >{{carSum}}</view>
+      </view>
+</view>
+
+
+
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+  <view class="modal-cancel" bindtap="hideAddModal" ></view>
+  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+    <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
+      <view style="width:100px;height:100px;">
+        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
+      </view>
+      <view>
+        <view style="font-size:14px;margin-left:10px;color:#33333;">{{commodity[idxFlag].s_name}}</view>
+        <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idxFlag].s_corporate_name}}</view>
+        <view style="margin-left:10px;margin-top:10px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+      </view>
+    </view>
+    <view class="specification">
+      <view style="margin-left:20px;color:#999999;font-size:14px;">规格</view>
+      <view style="display:flex;flex-direction:row;align-items: center;margin-right:20px;margin-left:auto;">
+        <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{commodity[idxFlag].init_unit==0?50:1}}</view>
+        <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
+        <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{totalSum}}&nbsp;{{commodity[idxFlag].init_unit==0?'g':'个'}}</text></view>
+        <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
+        <view class="btn"  bindtap="add">{{commodity[idxFlag].init_unit==0?50:1}}</view>
+      </view>
+    </view>
+    <view class="page_bottom">
+      <view style="margin-right:10px;margin-left:auto;">
+        <view style="display:flex;align-items: center;justify-content: center;  ">
+          <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;">￥{{totalPrice}}</view>
+          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;">加入购物车</text></view>
+        </view>
+      </view>
+    </view>   
+  </view>
+</view>
+
+
 
 
 
