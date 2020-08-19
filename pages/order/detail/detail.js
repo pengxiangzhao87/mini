@@ -464,11 +464,11 @@ Page({
     detailList[item]='/image/moren.png';
     this.setData(detailList);
   },
-  errorPic:function(e){
+  errorExtraPic:function(e){
     var idx= e.target.dataset.idx; //获取循环的下标
     var idxx= e.target.dataset.idxx; //获取循环的下标
-    console.info(idxx)
-    var item="detailList["+idxx+"].goods["+idx+"].extra_img_url" //commodity为数据源，对象数组
+    var index= e.target.dataset.index; //获取循环的下标
+    var item="detailList["+idxx+"].goods["+idx+"].extra_img_url["+index+"]" //commodity为数据源，对象数组
     var detailList = {};
     detailList[item]='/image/moren.png';
     this.setData(detailList);

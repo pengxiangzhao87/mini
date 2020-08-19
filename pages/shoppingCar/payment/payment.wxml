@@ -30,12 +30,12 @@
   </view>
 
 <view style="border-bottom: 0.5px solid #E5E5E5;">
-  <view  wx:for="{{detailList}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
-    <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#666666;padding-bottom:3px;">{{detail.supplier}}</view>
+  <view  wx:for="{{detailList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="detail">
+    <view style="margin-left:5px;padding-top:5px;font-size:10px;color:#999999;padding-bottom:3px;">{{detail.supplier}}</view>
     <view style="height:70px;display:flex;align-items: center; white-space: nowrap;">
       <scroll-view scroll-x style="width:85%;">
         <view wx:for="{{detail.goods}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
-          <image style="height:50px;width:50px;margin-left:5px;" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+          <image style="height:50px;width:50px;margin-left:5px;" src="{{item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
         </view>
       </scroll-view>
       <view style="margin-right:16.9px;margin-left:auto;font-size:14px;color:#999999;">共{{detail.goods.length}}件</view>

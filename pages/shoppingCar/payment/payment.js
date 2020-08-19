@@ -344,6 +344,15 @@ Page({
       })
     }
   },
-  disableRoll:function(){}
+  disableRoll:function(){},
+  errorPic:function(e){
+    var idx= e.target.dataset.idx; 
+    var idxx= e.target.dataset.idxx; 
+    var that =this;
+    var item="detailList["+idxx+"].goods["+idx+"].imgUrl" ; 
+    var detail = {};
+    detail[item]='/image/moren.png';
+    that.setData(detail);
+  }
 
 })
