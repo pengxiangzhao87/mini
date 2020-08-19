@@ -85,25 +85,31 @@
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;  ">
-            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
-            <view class="goods-name">{{commodity[idx].s_name}}</view>
-            <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
-            <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-              <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
-              <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
-            </view>
+        <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;">
+          <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+          <view class="goods-name">{{commodity[idx].s_name}}</view>
+          <view style="margin-top:10px;margin-left:10px;height:23px;">
+            <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
+            <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
+            <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
+            <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
+            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
+          </view>
         </view>
       </view>
     </view>
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:5px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
-          <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl}}upload/{{commodity[idx].coverUrl}}"></image>
+        <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
+          <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+           <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
           <view class="goods-name">{{commodity[idx].s_name}}</view>
-          <view style="font-size:12px;color:#999999;margin-left:10px;margin-top:2px;">{{commodity[idx].s_corporate_name}}</view>
-          <view style="font-size:16px;margin-top:5px;margin-left:10px;">
-            <text style="color:#FF1907;font-size:18px;">{{commodity[idx].price}}</text>{{commodity[idx].unit}}
+          <view style="margin-top:10px;margin-left:10px;height:23px;">
+            <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
+            <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
+            <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
+            <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
             <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
           </view>
         </view>
@@ -136,11 +142,15 @@
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view class="hotGoods" style="margin-left:10px;margin-top:10px;">
       <view style="width:100px;height:100px;">
-        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl}}upload/{{commodity[idxFlag].coverUrl}}"></image>
+        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{commodity[idxFlag].coverUrl}}" binderror="errorPic" data-idx="{{idxFlag}}"></image>
       </view>
       <view style="width:100%;margin-right:10px;">
         <view class="page_bottom_name">{{commodity[idxFlag].s_name}}</view>
-        <view style="margin-left:10px;margin-top:20px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+        <view style="margin-left:10px;margin-top:20px;">
+          <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idxFlag].s_price}}</text>
+          <text style="font-size:14px;color:#999999;" decode="true">{{commodity[idxFlag].unit}}&nbsp;</text>
+          <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{commodity[idxFlag].is_active!=3}}">￥{{commodity[idxFlag].original_price}}</text>
+        </view>
       </view>
     </view>
     <view class="specification">

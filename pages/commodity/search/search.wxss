@@ -36,7 +36,6 @@
   font-size:14px;
   margin-left:10px;
   margin-top:5px;
-  color:#333333;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;

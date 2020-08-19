@@ -507,6 +507,13 @@ Page({
     wx.navigateTo({
       url: '/pages/active/sales/sales',
     })
+  },
+  errorPic:function(e){
+    var idx= e.target.dataset.idx; //获取循环的下标
+    var item="commodity["+idx+"].coverUrl" //commodity为数据源，对象数组
+    var commodity = {};
+    commodity[item]='/image/moren.png';
+    this.setData(commodity);
   }
 
 })

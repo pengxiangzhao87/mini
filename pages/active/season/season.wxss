@@ -14,9 +14,9 @@ page{
 }
 
 .row_name{
-  font-size:16px;
-  color:#333333; 
-  height:45px;
+  font-size:14px;
+  margin-top:5px;
+  height:40px;
   padding-top:0px;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;

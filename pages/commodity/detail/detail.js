@@ -359,6 +359,13 @@ Page({
             duration:2000
         })
     })
+  },
+  errorPic:function(e){
+    var idx= e.target.dataset.idx; //获取循环的下标
+    var item="detail.urlList["+idx+"]" //commodity为数据源，对象数组
+    var detail = {};
+    detail[item]='/image/moren.png';
+    this.setData(detail);
   }
 
 })

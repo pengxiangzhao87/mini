@@ -17,7 +17,7 @@
     <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
       <view class="list-item" bindtap="toDetail" data-sid="{{item.s_id}}">
         <view style="width:66px;height:66px;">
-          <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+          <image style="width:66px;height:66px;" mode="aspectFit" src="{{item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-iddx="{{idxx}}"></image>
         </view>
         <view style="margin-left:14px;width:100%;height:90px;">
           <view style="display:flex;flex-direction:row;">
@@ -34,7 +34,7 @@
         <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
         <view class="extra-pic" hidden="{{item.extra_img_url==''}}">
           <view  wx:for="{{item.extra_img_url}}"  wx:for-index="idx" wx:key="idx" wx:for-item="pic">
-            <image style="width:50px;height:50px;margin-right:10px;" bindtap="enlargement" data-id="{{item.id}}" data-pic="{{pic}}" mode="widthFix" src="{{baseUrl}}upload/{{pic}}"></image>
+            <image style="width:50px;height:50px;margin-right:10px;" bindtap="enlargement" data-id="{{item.id}}" data-pic="{{pic}}" mode="widthFix" src="{{pic}}" binderror="errorExtraPic" data-idx="{{idx}}" data-iddx="{{idxx}}"></image>
           </view>
         </view>
       </view>

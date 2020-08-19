@@ -38,7 +38,7 @@ page{
   align-items: center;
   margin-top:15px;
   margin-bottom: 15px;
-  color:#666666;
+  color:#333333;
   font-size:14px;
 }
 .title-item{
@@ -54,6 +54,7 @@ page{
 
 .list-item{
   background-color: #FFFFFF;
+  color:#333333;
   margin-left:3%;
   margin-bottom: 10px;
   width:94%;

@@ -42,9 +42,9 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var paras = {};
-    paras.userId=4
+    paras.userId=4;
     wx.request({
-      url: baseUrl+"commodity/queryInSeason",
+      url: baseUrl+"commodity/queryOnSales",
       method: 'get',
       data: paras,
       success(res) {
@@ -318,5 +318,12 @@ Page({
     wx.switchTab({
       url: '/pages/shoppingCar/shoppingCar'
     })
+  },
+  errorPic:function(e){
+    var idx= e.target.dataset.idx; //获取循环的下标
+    var item="commodity["+idx+"].coverUrl" //commodity为数据源，对象数组
+    var commodity = {};
+    commodity[item]='/image/moren.png';
+    this.setData(commodity);
   }
 })

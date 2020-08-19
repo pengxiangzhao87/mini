@@ -43,8 +43,9 @@ Page({
     var baseUrl = that.data.baseUrl;
     var paras = {};
     paras.userId=4
+    paras.status=1;
     wx.request({
-      url: baseUrl+"commodity/queryInSeason",
+      url: baseUrl+"commodity/queryActive",
       method: 'get',
       data: paras,
       success(res) {
