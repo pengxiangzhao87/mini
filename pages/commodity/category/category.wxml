@@ -53,6 +53,13 @@
   </view>
 </view>
 
+<view hidden="{{commodity.length>0}}">
+<view style="display:flex;justify-content:center;margin-top:50px;">
+    <image style="height:100px;width:100px;" src="/image/goods_none1.png"></image>
+  </view>
+  <view style="display:flex;justify-content:center;color:#666666;font-size:12px;margin-top:30px;">看看其他商品吧~</view>
+</view>
+
 <image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
 
 <view class="carImg" bindtap="toShoppingCar">

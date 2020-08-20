@@ -23,7 +23,7 @@
 
   <input hidden="true" name="isUsed" value="{{address.isUsed}}"/>
   <input hidden="true" name="uId" value="{{address.uId}}"/>
-  <button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" form-type="submit">保存收货地址</button> 
+  <button class="page_bottom" style="width:90%;height:40px;margin-left:5%;" form-type="submit">保存收货地址</button> 
 
 </form>
 

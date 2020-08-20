@@ -21,7 +21,7 @@ page{
   bottom:5px;
   background-color: #FFD52E;
   display: flex;
-  border-radius: 4px;
+  border-radius: 50px;
   align-items: center;
   justify-content: center;
 }

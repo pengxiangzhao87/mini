@@ -26,7 +26,7 @@ page{
 }
 
 .goods-name{
-  font-weight: 400;
+  font-weight: 500;
   align-items: center;
   height:40px;
   font-size:14px;

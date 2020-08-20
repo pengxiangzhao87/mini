@@ -14,5 +14,5 @@
 </view>
 
 <view class="page_bottom" bindtap="add">
-  <text style="color:#333333;font-size:16px;font-weight: bolder;">新增收货地址</text>
+  <text style="font-size:16px;font-weight: bolder;">新增收货地址</text>
 </view>   
