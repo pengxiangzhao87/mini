@@ -18,7 +18,7 @@
       <image style="width:140px;height:128px;" mode="aspectFit" src="{{item.coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
     </view>
     <view style="margin-left:10px;margin-right:10px;width:100%;height:128px;">
-      <view style="font-size:10px;color:#666666;margin-top:10px;">{{item.s_corporate_name}}</view>
+      <view style="font-size:10px;color:#999999;margin-top:10px;">{{item.s_corporate_name}}</view>
       <view class="row_name">{{item.s_name}}</view>
       <view style="margin-top:20px;">
         <text style="font-size:22px;color:#FF1907;"><text style="font-size:14px">￥</text>{{item.s_price}}</text><text style="font-size:14px;color:#333333;margin-top:5px;" >{{item.unit}}</text>

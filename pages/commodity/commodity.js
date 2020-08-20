@@ -146,7 +146,6 @@ Page({
           var totalPage = res.data.data.totalPage;
           var total = that.data.totalPrice;
           var pageAll = total==0?totalPage:total;
-          console.info(list)
           that.setData({
             commodity:list,
             totalPage:pageAll

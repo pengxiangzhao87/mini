@@ -13,6 +13,7 @@ page{
 }
 .body{
   margin:10px 0px 10px 0px;
+  padding-bottom:10px;
   background-color: #FFFFFF;
 }
 .list-item{
@@ -25,10 +26,10 @@ page{
 }
 
 .goods-name{
+  font-weight: 400;
   align-items: center;
   height:40px;
   font-size:14px;
-  color:#333333;
   margin-right:5px;
   margin-top:5px;
   text-overflow: -o-ellipsis-lastline;
@@ -41,7 +42,7 @@ page{
 
 .list-canFeed{
   width:60px;
-  height:24px;
+  height:20px;
   border:solid 0.5px #999999;
   border-radius: 200px;
   color:#666666;
@@ -63,8 +64,8 @@ page{
   font-size:12px;
   display: flex;
   align-items: center;
-
   margin-right:10px;
+  
 }
 .extra-price.red{
   color:#FF1F1F ;
@@ -72,14 +73,15 @@ page{
   align-items: center;
   height:20px;
   font-size:12px;
-
   margin-right:10px;
+
 }
 .extra-pic{
   height:80px;
   display: flex;  
   flex-direction: row  ;
   align-items: center;
+
 }
 
 .foot{

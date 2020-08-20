@@ -34,7 +34,7 @@
   font-size:14px;
   margin-left:10px;
   margin-top:5px;
-  color:#333333;
+  font-weight: 400;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -195,7 +195,7 @@
 .page_bottom_name{
   font-size:14px;
   margin-left:10px;
-  color:#333333;
+  font-weight: 400;
   padding-top:10px;
   height:40px;
   text-overflow: -o-ellipsis-lastline;

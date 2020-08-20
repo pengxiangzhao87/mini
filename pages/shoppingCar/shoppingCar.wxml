@@ -1,6 +1,6 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
 <view class="head">
-  <view style="font-weight: bolder;font-size:18px;color:#333333;margin-left:10px;">购物车</view>
+  <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
   <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
 </view> 
 <view style="margin-bottom:100px;height:100%;">
@@ -13,7 +13,7 @@
             <image catchtap="checkBox" data-id="{{item.id}}" data-check="{{item.is_check}}" style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
           </view>
           <view bindtap="toDetail" data-sid="{{item.s_id}}">
-            <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl}}upload/{{item.imgUrl}}"></image>
+            <image style="width:66px;height:66px;" mode="widthFix" src="{{item.imgUrl}}"></image>
           </view>
           <view style="height:94px;margin-left:10px;width:100%;">
             <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">

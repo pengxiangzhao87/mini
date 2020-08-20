@@ -20,7 +20,12 @@
 
 
   <view class="priceUnit">
-    <view><text style="color:#FF1907 ;font-size:18px;">{{detail.price}}</text>{{detail.unit}}</view><text hidden="{{detail.is_active!=3}}" style="color:#666666;text-decoration:line-through;margin-left:10px;font-size:14px;">￥{{detail.original_price}}</text>
+    <view style="height:23px;"> 
+      <text style="color:#FF1907 ;font-size:20px;">{{detail.price}}</text>
+      <text style="font-size:14px;">{{detail.unit}}</text>
+      <text decode="true"  hidden="{{detail.is_active!=3}}">&nbsp;</text>
+      <text hidden="{{detail.is_active!=3}}" style="color:#999999;text-decoration:line-through;font-size:14px;">￥{{detail.original_price}}</text>
+    </view>
   </view>
   <view class="specification">
     <view style="margin-left:10px;color:#999999;font-size:14px;">规格</view>
@@ -55,8 +60,8 @@
     <view style="margin-right:10px;margin-left:auto;">
       <view wx:if="{{detail.state==1}}">
         <view style="display:flex;align-items: center;justify-content: center;  ">
-          <view style="color:#FF1907;margin-right:10px;font-size:18px;">￥{{detail.totalPrice}}</view>
-          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;color:#333333;">加入到购物车</text></view>
+          <view style="color:#FF1907;margin-right:10px;font-size:22px;">￥{{detail.totalPrice}}</view>
+          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;">加入到购物车</text></view>
         </view>
       </view>
       <view wx:elif="{{detail.state==0}}">

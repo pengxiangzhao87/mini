@@ -1,8 +1,8 @@
 <view class="title">
-  <view class="title-item" bindtap="payOrder"><text class="item {{payOrder?'checked':''}}">待支付</text></view>
-  <view class="title-item" bindtap="sendOrder"><text class="item {{sendOrder?'checked':''}}">待发货</text></view>
-  <view class="title-item" bindtap="takeOrder"><text class="item {{takeOrder?'checked':''}}">待收货</text></view>
-  <view class="title-item" bindtap="allOrder"><text class="item {{allOrder?'checked':''}}">全部订单</text></view>
+  <view class="title-item {{payOrder?'checked':''}}" bindtap="payOrder"><text class="item {{payOrder?'checked':''}}">待支付</text></view>
+  <view class="title-item {{sendOrder?'checked':''}}" bindtap="sendOrder"><text class="item {{sendOrder?'checked':''}}">待发货</text></view>
+  <view class="title-item {{takeOrder?'checked':''}}" bindtap="takeOrder"><text class="item {{takeOrder?'checked':''}}">待收货</text></view>
+  <view class="title-item {{allOrder?'checked':''}}" bindtap="allOrder"><text class="item {{allOrder?'checked':''}}">全部订单</text></view>
 </view>
 
 <view hidden="{{!payOrder}}">

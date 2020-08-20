@@ -68,6 +68,12 @@ Page({
     wx.navigateTo({
       url: 'deal/deal'
     })
+  },
+  errorPic:function(e){
+    var item="myInfo.u_avatar_url" //commodity为数据源，对象数组
+    var myInfo = {};
+    myInfo[item]='/image/logo.png';
+    this.setData(myInfo);
   }
 
 })

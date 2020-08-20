@@ -33,44 +33,44 @@
   <view class="icon_first">
     <view style="margin-left:8%;" data-tId="1" bindtap="toCategory">
       <image src="/image/shouye_shuiguo@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">水果</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">水果</view>
     </view>
 
     <view style="margin-left:10%;" data-tId="2" bindtap="toCategory">
       <image src="/image/shouye_shucai@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">蔬菜</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">蔬菜</view>
     </view>
 
     <view style="margin-left:10%;" data-tid="3" bindtap="toCategory">
       <image src="/image/shouye_haixian@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">海鲜</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">海鲜</view>
     </view>
 
     <view style="margin-left:10%;" data-tid="4" bindtap="toCategory">
       <image src="/image/shouye_roulei@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">肉类</view> 
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">肉类</view> 
     </view>
   </view>
   <view class="icon_second">
 
     <view style="margin-left:8%;" data-tid="5" bindtap="toCategory">
       <image src="/image/shouye_ganguo@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">干果</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">干果</view>
     </view>
 
     <view style="margin-left:10%;" data-tid="6" bindtap="toCategory">
       <image src="/image/shouye_direliang@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">低热量</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">低热量</view>
     </view>
 
     <view style="margin-left:10%;" data-tid="7" bindtap="toCategory">
       <image src="/image/shouye_lingshi@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">零食</view>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">零食</view>
     </view>
 
     <view style="margin-left:10%;" data-tid="8" bindtap="toCategory">
       <image src="/image/shouye_qita@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;color:#666666 ;">其他</view> 
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
     </view>
   </view>
 </view>
@@ -87,8 +87,8 @@
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;">
           <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-            <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
-          <view class="goods-name">{{commodity[idx].s_name}}</view>
+          <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+          <view class="goods-name" >{{commodity[idx].s_name}}</view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
             <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
@@ -103,7 +103,7 @@
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
           <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-           <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+           <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
           <view class="goods-name">{{commodity[idx].s_name}}</view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
@@ -154,7 +154,7 @@
       </view>
     </view>
     <view class="specification">
-      <view style="margin-left:20px;color:#999999;font-size:14px;">规格</view>
+      <view style="margin-left:20px;font-size:14px;color:#999999;">规格</view>
       <view style="display:flex;flex-direction:row;align-items: center;margin-right:10px;margin-left:auto;">
         <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{commodity[idxFlag].init_unit==0?50:1}}</view>
         <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
@@ -167,7 +167,7 @@
       <view style="margin-right:10px;margin-left:auto;">
         <view style="display:flex;align-items: center;justify-content: center;">
           <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;">￥{{totalPrice}}</view>
-          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;">加入购物车</text></view>
+          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:14px;color:#333333;">加入购物车</text></view>
         </view>
       </view>
     </view>   

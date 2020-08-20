@@ -82,7 +82,7 @@ Page({
     paras.userId=4;
     paras.page=1;
     paras.rows=that.data.rows;
-    paras.status=-1;
+    paras.status=status;
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
       method: 'get',

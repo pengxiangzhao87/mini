@@ -2,7 +2,7 @@
 
   <view class="search_arr" style="background-color: #EEEEEE ;" >  
     <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
-    <input style="width:100%;color:#333333;font-size:12px;" type="text" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
+    <input style="width:100%;color:#333333;font-size:14px;color:#666666" type="text" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
   </view > 
 
 <view style="background-color:rgb(245, 245, 245);height:100%;">
