@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData:{
-    baseUrl:"http://192.168.1.4:9000/CMTGP/",
+    baseUrl:"http://192.168.1.142:9000/CMTGP/",
     //baseUrl:"https://www.sotardust.cn/CMTGP/",
     searchList:[],
     ww:0,
@@ -9,7 +9,6 @@ App({
   },
   onLaunch: function () {
     var that = this;
-    var baseUrl = that.globalData.baseUrl;
     wx.getSystemInfo({
       success: function (res) {
         //可视窗口宽度
@@ -20,37 +19,44 @@ App({
         that.globalData.hh = hh;
       }
     })
-    // 登录
-    wx.login({
-      success: res => {
-        wx.request({
-          url: baseUrl+"user/getOpendId",
-          method: 'get',
-          data: {code:res.data,type:3},
-          success(res) {
-            if(res.data.code==200){
-              var data = res.data.data;
-              wx.setStorageSync('token', data.token);
-              wx.setStorageSync('isLogin', data.isLogin)
-            }else{
+    
+     
+  },
+  // 登录
+  wxGetOpenID:function(){
+    var that = this;
+    return new Promise(function (resolve, reject){
+      wx.login({
+        success: res => {
+          wx.request({
+            url: that.globalData.baseUrl+"user/getOpendId",
+            method: 'get',
+            data: {code:res.code,type:3},
+            success(res) {
+              console.info('login')
+              if(res.data.code==200){
+                var data = res.data.data;
+                wx.setStorageSync('token', data.token)
+              }else{
+                wx.showToast({
+                  icon:'none',
+                  title: '服务器异常'
+                })
+              }
+              resolve();
+            },fail(res){
               wx.showToast({
-                title: res.data.msg
+                icon:'none',
+                title: '服务器异常'
               })
             }
-          },fail(res){
-            wx.showToast({
-              icon:'none',
-              title: '服务器异常'
-            })
-          }
-        })
-      }
-    })
-     
+          })
+        }
+      })
+    });
   },
 
   bezier: function (points, times) {
-    
     // 0、以3个控制点为例，点A,B,C,AB上设置点D,BC上设置点E,DE连线上设置点F,则最终的贝塞尔曲线是点F的坐标轨迹。
     // 1、计算相邻控制点间距。
     // 2、根据完成时间,计算每次执行时D在AB方向上移动的距离，E在BC方向上移动的距离。

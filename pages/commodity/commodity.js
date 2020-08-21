@@ -2,7 +2,7 @@
 var app = getApp();
 Page({
   data: {
-    address:"", 
+    address:"未授权", 
     commodity:[],
     page:1,
     rows:20,
@@ -25,12 +25,13 @@ Page({
     topH:150
   },
   onLoad:function(){
+    var baseUrl = app.globalData.baseUrl;
     var that = this;
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = app.globalData.ww*0.5;
     busPos['y'] = app.globalData.hh;
-    var baseUrl = app.globalData.baseUrl;
+  
     var bannerH = app.globalData.ww*0.94*495/1530;
     that.setData({
       busPos:busPos,
@@ -44,17 +45,25 @@ Page({
     that.setData({
       topFlag:0
     })
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.showData(that);
+      })
+    }else{
+      that.showData(that);
+    }
+  },
+  showData(that){
     var data = that.data;
     var baseUrl = data.baseUrl;
     var paras = {};
-    paras.userId=4;
+    paras.page=1;
+    var page = that.data.page;
+    paras.rows=data.rows*page;
+    paras.userId=wx.getStorageSync('uId');
     that.getCarNum(paras,baseUrl);
-    paras.uId=4;
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
-    var page = that.data.page;
-    paras.page=1;
-    paras.rows=data.rows*page;
     paras.tId=-1;
     that.queryCommodity(that,paras,baseUrl);
   },
@@ -93,6 +102,15 @@ Page({
   //上拉获取新数据
   onReachBottom:function(){
     var that = this;
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.reachData(that);
+      })
+    }else{
+      that.reachData(that);
+    }
+  },
+  reachData:function(that){
     var baseUrl = that.data.baseUrl;
     var totalPage = that.data.totalPage;
     var rows = that.data.rows;
@@ -101,7 +119,7 @@ Page({
       var paras={};
       paras.page=page;
       paras.rows=rows;
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.tId=-1;
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
@@ -132,10 +150,9 @@ Page({
         hidden:false
       })
     }
-    
   },
   //热销商品分页查询
-  queryCommodity:function(that,data,baseUrl,busPos){
+  queryCommodity:function(that,data,baseUrl){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -213,34 +230,35 @@ Page({
     })
   },
   //加入购物车
-  addCar:function(e){
-    var that = this;
-    var idx = e.currentTarget.dataset.idx;
-    var detail = that.data.commodity[idx];
-    if(detail.state==0){
-      wx.showToast({
-        icon:'none',
-        title: '补货中',
-        duration:2000
-      })
-      return;
-    }
-    var sum = detail.init_num;
-    var unit = detail.init_unit;
-    var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
-    that.setData({
-      idxFlag:idx,
-      totalSum:sum,
-      totalPrice:totalPrice
-    })
-    this.finger = {};
-    //点击位置有偏移
-    this.finger['x'] = e.detail.x-10;
-    this.finger['y'] = e.detail.y-30;
-    wx.hideTabBar({
-      animation: true,
-    })
-    that.showAddModal();
+  getPhoneNumber:function(e){
+    console.info(e)
+    // var that = this;
+    // var idx = e.currentTarget.dataset.idx;
+    // var detail = that.data.commodity[idx];
+    // if(detail.state==0){
+    //   wx.showToast({
+    //     icon:'none',
+    //     title: '补货中',
+    //     duration:2000
+    //   })
+    //   return;
+    // }
+    // var sum = detail.init_num;
+    // var unit = detail.init_unit;
+    // var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
+    // that.setData({
+    //   idxFlag:idx,
+    //   totalSum:sum,
+    //   totalPrice:totalPrice
+    // })
+    // this.finger = {};
+    // //点击位置有偏移
+    // this.finger['x'] = e.detail.x-10;
+    // this.finger['y'] = e.detail.y-30;
+    // wx.hideTabBar({
+    //   animation: true,
+    // })
+    // that.showAddModal();
   },
 
   //双击回到顶部
@@ -420,7 +438,7 @@ Page({
     var commodity = that.data.commodity;
     var detail = commodity[idx];
     var shoppingInfo = {};
-    shoppingInfo.uId=4;
+    shoppingInfo.uId=wx.getStorageSync('uId');
     shoppingInfo.sId=detail.s_id;
     shoppingInfo.sNum=sum;
     var json = JSON.stringify(shoppingInfo);

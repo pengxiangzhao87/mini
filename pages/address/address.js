@@ -13,7 +13,7 @@ Page({
     var that =  this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.uId=4;
+    paras.userId=4;
     wx.request({
       url: baseUrl+"user/queryAddressList",
       method: 'get',
