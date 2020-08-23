@@ -1,4 +1,5 @@
 // pages/commodity.js
+var util= require('../../utils/util.js');
 var app = getApp();
 Page({
   data: {
@@ -22,7 +23,8 @@ Page({
     busPos:[],
     pointHid:true,
     bannerH:110,
-    topH:150
+    topH:150,
+    isPhone:1
   },
   onLoad:function(){
     var baseUrl = app.globalData.baseUrl;
@@ -165,7 +167,8 @@ Page({
           var pageAll = total==0?totalPage:total;
           that.setData({
             commodity:list,
-            totalPage:pageAll
+            totalPage:pageAll,
+            isPhone:wx.getStorageSync('isPhone')
           })
         }else{
           wx.showToast({
@@ -229,38 +232,48 @@ Page({
       url: 'detail/detail?sid='+sid
     })
   },
-  //加入购物车
+  //手机号授权
   getPhoneNumber:function(e){
-    console.info(e)
-    // var that = this;
-    // var idx = e.currentTarget.dataset.idx;
-    // var detail = that.data.commodity[idx];
-    // if(detail.state==0){
-    //   wx.showToast({
-    //     icon:'none',
-    //     title: '补货中',
-    //     duration:2000
-    //   })
-    //   return;
-    // }
-    // var sum = detail.init_num;
-    // var unit = detail.init_unit;
-    // var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
-    // that.setData({
-    //   idxFlag:idx,
-    //   totalSum:sum,
-    //   totalPrice:totalPrice
-    // })
-    // this.finger = {};
-    // //点击位置有偏移
-    // this.finger['x'] = e.detail.x-10;
-    // this.finger['y'] = e.detail.y-30;
-    // wx.hideTabBar({
-    //   animation: true,
-    // })
-    // that.showAddModal();
+    if(e.detail.iv==undefined){
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    util.getPhone(baseUrl,data,that,app);
   },
-
+  showCar:function(e){
+    var that = this;
+    var idx = e.currentTarget.dataset.idx;
+    var detail = that.data.commodity[idx];
+    if(detail.state==0){
+      wx.showToast({
+        icon:'none',
+        title: '补货中',
+        duration:2000
+      })
+      return;
+    }
+    var sum = detail.init_num;
+    var unit = detail.init_unit;
+    var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
+    that.setData({
+      idxFlag:idx,
+      totalSum:sum,
+      totalPrice:totalPrice
+    })
+    this.finger = {};
+    //点击位置有偏移
+    this.finger['x'] = e.detail.x-10;
+    this.finger['y'] = e.detail.y-30;
+    wx.hideTabBar({
+      animation: true,
+    })
+    that.showAddModal();
+  },
   //双击回到顶部
   onTabItemTap:function(e){
     var that = this;

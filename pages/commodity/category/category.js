@@ -1,8 +1,9 @@
 // pages/commodity/category/category.js
+var util= require('../../../utils/util.js');
 var app = getApp();
 Page({
   data: {
-    tid:null,
+    tid:-1,
     commodity:[],
     category:[],
     page:1,
@@ -21,7 +22,8 @@ Page({
     bus_y:0,
     busPos:[],
     pointHid:true,
-    carSum:0
+    carSum:0,
+    isPhone:1
   },
 
   onLoad:function(e) {
@@ -79,17 +81,27 @@ Page({
   },
   onShow:function(){
     var that = this;
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.showData(that);
+      })
+    }else{
+      that.showData(that);
+    }
+  },
+  showData(that){
     var data = that.data;
     var baseUrl = data.baseUrl;
-    var paras={};
-    paras.userId=4
-    that.getCarNum(that,paras,baseUrl);
-    var page = data.page;
+    var paras = {};
     paras.page=1;
+    var page = that.data.page;
     paras.rows=data.rows*page;
-    paras.tId=data.tid;
-    that.getCommodity(that,baseUrl,paras);
+    paras.userId=wx.getStorageSync('uId');
+    that.getCarNum(that,paras,baseUrl);
+    paras.tId=that.data.tid;
+    that.queryCommodity(that,paras,baseUrl);
   },
+  
   getCarNum:function(that,paras,baseUrl){
     wx.request({
       url: baseUrl+"shoppingCart/queryShoppingCartList",
@@ -117,7 +129,7 @@ Page({
       }
     })
   },
-  getCommodity(that,baseUrl,data){
+  queryCommodity(that,data,baseUrl){
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',
@@ -126,11 +138,12 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
-          var total = that.data.totalPrice;
-          var pageAll = total==0?totalPage:total;
+          var total = that.data.totalPrice; 
+          var pageAll = total==0?totalPage:total; 
           that.setData({
             commodity:list,
-            totalPage:pageAll
+            totalPage:pageAll,
+            isPhone:wx.getStorageSync('isPhone')
           })
         }else{
           wx.showToast({
@@ -158,7 +171,7 @@ Page({
       var paras={};
       paras.page=page;
       paras.rows=rows;
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.tId=tid;
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
@@ -208,7 +221,7 @@ Page({
     }
     var paras={};
     paras.tId=tid;
-    paras.userId=4
+    paras.userId=wx.getStorageSync('uId');
     paras.page=1;
     paras.rows=data.rows;
     wx.request({
@@ -248,8 +261,20 @@ Page({
       url: '/pages/commodity/detail/detail?sid='+sid
     })
   },
-  //加入购物车
-  addCar:function(e){
+  //手机号授权
+  getPhoneNumber:function(e){
+    if(e.detail.iv==undefined){
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    util.getPhone(baseUrl,data,that,app);
+  },
+  showCar:function(e){
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
@@ -441,7 +466,7 @@ Page({
     var commodity = that.data.commodity;
     var detail = commodity[idx];
     var shoppingInfo = {};
-    shoppingInfo.uId=4;
+    shoppingInfo.uId=wx.getStorageSync('uId');
     shoppingInfo.sId=detail.s_id;
     shoppingInfo.sNum=sum;
     var json = JSON.stringify(shoppingInfo);

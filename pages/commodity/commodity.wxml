@@ -85,35 +85,54 @@
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view  style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;">
-          <image bindtap="toDetail" wx:if="{{idx%2==0}}" data-sid="{{commodity[idx].s_id}}" style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-          <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
-          <view class="goods-name" >{{commodity[idx].s_name}}</view>
+        <view style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;">
+          <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
+            <image  wx:if="{{idx%2==0}}" style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+            <view class="goods-name" >{{commodity[idx].s_name}}</view>
+          </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
             <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
             <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
-            <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style="width:23px;height:23px;margin-right:10px;float:right;padding:0 0 0 0 ;">
-              <image  data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
-            </button>
-            
+            <view style="margin-right:10px;float:right;">
+              <view wx:if="{{isPhone==0}}">
+                <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
+              </view>
+              <view wx:elif="{{isPhone==1}}">
+                <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" style="width:23px;height:23px;padding:0 0 0 0 ;">
+                  <image  src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
+                </button>
+              </view>
+            </view>
           </view>
         </view>
       </view>
     </view>
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view  wx:if="{{idx%2!=0}}" bindtap="toDetail" data-sid="{{commodity[idx].s_id}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
-          <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-           <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+        <view  wx:if="{{idx%2!=0}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
+          <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
+            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
           <view class="goods-name">{{commodity[idx].s_name}}</view>
+          </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
             <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
             <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
-            <image catchtap="addCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;float:right;"></image>
+            <view style="margin-right:10px;float:right;">
+              <view wx:if="{{isPhone==0}}">
+                <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
+              </view>
+              <view wx:elif="{{isPhone==1}}">
+                <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" style="width:23px;height:23px;padding:0 0 0 0 ;">
+                  <image  src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
+                </button>
+              </view>
+            </view>
           </view>
         </view>
       </view> 

@@ -1,4 +1,5 @@
 // pages/commodity/detail/detail.js
+var util= require('../../../utils/util.js');
 var app = getApp();
 Page({
   data: {
@@ -11,7 +12,8 @@ Page({
     hideShareFlag:true,
     animationData: {},
     qrPic:'qr_user.jpg',
-    fxBg:'fx_bg.png'
+    fxBg:'fx_bg.png',
+    isPhone:1
   },
   onLoad:function(e) {
     var baseUrl = app.globalData.baseUrl;
@@ -20,14 +22,22 @@ Page({
       sid:e.sid
     })
   },
-  
   onShow:function(){
     var that = this;
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.showData(that);
+      })
+    }else{
+      that.showData(that);
+    }
+  },
+  showData(that){
     var baseUrl = that.data.baseUrl;
     var sId = that.data.sid;
     var data={};
     data.sId=sId;
-    data.userId=4;
+    data.userId=wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"commodity/queryCollage",
       method: 'get',
@@ -55,7 +65,8 @@ Page({
           that.setData({
             detail:result,
             disabled:disabled,
-            shareUrl:baseUrl+'upload/'+result.s_address_img.split('~')[0]
+            shareUrl:baseUrl+'upload/'+result.s_address_img.split('~')[0],
+            isPhone:wx.getStorageSync('isPhone')
           })
           var price = result.price+result.unit;
         }else{
@@ -120,13 +131,26 @@ Page({
       url: '/pages/shoppingCar/shoppingCar'
     })
   },
+  //手机号授权
+  getPhoneNumber:function(e){
+    if(e.detail.iv==undefined){
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    util.getPhone(baseUrl,data,that,app);
+  },
   //添加到购物车
   addShoppingCar:function(){
     var that = this;
     var baseUrl = that.data.baseUrl;
     var detail = that.data.detail;
     var shoppingInfo = {};
-    shoppingInfo.uId=4;
+    shoppingInfo.uId=wx.getStorageSync('uId');
     shoppingInfo.sId=detail.s_id;
     shoppingInfo.sNum=detail.init_num;
     var json = JSON.stringify(shoppingInfo);
@@ -135,12 +159,11 @@ Page({
       method: 'post',
       data: json,
       success(res) {
-        console.info(res)
         if(res.data.code==200){
           wx.showToast({
             title: '添加成功'
           })
-          that.onShow();
+          that.showData(that);
         }else{
           wx.showToast({
             title: "服务器异常"

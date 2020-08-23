@@ -1,4 +1,5 @@
 // pages/avtive/season/season.js
+var util= require('../../../utils/util.js')
 var app = getApp();
 Page({
 
@@ -19,7 +20,8 @@ Page({
     bus_y:0,
     busPos:[],
     pointHid:true,
-    carSum:0
+    carSum:0,
+    isPhone:1
   },
 
   /**
@@ -35,11 +37,20 @@ Page({
     this.setData({
       baseUrl:baseUrl,
       bannerH:bannerH,
-      busPos:busPos,
+      busPos:busPos
     })
   },
   onShow:function(){
     var that = this;
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.showData(that);
+      })
+    }else{
+      that.showData(that);
+    }
+  },
+  showData:function(that){
     var baseUrl = that.data.baseUrl;
     var paras = {};
     paras.userId=4;
@@ -50,9 +61,9 @@ Page({
       success(res) {
         if(res.data.code==200){
           var list = res.data.data;
-          console.info(list)
           that.setData({
-            commodity:list
+            commodity:list,
+            isPhone:wx.getStorageSync('isPhone')
           })
         }else{
           wx.showToast({
@@ -95,8 +106,20 @@ Page({
       }
     })
   },
-  //加入购物车
-  addCar:function(e){
+  //手机号授权
+  getPhoneNumber:function(e){
+    if(e.detail.iv==undefined){
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    util.getPhone(baseUrl,data,that,app);
+  },
+  showCar:function(e){
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
@@ -236,7 +259,7 @@ Page({
     var commodity = that.data.commodity;
     var detail = commodity[idx];
     var shoppingInfo = {};
-    shoppingInfo.uId=4;
+    shoppingInfo.uId=wx.getStorageSync('uId');
     shoppingInfo.sId=detail.s_id;
     shoppingInfo.sNum=sum;
     var json = JSON.stringify(shoppingInfo);

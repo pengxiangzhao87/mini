@@ -15,16 +15,27 @@
 
 
 <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
-  <view class="row" bindtap="toDetail" data-sid="{{item.s_id}}">
-    <view style="width:140px;height:128px;">
+  <view class="row" >
+    <view style="width:140px;height:128px;" bindtap="toDetail" data-sid="{{item.s_id}}">
       <image style="width:140px;height:128px;" mode="aspectFit" src="{{item.coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
     </view>
     <view style="margin-left:10px;margin-right:10px;width:100%;height:128px;">
-      <view style="font-size:10px;color:#999999;margin-top:10px;">{{item.s_corporate_name}}</view>
-      <view class="row_name">{{item.s_name}}</view>
-      <view style="margin-top:20px;">
-        <text style="font-size:22px;color:#FF1907;"><text style="font-size:14px">￥</text>{{item.s_price}}</text><text style="font-size:14px;color:#333333;margin-top:5px;" >{{item.unit}}</text>
-        <image catchtap="addCar" data-idx="{{idx}}" src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:30px;height:30px;margin-right:0px;float:right;"></image>
+      <view style="font-size:10px;color:#999999;margin-top:10px;" bindtap="toDetail" data-sid="{{item.s_id}}">{{item.s_corporate_name}}</view>
+      <view class="row_name" bindtap="toDetail" data-sid="{{item.s_id}}">{{item.s_name}}</view>
+      <view style="margin-top:20px;display:flex;flex-direction:row;">
+        <view bindtap="toDetail" data-sid="{{item.s_id}}">
+          <text style="font-size:22px;color:#FF1907;"><text style="font-size:14px">￥</text>{{item.s_price}}</text><text style="font-size:14px;color:#333333;margin-top:5px;" >{{item.unit}}</text>
+        </view>
+        <view style="width:30px;height:30px;margin-right:0px;margin-left:auto;">
+          <view wx:if="{{isPhone==0}}">
+            <image catchtap="showCar" data-idx="{{idx}}" src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:30px;height:30px;margin-right:0px;margin-left:auto;"></image>
+          </view>
+          <view wx:elif="{{isPhone==1}}">
+            <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" data-idx="{{idx}}"  style="width:30px;height:30px;padding:0 0 0 0 ;margin-right:0px;margin-left:auto;">
+              <image  src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:30px;height:30px;"></image>
+            </button>
+          </view>
+        </view>
       </view>
     </view>
   </view>
@@ -61,7 +72,11 @@
       </view>
       <view style="width:100%;margin-right:10px;">
         <view class="page_bottom_name">{{commodity[idxFlag].s_name}}</view>
-        <view style="margin-left:10px;margin-top:20px;"><text style="color:#FF1907;font-size:18px;">{{commodity[idxFlag].price}}</text>{{commodity[idxFlag].unit}}</view>
+        <view style="margin-left:10px;margin-top:20px;">
+          <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idxFlag].s_price}}</text>
+          <text style="font-size:14px;color:#999999;" decode="true">{{commodity[idxFlag].unit}}&nbsp;</text>
+          <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{commodity[idxFlag].is_active!=3}}">￥{{commodity[idxFlag].original_price}}</text>
+        </view>
       </view>
     </view>
     <view class="specification">

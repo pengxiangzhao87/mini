@@ -10,13 +10,14 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.uId=4;
+    paras.uId=wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"user/queryMyInfo",
       method: 'get',
       data: paras,
       success(res) {
         if(res.data.code==200){
+          console.info(res)
           var myInfo = res.data.data;
           if(myInfo.imgUrl!='' && myInfo.imgUrl!=undefined){
             myInfo.imgList = myInfo.imgUrl.split('~');
@@ -50,6 +51,9 @@ Page({
     wx.navigateTo({
       url: 'editInfo/editInfo?json='+json
     })
+  },
+  getUser:function(e){
+    console.info(e)
   },
   //跳转地址管理
   toAddress:function(){

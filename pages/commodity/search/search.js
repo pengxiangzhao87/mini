@@ -1,4 +1,5 @@
 // pages/commodity/search/search.js
+var util= require('../../../utils/util.js')
 var app = getApp();
 Page({
    
@@ -21,7 +22,8 @@ Page({
     bus_y:0,
     busPos:[],
     pointHid:true,
-    carSum:0
+    carSum:0,
+    isPhone:1
   },
   onLoad:function(e){
     var that = this;
@@ -39,15 +41,23 @@ Page({
   },
   onShow:function(){
     var that = this;
+    if(!wx.getStorageSync('uId')){
+      app.wxGetOpenID().then(function(){
+        that.showData(that);
+      })
+    }else{
+      that.showData(that);
+    }
+  },
+  showData(that){
     var data = that.data;
     var baseUrl = data.baseUrl;
-    var paras={};
-    paras.userId=4
-    that.getCarNum(that,paras,baseUrl);
-    paras.sName = data.sName;
-    var page = data.page;
+    var paras = {};
     paras.page=1;
-    paras.rows=that.data.rows*page;
+    var page = that.data.page;
+    paras.rows=data.rows*page;
+    paras.userId=wx.getStorageSync('uId');
+    that.getCarNum(that,paras,baseUrl);
     paras.tId=-1;
     that.queryCommodity(that,paras,baseUrl);
   },
@@ -92,7 +102,8 @@ Page({
           var pageAll = total==0?totalPage:total;
           that.setData({
             commodity:list,
-            totalPage:pageAll
+            totalPage:pageAll,
+            isPhone:wx.getStorageSync('isPhone')
           })
         }else{
           wx.showToast({
@@ -225,8 +236,20 @@ Page({
       })
     }
   },
-  //加入购物车
-  addCar:function(e){
+  //手机号授权
+  getPhoneNumber:function(e){
+    if(e.detail.iv==undefined){
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    util.getPhone(baseUrl,data,that,app);
+  },
+  showCar:function(e){
     var that = this;
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
@@ -418,7 +441,7 @@ Page({
     var commodity = that.data.commodity;
     var detail = commodity[idx];
     var shoppingInfo = {};
-    shoppingInfo.uId=4;
+    shoppingInfo.uId=wx.getStorageSync('uId');
     shoppingInfo.sId=detail.s_id;
     shoppingInfo.sNum=sum;
     var json = JSON.stringify(shoppingInfo);

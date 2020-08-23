@@ -1,10 +1,24 @@
 <!--pages/my/my.wxml-->
 <view class="head">
-  <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" bindtap="toEditInfo">
-    <image mode="aspectFill" style="height:64px;width:64px;border-radius: 130px;margin-left:10px;" src="{{myInfo.u_avatar_url}}" binderror="errorPic"></image>
-    <view style="color:#333333;font-size:18px;font-weight: bolder;margin-left:14px;">{{myInfo.u_nick_name}}</view>
-    <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;"  src="/image/zhifu_xiayibu@3x.png"></image>
-  </view>
+  
+    <view wx:if="{{myInfo.u_nick_name==''}}">
+      <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" >
+        
+        <image mode="aspectFill" style="height:64px;width:64px;border-radius: 130px;margin-left:10px;" src="{{myInfo.u_avatar_url}}" binderror="errorPic"></image>
+        <button style="background-color:#FFD52E;color:#333333;font-size:18px;font-weight: bolder;width:100%;padding:0 0 0 0 ;" open-type='getUserInfo' bindgetuserinfo="getUser">{{myInfo.u_nick_name==''?'点击登录':myInfo.u_nick_name}}</button>
+    
+        <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;" bindtap="toEditInfo" src="/image/zhifu_xiayibu@3x.png"></image>
+        
+      </view>
+    </view>
+    <view wx:elif="{{myInfo.u_nick_name!=''}}">
+      <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" >
+        <image mode="aspectFill" style="height:64px;width:64px;border-radius: 130px;margin-left:10px;" src="{{myInfo.u_avatar_url}}" binderror="errorPic"></image>
+        <view style="color:#333333;font-size:18px;font-weight: bolder;margin-left:14px;width:100%;">{{myInfo.u_nick_name}}</view>
+        <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;" bindtap="toEditInfo" src="/image/zhifu_xiayibu@3x.png"></image>
+      </view>
+    </view>
+
   <view class="orderBox" >
    <view style="margin-left:11%;width:48px;" bindtap="toOrder" data-id="5">
       <view style="display:flex;justify-content: center;">
