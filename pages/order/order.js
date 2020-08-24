@@ -79,7 +79,7 @@ Page({
     var baseUrl = that.data.baseUrl;
     var status =that.data.payOrder?5:(that.data.sendOrder?1:(that.data.takeOrder?2:-1));
     var paras={};
-    paras.userId=4;
+    paras.userId=wx.getStorageSync('uId');
     paras.page=1;
     paras.rows=that.data.rows;
     paras.status=status;
@@ -140,7 +140,7 @@ Page({
       var page = that.data.allPage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.page=page;
       paras.rows=rows;
       paras.status=-1;
@@ -195,7 +195,7 @@ Page({
       var page = that.data.sendPage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.page=page;
       paras.rows=rows;
       paras.status=1;
@@ -250,7 +250,7 @@ Page({
       var page = that.data.takePage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.page=page;
       paras.rows=rows;
       paras.status=2;
@@ -305,7 +305,7 @@ Page({
       var page = that.data.payPage;
       var rows = that.data.rows;
       var paras={};
-      paras.userId=4;
+      paras.userId=wx.getStorageSync('uId');
       paras.page=page;
       paras.rows=rows;
       paras.status=5;
@@ -380,7 +380,7 @@ Page({
     var baseUrl = app.globalData.baseUrl;
     var rows = that.data.rows;
     var paras={};
-    paras.userId=4;
+    paras.userId=wx.getStorageSync('uId');
     paras.page=page;
     paras.rows=rows;
     if(that.data.sendOrder){

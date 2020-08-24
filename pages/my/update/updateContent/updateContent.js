@@ -17,7 +17,15 @@ Page({
   save:function(e){
     var that = this;
     var baseUrl = that.data.baseUrl;
-    var content = e.detail.value.content;
+    var content = e.detail.value.content.replace(/\s+/g,"");
+    if(content==''){
+      wx.showToast({
+        icon:'none',
+        title: '不能为空',
+        duration:1500
+      })
+      return;
+    }
     var info = that.data.info;
     info.u_content=content;
     var json = JSON.stringify(info);

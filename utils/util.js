@@ -25,6 +25,7 @@ function  getPhone(baseUrl,data,that,app){
           if(res.data.code==200){
             var data = res.data.data;
             wx.setStorageSync('isPhone', data.isPhone);
+            wx.setStorageSync('uId', data.uId);
             that.setData({
               isPhone:data.isPhone
             })

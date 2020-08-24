@@ -20,7 +20,7 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras=[];
-    paras.userId = 4;
+    paras.userId = wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"shoppingCart/queryShoppingCartList",
       method: 'get',
@@ -75,7 +75,7 @@ Page({
   },
   getCarNum:function(baseUrl){
     var paras = {};
-    paras.userId=4;
+    paras.userId= wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"shoppingCart/queryShoppingCartList",
       method: 'get',
@@ -202,7 +202,6 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
-    console.info(list)
     if(list.length==0){
       return;
     }
@@ -303,7 +302,7 @@ Page({
     }else{
       var list = that.data.shoppingCar;
       var detailList=[];
-      detailList.a=1;
+      // detailList.a=1;
       for(var idx in list){
         var supplier = list[idx].supplier;
         var goods = list[idx].goods

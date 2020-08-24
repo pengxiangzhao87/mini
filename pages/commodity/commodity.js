@@ -3,7 +3,7 @@ var util= require('../../utils/util.js');
 var app = getApp();
 Page({
   data: {
-    address:"未授权", 
+    address:"填写收货地址", 
     commodity:[],
     page:1,
     rows:20,
@@ -47,7 +47,7 @@ Page({
     that.setData({
       topFlag:0
     })
-    if(!wx.getStorageSync('uId')){
+    if(wx.getStorageSync('uId')==''){
       app.wxGetOpenID().then(function(){
         that.showData(that);
       })
@@ -545,6 +545,12 @@ Page({
     var commodity = {};
     commodity[item]='/image/moren.png';
     this.setData(commodity);
-  }
+  },
+  //跳转地址
+  toAddress:function(){
+    wx.navigateTo({
+      url: '/pages/address/address'
+    })
+  },
 
 })

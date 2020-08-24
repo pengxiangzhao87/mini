@@ -11,7 +11,7 @@ Page({
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras = {};
-    paras.uId=4;
+    paras.uId=wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"user/queryAccountDetail",
       method: 'get',
@@ -37,7 +37,6 @@ Page({
   },
   toDetail:function(e){
     var direction = e.currentTarget.dataset.direction;
-    console.info(direction)
     if(direction!=1){
       var oid = e.currentTarget.dataset.oid;
       wx.navigateTo({

@@ -53,7 +53,36 @@ Page({
     })
   },
   getUser:function(e){
-    console.info(e)
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    wx.request({
+      url: baseUrl+"user/getUserInfo",
+      method: 'get',
+      data: data,
+      success(res) {
+        if(res.data.code==200){
+          that.onLoad();
+          wx.showToast({
+            icon:'none',
+            title: '授权成功',
+            duration:1500
+          })
+        }else{
+          wx.showToast({
+            title: "服务器异常"
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          title: "服务器异常"
+        })
+      }
+    })
   },
   //跳转地址管理
   toAddress:function(){

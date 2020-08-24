@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData:{
-    baseUrl:"http://192.168.1.4:9000/CMTGP/",
+    baseUrl:"http://192.168.1.142:9000/CMTGP/",
     //baseUrl:"https://www.sotardust.cn/CMTGP/",
     searchList:[],
     ww:0,
@@ -36,8 +36,8 @@ App({
               if(res.data.code==200){
                 var data = res.data.data;
                 wx.setStorageSync('token', data.token);
-                wx.setStorageSync('uId', data.uId);
                 wx.setStorageSync('isPhone', data.isPhone);
+                wx.setStorageSync('uId', data.uId);
               }else{
                 wx.showToast({
                   icon:'none',

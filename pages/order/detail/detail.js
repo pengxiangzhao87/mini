@@ -274,7 +274,7 @@ Page({
       var orderBasic = {};
       orderBasic.oId=info.o_id
       orderBasic.paymentChannel=method;
-      orderBasic.uId=4;
+      orderBasic.uId=wx.getStorageSync('uId');
       orderBasic.totalPrice=info.total_price;
       wx.request({
         url: baseUrl+"order/payment",
@@ -313,7 +313,7 @@ Page({
       var baseUrl = that.data.baseUrl;
       var orderBasic = {};
       orderBasic.oId = info.o_id
-      orderBasic.uid = 4;
+      orderBasic.uid = wx.getStorageSync('uId');
       orderBasic.extra_payment = info.extraPrice;
       orderBasic.extra_status=1;
       orderBasic.extra_channel=method;

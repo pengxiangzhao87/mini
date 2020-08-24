@@ -24,7 +24,15 @@ Page({
   save:function(e){
     var that = this;
     var baseUrl = that.data.baseUrl;
-    var name = e.detail.value.name;
+    var name = e.detail.value.name.replace(/\s+/g,"");
+    if(name==''){
+      wx.showToast({
+        icon:'none',
+        title: '不能为空',
+        duration:1500
+      })
+      return;
+    }
     var info = that.data.info;
     info.u_nick_name=name;
     var json = JSON.stringify(info);

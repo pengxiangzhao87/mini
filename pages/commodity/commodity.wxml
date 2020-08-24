@@ -1,6 +1,6 @@
 <!--pages/commodity.wxml-->
 <view style="background-color: #FFD52E;padding-bottom:10px;height:{{topH}}px;">
-  <view style="font-size:14px;margin-left:10px;display:flex; align-items: center;margin-bottom:5px;">
+  <view style="font-size:14px;margin-left:10px;display:flex; align-items: center;margin-bottom:5px;" bindtap="toAddress">
     <image src="/image/nav_shouye_dizhi@3x.png" style="width:16px;height:18px;"></image>
     <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;">送至：{{address}}</text>
   </view>
