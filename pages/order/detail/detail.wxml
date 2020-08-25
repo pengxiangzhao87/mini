@@ -115,48 +115,14 @@
 <view wx:if="{{info.order_status!=6}}">
   <view wx:if="{{info.order_status==5}}">
     <view class="page_bottom_pay" >
-      <view class="cancel" bindtap="closeOrder">取消订单</view>
-      <view class="continue" bindtap="showModal"><view style="width:60px;">继续支付</view><view style="width:30px;">{{countDown}}</view></view>
+      <view class="cancel" bindtap="closeOrder" data-oid="{{info.o_id}}">取消订单</view>
+      <view class="continue" bindtap="continuePayment"><view style="width:60px;">继续支付</view><view style="width:30px;">{{countDown}}</view></view>
     </view>   
   </view>
   <view wx:if="{{info.order_status!=5}}">
-    <view class="page_bottom" bindtap="showModal" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
+    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
       <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
     </view>
   </view>
 </view>
    
-
-
-<view class="wrap">
-  <!-- modal  -->
-  <view class="modal modal-bottom-dialog"  hidden="{{hideFlag}}">
-    <view class="modal-cancel" bindtap="hideModal"></view>
-    <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
-        <view class="modal-head">支付方式</view>
-        <view style="margin-top:15px;">
-          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="1">
-            <image src="/image/weixin@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
-            <text style="margin-left:15px;color:#333333;font-size:14px;">微信支付</text>
-            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-          </view>   
-          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="2">
-            <image src="/image/zhifu_zhifubao@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
-            <text style="margin-left:15px;color:#333333;font-size:14px;">支付宝支付</text>
-            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==2?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-          </view> 
-          <view style="display:flex;align-items: center;height:44px;width:100%;" bindtap="chechMethod" data-method="3">
-            <image src="/image/zhifu_yue@3x.png" style="width:20px;height:20px;margin-left:30px;"></image>
-            <text style="margin-left:15px;color:#333333;font-size:14px;">账户余额 ￥{{info.accountPrice}}</text>
-            <image style="height:16px;width:16px;margin-left:auto;margin-right:30px;" src="{{method==3?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-          </view>  
-        </view>
-        <view hidden="{{info.order_status==5}}" class="page_bottom {{method==3 && info.payPrice>info.accountPrice?'gray':''}}" bindtap="extraPayment" >
-          <text style="color:#333333;font-size:16px;">确认支付 ￥{{info.extraPrice}}</text>
-        </view>   
-        <view hidden="{{info.order_status!=5}}" class="page_bottom {{method==3 && allPrice>info.accountPrice?'gray':''}}" bindtap="payment" >
-          <text style="color:#333333;font-size:16px;">确认支付 ￥{{allPrice}}</text>
-        </view>  
-    </view>
-  </view>
-</view>

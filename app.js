@@ -29,7 +29,7 @@ App({
       wx.login({
         success: res => {
           wx.request({
-            url: that.globalData.baseUrl+"user/getOpendId",
+            url: that.globalData.baseUrl+"mini/getOpendId",
             method: 'get',
             data: {code:res.code,type:3},
             success(res) {

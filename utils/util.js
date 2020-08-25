@@ -18,7 +18,7 @@ function  getPhone(baseUrl,data,that,app){
   wx.checkSession({
     success: (res) => {
       wx.request({
-        url: baseUrl+"user/getPhone",
+        url: baseUrl+"mini/getPhone",
         method: 'get',
         data: data,
         success(res) {

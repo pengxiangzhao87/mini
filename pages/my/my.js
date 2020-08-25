@@ -60,7 +60,7 @@ Page({
     data.iv = e.detail.iv;
     data.token=wx.getStorageSync('token');
     wx.request({
-      url: baseUrl+"user/getUserInfo",
+      url: baseUrl+"mini/getUserInfo",
       method: 'get',
       data: data,
       success(res) {

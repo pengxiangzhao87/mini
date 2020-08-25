@@ -197,6 +197,7 @@ Page({
   },
   //下单 TODO
   toPayment:function(){
+    
     var that = this;
     var range = '';
     var dateRange = that.data.dateRange;
@@ -244,20 +245,81 @@ Page({
       }
     }
     data.details = detail;
+    data.token=wx.getStorageSync('token');
     wx.request({
       url: baseUrl+"order/addOrder",
       method: 'post',
       data: data,
       success(res) {
-        console.info(res)
         if(res.data.code==200){
           wx.hideLoading({
             complete: (res) => {},
           })
-          that.setData({
-            oId:res.data.data
+          var data = res.data.data.data;
+          var oId = res.data.data.oId;
+          //支付
+          wx.requestPayment({
+            'timeStamp':data.timeStamp,
+            'nonceStr': data.nonceStr,
+            'package': data.package,
+            'signType': 'MD5',
+            'paySign': data.paySign,
+            success (res) {
+              var param = {};
+              param.oId = oId;
+              param.token = wx.getStorageSync('token');
+              //查询是否支付
+              wx.request({
+                url: baseUrl+"mini/queryPayOrder",
+                method: 'post',
+                data: param,
+                success(res) {
+                  var result = res.data.data;
+                  if(result=='SUCCESS'){
+                    wx.showToast({
+                      title: '支付成功',
+                      success:function(){
+                        setTimeout(function () {
+                          wx.redirectTo({
+                            url: '/pages/order/detail/detail?oid='+oId,
+                          })
+                        }, 1500);
+                      }
+                    })
+                  }else{
+                    wx.redirectTo({
+                      url: '/pages/order/detail/detail?oid='+oId,
+                    })
+                  }
+                },
+                fail(res){
+                  wx.showToast({
+                    title: '支付失败，请重新支付',
+                    success:function(){
+                      setTimeout(function () {
+                        wx.redirectTo({
+                          url: '/pages/order/detail/detail?oid='+oId,
+                        })
+                      }, 1500);
+                    }
+                  })
+                }
+              })
+            
+            },
+            fail (res) {
+              wx.showToast({
+                title: '支付失败，请重新支付',
+                success:function(){
+                  setTimeout(function () {
+                    wx.redirectTo({
+                      url: '/pages/order/detail/detail?oid='+oId,
+                    })
+                  }, 1500);
+                }
+              })
+            }
           })
-
         }else{
           wx.showToast({
             title: res.data.msg
@@ -271,49 +333,7 @@ Page({
       }
     })
   },
-  //支付
-  // payment:function(){
-  //   var that = this;
-  //   var method = that.data.method;
-  //   var accountPrice = that.data.accountPrice;
-  //   var allPrice = that.data.allPrice;
-  //   if(method==3 && allPrice>accountPrice){
-  //     return;
-  //   }else{
-  //     var baseUrl = that.data.baseUrl;
-  //     var orderBasic = {};
-  //     orderBasic.oId=that.data.oId
-  //     orderBasic.paymentChannel=method;
-  //     wx.request({
-  //       url: baseUrl+"order/payment",
-  //       method: 'post',
-  //       data: orderBasic,
-  //       success(res) {
-  //         if(res.data.code==200){
-  //           wx.showToast({
-  //             title: '支付成功',
-  //             success:function(){
-  //               setTimeout(function () {
-  //                 wx.redirectTo({
-  //                   url: '/pages/order/order?id=1',
-  //                 })
-  //               }, 1000);
-  //             }
-  //           })
-  //         }else{
-  //           wx.showToast({
-  //             title: res.data.msg
-  //           })
-  //         }
-  //       },fail(res){
-  //         wx.showToast({
-  //           icon:'none',
-  //           title: '服务器异常'
-  //         })
-  //       }
-  //     })
-  //   }
-  // },
+  
   disableRoll:function(){},
   errorPic:function(e){
     var idx= e.target.dataset.idx; 
