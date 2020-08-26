@@ -5,7 +5,6 @@ Page({
     baseUrl:'',
     detailList:[],
     info:{},
-    deal:[],
     goodsPrice:0,
     oid:0,
     countDown:'',
@@ -16,18 +15,19 @@ Page({
   },
   onUnload:function(){
     clearInterval(this.timer);
-    var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
-    var prevPage = pages[ pages.length - 2 ];  
-    //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
-    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-      back:true
-    })
   },
   onLoad:function(e){
+    var baseUrl = app.globalData.baseUrl;
+    this.setData({
+      baseUrl:baseUrl,
+      oid:e.oid
+    }) 
+  },
+  onShow(){
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
-    paras.oId=e==undefined?that.data.oid:e.oid;
+    paras.oId=that.data.oid;
     wx.request({
       url: baseUrl+"order/queryOrderDetail",
       method: 'get',
@@ -52,11 +52,8 @@ Page({
           that.setData({
             detailList:detailList,
             info:info,
-            deal:res.data.data.deal,
             status:info.order_status,
             goodsPrice:(info.total_price).toFixed(2),
-            oid:e==undefined?that.data.oid:e.oid,
-            baseUrl:app.globalData.baseUrl,
             urls:urls
           })
           if(info.order_status==5){
@@ -78,7 +75,7 @@ Page({
     }
     var start = Date.parse(new Date(orderTime));//现在时间（时间戳）
     var value = (now-start)/1000;
-    var min = '0'+parseInt((1800-value) % (60 * 60 * 24) % 3600 / 60);
+    var min = parseInt((1800-value) % (60 * 60 * 24) % 3600 / 60);
     var sec = parseInt((1800-value) % (60 * 60 * 24) % 3600 % 60);
     if(sec>=0 && sec<10){
       sec = '0'+sec;
@@ -91,12 +88,13 @@ Page({
       var now = Date.parse(new Date());//现在时间（时间戳）
       var value = (now-start)/1000;
       if(value>=1800){
-        clearInterval(this.timer);
+
         var baseUrl = that.data.baseUrl;
         var paras={};
         paras.oId=that.data.oid;
+        paras.outRradeNo=info.out_trade_no;
         wx.request({
-          url: baseUrl+"order/closeOrder",
+          url: baseUrl+"mini/closeOrder",
           method: 'get',
           data: paras,
           success(res) {
@@ -105,12 +103,6 @@ Page({
                 icon:'none',
                 title: '订单超时，已自动取消',
                 success:function(){
-                  var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
-                  var prevPage = pages[ pages.length - 2 ];  
-                  //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
-                  prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-                    back:true
-                  })
                   setTimeout(function () {
                     wx.navigateBack({
                       delta: 1
@@ -122,8 +114,8 @@ Page({
           }
         })
       }else{
-        var min = '0'+parseInt((300-value) % (60 * 60 * 24) % 3600 / 60);
-        var sec = parseInt((300-value) % (60 * 60 * 24) % 3600 % 60);
+        var min = parseInt((1800-value) % (60 * 60 * 24) % 3600 / 60);
+        var sec = parseInt((1800-value) % (60 * 60 * 24) % 3600 % 60);
         if(sec>=0 && sec<10){
           sec = '0'+sec;
         }
@@ -179,7 +171,7 @@ Page({
               data: paras,
               success(res) {
                 if(res.data.code==200){
-                  that.onLoad();
+                  that.onShow();
                 }
               }
             })
@@ -203,28 +195,73 @@ Page({
       success (res) {}
     })
   },
-  //支付订单
+  //继续支付
   continuePayment:function(e){
+    wx.showLoading({
+      title: '发起支付',
+    })
     var oid = e.currentTarget.dataset.oid;
     var that = this;
     var baseUrl = that.data.baseUrl;
     var param = {};
-    param.oid=oid;
+    param.oId=oid;
     param.token=wx.getStorageSync('token');
     wx.request({
-      url: baseUrl+"order/continuePayment",
+      url: baseUrl+"mini/continuePayment",
       method: 'get',
       data: param,
       success(res) {
         if(res.data.code==200){
-          wx.showToast({
-            title: '支付成功',
-            success:function(){ }
+          wx.hideLoading({
+            complete: (res) => {},
           })
-          that.onLoad();
+          var data = res.data.data;
+          //支付
+          wx.requestPayment({
+            'timeStamp':data.timeStamp,
+            'nonceStr': data.nonceStr,
+            'package': data.package,
+            'signType': 'MD5',
+            'paySign': data.paySign,
+            success (res) {
+              var param = {};
+              param.oId = oid;
+              param.type = 1;
+              param.token = wx.getStorageSync('token');
+              //查询是否支付
+              wx.request({
+                url: baseUrl+"mini/queryPayOrder",
+                method: 'get',
+                data: param,
+                success(res) {
+                  var result = res.data.msg;
+                  wx.showToast({
+                    icon:"none",
+                    title: result,
+                     duration:1500
+                  })
+                  that.onShow();
+                },
+                fail(res){
+                  wx.showToast({
+                    icon:'none',
+                    title: '服务器异常'
+                  })
+                }
+              })
+            
+            },fail (res) {
+              wx.showToast({
+                icon:"none",
+                title: '支付失败，请重新支付',
+                duration:1500,
+              })
+            }
+          })
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -238,43 +275,81 @@ Page({
   },
   //二次支付
   extraPayment:function(){
+    wx.showLoading({
+      title: '发起支付',
+    })
     var that = this;
-    var method = that.data.method;
     var info = that.data.info;
-    if(method==3 && info.extraPrice>info.accountPrice){
-      return;
-    }else{
-      var baseUrl = that.data.baseUrl;
-      var orderBasic = {};
-      orderBasic.oId = info.o_id
-      orderBasic.uid = wx.getStorageSync('uId');
-      orderBasic.extra_payment = info.extraPrice;
-      orderBasic.extra_status=1;
-      orderBasic.extra_channel=method;
-      wx.request({
-        url: baseUrl+"order/extraOrder",
-        method: 'post',
-        data: orderBasic,
-        success(res) {
-          if(res.data.code==200){
-            wx.showToast({
-              title: '支付成功',
-              success:function(){ }
-            })
-            that.onLoad();
-          }else{
-            wx.showToast({
-              title: res.data.msg
-            })
-          }
-        },fail(res){
+    var baseUrl = that.data.baseUrl;
+    var param = {};
+    param.oId = info.o_id
+    param.token = wx.getStorageSync('token');
+    param.totalPrice = info.extraPrice*100;
+    wx.request({
+      url: baseUrl+"mini/extraPayment",
+      method: 'get',
+      data: param,
+      success(res) {
+        if(res.data.code==200){
+          wx.hideLoading({
+            complete: (res) => {},
+          })
+          var data = res.data;
+          //支付
+          wx.requestPayment({
+            'timeStamp':data.timeStamp,
+            'nonceStr': data.nonceStr,
+            'package': data.package,
+            'signType': 'MD5',
+            'paySign': data.paySign,
+            success (res) {
+              var param = {};
+              param.oId = oid;
+              param.type = 2;
+              param.token = wx.getStorageSync('token');
+              //查询是否支付
+              wx.request({
+                url: baseUrl+"mini/queryPayOrder",
+                method: 'get',
+                data: param,
+                success(res) {
+                  var result = res.data.msg;
+                  wx.showToast({
+                    icon:"none",
+                    title: result,
+                      duration:1500
+                  })
+                  that.onShow();
+                },
+                fail(res){
+                  wx.showToast({
+                    icon:'none',
+                    title: '服务器异常'
+                  })
+                }
+              })
+            
+            },fail (res) {
+              wx.showToast({
+                icon:"none",
+                title: '支付失败，请重新支付',
+                duration:1500,
+              })
+            }
+          })
+        }else{
           wx.showToast({
             icon:'none',
             title: '服务器异常'
           })
         }
-      })
-    }
+      },fail(res){
+        wx.showToast({
+          icon:'none',
+          title: '服务器异常'
+        })
+      }
+    })
   },
   enlargement:function(e){
     var id = e.currentTarget.dataset.id;
@@ -298,7 +373,10 @@ Page({
       urls: urlList // 需要预览的图片http链接列表
     })
   },
-  closeOrder:function(){
+  //取消订单
+  closeOrder:function(e){
+    var oid = e.currentTarget.dataset.oid;
+    var tradeno = e.currentTarget.dataset.tradeno;
     var that = this;
     var baseUrl = that.data.baseUrl;
     wx.showModal({
@@ -309,9 +387,10 @@ Page({
           return;
         }
         var param = {};
-        param.oId=that.data.oid;
+        param.oId=oid;
+        param.outRradeNo=tradeno;
         wx.request({
-          url: baseUrl+"order/closeOrder",
+          url: baseUrl+"mini/closeOrder",
           method: 'get',
           data: param,
           success(res) {
@@ -320,46 +399,7 @@ Page({
                 icon:'none',
                 title: '取消成功',
                 success:function(){
-                  var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
-                  var prevPage = pages[ pages.length - 2 ];  
-                  //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
-                  var payList = prevPage.data.payList;
-                  var result = {};
-                  var index = 0;
-                  for(var idx in payList){
-                    var item = payList[idx];
-                    if(item.o_id==that.data.oid){
-                      result = item;
-                      index = idx;
-                      break;
-                    }
-                  }
-                  payList.splice(index,1);
-                  var allList = prevPage.data.allList;
-                  if(allList.length>0){
-                    var indexx = 0
-                    for(var idx in allList){
-                      var item = payList[idx];
-                      if(item.o_id==that.data.oid){
-                        indexx = idx;
-                        break;
-                      }
-                    }
-                    allList.splice(indexx,1);
-                    allList.reverse();
-                    allList.push(result);
-                    allList.reverse();
-                    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-                      payList:payList,
-                      allList:allList
-                    })
-                  }else{
-                    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-                      payList:payList
-                    })
-                  }
                   setTimeout(function () {
-                    clearInterval(this.timer);
                     wx.navigateBack({
                       delta: 1
                     })

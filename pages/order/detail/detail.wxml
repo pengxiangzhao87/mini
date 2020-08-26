@@ -115,8 +115,11 @@
 <view wx:if="{{info.order_status!=6}}">
   <view wx:if="{{info.order_status==5}}">
     <view class="page_bottom_pay" >
-      <view class="cancel" bindtap="closeOrder" data-oid="{{info.o_id}}">取消订单</view>
-      <view class="continue" bindtap="continuePayment"><view style="width:60px;">继续支付</view><view style="width:30px;">{{countDown}}</view></view>
+      <view class="cancel" bindtap="closeOrder" data-tradeno="{{info.out_trade_no}}" data-oid="{{info.o_id}}">取消订单</view>
+      <view class="continue" bindtap="continuePayment" data-oid="{{info.o_id}}">
+        <text style="width:70px;margin-left:10px;" >继续支付</text>
+        <text style="width:50px;" >{{countDown}}</text>
+      </view>
     </view>   
   </view>
   <view wx:if="{{info.order_status!=5}}">

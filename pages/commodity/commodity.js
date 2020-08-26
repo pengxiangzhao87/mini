@@ -163,7 +163,7 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
-          var total = that.data.totalPrice;
+          var total = that.data.totalPage;
           var pageAll = total==0?totalPage:total;
           that.setData({
             commodity:list,

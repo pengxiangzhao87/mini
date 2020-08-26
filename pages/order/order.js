@@ -2,8 +2,6 @@
 var app = getApp();
 Page({
   data: {
-    back:false,
-    hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     baseUrl:'',
     rows:20,
@@ -69,19 +67,13 @@ Page({
   },
   onShow:function(){
     var that = this;
-    //是否返回页
-    if(that.data.back){
-      that.setData({
-        back:false
-      })
-      return;
-    }
     var baseUrl = that.data.baseUrl;
     var status =that.data.payOrder?5:(that.data.sendOrder?1:(that.data.takeOrder?2:-1));
     var paras={};
     paras.userId=wx.getStorageSync('uId');
     paras.page=1;
-    paras.rows=that.data.rows;
+    var page = status==1?that.data.sendPage:(status==2?that.data.takePage:(status==5?that.data.payPage:that.data.allPage));
+    paras.rows=that.data.rows*page;
     paras.status=status;
     wx.request({
       url: baseUrl+"order/queryOrderBasicByPage",
@@ -91,6 +83,8 @@ Page({
         if(res.data.code==200){
           var data = res.data.data.list;
           var totalPage = res.data.data.totalPage;
+          var total = status==1?that.data.sendTotalPage:(status==2?that.data.takeTotalPage:(status==5?that.data.payTotalPage:that.data.allTotalPage));
+          var pageAll = total==0?totalPage:total;
           for(var idx in data){
             var item = data[idx];
             item.imgUrl = item.imgUrl.split('~');
@@ -98,22 +92,22 @@ Page({
           if(status==1){
             that.setData({
               sendList:data,
-              sendTotalPage:totalPage
+              sendTotalPage:pageAll
             })
           }else if(status==2){
             that.setData({
               takeList:data,
-              takeTotalPage:totalPage
+              takeTotalPage:pageAll
             })
           }else if(status==5){
             that.setData({
               payList:data,
-              payTotalPage:totalPage
+              payTotalPage:pageAll
             })
           }else{
             that.setData({
               allList:data,
-              allTotalPage:totalPage
+              allTotalPage:pageAll
             })
           }
           
@@ -138,7 +132,7 @@ Page({
     if(list.length==0){
       var baseUrl = app.globalData.baseUrl;
       var page = that.data.allPage;
-      var rows = that.data.rows;
+      var rows = that.data.rows*page;
       var paras={};
       paras.userId=wx.getStorageSync('uId');
       paras.page=page;
@@ -152,13 +146,15 @@ Page({
           if(res.data.code==200){
             var data = res.data.data.list;
             var totalPage = res.data.data.totalPage;
+            var total = that.data.allTotalPage;
+            var pageAll = total==0?totalPage:total;
             for(var idx in data){
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
             that.setData({
               allList:data,
-              allTotalPage:totalPage,
+              allTotalPage:pageAll,
               payOrder:false,
               allOrder:true,
               sendOrder:false,
@@ -193,7 +189,7 @@ Page({
     if(list.length==0){
       var baseUrl = app.globalData.baseUrl;
       var page = that.data.sendPage;
-      var rows = that.data.rows;
+      var rows = that.data.rows*page;
       var paras={};
       paras.userId=wx.getStorageSync('uId');
       paras.page=page;
@@ -207,13 +203,15 @@ Page({
           if(res.data.code==200){
             var data = res.data.data.list;
             var totalPage = res.data.data.totalPage;
+            var total = that.data.sendTotalPage;
+            var pageAll = total==0?totalPage:total;
             for(var idx in data){
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
             that.setData({
               sendList:data,
-              sendTotalPage:totalPage,
+              sendTotalPage:pageAll,
               payOrder:false,
               allOrder:false,
               sendOrder:true,
@@ -248,7 +246,7 @@ Page({
     if(list.length==0){
       var baseUrl = app.globalData.baseUrl;
       var page = that.data.takePage;
-      var rows = that.data.rows;
+      var rows = that.data.rows*page;
       var paras={};
       paras.userId=wx.getStorageSync('uId');
       paras.page=page;
@@ -262,13 +260,15 @@ Page({
           if(res.data.code==200){
             var data = res.data.data.list;
             var totalPage = res.data.data.totalPage;
+            var total = that.data.takeTotalPage;
+            var pageAll = total==0?totalPage:total;
             for(var idx in data){
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
             that.setData({
               takeList:data,
-              takeTotalPage:totalPage,
+              takeTotalPage:pageAll,
               payOrder:false,
               allOrder:false,
               sendOrder:false,
@@ -303,7 +303,7 @@ Page({
     if(list.length==0){
       var baseUrl = app.globalData.baseUrl;
       var page = that.data.payPage;
-      var rows = that.data.rows;
+      var rows = that.data.rows*page;
       var paras={};
       paras.userId=wx.getStorageSync('uId');
       paras.page=page;
@@ -317,13 +317,15 @@ Page({
           if(res.data.code==200){
             var data = res.data.data.list;
             var totalPage = res.data.data.totalPage;
+            var total = that.data.payTotalPage;
+            var pageAll = total==0?totalPage:total;
             for(var idx in data){
               var item = data[idx];
               item.imgUrl = item.imgUrl.split('~');
             }
             that.setData({
               payList:data,
-              payTotalPage:totalPage,
+              payTotalPage:pageAll,
               payOrder:true,
               allOrder:false,
               sendOrder:false,

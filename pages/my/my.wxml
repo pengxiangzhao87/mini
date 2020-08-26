@@ -51,7 +51,7 @@
     <image style="width:200px;height:200px;margin-top:10px;" src="{{baseUrl}}upload/weixin-code.jpg" object-fit="fill"></image>
   </view>
 </view>
-
+<!-- 
 <view class="myAccount">
   <text style="display:flex;color:#333333;font-size:16px;font-weight:bold;">我的账户</text>
   <view class="account-center">
@@ -76,4 +76,4 @@
     <view class="button-right" bindtap="toDeal">明细</view>
   </view>
   
-</view>
+</view> -->

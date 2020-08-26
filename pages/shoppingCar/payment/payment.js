@@ -197,7 +197,6 @@ Page({
   },
   //下单 TODO
   toPayment:function(){
-    
     var that = this;
     var range = '';
     var dateRange = that.data.dateRange;
@@ -267,34 +266,32 @@ Page({
             success (res) {
               var param = {};
               param.oId = oId;
+              param.type = 1;
               param.token = wx.getStorageSync('token');
               //查询是否支付
               wx.request({
                 url: baseUrl+"mini/queryPayOrder",
-                method: 'post',
+                method: 'get',
                 data: param,
                 success(res) {
                   var result = res.data.data;
-                  if(result=='SUCCESS'){
-                    wx.showToast({
-                      title: '支付成功',
-                      success:function(){
-                        setTimeout(function () {
-                          wx.redirectTo({
-                            url: '/pages/order/detail/detail?oid='+oId,
-                          })
-                        }, 1500);
-                      }
-                    })
-                  }else{
-                    wx.redirectTo({
-                      url: '/pages/order/detail/detail?oid='+oId,
-                    })
-                  }
+                  console.info('queryOrder',result)
+                  wx.showToast({
+                    icon:'none',
+                    title: result,
+                    success:function(){
+                      setTimeout(function () {
+                        wx.redirectTo({
+                          url: '/pages/order/detail/detail?oid='+oId,
+                        })
+                      }, 1500);
+                    }
+                  })
                 },
                 fail(res){
                   wx.showToast({
-                    title: '支付失败，请重新支付',
+                    icon:'none',
+                    title: '支付中!',
                     success:function(){
                       setTimeout(function () {
                         wx.redirectTo({
@@ -309,6 +306,7 @@ Page({
             },
             fail (res) {
               wx.showToast({
+                icon:'none',
                 title: '支付失败，请重新支付',
                 success:function(){
                   setTimeout(function () {

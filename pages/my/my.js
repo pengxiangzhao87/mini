@@ -17,7 +17,6 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          console.info(res)
           var myInfo = res.data.data;
           if(myInfo.imgUrl!='' && myInfo.imgUrl!=undefined){
             myInfo.imgList = myInfo.imgUrl.split('~');
