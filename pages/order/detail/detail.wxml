@@ -78,7 +78,7 @@
     <view class="foot-item-left">送达时间</view>
     <view class="foot-item-right">{{info.last_time}}</view>
   </view>
-  <view hidden="{{info.extra_channel==null}}">
+  <view hidden="{{info.extra_status!=1}}">
     <view style="background-color:#E5E5E5;height:0.5px;margin-left:5px;margin-right:5px;margin-bottom:10px;"></view>
     <view class="foot-item">
       <view class="foot-item-left">差价支付方式</view>
@@ -123,7 +123,7 @@
     </view>   
   </view>
   <view wx:if="{{info.order_status!=5}}">
-    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extraPrice==0 || info.extra_channel!=null}}" >
+    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extraPrice==0 || info.extra_channel!=null || info.extra_status==1}}" >
       <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
     </view>
   </view>

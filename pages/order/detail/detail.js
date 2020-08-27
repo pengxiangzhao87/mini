@@ -282,9 +282,10 @@ Page({
     var info = that.data.info;
     var baseUrl = that.data.baseUrl;
     var param = {};
-    param.oId = info.o_id
+    param.oId = info.o_id;
     param.token = wx.getStorageSync('token');
     param.totalPrice = info.extraPrice*100;
+    param.orginalPrice = info.extraPrice;
     wx.request({
       url: baseUrl+"mini/extraPayment",
       method: 'get',
@@ -294,7 +295,7 @@ Page({
           wx.hideLoading({
             complete: (res) => {},
           })
-          var data = res.data;
+          var data = res.data.data;
           //支付
           wx.requestPayment({
             'timeStamp':data.timeStamp,
@@ -304,7 +305,7 @@ Page({
             'paySign': data.paySign,
             success (res) {
               var param = {};
-              param.oId = oid;
+              param.oId = info.o_id;
               param.type = 2;
               param.token = wx.getStorageSync('token');
               //查询是否支付
