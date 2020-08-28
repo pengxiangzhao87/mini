@@ -264,22 +264,21 @@ Page({
             'signType': 'MD5',
             'paySign': data.paySign,
             success (res) {
+              //查询是否支付
               var param = {};
               param.oId = oId;
               param.type = 1;
               param.token = wx.getStorageSync('token');
-              //查询是否支付
               wx.request({
                 url: baseUrl+"mini/queryPayOrder",
                 method: 'get',
                 data: param,
                 success(res) {
-                  var result = res.data.data;
-                  console.info('queryOrder',result)
+                  var result = res.data.msg;
                   wx.showToast({
                     icon:'none',
                     title: result,
-                    success:function(){
+                    success:function(res){
                       setTimeout(function () {
                         wx.redirectTo({
                           url: '/pages/order/detail/detail?oid='+oId,

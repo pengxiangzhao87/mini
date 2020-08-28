@@ -284,8 +284,7 @@ Page({
     var param = {};
     param.oId = info.o_id;
     param.token = wx.getStorageSync('token');
-    param.totalPrice = info.extraPrice*100;
-    param.orginalPrice = info.extraPrice;
+    param.totalPrice = info.extraPrice;
     wx.request({
       url: baseUrl+"mini/extraPayment",
       method: 'get',
@@ -304,11 +303,11 @@ Page({
             'signType': 'MD5',
             'paySign': data.paySign,
             success (res) {
+              //查询是否支付
               var param = {};
               param.oId = info.o_id;
               param.type = 2;
               param.token = wx.getStorageSync('token');
-              //查询是否支付
               wx.request({
                 url: baseUrl+"mini/queryPayOrder",
                 method: 'get',
