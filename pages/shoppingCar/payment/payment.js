@@ -199,6 +199,15 @@ Page({
   toPayment:function(){
     var that = this;
     var range = '';
+    var address = that.data.address;
+
+    if(address==undefined){
+      wx.showToast({
+        title: '请选择收货地址',
+        icon:'none'
+      })
+      return;
+    }
     var dateRange = that.data.dateRange;
     if(dateRange=='选择时间'){
       wx.showToast({
@@ -221,8 +230,6 @@ Page({
     var allPrice = that.data.allPrice;
     var baseUrl = that.data.baseUrl;
     var list = that.data.detailList;
-    var address = that.data.address;
-    var dateRange = that.data.dateRange;
     var data = {};
     data.rangeTime = range;
     data.uId=wx.getStorageSync('uId');

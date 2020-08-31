@@ -164,14 +164,26 @@ Page({
           if (sm.confirm) {
             var baseUrl = app.globalData.baseUrl;
             var paras={};
-            paras.ids=id;
+            paras.id=id;
             wx.request({
               url: baseUrl+"order/applyForRefundDetail",
               method: 'get',
               data: paras,
               success(res) {
                 if(res.data.code==200){
-                  that.onShow();
+                  if(res.data.msg=='1'){
+                    wx.showToast({
+                      icon:'none',
+                      title: "配送中，无法申请退款",
+                      success:function(){
+                        setTimeout(function () {
+                          that.onShow();
+                        }, 1500);
+                      }
+                    })
+                  }else{
+                    that.onShow();
+                  }
                 }
               }
             })
