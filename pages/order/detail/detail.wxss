@@ -85,6 +85,7 @@ page{
 }
 
 .foot{
+  margin-top:10px;
   margin-bottom:70px;
   padding-bottom:10px;
   background-color: #FFFFFF;
