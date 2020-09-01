@@ -20,14 +20,12 @@
           <image style="width:66px;height:66px;" mode="aspectFit" src="{{item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-iddx="{{idxx}}"></image>
         </view>
         <view style="margin-left:14px;width:100%;">
-          <view style="display:flex;flex-direction:row;">
-            <view style="height:43px;width:100%;">
-              <view class="goods-name">{{item.name}}</view>
-            </view>
-            <view class="list-canFeed" hidden="{{info.order_status==5 || info.order_status==6}}" catchtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?3:item.chargeback_status}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
+          <view style="height:43px;width:100%;">
+            <view class="goods-name">{{item.name}}</view>
           </view>
-          <view><text style="color:#FF1907;font-size:14px;">{{item.price}}</text><text style="color:#666666;font-size:12px;"> /{{item.num}}</text></view>
-          <view><text style="color:#666666;font-size:12px;">单号：{{item.id}}</text></view>
+          <view><text style="color:#666666;font-size:12px;">价格：{{item.price}}</text></view>
+           <view><text style="color:#666666;font-size:12px;">规格：{{item.num}}</text></view>
+          <view class="list-canFeed" hidden="{{info.order_status==5 || info.order_status==6}}" catchtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status==null?3:item.chargeback_status}}">{{item.chargeback_status==null?'申请退款':(item.chargeback_status==1?'退款中':'已退款')}}</view> 
         </view>
       </view>
       <view class="extra-list" hidden="{{item.is_extra==0 || item.is_extra==undefined}}">

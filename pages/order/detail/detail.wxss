@@ -22,7 +22,7 @@ page{
   margin-top:5px;
   margin-left:10px;
   margin-right:10px;
-  height:95px;
+  height:120px;
 }
 
 .goods-name{
@@ -42,7 +42,7 @@ page{
 
 .list-canFeed{
   width:60px;
-  height:20px;
+  height:25px;
   border:solid 0.5px #999999;
   border-radius: 200px;
   color:#666666;

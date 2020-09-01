@@ -18,9 +18,23 @@ App({
         that.globalData.ww = ww;
         that.globalData.hh = hh;
       }
-    })
-    
-     
+    })  
+  },
+  onShow:function(){
+    var that = this;
+    var token = wx.getStorageSync('token');
+    if(token!=''){
+      wx.request({
+        url: that.globalData.baseUrl+"mini/checkToken",
+        method: 'get',
+        data: {token:wx.getStorageSync('token')},
+        success(res) {
+          if(res.data.code!=200){
+            that.wxGetOpenID();
+          }
+        }
+      })
+    }
   },
   // 登录
   wxGetOpenID:function(){

@@ -225,7 +225,7 @@ Page({
     var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
     range = now.getFullYear() +'-'+month+'-'+day+' '+dateRange.substr(2,dateRange.length-1);
     wx.showLoading({
-      title: '生成订单中',
+      title: '生成订单中...',
     })
     var allPrice = that.data.allPrice;
     var baseUrl = that.data.baseUrl;

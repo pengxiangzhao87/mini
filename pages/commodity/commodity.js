@@ -247,7 +247,7 @@ Page({
   },
   showCar:function(e){
     wx.requestSubscribeMessage({
-      tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcmyUAF_7nNsfnqJ9B_W9r8gI'],
+      tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
     })
     // var that = this;
     // var idx = e.currentTarget.dataset.idx;
