@@ -198,6 +198,23 @@ Page({
   //下单 TODO
   toPayment:function(){
     var that = this;
+    wx.getSetting({
+      withSubscriptions: true,
+      complete(res){
+        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+           that.toOrder(that);
+        }else{
+          wx.requestSubscribeMessage({
+            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
+            complete (res) { 
+              that.toOrder(that);
+            }
+          })
+        }
+      }
+    })
+  },
+  toOrder:function(that){
     var range = '';
     var address = that.data.address;
 

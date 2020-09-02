@@ -249,34 +249,50 @@ Page({
     util.getPhone(baseUrl,data,that,app);
   },
   showCar:function(e){
+    wx.getSetting({
+      withSubscriptions: true,
+      complete(res){
+        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+           
+        }else{
+          wx.requestSubscribeMessage({
+            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
+            complete (res) { 
+              c 
+            }
+          })
+          
+        }
+      }
+    })
     
-    var that = this;
-    var idx = e.currentTarget.dataset.idx;
-    var detail = that.data.commodity[idx];
-    if(detail.state==0){
-      wx.showToast({
-        icon:'none',
-        title: '补货中',
-        duration:2000
-      })
-      return;
-    }
-    var sum = detail.init_num;
-    var unit = detail.init_unit;
-    var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
-    that.setData({
-      idxFlag:idx,
-      totalSum:sum,
-      totalPrice:totalPrice
-    })
-    this.finger = {};
-    //点击位置有偏移
-    this.finger['x'] = e.detail.x-10;
-    this.finger['y'] = e.detail.y-30;
-    wx.hideTabBar({
-      animation: true,
-    })
-    that.showAddModal();
+    // var that = this;
+    // var idx = e.currentTarget.dataset.idx;
+    // var detail = that.data.commodity[idx];
+    // if(detail.state==0){
+    //   wx.showToast({
+    //     icon:'none',
+    //     title: '补货中',
+    //     duration:2000
+    //   })
+    //   return;
+    // }
+    // var sum = detail.init_num;
+    // var unit = detail.init_unit;
+    // var totalPrice = (detail.price_unit * (unit==0?sum/50:sum)).toFixed(2);
+    // that.setData({
+    //   idxFlag:idx,
+    //   totalSum:sum,
+    //   totalPrice:totalPrice
+    // })
+    // this.finger = {};
+    // //点击位置有偏移
+    // this.finger['x'] = e.detail.x-10;
+    // this.finger['y'] = e.detail.y-30;
+    // wx.hideTabBar({
+    //   animation: true,
+    // })
+    // that.showAddModal();
   },
 
 

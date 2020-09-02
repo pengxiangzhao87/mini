@@ -207,13 +207,30 @@ Page({
       success (res) {}
     })
   },
-  //继续支付
   continuePayment:function(e){
+    var that = this;
+    wx.getSetting({
+      withSubscriptions: true,
+      complete(res){
+        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+           that.toContinuePayment(that,e);
+        }else{
+          wx.requestSubscribeMessage({
+            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
+            complete (res) { 
+              that.toContinuePayment(that,e);
+            }
+          })
+        }
+      }
+    })
+  },
+  //继续支付
+  toContinuePayment:function(that,e){
     wx.showLoading({
       title: '发起支付',
     })
     var oid = e.currentTarget.dataset.oid;
-    var that = this;
     var baseUrl = that.data.baseUrl;
     var param = {};
     param.oId=oid;
@@ -285,12 +302,29 @@ Page({
     })
 
   },
-  //二次支付
   extraPayment:function(){
+    var that = this;
+    wx.getSetting({
+      withSubscriptions: true,
+      complete(res){
+        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+           that.toExtraPayment(that);
+        }else{
+          wx.requestSubscribeMessage({
+            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
+            complete (res) { 
+              that.toExtraPayment(that);
+            }
+          })
+        }
+      }
+    })
+  },
+  //二次支付
+  toExtraPayment:function(that){
     wx.showLoading({
       title: '发起支付',
     })
-    var that = this;
     var info = that.data.info;
     var baseUrl = that.data.baseUrl;
     var param = {};
