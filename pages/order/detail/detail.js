@@ -132,14 +132,6 @@ Page({
     var that = this;
     var orderStatus = that.data.info.order_status;
     var status = e.currentTarget.dataset.status;
-    if(orderStatus==2){
-      wx.showToast({
-        icon:'none',
-        title: '配送中，无法申请退款',
-        duration:3000
-      })
-      return;
-    }
     if(orderStatus==3){
       var lastTime = that.data.info.last_time;
       var system = wx.getSystemInfoSync()

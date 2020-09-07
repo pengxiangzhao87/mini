@@ -9,11 +9,11 @@
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
-        <view wx:if="{{idx%2==0}}" tyle="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;  ">
+        <view  wx:if="{{idx%2==0}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;">
           <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
-            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-            <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
-            <view class="goods-name">{{commodity[idx].s_name}}</view>
+            <image  style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+            <view class="goods-name" >{{commodity[idx].s_name}}</view>
           </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
@@ -39,9 +39,9 @@
         <view  wx:if="{{idx%2!=0}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
           <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
             <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
-            <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
-            <view class="goods-name">{{commodity[idx].s_name}}</view>
-          </view>  
+            <view style="font-size:12px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
+          <view class="goods-name">{{commodity[idx].s_name}}</view>
+          </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
             <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
@@ -62,12 +62,15 @@
       </view> 
     </view>
   </view> 
+  
+  <view hidden="{{hidden}}" class="baseLine">
+    <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
+    <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>
+  </view>
+
 </view>
 
-<view hidden="{{hidden}}" class="baseLine">
-  <text decode="true">我也是有底线的&nbsp;&nbsp;</text>
-  <image style="width:12px;height:12px;" src="/image/shouye_dixian@3x.png"></image>
-</view>
+
 
 <view hidden="{{commodity.length>0}}">
 <view style="display:flex;justify-content:center;margin-top:50px;">
