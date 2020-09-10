@@ -43,9 +43,6 @@ Page({
     })
   },
   onShow:function(){
-    wx.requestSubscribeMessage({
-      tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
-    })
     var that = this;
     that.setData({
       topFlag:0
@@ -237,7 +234,6 @@ Page({
   },
   //手机号授权
   getPhoneNumber:function(e){
-    console.info(e)
     if(e.detail.iv==undefined){
       return;
     }
@@ -251,25 +247,6 @@ Page({
   },
   showCar:function(e){
     var that =this;
-    wx.getSetting({
-      withSubscriptions: true,
-      complete(res){
-        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
-           that.toShowModal(that,e);
-        }else{
-          wx.requestSubscribeMessage({
-            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
-            complete (res) { 
-              that.toShowModal(that,e);
-            }
-          })
-          
-        }
-      }
-    })
-    
-  },
-  toShowModal(that,e){
     var idx = e.currentTarget.dataset.idx;
     var detail = that.data.commodity[idx];
     if(detail.state==0){
