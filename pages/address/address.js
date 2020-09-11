@@ -28,7 +28,8 @@ Page({
           })
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -74,21 +75,13 @@ Page({
             nextFlag:1,
             address:result
           })
-          wx.showToast({
-            icon:'none',
-            title: '变更成功',
-            success:function(){
-              setTimeout(function () {
-                wx.navigateBack({
-                  delta: 1
-                })
-              }, 1000);
-            }
+          wx.navigateBack({
+            delta: 1
           })
         }else{
           wx.showToast({
             icon:'none',
-            title: res.data.msg
+            title: '服务器异常'
           })
         }
       },fail(res){

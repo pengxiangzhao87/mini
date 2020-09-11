@@ -62,7 +62,8 @@ Page({
           that.getCarNum(baseUrl);
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },
@@ -149,7 +150,8 @@ Page({
           that.onShow();
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -179,7 +181,8 @@ Page({
           that.onShow();
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -226,7 +229,8 @@ Page({
           that.onShow();
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -274,7 +278,8 @@ Page({
                   that.onShow();
                 }else{
                   wx.showToast({
-                    title: res.data.msg
+                    icon:'none',
+                    title: '服务器异常'
                   })
                 }
               },fail(res){

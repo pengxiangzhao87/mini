@@ -130,66 +130,53 @@ Page({
   refund:function(e){
     var id = e.currentTarget.dataset.id;
     var that = this;
-    var orderStatus = that.data.info.order_status;
     var status = e.currentTarget.dataset.status;
-    if(orderStatus==3){
-      var lastTime = that.data.info.last_time;
-      var system = wx.getSystemInfoSync()
-      if(system.platform=='ios'){
-        lastTime = lastTime.replace(/\-/g,'/');
-      }
-      var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
-      if(new Date().getTime()>limitTime){
-        wx.showToast({
-          icon:'none',
-          title: '收到商品24小时后，不受理退款',
-          duration:3000
-        })
-        return;
-      }
+    if(status!=undefined){
+      return;
     }
-    if(status==3){
+    var lastTime = that.data.info.last_time;
+    var system = wx.getSystemInfoSync()
+    if(system.platform=='ios'){
+      lastTime = lastTime.replace(/\-/g,'/');
+    }
+    var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
+    if(new Date().getTime()>limitTime){
       wx.showModal({
-        title: '提示',
-        content: '确定申请退款吗？',
-        success: function (sm) {
-          if (sm.confirm) {
-            var baseUrl = app.globalData.baseUrl;
-            var paras={};
-            paras.id=id;
-            wx.request({
-              url: baseUrl+"order/applyForRefundDetail",
-              method: 'get',
-              data: paras,
-              success(res) {
-                if(res.data.code==200){
-                  if(res.data.msg=='1'){
-                    wx.showToast({
-                      icon:'none',
-                      title: "配送中，无法申请退款",
-                      success:function(){
-                        setTimeout(function () {
-                          that.onShow();
-                        }, 1500);
-                      }
-                    })
-                  }else{
-                    that.onShow();
-                  }
-                }
-              }
-            })
-          }
-        }
-      })
-    }else if(status==1){
-      wx.showToast({
-        icon:'none',
-        title: '待商家处理',
-        duration:1500
+        content: '收到商品24小时后，不受理退款',
+        showCancel:false
       })
       return;
-    } 
+    }
+  
+    wx.showModal({
+      title: '提示',
+      content: '确定申请退款吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          var baseUrl = app.globalData.baseUrl;
+          var paras={};
+          paras.id=id;
+          wx.request({
+            url: baseUrl+"order/applyForRefundDetail",
+            method: 'get',
+            data: paras,
+            success(res) {
+              if(res.data.code==200){
+                if(res.data.msg=='1'){
+                  wx.showModal({
+                    content: '配送中，无法申请退款',
+                    showCancel:false
+                  })
+                }else{
+                  that.onShow();
+                }
+              }
+            }
+          })
+        }
+      }
+    })
+    
   },
 
   copy:function(e){
@@ -220,7 +207,7 @@ Page({
   //继续支付
   toContinuePayment:function(that,e){
     wx.showLoading({
-      title: '发起支付',
+      title: '发起支付...',
     })
     var oid = e.currentTarget.dataset.oid;
     var baseUrl = that.data.baseUrl;
@@ -233,9 +220,6 @@ Page({
       data: param,
       success(res) {
         if(res.data.code==200){
-          wx.hideLoading({
-            complete: (res) => {},
-          })
           var data = res.data.data;
           //支付
           wx.requestPayment({
@@ -255,27 +239,29 @@ Page({
                 method: 'get',
                 data: param,
                 success(res) {
+                  wx.hideLoading();
                   var result = res.data.msg;
-                  wx.showToast({
-                    icon:"none",
-                    title: result,
-                     duration:1500
+                  wx.showModal({
+                    content: result,
+                    showCancel:false
                   })
                   that.onShow();
                 },
                 fail(res){
-                  wx.showToast({
-                    icon:'none',
-                    title: '服务器异常'
+                  wx.hideLoading()
+                  wx.showModal({
+                    content: '支付中',
+                    showCancel:false
                   })
+                  that.onShow();
                 }
               })
             
             },fail (res) {
-              wx.showToast({
-                icon:"none",
-                title: '支付失败，请重新支付',
-                duration:1500,
+              wx.hideLoading();
+              wx.showModal({
+                content: '支付失败，请重新支付',
+                showCancel:false
               })
             }
           })
@@ -315,7 +301,7 @@ Page({
   //二次支付
   toExtraPayment:function(that){
     wx.showLoading({
-      title: '发起支付',
+      title: '发起支付...',
     })
     var info = that.data.info;
     var baseUrl = that.data.baseUrl;
@@ -329,9 +315,7 @@ Page({
       data: param,
       success(res) {
         if(res.data.code==200){
-          wx.hideLoading({
-            complete: (res) => {},
-          })
+          wx.hideLoading();
           var data = res.data.data;
           //支付
           wx.requestPayment({
@@ -352,26 +336,27 @@ Page({
                 data: param,
                 success(res) {
                   var result = res.data.msg;
-                  wx.showToast({
-                    icon:"none",
-                    title: result,
-                      duration:1500
+                  wx.showModal({
+                    content: result,
+                    showCancel:false
                   })
                   that.onShow();
                 },
                 fail(res){
-                  wx.showToast({
-                    icon:'none',
-                    title: '服务器异常'
+                  wx.hideLoading()
+                  wx.showModal({
+                    content: '支付中',
+                    showCancel:false
                   })
+                  that.onShow();
                 }
               })
             
             },fail (res) {
-              wx.showToast({
-                icon:"none",
-                title: '支付失败，请重新支付',
-                duration:1500,
+              wx.hideLoading();
+              wx.showModal({
+                content: '支付失败，请重新支付',
+                showCancel:false
               })
             }
           })
@@ -433,20 +418,21 @@ Page({
           data: param,
           success(res) {
             if(res.data.code==200){
-              wx.showToast({
-                icon:'none',
-                title: '取消成功',
-                success:function(){
-                  setTimeout(function () {
+              wx.showModal({
+                content: '取消成功',
+                showCancel:false,
+                success (res) {
+                  if (res.confirm) {
                     wx.navigateBack({
                       delta: 1
                     })
-                  }, 1000);
+                  }
                 }
               })
             }else{
               wx.showToast({
-                title: res.data.msg
+                icon:'none',
+                title: '服务器异常'
               })
             }
           },fail(res){

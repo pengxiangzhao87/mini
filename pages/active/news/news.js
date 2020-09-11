@@ -127,8 +127,7 @@ Page({
     if(detail.state==0){
       wx.showToast({
         icon:'none',
-        title: '补货中',
-        duration:2000
+        title: '补货中'
       })
       return;
     }

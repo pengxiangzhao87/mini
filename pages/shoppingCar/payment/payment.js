@@ -45,7 +45,8 @@ Page({
           })
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -66,7 +67,8 @@ Page({
           })
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){
@@ -275,9 +277,6 @@ Page({
       data: data,
       success(res) {
         if(res.data.code==200){
-          wx.hideLoading({
-            complete: (res) => {},
-          })
           var data = res.data.data.data;
           var oId = res.data.data.oId;
           //支付
@@ -298,34 +297,36 @@ Page({
                 method: 'get',
                 data: param,
                 success(res) {
+                  wx.hideLoading();
                   var result = res.data.msg;
-                  wx.showToast({
-                    icon:'none',
-                    title: result,
-                    success:function(res){
-                      setTimeout(function () {
+                  wx.showModal({
+                    content: result,
+                    showCancel:false,
+                    success (res) {
+                      if (res.confirm) {
                         wx.redirectTo({
                           url: '/pages/order/detail/detail?oid='+oId,
                         })
-                      }, 1500);
+                      }
                     }
                   })
                 },
                 fail(res){
-                  wx.showToast({
-                    icon:'none',
-                    title: '支付中!',
-                    success:function(){
-                      setTimeout(function () {
+                  wx.hideLoading();
+                  wx.showModal({
+                    content: '支付中',
+                    showCancel:false,
+                    success (res) {
+                      if (res.confirm) {
                         wx.redirectTo({
                           url: '/pages/order/detail/detail?oid='+oId,
                         })
-                      }, 1500);
+                      }
                     }
                   })
+
                 }
               })
-            
             },
             fail (res) {
               wx.showToast({
@@ -343,7 +344,8 @@ Page({
           })
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },fail(res){

@@ -113,7 +113,8 @@ Page({
           
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },
@@ -162,7 +163,8 @@ Page({
             })
           }else{
             wx.showToast({
-              title: res.data.msg
+              icon:'none',
+              title: '服务器异常'
             })
           }
         },
@@ -219,7 +221,8 @@ Page({
             })
           }else{
             wx.showToast({
-              title: res.data.msg
+              icon:'none',
+              title: '服务器异常'
             })
           }
         },
@@ -276,7 +279,8 @@ Page({
             })
           }else{
             wx.showToast({
-              title: res.data.msg
+              icon:'none',
+              title: '服务器异常'
             })
           }
         },
@@ -333,7 +337,8 @@ Page({
             })
           }else{
             wx.showToast({
-              title: res.data.msg
+              icon:'none',
+              title: '服务器异常'
             })
           }
         },
@@ -428,7 +433,8 @@ Page({
           }
         }else{
           wx.showToast({
-            title: res.data.msg
+            icon:'none',
+            title: '服务器异常'
           })
         }
       },
