@@ -13,9 +13,6 @@ Page({
     status:1,
     urls:[]
   },
-  onUnload:function(){
-    clearInterval(this.timer);
-  },
   onLoad:function(e){
     var baseUrl = app.globalData.baseUrl;
     this.setData({
@@ -99,20 +96,21 @@ Page({
           data: paras,
           success(res) {
             if(res.data.code==200){
-              wx.showToast({
-                icon:'none',
-                title: '订单超时，已自动取消',
-                success:function(){
-                  setTimeout(function () {
+              wx.showModal({
+                content: '订单超时，已自动取消',
+                showCancel:false,
+                success (res) {
+                  if (res.confirm) {
                     wx.navigateBack({
                       delta: 1
                     })
-                  }, 1500);
+                  }
                 }
               })
             }
           }
         })
+        clearInterval(that.timer);
       }else{
         var min = parseInt((1800-value) % (60 * 60 * 24) % 3600 / 60);
         var sec = parseInt((1800-value) % (60 * 60 * 24) % 3600 % 60);
@@ -135,19 +133,20 @@ Page({
       return;
     }
     var lastTime = that.data.info.last_time;
-    var system = wx.getSystemInfoSync()
-    if(system.platform=='ios'){
-      lastTime = lastTime.replace(/\-/g,'/');
+    if(lastTime!=undefined){
+      var system = wx.getSystemInfoSync()
+      if(system.platform=='ios'){
+        lastTime = lastTime.replace(/\-/g,'/');
+      }
+      var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
+      if(new Date().getTime()>limitTime){
+        wx.showModal({
+          content: '收到商品24小时后，不受理退款',
+          showCancel:false
+        })
+        return;
+      }
     }
-    var limitTime = new Date(lastTime).getTime()+24*60*60*1000;
-    if(new Date().getTime()>limitTime){
-      wx.showModal({
-        content: '收到商品24小时后，不受理退款',
-        showCancel:false
-      })
-      return;
-    }
-  
     wx.showModal({
       title: '提示',
       content: '确定申请退款吗？',

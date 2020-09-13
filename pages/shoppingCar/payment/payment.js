@@ -228,7 +228,7 @@ Page({
       return;
     }
     var dateRange = that.data.dateRange;
-    if(dateRange=='选择时间'){
+    if(dateRange=='请选择时间'){
       wx.showToast({
         title: '请选择送达时间',
         icon:'none'
