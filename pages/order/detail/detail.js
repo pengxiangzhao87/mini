@@ -36,13 +36,20 @@ Page({
           for(var idx in detailList){
             var goods = detailList[idx].goods;
             for(var index in goods){
-              var imgUrlList = goods[index].extra_img_url
+              var imgUrlList = goods[index].extra_img_url;
               if(imgUrlList!=''){
                 var imgList = {};
                 imgList.id=goods[index].id;
                 imgList.urlList=imgUrlList;
                 urls.push(imgList);
               }
+              var hidMsg = true;
+              if(goods[index].is_extra==2 && goods[index].extra_pay_status!=undefined){
+                hidMsg = false;
+              }else if(goods[index].is_extra==1 && goods[index].extra_back_status==2){
+                hidMsg = false;
+              }
+              goods[index].hidMsg = hidMsg;
             }
           }
           var info = res.data.data.info;

@@ -35,7 +35,7 @@
       <view style="height:70px;display:flex;align-items: center; white-space: nowrap;">
         <scroll-view scroll-x style="width:85%;">
           <view wx:for="{{detail.goods}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
-            <image style="height:50px;width:50px;margin-left:5px;" src="{{item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+            <image style="height:50px;width:50px;margin-left:5px;" src="{{baseUrl+'upload/'+item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
           </view>
         </scroll-view>
         <view style="margin-right:16.9px;margin-left:auto;font-size:12px;color:#999999;">共{{detail.goods.length}}件</view>

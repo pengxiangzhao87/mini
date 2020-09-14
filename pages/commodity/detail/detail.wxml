@@ -41,11 +41,11 @@
   <view class="desc">
     <view style="color:#666666;font-size:16px;align-items: center;justify-content: center;height:44px;display:flex;">商品详情</view>
     <view>
-      <image src="{{baseUrl}}upload/{{detail.s_desc}}" mode="widthFix"></image>
+      <image src="{{baseUrl+'upload/'+detail.s_desc}}" mode="widthFix"></image>
 
     </view>
     <view >
-      <image src="{{baseUrl}}upload/{{detail.sales_desc}}" mode='widthFix'></image>
+      <image src="{{baseUrl+'upload/'+detail.sales_desc}}" mode='widthFix'></image>
     </view>
   </view>
 

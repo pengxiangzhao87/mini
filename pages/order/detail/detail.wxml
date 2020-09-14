@@ -17,7 +17,7 @@
     <view  wx:for="{{detail.goods}}" wx:for-index="idx" wx:key="id" wx:for-item="item">
       <view class="list-item" bindtap="toDetail" data-sid="{{item.s_id}}">
         <view style="width:66px;height:66px;">
-          <image style="width:66px;height:66px;" mode="aspectFit" src="{{item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-iddx="{{idxx}}"></image>
+          <image style="width:66px;height:66px;" mode="aspectFit" src="{{baseUrl+'upload/'+item.imgUrl}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
         </view>
         <view style="margin-left:14px;width:100%;">
           <view style="height:43px;width:100%;">
@@ -25,14 +25,15 @@
           </view>
           <view><text style="color:#666666;font-size:12px;">价格：{{item.price}}</text></view>
            <view><text style="color:#666666;font-size:12px;">规格：{{item.num}}</text></view>
-          <view class="list-canFeed" hidden="{{info.order_status==5 || info.order_status==6}}" catchtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status}}">{{item.refundBack}}</view> 
+          <view class="list-canFeed" hidden="{{info.order_status==4 || info.order_status==5 || info.order_status==6}}" catchtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status}}">{{item.refundBack}}</view> 
         </view>
       </view>
-      <view class="extra-list" hidden="{{item.is_extra==0 || item.is_extra==undefined || item.is_extra==1 && info.back_price_status==undefinde}}">
+
+      <view class="extra-list" hidden="{{item.hidMsg}}">
         <view class="extra-price {{item.is_extra==1?'':'red'}}" >{{item.msg}}</view>
         <view class="extra-pic" hidden="{{item.extra_img_url==''}}">
           <view  wx:for="{{item.extra_img_url}}"  wx:for-index="index" wx:key="idx" wx:for-item="pic">
-            <image style="width:50px;height:50px;margin-right:10px;" bindtap="enlargement" data-id="{{item.id}}" data-pic="{{pic}}" mode="widthFix" src="{{pic}}" binderror="errorExtraPic" data-idx="{{idx}}" data-idxx="{{idxx}}" data-index="{{index}}"></image>
+            <image style="width:50px;height:50px;margin-right:10px;" bindtap="enlargement" data-id="{{item.id}}" data-pic="{{pic}}" mode="widthFix" src="{{baseUrl+'upload/'+pic}}" binderror="errorExtraPic" data-idx="{{idx}}" data-idxx="{{idxx}}" data-index="{{index}}"></image>
           </view>
         </view>
       </view>
@@ -48,16 +49,12 @@
     <view class="foot-item-left">商品金额</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{goodsPrice}}</view>
   </view>
-  <view class="foot-item" hidden="{{info.order_status==5}}">
-    <view class="foot-item-left">实付金额</view>
-    <view class="foot-item-right" style="color:#FF1F1F"><text >￥{{info.order_status==6?0:goodsPrice}}</text></view>
-  </view>
-  <view class="foot-item" hidden="{{info.extra_status==undefined || info.extra_status==2}}">
-    <view class="foot-item-left">支付差价总金额</view>
+  <view class="foot-item" hidden="{{info.extra_status!=1 && info.extra_status!=3}}">
+    <view class="foot-item-left">支付差价</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{info.extra_payment}}</view>
   </view>
-  <view class="foot-item" hidden="{{info.back_price_status==undefined || info.back_price_status==4}}">
-    <view class="foot-item-left">商家退还差价</view>
+  <view class="foot-item" hidden="{{info.back_price_status!=2}}">
+    <view class="foot-item-left">商家退款差价</view>
     <view class="foot-item-right" style="color:green">￥{{info.total_back_price}}</view>
   </view>
   <view class="foot-item" hidden="{{info.backPrice==0}}">
@@ -65,11 +62,11 @@
     <view class="foot-item-right" style="color:green">￥{{info.backPrice}}</view>
   </view>
   <view class="foot-item" hidden="{{info.chargeback_pay==0}}">
-    <view class="foot-item-left">退款总金额 - 返还支付的差价</view>
+    <view class="foot-item-left">退款支付的差价</view>
     <view class="foot-item-right" style="color:green">￥{{info.chargeback_pay}}</view>
   </view>
   <view class="foot-item" hidden="{{info.chargeback_back==0}}">
-    <view class="foot-item-left">退款总金额 - 返还商家退还的差价</view>
+    <view class="foot-item-left">退款商家退还的差价</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{info.chargeback_back}}</view>
   </view>
 </view>
@@ -100,7 +97,7 @@
     </view>   
   </view>
   <view wx:if="{{info.order_status!=5}}">
-    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extraPrice==0 || info.extra_channel!=null || info.extra_status==1}}" >
+    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extra_status==undefined || info.extra_status==1 || info.extra_status==3}}" >
       <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
     </view>
   </view>

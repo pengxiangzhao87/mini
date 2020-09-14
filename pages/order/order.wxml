@@ -15,7 +15,7 @@
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
           <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
-            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{baseUrl+'upload/'+img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
           </view>
         </scroll-view>
         <view style="margin-right:0px;margin-left:auto;">
@@ -40,7 +40,7 @@
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
           <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
-            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{baseUrl+'upload/'+img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
           </view>
         </scroll-view>
         <view style="margin-right:0px;margin-left:auto;">
@@ -67,7 +67,7 @@
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
           <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
-            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{baseUrl+'upload/'+img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
           </view>
         </scroll-view>
         <view style="margin-right:0px;margin-left:auto;">
@@ -93,7 +93,7 @@
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
           <view wx:for="{{item.imgUrl}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="img">
-            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+            <image style="height:50px;width:50px;margin-right:5px;" mode="aspectFit" src="{{baseUrl+'upload/'+img}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
           </view>
         </scroll-view>
         <view style="margin-right:0px;margin-left:auto;">
