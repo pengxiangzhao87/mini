@@ -76,7 +76,6 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
-          console.info(res)
         }else{  
           wx.showToast({
             title: res.data.msg

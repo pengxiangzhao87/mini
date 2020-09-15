@@ -63,7 +63,6 @@ Page({
       success(res) {
         if(res.data.code==200){
           var list = res.data.data;
-          console.info(list)
           that.setData({
             commodity:list,
             isPhone:wx.getStorageSync('isPhone')

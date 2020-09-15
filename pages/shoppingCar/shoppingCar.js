@@ -1,4 +1,5 @@
 // pages/shoppingCar/shoppingCar.js
+var util= require('../../utils/util.js');
 var app = getApp();
 Page({
   data: {
@@ -36,6 +37,7 @@ Page({
             var detail = list[idx];
             for(var index in detail.goods){
               var item = detail.goods[index];
+              item.isTouchMove = false;
               if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
                 item.disabled = true;
               }else{
@@ -364,5 +366,64 @@ Page({
         }
       })
     }  
+  },
+
+  //手指触摸动作开始 记录起点X坐标
+  touchstart: function(e) {
+    var shoppingCar = this.data.shoppingCar;
+    var idx = e.currentTarget.dataset.idx; //当前索引
+    var goods = shoppingCar[idx].goods;
+    //开始触摸时 重置所有删除
+    var data = util.touchStart(e, goods)
+    shoppingCar[idx].goods = data;
+    for(var index in shoppingCar){
+      if(index!=idx){
+        var item = shoppingCar[index];
+        for(var idx in  item.goods){
+          item.goods[idx].isTouchMove=false;
+        }
+      }
+    }
+    this.setData({
+      shoppingCar: shoppingCar
+    })
+  },
+
+  //滑动事件处理
+  touchmove: function(e) {
+    var shoppingCar = this.data.shoppingCar;
+    var idx = e.currentTarget.dataset.idx; //当前索引
+    var goods = shoppingCar[idx].goods;
+    var data = util.touchMove(e, goods)
+    shoppingCar[idx].goods = data;
+    this.setData({
+      shoppingCar: shoppingCar
+    })
+  },
+  del:function(e){
+    var ids = e.currentTarget.dataset.id; //当前索引
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    wx.showModal({
+      content: '确定删除吗',
+      success (res) {
+        if (res.confirm) {
+          var paras = [];
+          paras.ids=ids;
+          wx.request({
+            url: baseUrl+"shoppingCart/delteShoppingCart",
+            method: 'get',
+            data: paras,
+            success(res) {
+              wx.showToast({
+                icon:'none',
+                title: '删除成功',
+              })
+              that.onShow();
+            } 
+          })
+        }
+      }
+    })
   }
 })

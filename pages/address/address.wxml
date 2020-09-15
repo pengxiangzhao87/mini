@@ -10,7 +10,7 @@
       <image src="/image/gouwuche_bianji@3x.png" style="width:16px;height:16px;" ></image>
     </view>
   </view>
-  <view class="del" catchtap="del" data-index="{{idx}}">删除</view>
+  <view class="del" catchtap="del" data-aid="{{item.aId}}">删 除</view>
 </view>
 
 <view class="page_bottom" bindtap="add">

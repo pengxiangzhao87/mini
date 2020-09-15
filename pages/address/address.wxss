@@ -23,9 +23,9 @@ page{
   width: 100%;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
-  -webkit-transform: translateX(100px);
-  transform: translateX(100px);
-  margin-left: -100px;
+  -webkit-transform: translateX(50px);
+  transform: translateX(50px);
+  margin-left: -50px;
 }
 
 .page_bottom{
@@ -44,7 +44,8 @@ page{
 
 .del {
   background-color: #FF1907;
-  width: 100px;
+  writing-mode:vertical-rl;
+  width: 50px;
   height:68px;
   margin-top:10px;
   display: flex;
@@ -52,8 +53,8 @@ page{
   align-items: center;
   justify-content: center;
   color: #fff;
-  -webkit-transform: translateX(100px);
-  transform: translateX(100px);
+  -webkit-transform: translateX(50px);
+  transform: translateX(50px);
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
