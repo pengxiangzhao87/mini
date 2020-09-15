@@ -1,5 +1,5 @@
 <!--pages/avtive/season/season.wxml-->
-<image mode="widthFix" style="width:100%;" src="{{baseUrl}}upload/news@3x.png">></image>
+<image mode="widthFix" style="width:100%;" src="{{baseUrl}}upload/sale@3x.png">></image>
 
 <view hidden="{{commodity.length==0}}">
   <view style="display:flex;justify-content:center;">

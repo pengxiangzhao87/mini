@@ -1,5 +1,5 @@
 <!--pages/shoppingCar/address/address.wxml-->
-<view  wx:for="{{address}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+<view  wx:for="{{address}}" wx:for-index="idx" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
   <view class="list" bindtap="check" data-aid="{{item.aId}}">
     <image src="{{item.isUsed==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}" style="width:16px;height:16px;margin-left:10px;"></image>
     <view style="margin-left:10px;">
@@ -9,8 +9,8 @@
     <view style="width:25px;height:25px;margin-right:10px;margin-left:auto;" catchtap="toEdit" data-aid="{{item.aId}}">
       <image src="/image/gouwuche_bianji@3x.png" style="width:16px;height:16px;" ></image>
     </view>
-    
   </view>
+  <view class="del" catchtap="del" data-index="{{idx}}">删除</view>
 </view>
 
 <view class="page_bottom" bindtap="add">

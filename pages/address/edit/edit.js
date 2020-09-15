@@ -27,9 +27,18 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var address = e.detail.value;
+
+    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(address.phone))){ 
+      wx.showToast({
+        icon:'none',
+        title: '手机号输入有误',
+      })
+      return false; 
+    } 
     if(that.data.flag){
       address.aId=that.data.address.aId;
     }
+    address.isUsed=1;
     var json = JSON.stringify(address);
     wx.request({
       url: baseUrl+"user/saveAddress",

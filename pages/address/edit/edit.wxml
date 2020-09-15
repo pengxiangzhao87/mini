@@ -8,7 +8,7 @@
     </view>
     <view class="row">
       <view class="left">手机号</view>
-      <input style="width:100%;" name="phone" type="text" placeholder="联系您的手机号" placeholder-style="color:#999999;font-size:12px;" value="{{address.phone}}"/>
+      <input style="width:100%;" name="phone" type="number" placeholder="联系您的手机号" placeholder-style="color:#999999;font-size:12px;" value="{{address.phone}}"/>
     </view>
     <view class="row">
       <view class="left">收货地址</view>

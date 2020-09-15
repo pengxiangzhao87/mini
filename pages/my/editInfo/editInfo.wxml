@@ -36,5 +36,5 @@
 
   </view>
   
-  <button class="page_bottom" style="width:90%;height:45px;margin-left:5%;" bindtap="logout">退出当前账号</button> 
+  <button class="page_bottom" style="width:90%;height:40px;margin-left:5%;" bindtap="logout">退出当前账号</button> 1
 

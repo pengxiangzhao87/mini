@@ -4,6 +4,15 @@ page{
   height:100%;
   width:100%;
 }
+
+
+.touch-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+}
+
 .list{
   display: flex;  
   align-items: center;
@@ -11,6 +20,12 @@ page{
   height:68px;
   background-color: #FFFFFF;
   margin-top:10px;
+  width: 100%;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(100px);
+  transform: translateX(100px);
+  margin-left: -100px;
 }
 
 .page_bottom{
@@ -24,4 +39,26 @@ page{
   border-radius: 50px;
   align-items: center;
   justify-content: center;
+}
+
+
+.del {
+  background-color: #FF1907;
+  width: 100px;
+  height:68px;
+  margin-top:10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  -webkit-transform: translateX(100px);
+  transform: translateX(100px);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+ 
+.touch-move-active .list, .touch-move-active .del {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }

@@ -11,9 +11,9 @@
  
   <view class="carousel" >
     <swiper autoplay="true" interval="5000" indicator-dots="true" indicator-active-color="#ffffff" style="width:100%;height:{{bannerH}}px;">
-      <swiper-item>
+      <!-- <swiper-item>
         <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/qr_user.jpg"></image>
-      </swiper-item>
+      </swiper-item> -->
       <swiper-item>
         <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite@3x.png"></image>
       </swiper-item>
