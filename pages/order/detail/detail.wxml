@@ -23,8 +23,8 @@
           <view style="height:43px;width:100%;">
             <view class="goods-name">{{item.name}}</view>
           </view>
-          <view><text style="color:#666666;font-size:12px;">价格：{{item.price}}</text></view>
-           <view><text style="color:#666666;font-size:12px;">规格：{{item.num}}</text></view>
+          <view><text style="color:#666666;font-size:14px;">价格：{{item.price}}</text></view>
+           <view><text style="color:#666666;font-size:14px;">规格：{{item.num}}</text></view>
           <view class="list-canFeed" hidden="{{info.order_status==4 || info.order_status==5 || info.order_status==6}}" catchtap="refund" data-id="{{item.id}}" data-status="{{item.chargeback_status}}">{{item.refundBack}}</view> 
         </view>
       </view>
@@ -44,7 +44,7 @@
   </view>
 </view>
 
-<view style="padding-top:10px; padding-bottom:10px;background-color: #FFFFFF;color:#666666;font-size:12px;">
+<view style="padding-top:10px; padding-bottom:10px;background-color: #FFFFFF;color:#666666;font-size:14px;">
   <view class="foot-item">
     <view class="foot-item-left">商品金额</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{goodsPrice}}</view>

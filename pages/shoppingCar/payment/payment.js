@@ -255,7 +255,7 @@ Page({
     data.totalPrice = allPrice;
     data.name = address.name;
     data.phone = address.phone;
-    data.address = address.aCity;
+    data.address = address.aCity+address.aDetail;
     data.channel = 1;
     var detail = [];
     for(var idx in list){
