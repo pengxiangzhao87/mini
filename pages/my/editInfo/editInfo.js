@@ -31,7 +31,7 @@ Page({
           url: baseUrl+"user/uploadAvatar",
           filePath: tempFilePaths[0], 
           name: 'file',
-          formData:{'uId':4},
+          formData:{'uId':wx.getStorageSync('uId')},
           success:function(res){
             var data = JSON.parse(res.data);
             if(data.code==200){

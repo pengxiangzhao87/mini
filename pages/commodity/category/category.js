@@ -232,6 +232,7 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
+          console.info(list)
           that.setData({
             commodity:list,
             totalPage:totalPage,
@@ -542,6 +543,10 @@ Page({
     })
   },
   errorPic:function(e){
+    var data = this.data.commodity;
+    if(data.length==0){
+      return;
+    }
     var idx= e.target.dataset.idx; //获取循环的下标
     var item="commodity["+idx+"].coverUrl" //commodity为数据源，对象数组
     var commodity = {};
