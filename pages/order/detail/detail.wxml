@@ -46,7 +46,7 @@
 
 <view style="padding-top:10px; padding-bottom:10px;background-color: #FFFFFF;color:#666666;font-size:14px;">
   <view class="foot-item">
-    <view class="foot-item-left">商品金额</view>
+    <view class="foot-item-left">商品总金额</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{goodsPrice}}</view>
   </view>
   <view class="foot-item" hidden="{{info.extra_status!=1 && info.extra_status!=3}}">
@@ -54,19 +54,19 @@
     <view class="foot-item-right" style="color:#FF1F1F">￥{{info.extra_payment}}</view>
   </view>
   <view class="foot-item" hidden="{{info.back_price_status!=2}}">
-    <view class="foot-item-left">商家退款差价</view>
+    <view class="foot-item-left">返还金额</view>
     <view class="foot-item-right" style="color:green">￥{{info.total_back_price}}</view>
   </view>
   <view class="foot-item" hidden="{{info.backPrice==0}}">
-    <view class="foot-item-left">退款总金额</view>
+    <view class="foot-item-left">退款商品金额</view>
     <view class="foot-item-right" style="color:green">￥{{info.backPrice}}</view>
   </view>
   <view class="foot-item" hidden="{{info.chargeback_pay==0}}">
-    <view class="foot-item-left">退款支付的差价</view>
+    <view class="foot-item-left">退款差价金额</view>
     <view class="foot-item-right" style="color:green">￥{{info.chargeback_pay}}</view>
   </view>
   <view class="foot-item" hidden="{{info.chargeback_back==0}}">
-    <view class="foot-item-left">退款商家退还的差价</view>
+    <view class="foot-item-left">退款返还金额</view>
     <view class="foot-item-right" style="color:#FF1F1F">￥{{info.chargeback_back}}</view>
   </view>
 </view>
@@ -96,8 +96,8 @@
       </view>
     </view>   
   </view>
-  <view wx:if="{{info.order_status!=5}}">
-    <view class="page_bottom" bindtap="extraPayment" hidden="{{info.extra_status==undefined || info.extra_status==1 || info.extra_status==3}}" >
+  <view hidden="{{hideExtra}}">
+    <view class="page_bottom" bindtap="extraPayment" >
       <text style="color:#333333;font-size:16px;">补差价￥{{info.extraPrice}}</text>
     </view>
   </view>

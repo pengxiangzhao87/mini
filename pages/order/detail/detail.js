@@ -11,7 +11,8 @@ Page({
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
     status:1,
-    urls:[]
+    urls:[],
+    hideExtra:true
   },
   onLoad:function(e){
     var baseUrl = app.globalData.baseUrl;
@@ -33,9 +34,13 @@ Page({
         if(res.data.code==200){
           var detailList = res.data.data.detailList;
           var urls = [];
+          var hideExtra = true;
           for(var idx in detailList){
             var goods = detailList[idx].goods;
             for(var index in goods){
+              if(goods[index].extra_pay_status==2 && goods[index].chargeback_status==undefined){
+                hideExtra = false;
+              }
               var imgUrlList = goods[index].extra_img_url;
               if(imgUrlList!=''){
                 var imgList = {};
@@ -58,7 +63,8 @@ Page({
             info:info,
             status:info.order_status,
             goodsPrice:(info.total_price).toFixed(2),
-            urls:urls
+            urls:urls,
+            hideExtra:hideExtra
           })
           if(info.order_status==5){
             that.countDown();
