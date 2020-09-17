@@ -139,8 +139,8 @@ Page({
   },
   //退款
   refund:function(e){
-    var id = e.currentTarget.dataset.id;
     var that = this;
+    var id = e.currentTarget.dataset.id;
     var status = e.currentTarget.dataset.status;
     if(status!=undefined){
       return;
@@ -160,6 +160,24 @@ Page({
         return;
       }
     }
+    wx.getSetting({
+      withSubscriptions: true,
+      complete(res){
+        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+           that.toRefund(that,id);
+        }else{
+          wx.requestSubscribeMessage({
+            tmplIds: ['jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA'],
+            complete (res) { 
+              that.toRefund(that,id);
+            }
+          })
+        }
+      }
+    })
+  },
+
+  toRefund:function(that,id){
     wx.showModal({
       title: '提示',
       content: '确定申请退款吗？',
@@ -198,26 +216,27 @@ Page({
       success (res) {}
     })
   },
+  // continuePayment:function(e){
+  //   var that = this;
+  //   wx.getSetting({
+  //     withSubscriptions: true,
+  //     complete(res){
+  //       if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
+  //          that.toContinuePayment(that,e);
+  //       }else{
+  //         wx.requestSubscribeMessage({
+  //           tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
+  //           complete (res) { 
+  //             that.toContinuePayment(that,e);
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // },
+  //继续支付
   continuePayment:function(e){
     var that = this;
-    wx.getSetting({
-      withSubscriptions: true,
-      complete(res){
-        if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
-           that.toContinuePayment(that,e);
-        }else{
-          wx.requestSubscribeMessage({
-            tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
-            complete (res) { 
-              that.toContinuePayment(that,e);
-            }
-          })
-        }
-      }
-    })
-  },
-  //继续支付
-  toContinuePayment:function(that,e){
     wx.showLoading({
       title: '发起支付...',
     })
