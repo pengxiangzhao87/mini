@@ -4,6 +4,8 @@ var app = getApp();
 Page({
   data: {
     address:"填写收货地址", 
+    firstType:[],
+    secondType:[],
     commodity:[],
     page:1,
     rows:20,
@@ -28,6 +30,29 @@ Page({
   },
   onLoad:function(){
     var baseUrl = app.globalData.baseUrl;
+    wx.request({
+      url: baseUrl+"commodity/queryCategoryList",
+      method: 'get',
+      success(res) {
+        if(res.data.code==200){
+          var data = res.data.data;
+          var firstType = [];
+          var secondType = [];
+          for(var index in data){
+            var item = data[index];
+            if(index<4){
+              firstType.push(item);
+            }else{
+              secondType.push(item)
+            }
+          }
+          that.setData({
+            firstType:firstType,
+            secondType:secondType
+          })
+        }
+      }
+    })
     var that = this;
     //首先计算购物车的位置
     var busPos = [];

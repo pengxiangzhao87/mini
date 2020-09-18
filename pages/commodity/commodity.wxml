@@ -11,9 +11,6 @@
  
   <view class="carousel" >
     <swiper autoplay="true" interval="5000" indicator-dots="true" indicator-active-color="#ffffff" style="width:100%;height:{{bannerH}}px;">
-      <!-- <swiper-item>
-        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/qr_user.jpg"></image>
-      </swiper-item> -->
       <swiper-item>
         <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite@3x.png"></image>
       </swiper-item>
@@ -29,54 +26,25 @@
 
 <image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
 
+
 <view class="icon">
-  <view class="icon_first">
-    <view style="margin-left:8%;" data-tId="1" bindtap="toCategory">
-      <image src="/image/shouye_shuiguo@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">水果</view>
+  <view class="icon_first" >
+    <view wx:for="{{firstType}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item">
+      <view  data-tId="{{item.tId}}" bindtap="toCategory">
+        <image src="/image/{{item.tId==1?'shouye_shuiguo@3x.png':(item.tId==2?'shouye_shucai@3x.png':(item.tId==3?'shouye_haixian@3x.png':(item.tId==4?'shouye_roulei@3x.png':(item.tId==5?'shouye_ganguo@3x.png':(item.tId==6?'shouye_direliang@3x.png':(item.tId==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))))))}}" style="height:50px;width:50px;"></image>
+        <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.tName}}</view>
+      </view>
     </view>
-
-    <view style="margin-left:10%;" data-tId="2" bindtap="toCategory">
-      <image src="/image/shouye_shucai@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">蔬菜</view>
-    </view>
-
-    <view style="margin-left:10%;" data-tid="3" bindtap="toCategory">
-      <image src="/image/shouye_haixian@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">海鲜</view>
-    </view>
-
-    <view style="margin-left:10%;" data-tid="8" bindtap="toCategory">
-      <image src="/image/shouye_qita@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
-    </view>
-    <!-- <view style="margin-left:10%;" data-tid="4" bindtap="toCategory">
-      <image src="/image/shouye_roulei@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
-    </view> -->
   </view>
-  <!-- <view class="icon_second">
-
-    <view style="margin-left:8%;" data-tid="5" bindtap="toCategory">
-      <image src="/image/shouye_ganguo@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">干果</view>
+  <view class="icon_second">
+    <view wx:for="{{secondType}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item">
+      <view data-tId="{{item.t_id}}" bindtap="toCategory">
+        <image src="/image/{{item.tId==1?'shouye_shuiguo@3x.png':(item.tId==2?'shouye_shucai@3x.png':(item.tId==3?'shouye_haixian@3x.png':(item.tId==4?'shouye_roulei@3x.png':(item.tId==5?'shouye_ganguo@3x.png':(item.tId==6?'shouye_direliang@3x.png':(item.tId==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))))))}}" style="height:50px;width:50px;"></image>
+        <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.tName}}</view>
+      </view>
     </view>
-
-    <view style="margin-left:10%;" data-tid="6" bindtap="toCategory">
-      <image src="/image/shouye_direliang@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">低热量</view>
-    </view>
-
-    <view style="margin-left:10%;" data-tid="7" bindtap="toCategory">
-      <image src="/image/shouye_lingshi@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">零食</view>
-    </view>
-
-    <view style="margin-left:10%;" data-tid="8" bindtap="toCategory">
-      <image src="/image/shouye_qita@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
-    </view>
-  </view> -->
+  </view>
+ 
 </view>
 
 <view class="hotTitle">
