@@ -46,12 +46,16 @@
       <view style="width:50px;display: flex;justify-content: center;font-size:13px;">海鲜</view>
     </view>
 
-    <view style="margin-left:10%;" data-tid="4" bindtap="toCategory">
-      <image src="/image/shouye_roulei@3x.png" style="height:50px;width:50px;"></image>
-      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">肉类</view> 
+    <view style="margin-left:10%;" data-tid="8" bindtap="toCategory">
+      <image src="/image/shouye_qita@3x.png" style="height:50px;width:50px;"></image>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
     </view>
+    <!-- <view style="margin-left:10%;" data-tid="4" bindtap="toCategory">
+      <image src="/image/shouye_roulei@3x.png" style="height:50px;width:50px;"></image>
+      <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
+    </view> -->
   </view>
-  <view class="icon_second">
+  <!-- <view class="icon_second">
 
     <view style="margin-left:8%;" data-tid="5" bindtap="toCategory">
       <image src="/image/shouye_ganguo@3x.png" style="height:50px;width:50px;"></image>
@@ -72,7 +76,7 @@
       <image src="/image/shouye_qita@3x.png" style="height:50px;width:50px;"></image>
       <view style="width:50px;display: flex;justify-content: center;font-size:13px;">其他</view> 
     </view>
-  </view>
+  </view> -->
 </view>
 
 <view class="hotTitle">
