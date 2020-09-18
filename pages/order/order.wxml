@@ -9,8 +9,8 @@
   <view  wx:for="{{payList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="item">
     <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}" data-status="{{item.order_status}}">
       <view class="list-head">
-        <view style="display:flex;color:#666666;margin-left:0px;">订单号：{{item.o_id}}</view>
-        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+        <view style="display:flex;color:#666666;margin-left:0px;font-weight:500;">订单号：{{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;font-weight:500;">{{item.status}}</view>
       </view>
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
@@ -34,8 +34,8 @@
   <view  wx:for="{{sendList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="item">
     <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}" data-status="{{item.order_status}}">
       <view class="list-head">
-        <view style="display:flex;color:#666666;margin-left:0px;">订单号：{{item.o_id}}</view>
-        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+        <view style="display:flex;color:#666666;margin-left:0px;font-weight:500;">订单号：{{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;font-weight:500;">{{item.status}}</view>
       </view>
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
@@ -61,8 +61,8 @@
   <view  wx:for="{{takeList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="item">
     <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}" data-status="{{item.order_status}}">
       <view class="list-head">
-        <view style="display:flex;color:#666666;margin-left:0px;">订单号：{{item.o_id}}</view>
-        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+        <view style="display:flex;color:#666666;margin-left:0px;font-weight:500;">订单号：{{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;font-weight:500;">{{item.status}}</view>
       </view>
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
@@ -87,8 +87,8 @@
   <view  wx:for="{{allList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="item">
     <view class="list-item" bindtap="toDetail" data-oid = "{{item.o_id}}" data-status="{{item.order_status}}">
       <view class="list-head">
-        <view style="display:flex;color:#666666;margin-left:0px;">订单号：{{item.o_id}}</view>
-        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;">{{item.status}}</view>
+        <view style="display:flex;color:#666666;margin-left:0px;font-weight:500;">订单号：{{item.o_id}}</view>
+        <view style="display:flex;color:#FF982E;margin-left:auto;margin-right:5px;font-weight:500;">{{item.status}}</view>
       </view>
       <view class="list-body">
         <scroll-view scroll-x style="width:80%;">
@@ -109,8 +109,8 @@
 </view>
 
 <view wx:if="{{payOrder && payList.length==0 || sendOrder && sendList.length==0 || takeOrder && takeList.length==0 || allOrder && allList.length==0 }}">
-  <view style="display:flex;justify-content:center;margin-top:50px;">
-    <image style="height:100px;width:100px;" src="/image/order_none.png"></image>
+  <view style="display:flex;justify-content:center;margin-top:100px;">
+    <image style="height:87px;width:98px;" src="/image/order_none.png"></image>
   </view>
-  <view style="display:flex;justify-content:center;color:#666666;font-size:12px;margin-top:30px;">还没有订单，下一单吧 ~</view>
+  <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">还没有订单哦~</view>
 </view>

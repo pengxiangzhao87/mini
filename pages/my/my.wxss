@@ -25,6 +25,7 @@ page{
   display:flex;
   align-items: center;
   flex-direction:row;
+  font-weight: bolder;
 }
 
 .QR-code{

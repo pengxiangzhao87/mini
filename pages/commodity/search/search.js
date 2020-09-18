@@ -59,6 +59,7 @@ Page({
     paras.userId=wx.getStorageSync('uId');
     that.getCarNum(that,paras,baseUrl);
     paras.tId=-1;
+    paras.sName = that.data.sName;
     that.queryCommodity(that,paras,baseUrl);
   },
   getCarNum:function(that,paras,baseUrl){

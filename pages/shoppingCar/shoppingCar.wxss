@@ -1,7 +1,6 @@
 /* pages/shoppingCar/shoppingCar.wxss */
 page{
   background-color:rgb(245, 245, 245);
-  height:100%;
   width:100%;
 }
 .head{
@@ -70,9 +69,9 @@ page{
   width: 100%;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
-  -webkit-transform: translateX(50px);
-  transform: translateX(50px);
-  margin-left: -50px;
+  -webkit-transform: translateX(60px);
+  transform: translateX(60px);
+  margin-left: -60px;
 }
 
 .title{
@@ -110,6 +109,7 @@ page{
 }
 
 .checkNum{
+  font-weight:500;
   width:150px;
   height:40px;
   background-color:#FFD52E;
@@ -130,7 +130,7 @@ page{
 .del {
   background-color: #FF1907;
   writing-mode:vertical-rl;
-  width: 50px;
+  width: 60px;
   height:94px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -138,9 +138,10 @@ page{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  -webkit-transform: translateX(50px);
-  transform: translateX(50px);
+  color: #ffffff;
+  font-size:16px;
+  -webkit-transform: translateX(60px);
+  transform: translateX(60px);
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }

@@ -339,25 +339,25 @@ Page({
         //价格
         ctx.setFontSize(16)        
         ctx.setFillStyle('red')
-        ctx.fillText(detail.price, 35, 285)
+        ctx.fillText(detail.price, 35, 295)
         //单位
         ctx.setFontSize(14)        
         ctx.setFillStyle('#666666')
-        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 285)
+        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 295)
  
         //名称
         ctx.setFontSize(12);
         ctx.setFillStyle('black')    
         var name = detail.s_name;    
         var len = name.length;
-        ctx.fillText(name.substring(0,8), 35,318);
+        ctx.fillText(name.substring(0,8), 35,328);
         if(len>8){
           if(len>16){
             name = name.substring(8,15)+'...';
           }else{
             name = name.substring(8,len-1);
           }
-          ctx.fillText(name, 35, 335)
+          ctx.fillText(name, 35, 345)
         }
       
         ctx.stroke()

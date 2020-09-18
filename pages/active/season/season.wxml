@@ -48,7 +48,7 @@
   <view style="display:flex;justify-content:center;margin-top:20px;">
     <image style="height:100px;width:100px;" src="/image/goods_none2.png"></image>
   </view>
-  <view style="display:flex;justify-content:center;color:#ffffff;font-size:14px;margin-top:10px;">空空如也，看看其他商品吧~</view>
+  <view style="display:flex;justify-content:center;color:#ffffff;font-size:16px;margin-top:10px;">空空如也，看看其他商品吧~</view>
 </view>
 
 
@@ -93,7 +93,7 @@
       <view style="margin-right:10px;margin-left:auto;">
         <view style="display:flex;align-items: center;justify-content: center;  ">
           <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;">￥{{totalPrice}}</view>
-          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;">加入购物车</text></view>
+          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;font-weight: 500;">加入购物车</text></view>
         </view>
       </view>
     </view>   

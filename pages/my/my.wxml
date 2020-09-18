@@ -18,7 +18,7 @@
     </view>
 
   <view class="orderBox" >
-   <view style="margin-left:11%;width:48px;" bindtap="toOrder" data-id="5">
+    <view style="margin-left:11%;width:48px;" bindtap="toOrder" data-id="5">
       <view style="display:flex;justify-content: center;">
         <image style="width:23px;height:19px;" src="/image/my_order@3x.png"></image>
       </view>

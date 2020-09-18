@@ -12,7 +12,7 @@
       </swiper-item>
     </block>
   </swiper>
-  <view style="display: flex;  flex-direction:row ;align-items: center;margin-top:10px;">
+  <view style="display: flex;  flex-direction:row ;align-items: center;margin-top:10px;font-weight: bolder;">
     <view style="margin-left:10px;font-size:16px;width:70%;">{{detail.s_name}}</view>
     <!-- <button style="width:20px;height:20px;padding:0 0 0 0;margin-left:auto;margin-right:10px;" data-id="{{detail.s_id}}" data-img="{{shareUrl}}" data-name="{{detail.s_name}}" open-type="share"><image src="/image/fenxiang.png" style="width:20px;height:20px;"></image></button> -->
     <image src="/image/fenxiang.png" style="width:20px;height:20px;margin-left:auto;margin-right:10px;" bindtap="toShare"></image>
@@ -24,15 +24,15 @@
       <text style="color:#FF1907 ;font-size:20px;">{{detail.price}}</text>
       <text style="font-size:14px;">{{detail.unit}}</text>
       <text decode="true"  hidden="{{detail.is_active!=3}}">&nbsp;</text>
-      <text hidden="{{detail.is_active!=3}}" style="color:#999999;text-decoration:line-through;font-size:14px;">￥{{detail.original_price}}</text>
+      <text hidden="{{detail.is_active!=3}}" style="color:#666666;text-decoration:line-through;font-size:14px;">￥{{detail.original_price}}</text>
     </view>
   </view>
   <view class="specification">
-    <view style="margin-left:10px;color:#999999;font-size:14px;">规格</view>
+    <view style="margin-left:10px;font-size:14px;">规格</view>
     <view style="display:flex;flex-direction:row;align-items: center;margin-right:10px;margin-left:auto;">
       <view class="btn {{disabled?'btn_disabled':''}}" hover-class="afterbtn" bindtap="subtract" disabled="{{disabled}}">{{detail.init_unit==0?50:1}}</view>
       <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
-      <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{detail.init_num}}&nbsp;{{detail.init_unit==0?'g':'个'}}</text></view>
+      <view style="font-size:14px;display:flex;align-items: center;"><text decode="true">{{detail.init_num}}&nbsp;{{detail.init_unit==0?'g':'个'}}</text></view>
       <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
       <view class="btn" hover-class="afterbtn" bindtap="add">{{detail.init_unit==0?50:1}}</view>
     </view>
@@ -63,7 +63,7 @@
         <view wx:if="{{detail.state==1}}">
           <view style="display:flex;align-items: center;justify-content: center;  ">
             <view style="color:#FF1907;margin-right:10px;font-size:22px;">￥{{detail.totalPrice}}</view>
-            <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;">加入到购物车</text></view>
+            <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;font-weight: 500;">加入到购物车</text></view>
           </view>
         </view>
         <view wx:elif="{{detail.state==0}}">
@@ -73,7 +73,7 @@
       <view wx:elif="{{isPhone==1}}">
         <view style="display:flex;align-items: center;justify-content: center;  ">
           <view style="color:#FF1907;margin-right:10px;font-size:22px;">￥{{detail.totalPrice}}</view>
-          <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" class="addShoppingCar" style="width:175px;height:40px;padding:0 0 0 0 ;">加入到购物车</button>
+          <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" class="addShoppingCar" style="width:175px;height:40px;padding:0 0 0 0 ;font-weight: 500;">加入到购物车</button>
         </view>
       </view>
     </view>

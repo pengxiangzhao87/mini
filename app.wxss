@@ -1,6 +1,6 @@
 /**app.wxss**/
 page{
-  font-weight: bolder;
+   
 }
 .container {
   height: 100%;

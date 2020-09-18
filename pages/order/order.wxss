@@ -47,6 +47,7 @@ page{
   justify-content: center;
   color:#666666;
   width:33%;
+  font-weight:500;
 }
 
 .title-item.checked{
@@ -55,6 +56,7 @@ page{
   justify-content: center;
   color:black;
   width:33%;
+  font-weight:500;
   
 }
 
@@ -100,7 +102,7 @@ page{
   flex-direction: row ;
   margin-left:0px;
   margin-right:5px;
-  font-size:12px;
+  font-size:14px;
 }
 
 

@@ -17,9 +17,9 @@
           </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
-            <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
+            <text style="font-size:14px;color:#666666;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
-            <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
+            <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
             <view style="margin-right:10px;float:right;">
               <view wx:if="{{isPhone==0}}">
                 <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
@@ -44,9 +44,9 @@
           </view>
           <view style="margin-top:10px;margin-left:10px;height:23px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idx].s_price}}</text>
-            <text style="font-size:14px;color:#999999;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
+            <text style="font-size:14px;color:#666666;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
-            <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
+            <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
             <view style="margin-right:10px;float:right;">
               <view wx:if="{{isPhone==0}}">
                 <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
@@ -73,8 +73,8 @@
 
 
 <view hidden="{{commodity.length>0}}">
-<view style="display:flex;justify-content:center;margin-top:50px;">
-    <image style="height:100px;width:100px;" src="/image/goods_none1.png"></image>
+<view style="display:flex;justify-content:center;margin-top:150px;">
+    <image style="height:100px;width:100px;" src="/image/goods_none.png"></image>
   </view>
   <view style="display:flex;justify-content:center;color:#666666;font-size:12px;margin-top:30px;">没有你要找的商品~</view>
 </view>
@@ -104,17 +104,17 @@
           <view class="page_bottom_name">{{commodity[idxFlag].s_name}}</view>
           <view style="margin-left:10px;margin-top:20px;">
             <text style="color:#FF1907;font-size:20px;"><text style="font-size:14px;">￥</text>{{commodity[idxFlag].s_price}}</text>
-            <text style="font-size:14px;color:#999999;" decode="true">{{commodity[idxFlag].unit}}&nbsp;</text>
-            <text style="text-decoration:line-through;color:#999999;font-size:14px;" hidden="{{commodity[idxFlag].is_active!=3}}">￥{{commodity[idxFlag].original_price}}</text>
+            <text style="font-size:14px;color:#666666;" decode="true">{{commodity[idxFlag].unit}}&nbsp;</text>
+            <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{commodity[idxFlag].is_active!=3}}">￥{{commodity[idxFlag].original_price}}</text>
           </view>
         </view>
       </view>
       <view class="specification">
-        <view style="margin-left:20px;color:#999999;font-size:14px;">规格</view>
+        <view style="margin-left:20px;font-size:14px;">规格</view>
         <view style="display:flex;flex-direction:row;align-items: center;margin-right:10px;margin-left:auto;">
           <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{commodity[idxFlag].init_unit==0?50:1}}</view>
           <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
-          <view style="font-size:14px;color:#333333;display:flex;align-items: center;"><text decode="true">{{totalSum}}&nbsp;{{commodity[idxFlag].init_unit==0?'g':'个'}}</text></view>
+          <view style="font-size:14px;display:flex;align-items: center;"><text decode="true">{{totalSum}}&nbsp;{{commodity[idxFlag].init_unit==0?'g':'个'}}</text></view>
           <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
           <view class="btn"  bindtap="add">{{commodity[idxFlag].init_unit==0?50:1}}</view>
         </view>
@@ -123,7 +123,7 @@
         <view style="margin-right:10px;margin-left:auto;">
           <view style="display:flex;align-items: center;justify-content: center;  ">
             <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;">￥{{totalPrice}}</view>
-            <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;">加入购物车</text></view>
+            <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;font-weight: 500;">加入购物车</text></view>
           </view>
         </view>
       </view>   

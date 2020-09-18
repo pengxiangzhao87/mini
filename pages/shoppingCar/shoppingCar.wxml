@@ -1,10 +1,10 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
-<view class="head">
-  <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
-  <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
-</view> 
-<view style="margin-bottom:100px;height:100%;">
-  <view style="padding-top:5px;">
+<view style="height:100%;">
+  <view class="head">
+    <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
+    <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
+  </view> 
+  <view style="padding-top:5px;margin-bottom:100px;">
     <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
       <view style="margin-left:10px;padding-top:5px;font-size:12px;color:#999999;margin-bottom:5px;">{{detail.supplier}}</view>
       <view  wx:for="{{detail.goods}}" wx:for-index="index" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-idx="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
@@ -36,14 +36,23 @@
       </view> 
     </view>
   </view>
+
+  <view wx:if="{{shoppingCar.length==0 }}">
+    <view style="display:flex;justify-content:center;margin-top:150px;">
+      <image style="height:90px;width:130px;" src="/image/none_shop.png"></image>
+    </view>
+    <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">购物车空空如也~</view>
+  </view>
 </view>
+
+
 
 <view class="page_bottom" >
   <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
   <view style="margin-left:5px;color:#333333;font-size:14px;" bindtap="checkAll">全选</view>
   <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
     <view style="margin-right:10px;color:#999999 ;">
-      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:18px;color:#FF1907;">￥{{totalPrice}}</text></view>
+      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:18px;color:#FF1907;font-weight:500;">￥{{totalPrice}}</text></view>
     </view>
     <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
   </view>

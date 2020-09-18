@@ -50,6 +50,7 @@ page{
 
 
 .toPayment{
+  font-weight: bolder;
   width:150px;
   height:45px;
   background-color:#FFD52E;
