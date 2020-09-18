@@ -4,7 +4,8 @@
   <scroll-view scroll-x>
     <view wx:for="{{category}}" class="item_list" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
       <view bindtap="changeCategory" data-tid="{{item.tId}}"> 
-        <image src="{{item.tId==1?(item.selected?'/image/shouye_shuiguo_checked@3x.png':'/image/shouye_shuiguo@3x.png'):(item.tId==2?(item.selected?'/image/shouye_shucai_checked@3x.png':'/image/shouye_shucai@3x.png'):(item.tId==3?(item.selected?'/image/shouye_haixian_checked@3x.png':'/image/shouye_haixian@3x.png'):(item.tId==4?(item.selected?'/image/shouye_roulei_checked@3x.png':'/image/shouye_roulei@3x.png'):(item.tId==5?(item.selected?'/image/shouye_ganguo_checked@3x.png':'/image/shouye_ganguo@3x.png'):(item.tId==6?(item.selected?'/image/shouye_direliang_checked@3x.png':'/image/shouye_direliang@3x.png'):(item.tId==7?(item.selected?'/image/shouye_lingshi_checked@3x.png':'/image/shouye_lingshi@3x.png'):(item.selected?'/image/shouye_qita_checked@2x.png':'/image/shouye_qita@3x.png')))))))}}" style="height:36px;width:36px;"></image> 
+        <image src="{{item.tId==1?(item.selected?'/image/shouye_shuiguo_checked@3x.png':'/image/shouye_shuiguo@3x.png'):(item.tId==2?(item.selected?'/image/shouye_shucai_checked@3x.png':'/image/shouye_shucai@3x.png'):(item.tId==3?(item.selected?'/image/shouye_haixian_checked@3x.png':'/image/shouye_haixian@3x.png'):(item.tId==4?(item.selected?'/image/shouye_roulei_checked@3x.png':'/image/shouye_roulei@3x.png'):(item.tId==5?(item.selected?'/image/shouye_ganguo_checked@3x.png':'/image/shouye_ganguo@3x.png'):(item.tId==6?(item.selected?'/image/shouye_direliang_checked@3x.png':'/image/shouye_direliang@3x.png'):(item.tId==7?(item.selected?'/image/shouye_lingshi_checked@3x.png':'/image/shouye_lingshi@3x.png'):(item.selected?'/image/shouye_qita_checked@2x.png':'/image/shouye_qita@3x.png')))))))}}" style="height:36px;width:36px;"></image>
+        <view style="font-size:14px;height:18px;display: flex;justify-content: center;font-weight: 500;"><text class="tname {{item.selected?'nameChecked':''}}">{{item.tName}}</text></view>
       </view>
     </view>
   </scroll-view>
@@ -76,7 +77,7 @@
 
 <view hidden="{{commodity.length>0}}">
   <view style="display:flex;justify-content:center;margin-top:50px;">
-    <image style="height:100px;width:100px;" src="/image/goods_none1.png"></image>
+    <image style="height:100px;width:100px;" src="/image/goods_none.png"></image>
   </view>
   <view style="display:flex;justify-content:center;color:#666666;font-size:12px;margin-top:30px;">看看其他商品吧~</view>
 </view>
