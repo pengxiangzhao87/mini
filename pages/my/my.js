@@ -16,7 +16,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
         if(res.data.code==200){
           var myInfo = res.data.data;
  
@@ -77,13 +76,13 @@ Page({
           })
         }else{
           wx.showToast({
-            title: "服务器异常"
+            title: "请重新登录"
           })
         }
       },
       fail(res) {
         wx.showToast({
-          title: "服务器异常"
+          title: "请重新登录"
         })
       }
     })
