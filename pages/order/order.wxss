@@ -3,33 +3,6 @@ page{
   background-color:rgb(248, 248, 248);
   height:100%;
   width:100%;
-} 
-.head{
-  display: flex;  
-  flex-direction: row ;
-  align-items: center;
-  margin-top:10px;
-  height:32px;
-  margin-left:10px;
-}
-.search_arr {  
-  border: 1px solid #d0d0d0;  
-  border-radius: 110px;  
-  width:90%;
-  display: flex;  
-  flex-direction: row  ;
-  align-items: center;
-}  
-.search_arr input{  
-  margin-left: 10px;  
-  height: 32px;  
-  border-radius: 5px;  
-}  
-
-.searchcion {  
-  margin-left:10px;
-  width: 15px;  
-  height: 15px;  
 }  
 
 .title{

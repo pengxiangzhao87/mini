@@ -16,8 +16,10 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
+        console.info(res)
         if(res.data.code==200){
           var myInfo = res.data.data;
+ 
           if(myInfo.imgUrl!='' && myInfo.imgUrl!=undefined){
             myInfo.imgList = myInfo.imgUrl.split('~');
           }
@@ -52,6 +54,9 @@ Page({
     })
   },
   getUser:function(e){
+    wx.showLoading({
+      title: '授权中...',
+    })
     var that = this;
     var baseUrl = that.data.baseUrl;
     var data={};
