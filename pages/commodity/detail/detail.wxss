@@ -8,6 +8,11 @@
   height: 100vw;
 }
 
+.wx-swiper-dots{position:relative;left: unset!important;right: 0;}
+.wx-swiper-dots.wx-swiper-dots-horizontal{
+  margin-bottom: -5px;
+}
+
 .priceUnit{
   display: flex;  
   flex-direction:row ;

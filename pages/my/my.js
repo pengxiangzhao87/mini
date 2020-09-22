@@ -6,7 +6,7 @@ Page({
     myInfo:{},
     eyeFlag:0
   },
-  onLoad:function() {
+  onShow:function() {
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras={};
@@ -75,14 +75,16 @@ Page({
             duration:1500
           })
         }else{
-          wx.showToast({
-            title: "请重新登录"
+          wx.showModal({
+            content: '请重新授权',
+            showCancel:false
           })
         }
       },
       fail(res) {
-        wx.showToast({
-          title: "请重新登录"
+        wx.showModal({
+          content: '请重新授权',
+          showCancel:false
         })
       }
     })

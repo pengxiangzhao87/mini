@@ -29,7 +29,7 @@ page{
 
 .page_bottom{
   position:fixed; 
-  bottom:5px;
+  bottom:20px;
   background-color: #FFD52E;
   display: flex;
   border-radius: 50px;
