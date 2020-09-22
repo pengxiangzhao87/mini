@@ -51,6 +51,7 @@ Page({
               }else{
                 selectedAll = false;
               }
+              item.totalPrice = item.totalPrice.toFixed(2);
             }
           }
           that.setData({

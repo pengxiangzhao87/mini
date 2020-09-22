@@ -232,7 +232,6 @@ Page({
         if(res.data.code==200){
           var list = res.data.data.list;
           var totalPage = res.data.data.totalPage;
-          console.info(list)
           that.setData({
             commodity:list,
             totalPage:totalPage,

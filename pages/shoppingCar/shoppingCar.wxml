@@ -20,8 +20,8 @@
               <view class="title_name">{{item.s_name}}</view>
               <view style="margin-right:10px;margin-left:auto;color:#333333;font-size:14px;height:40px;padding-top:0px;">{{item.sell}}</view>
             </view>
-            <view style="display:flex;flex-direction:row;height:22px;margin-top:10px;">
-              <view style="font-size:20px;color:#FF1907;font-weight:bolder;">￥{{item.totalPrice}}</view>
+            <view style="display:flex;flex-direction:row;height:30px;margin-top:10px;">
+              <view style="font-size:18px;color:#FF1907;font-weight:bolder;">￥{{item.totalPrice}}</view>
               <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
                 <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
                 <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
@@ -52,7 +52,7 @@
   <view style="margin-left:5px;color:#333333;font-size:14px;" bindtap="checkAll">全选</view>
   <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
     <view style="margin-right:10px;color:#999999 ;">
-      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:18px;color:#FF1907;font-weight:bolder;">￥{{totalPrice}}</text></view>
+      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:20px;color:#FF1907;font-weight:bolder;">￥{{totalPrice}}</text></view>
     </view>
     <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
   </view>
