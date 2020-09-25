@@ -23,7 +23,7 @@ App({
   onShow:function(){
     var that = this;
     var token = wx.getStorageSync('token');
-    if(token!=''){
+    if(token){
       wx.request({
         url: that.globalData.baseUrl+"mini/checkToken",
         method: 'get',

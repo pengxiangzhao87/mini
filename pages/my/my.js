@@ -4,7 +4,12 @@ Page({
   data: {
     baseUrl:'',
     myInfo:{},
-    eyeFlag:0
+    eyeFlag:0,
+    showModal:false,
+    windowHeight:0,
+    windowWidth:0,
+    aniState: false,
+    classState:false 
   },
   onShow:function() {
     var that = this;
@@ -112,6 +117,69 @@ Page({
     var myInfo = {};
     myInfo[item]='/image/logo.png';
     this.setData(myInfo);
-  }
+  },
 
+  showModal:function(){
+    var that = this;
+    var ww = app.globalData.ww;
+    var hh = app.globalData.hh;
+    that.setData({
+      showModal: true,
+      windowHeight:hh,
+      windowWidth:ww
+    })
+  },
+  hiddenModal:function(){
+    var that = this;
+    that.setData({
+      showModal: false
+    })
+  },
+  feedBack:function(e){
+    var content = e.detail.value.content;
+    if(''==content){
+      wx.showToast({
+        icon:'none',
+        title: '和小夕说点什么吧？'
+      })
+      return;
+    }
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var paras = {};
+    paras.content= content;
+    paras.uId = wx.getStorageSync('uId');
+    wx.request({
+      url: baseUrl+"user/feedBack",
+      method: 'get',
+      data: paras,
+      success(res) {
+        wx.showModal({
+          content: '再次感谢您的支持!',
+          showCancel:false
+        })
+        that.setData({
+          showModal:false
+        })
+      }
+    })
+  },
+  fadeInOut() {
+    var that = this,
+        aniState = that.data.aniState,
+        classState = that.data.classState
+  
+      // 执行淡入淡出动画
+      that.setData({
+        classState: !classState
+      })
+  
+      // 延时600ms切换图片
+      setTimeout(()=> {
+        that.setData({
+          aniState: !aniState
+        })
+      },500)
+  }
+   
 })

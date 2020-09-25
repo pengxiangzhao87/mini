@@ -56,6 +56,12 @@ Page({
             result.isVideo=0;
           }
           result.urlList=urlList;
+          if(result.s_desc!='' && result.s_desc!=undefined){
+            result.descList = result.s_desc.split('~');
+          }
+          if(result.sales_desc!='' && result.sales_desc!=undefined){
+            result.salesList = result.sales_desc.split('~');
+          }
           var disabled = false;
           if(result.init_unit==0 && result.init_num<=50 || result.init_unit==1 && result.init_num==1){
             disabled = true;

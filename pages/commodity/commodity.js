@@ -72,7 +72,7 @@ Page({
     that.setData({
       topFlag:0
     })
-    if(wx.getStorageSync('uId')==''){
+    if(!wx.getStorageSync('uId')){
       app.wxGetOpenID().then(function(){
         that.showData(that);
       })

@@ -3,17 +3,16 @@
     <view wx:if="{{myInfo.u_nick_name=='' || myInfo.u_nick_name==undefined}}">
       <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" >
         <button style="background-color:#FFD52E;color:#333333;font-size:18px;font-weight: bolder;width:100%;padding:0 0 0 0 ;" open-type='getUserInfo' bindgetuserinfo="getUser">{{myInfo.u_nick_name=='' || myInfo.u_nick_name==undefined?'点击登录':myInfo.u_nick_name}}</button>
-        <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;" src="/image/zhifu_xiayibu@3x.png"></image>
+       <image style="height:25px;width:37px;margin-right:15px;margin-left:auto;" catchtap="showModal" src="/image/feedback.png"></image>
       </view>
     </view>
     <view wx:elif="{{myInfo.u_nick_name!='' && myInfo.u_nick_name!=undefined}}">
       <view style="height:74px;width:100%;display:flex;align-items: center;flex-direction:row;" bindtap="toEditInfo">
         <view style="height:64px;width:64px;margin-left:10px;">
- 
           <image mode="aspectFill" style="height:64px;width:64px;border-radius: 130px;" src="{{baseUrl+'upload/'+myInfo.u_avatar_url}}" binderror="errorPic"></image>
         </view>
         <view style="color:#333333;font-size:18px;font-weight: bolder;margin-left:14px;width:100%;">{{myInfo.u_nick_name}}</view>
-        <image style="height:11.9px;width:6.9px;margin-right:10px;margin-left:auto;" bindtap="toEditInfo" src="/image/zhifu_xiayibu@3x.png"></image>
+        <image style="height:25px;width:37px;margin-right:15px;margin-left:auto;" catchtap="showModal" src="/image/feedback.png"></image>
       </view>
     </view>
 
@@ -47,6 +46,7 @@
   </view>
 </view>
 
+
 <view hidden="true" class="QR-code">
   <text style="display:flex;color:#333333;font-size:16px;font-weight:bold;">下载app，使用完整版</text>
   <view style="display:flex;justify-content: center;">
@@ -79,3 +79,32 @@
   </view>
   
 </view> -->
+
+
+
+ 
+<view class="mask" bindtap="hiddenModal" wx:if="{{showModal}}"></view>
+
+<form bindsubmit="feedBack"> 
+  <view class="modalDlg" style="margin:{{windowHeight/2-340}}px 0 0 {{windowWidth/2-150}}px" wx:if="{{showModal}}">
+    <view style="margin-left:10px;font-size:14px;margin-top:10px;color:#666666;">给小夕的</view>
+    <textarea class="feedBackText" name="content" focus="true" auto-focus="true" placeholder="留下点什么，再走吧..." placeholder-style="color:#999999;font-size:14px;" maxlength="300"></textarea>
+    <view class="row" >
+      <button  size="mini" bindtap="hiddenModal" style="font-size:16px;color:#333333;">取消</button>
+      <button  size="mini" type="primary" style="font-size:16px;" form-type="submit">确定</button>
+    </view>
+  </view>
+</form>
+
+
+<view  class="letter">
+  <view class="letter-front animated {{classState?'fadeOut':'fadeIn'}}" bindtap="fadeInOut" hidden="{{aniState}}">
+    <image src="/image/letter.png" style="width:100px;height:100px;"></image>
+  </view>
+  <view class="letter-back animated {{!classState?'fadeOut':'fadeIn'}}" bindtap="fadeInOut" hidden="{{!aniState}}">
+    <text class="letter-title">亲爱的邻居：</text>
+    <text class="letter-row" decode="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;食朝夕（简称小夕，3号楼业主）在10月1号出生了，和我一起的还有两个小伙伴，小果（田园鲜果，2号楼底商）、阿水（水晶进口食品，8号楼地库商家）。我们致力于打造大成郡自己的APP，通过线上服务为大家提供真正的自由购物。</text>
+    <text class="letter-row" decode="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;线上购物畅行了十余年，在一定程度上改变了人们的生活方式。然而，不管是盒某或者物某等等，售卖的单位永远是500g或一份，都是已定量的。用户无法按照自己的实际需求、购买适合自己的量。购买的水果为了不丢失新鲜度，必须在一两天内吃完；购买的蔬菜，炒了一盘菜，还有多出来的量，再炒一盘吧，量又不够，扔了又浪费，不得不来盘“大烩菜”。</text>
+    <text class="letter-row" decode="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小夕提出了真正的随心购、随意购。你可以买10根香蕉或者一根，5个苹果或者一个苹果，一斤葡萄或者，50克。只要你有需求，本着多退少补的原则，"斤斤计较"保障大家共同的利益。</text>
+  </view>
+</view>
