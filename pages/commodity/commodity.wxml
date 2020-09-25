@@ -38,7 +38,7 @@
   </view>
   <view class="icon_second">
     <view wx:for="{{secondType}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item">
-      <view data-tId="{{item.t_id}}" bindtap="toCategory">
+      <view data-tId="{{item.tId}}" bindtap="toCategory">
         <image src="/image/{{item.tId==1?'shouye_shuiguo@3x.png':(item.tId==2?'shouye_shucai@3x.png':(item.tId==3?'shouye_haixian@3x.png':(item.tId==4?'shouye_roulei@3x.png':(item.tId==5?'shouye_ganguo@3x.png':(item.tId==6?'shouye_direliang@3x.png':(item.tId==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))))))}}" style="height:50px;width:50px;"></image>
         <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.tName}}</view>
       </view>
