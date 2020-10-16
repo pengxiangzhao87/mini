@@ -21,7 +21,7 @@ page{
 }
 .left{
   display:flex;
-  width:100px;
+  width:20%;
   color:#666666;
 }
 

@@ -13,6 +13,7 @@ Page({
     animationData: {},
     qrPic:'qr_user.jpg',
     fxBg:'fx_bg.png',
+    avatarUrl:'',
     isPhone:1
   },
   onLoad:function(e) {
@@ -86,6 +87,36 @@ Page({
           icon:'none',
           title: '服务器异常'
         })
+      }
+    })
+    wx.getSetting({
+      success: (res) => {
+        if(res.authSetting['scope.userInfo']){
+          var paras={};
+          paras.uId=wx.getStorageSync('uId');
+          wx.request({
+            url: baseUrl+"user/queryMyInfo",
+            method: 'get',
+            data: paras,
+            success(res) {
+              if(res.data.code==200){
+                var myInfo = res.data.data;
+                that.setData({
+                  avatarUrl:myInfo.u_avatar_url
+                })
+              }else{
+                wx.showToast({
+                  title: res.data.msg
+                })
+              }
+            },fail(res){
+              wx.showToast({
+                icon:'none',
+                title: '服务器异常'
+              })
+            }
+          })
+        }
       }
     })
   },
@@ -184,8 +215,46 @@ Page({
       }
     })
   },
-  toShare:function(){
-    this.showModal();
+  toShare:function(e){
+    var that = this;
+    wx.showLoading({
+      title: '授权中...',
+    })
+    var baseUrl = that.data.baseUrl;
+    var data={};
+    data.encryptedData = e.detail.encryptedData;
+    data.iv = e.detail.iv;
+    data.token=wx.getStorageSync('token');
+    wx.request({
+      url: baseUrl+"mini/getUserInfo",
+      method: 'get',
+      data: data,
+      success(res) {
+        if(res.data.code==200){
+          wx.showToast({
+            icon:'none',
+            title: '授权成功',
+            duration:1500
+          })
+          console.info(res)
+          that.setData({
+            avatarUrl:res.data.msg
+          })
+          that.showModal();
+        }else{
+          wx.showModal({
+            content: '请重新授权',
+            showCancel:false
+          })
+        }
+      },
+      fail(res) {
+        wx.showModal({
+          content: '请重新授权',
+          showCancel:false
+        })
+      }
+    })
   },
   // 显示遮罩层
   showModal:function () {
@@ -303,6 +372,7 @@ Page({
     var detail = that.data.detail;
     var qrPic = baseUrl + 'upload/' + that.data.qrPic;
     var fxBg = baseUrl + 'upload/' + that.data.fxBg;
+    var avatarUrl = baseUrl + 'upload/' + that.data.avatarUrl;
     var shareUrl = that.data.shareUrl;
     Promise.all([
       wx.getImageInfo({
@@ -313,6 +383,9 @@ Page({
       }),
       wx.getImageInfo({
           src: qrPic
+      }),
+      wx.getImageInfo({
+        src: avatarUrl
       })
     ]).then(res => {
         const ctx = wx.createCanvasContext('shareCanvas')
@@ -330,7 +403,7 @@ Page({
         ctx.drawImage(res[0].path, 0, 0, 250, 400);
         
         //头像
-        ctx.drawImage(res[2].path, 35, 35, 30, 30);
+        ctx.drawImage(res[3].path, 35, 35, 30, 30);
 
         //图片
         ctx.drawImage(res[1].path, 25, yy , ww, hh);
@@ -345,25 +418,25 @@ Page({
         //价格
         ctx.setFontSize(16)        
         ctx.setFillStyle('red')
-        ctx.fillText(detail.price, 35, 295)
+        ctx.fillText(detail.price, 35, 300)
         //单位
         ctx.setFontSize(14)        
         ctx.setFillStyle('#666666')
-        ctx.fillText(detail.unit, 35+((detail.price.length-2)*16), 295)
+        ctx.fillText(detail.unit, 35+(detail.price.length*16), 300)
  
         //名称
         ctx.setFontSize(12);
         ctx.setFillStyle('black')    
         var name = detail.s_name;    
         var len = name.length;
-        ctx.fillText(name.substring(0,8), 35,328);
+        ctx.fillText(name.substring(0,8), 35,333);
         if(len>8){
           if(len>16){
             name = name.substring(8,15)+'...';
           }else{
-            name = name.substring(8,len-1);
+            name = name.substring(8,len);
           }
-          ctx.fillText(name, 35, 345)
+          ctx.fillText(name, 35, 350)
         }
       
         ctx.stroke()

@@ -1,0 +1,2 @@
+<!--pages/address/map/map.wxml-->
+<map id="myMap" class="maMap" subkey="5ZNBZ-VAPWP-THWD3-LBXL6-UK6GQ-UZBGN"/>

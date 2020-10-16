@@ -19,6 +19,7 @@ App({
         that.globalData.hh = hh;
       }
     })  
+    
   },
   onShow:function(){
     var that = this;

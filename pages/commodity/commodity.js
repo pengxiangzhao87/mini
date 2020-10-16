@@ -28,7 +28,12 @@ Page({
     topH:150,
     isPhone:1
   },
-  onLoad:function(){
+  onLoad:function(options){
+    if (options.scene) {
+      console.log('小程序码扫码进入');
+      var scen = decodeURIComponent(options.scene);
+      console.info(scen)
+    }
     var baseUrl = app.globalData.baseUrl;
     wx.request({
       url: baseUrl+"commodity/queryCategoryList",
@@ -256,6 +261,7 @@ Page({
     wx.navigateTo({
       url: 'detail/detail?sid='+sid
     })
+
   },
   //手机号授权
   getPhoneNumber:function(e){

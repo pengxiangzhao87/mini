@@ -1,11 +1,23 @@
 // pages/address/edit/edit.js
+const QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp();
+var qqMap = new QQMapWX({
+  key: '5ZNBZ-VAPWP-THWD3-LBXL6-UK6GQ-UZBGN' // 必填
+});
 Page({
   data: {
     address:{},
     baseUrl:'',
     //0:新增，1:修改
-    flag:false
+    flag:false,
+    region: [],
+    switch1Checked: false,
+    chooseAddress: '',
+    IDNo: '',
+    lng: '',
+    lat: '',
+    isshop: true, //判断来源
+    i:''
   },
 
   onLoad:function(e) {
@@ -80,5 +92,44 @@ Page({
         flag:true
       })
     }
+  },
+  toMap:function(){
+    wx.navigateTo({
+      url: '/pages/address/map/map'
+    })
+  },
+  //地区选择
+  bindRegionChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e)
+    this.setData({
+      region: e.detail.value
+    })
+    console.log(e.detail.value[0] + e.detail.value[1] + e.detail.value[2])
+    qqMap.geocoder({
+      address: e.detail.value[0] + e.detail.value[1] + e.detail.value[2],
+      complete: (res => {
+        console.log(res.result.location); //经纬度对象
+        this.setData({
+          lng: res.result.location.lng,
+          lat: res.result.location.lat
+        })
+      })
+    })
+  },
+  //移动选点
+  onChangeAddress: function() {
+    var _page = this;
+    wx.chooseLocation({
+      latitude: _page.data.lat,
+      longitude: _page.data.lng,
+      success: function(res) {
+        _page.setData({
+          chooseAddress: res.name
+        });
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    });
   }
 })
