@@ -99,6 +99,7 @@ Page({
     paras.userId=wx.getStorageSync('uId');
     that.getCarNum(that,paras,baseUrl);
     paras.tId=that.data.tid;
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     that.queryCommodity(that,paras,baseUrl);
   },
   
@@ -173,6 +174,7 @@ Page({
       paras.rows=rows;
       paras.userId=wx.getStorageSync('uId');
       paras.tId=tid;
+      paras.areaFlag=wx.getStorageSync('areaFlag');
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',
@@ -224,6 +226,7 @@ Page({
     paras.userId=wx.getStorageSync('uId');
     paras.page=1;
     paras.rows=data.rows;
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',

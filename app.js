@@ -1,8 +1,8 @@
 //app.js
 App({
   globalData:{
-    //baseUrl:"http://192.168.1.142:9000/CMTGP/",
-    baseUrl:"https://www.sotardust.cn/CMTGP/",
+    baseUrl:"http://192.168.1.142:9000/CMTGP/",
+    //baseUrl:"https://www.sotardust.cn/CMTGP/",
     searchList:[],
     ww:0,
     hh:0
@@ -53,6 +53,9 @@ App({
                 wx.setStorageSync('token', data.token);
                 wx.setStorageSync('isPhone', data.isPhone);
                 wx.setStorageSync('uId', data.uId);
+                if(data.areaFlag!=undefined){
+                  wx.setStorageSync('areaFlag', data.areaFlag);
+                }
               }else{
                 wx.showToast({
                   icon:'none',

@@ -43,13 +43,15 @@ Page({
               }else{
                 item.disabled = false;
               }
-              if(item.is_check==1){
-                var sum = item.init_unit==0?item.s_num/50:item.s_num;
-                totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-                ++checkNum;
-                isDelete = true;
-              }else{
-                selectedAll = false;
+              if(item.state==1){
+                if(item.is_check==1){
+                  var sum = item.init_unit==0?item.s_num/50:item.s_num;
+                  totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
+                  ++checkNum;
+                  isDelete = true;
+                }else{
+                  selectedAll = false;
+                }
               }
               item.totalPrice = item.totalPrice.toFixed(2);
             }

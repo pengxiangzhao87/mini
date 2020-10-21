@@ -70,7 +70,7 @@
 
     <view style="margin-right:10px;margin-left:auto;">
       <view wx:if="{{isPhone==0}}">
-        <view wx:if="{{detail.state==1}}">
+        <view wx:if="{{detail.state==1 && detail.areaFlag!=0}}">
           <view style="display:flex;align-items: center;justify-content: center;  ">
             <view style="color:#FF1907;margin-right:10px;font-size:22px;font-weight:bolder;">￥{{detail.totalPrice}}</view>
             <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:16px;font-weight: 500;">加入到购物车</text></view>
@@ -78,6 +78,9 @@
         </view>
         <view wx:elif="{{detail.state==0}}">
           <view class="disabledCar" ><text style="font-size:16px;color:white;">补货中</text></view>
+        </view>
+        <view wx:elif="{{detail.areaFlag==0}}">
+          <view class="disabledCar" ><text style="font-size:16px;color:white;">不在配送范围</text></view>
         </view>
       </view>
       <view wx:elif="{{isPhone==1}}">

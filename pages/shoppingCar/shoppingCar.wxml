@@ -1,27 +1,42 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
-<view style="height:100%;">
-  <view class="head">
+
+  <!-- <view class="head">
     <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
     <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
-  </view> 
-  <view style="padding-top:5px;margin-bottom:100px;">
-    <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
-      <view style="margin-left:10px;padding-top:5px;font-size:12px;color:#999999;margin-bottom:5px;">{{detail.supplier}}</view>
-      <view  wx:for="{{detail.goods}}" wx:for-index="index" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-idx="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
-        <view class="list">
-          <view style="width:16px;height:16px;margin-left:5px;margin-right:5px;">
+  </view>  -->
+
+<view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
+  <view style="margin-top:10px;margin-left:10px;padding-bottom:10px;margin-right:10px;border-radius: 10px;background-color:#ffffff">
+
+    <view style="display:flex;flex-direction:row;align-items: center;height:30px;font-size:12px;">
+      <image style="width:16px;height:16px;margin-left:10px;" src="/image/icon_gouwuche_default@3x.png"></image>
+      <view style="margin-left:10px;">{{detail.supplier}}</view>
+      <image style="margin-left:10px;height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+      <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
+    </view>
+    
+    <view  wx:for="{{detail.goods}}" wx:for-index="index" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-idx="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
+      <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
+
+        <view style="width:16px;height:16px;margin-left:10px;margin-right:10px;display: flex;align-items: center;justify-content: center;">
+          <view wx:if="{{item.state==1}}">
             <image catchtap="checkBox" data-id="{{item.id}}" data-check="{{item.is_check}}" style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
           </view>
-          <view bindtap="toDetail" data-sid="{{item.s_id}}">
-            <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl+'upload/'+item.imgUrl}}"></image>
+          <view wx:elif="{{item.state==0}}">
+            <view style="color:white;font-size:10px;background-color:#999999;">失效</view>
           </view>
-          <view style="height:94px;margin-left:10px;width:100%;">
-            <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">
-              <view class="title_name">{{item.s_name}}</view>
-              <view style="margin-right:10px;margin-left:auto;color:#333333;font-size:14px;height:40px;padding-top:0px;">{{item.sell}}</view>
-            </view>
-            <view style="display:flex;flex-direction:row;height:30px;margin-top:10px;">
-              <view style="font-size:18px;color:#FF1907;font-weight:bolder;">￥{{item.totalPrice}}</view>
+        </view>
+
+        
+        <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl+'upload/'+item.imgUrl}}"></image>
+     
+
+        <view style="height:94px;margin-left:10px;width:100%;">
+          <view class="title_name" style="{{item.state==0?'color:#bebebe':''}}">{{item.s_name}}</view>
+          <view style="{{item.state==0?'color:#bebebe;':'color:#333333;'}}margin-right:10px;margin-left:auto;font-size:14px;height:40px;padding-top:0px;">{{item.sell}}</view>
+          <view style="display:flex;flex-direction:row;height:30px;margin-top:10px;">
+            <view style="{{item.state==0?'color:#bebebe;':'color:#FF1907;'}}font-size:18px;font-weight:bolder;">￥{{item.totalPrice}}</view>
+            <view hidden="{{item.state==0}}" style="width:100%;">
               <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
                 <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
                 <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
@@ -32,20 +47,20 @@
             </view>
           </view>
         </view>
-        <view class="del" catchtap="del" data-id="{{item.id}}">删 除</view>
-      </view> 
-    </view>
-  </view>
 
-  <view wx:if="{{shoppingCar.length==0 }}">
-    <view style="display:flex;justify-content:center;margin-top:150px;">
-      <image style="height:90px;width:130px;" src="/image/none_shop.png"></image>
-    </view>
-    <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">购物车空空如也~</view>
+      </view>
+      <view class="del" catchtap="del" data-id="{{item.id}}">删 除</view>
+    </view>  
   </view>
 </view>
+ 
 
-
+<view wx:if="{{shoppingCar.length==0 }}">
+  <view style="display:flex;justify-content:center;margin-top:150px;">
+    <image style="height:90px;width:130px;" src="/image/none_shop.png"></image>
+  </view>
+  <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">购物车空空如也~</view>
+</view>
 
 <view class="page_bottom" >
   <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
@@ -57,4 +72,84 @@
     <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
   </view>
 </view>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<view style="height:100%;">
+  <view class="head">
+    <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
+    <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
+  </view> 
+  <view style="padding-top:5px;margin-bottom:100px;">
+    <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
+      <view style="margin-left:10px;padding-top:5px;font-size:12px;color:#999999;margin-bottom:5px;">{{detail.supplier}}</view>
+      <view  wx:for="{{detail.goods}}" wx:for-index="index" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-idx="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
+        <view class="list">
+          <view style="width:16px;height:16px;margin-left:5px;margin-right:5px;display: flex;align-items: center;justify-content: center;">
+            <view wx:if="{{item.state==1}}">
+              <image catchtap="checkBox" data-id="{{item.id}}" data-check="{{item.is_check}}" style="width:16px;height:16px;" src="{{item.is_check==0?'/image/icon_gouwuche_default@3x.png':'/image/icon_gouwuche_xuanzhong@3x.png'}}"></image>
+            </view>
+            <view wx:elif="{{item.state==0}}">
+              <view style="color:white;font-size:10px;background-color:#999999;">失效</view>
+            </view>
+          </view>
+          <view bindtap="toDetail" data-sid="{{item.s_id}}">
+            <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl+'upload/'+item.imgUrl}}"></image>
+          </view>
+          <view style="height:94px;margin-left:10px;width:100%;">
+            <view class="title" bindtap="toDetail" data-sid="{{item.s_id}}">
+              <view class="title_name" style="{{item.state==0?'color:#bebebe':''}}">{{item.s_name}}</view>
+              <view style="{{item.state==0?'color:#bebebe;':'color:#333333;'}}margin-right:10px;margin-left:auto;font-size:14px;height:40px;padding-top:0px;">{{item.sell}}</view>
+            </view>
+            <view style="display:flex;flex-direction:row;height:30px;margin-top:10px;">
+              <view style="{{item.state==0?'color:#bebebe;':'color:#FF1907;'}}font-size:18px;font-weight:bolder;">￥{{item.totalPrice}}</view>
+              <view hidden="{{item.state==0}}" style="width:100%;">
+                <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
+                  <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
+                  <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
+                  <view style="font-size:14px;color:#333333;display:flex;align-items: center;justify-content: center;width:47px;"><text style="font-size:16px">{{item.s_num}}</text><text decode="true">&nbsp;{{item.init_unit==0?'g':'个'}}</text></view>
+                  <image src="/image/shouye_xq_add@3x.png" style="margin-left:5px;margin-right:5px;height:10px;width:10px"></image>
+                  <view class="btn" catchtap="fineTuning" data-id="{{item.id}}" data-flag="1">{{item.init_unit==0?50:1}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="del" catchtap="del" data-id="{{item.id}}">删 除</view>
+      </view>  
+    </view>
+  </view>
+
+  <view wx:if="{{shoppingCar.length==0 }}">
+    <view style="display:flex;justify-content:center;margin-top:150px;">
+      <image style="height:90px;width:130px;" src="/image/none_shop.png"></image>
+    </view>
+    <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">购物车空空如也~</view>
+  </view>
+</view>
+
+<view class="page_bottom" >
+  <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+  <view style="margin-left:5px;color:#333333;font-size:14px;" bindtap="checkAll">全选</view>
+  <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
+    <view style="margin-right:10px;color:#999999 ;">
+      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:20px;color:#FF1907;font-weight:bolder;">￥{{totalPrice}}</text></view>
+    </view>
+    <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
+  </view>
+</view>    -->
 

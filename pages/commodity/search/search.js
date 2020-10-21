@@ -60,6 +60,7 @@ Page({
     that.getCarNum(that,paras,baseUrl);
     paras.tId=-1;
     paras.sName = that.data.sName;
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     that.queryCommodity(that,paras,baseUrl);
   },
   getCarNum:function(that,paras,baseUrl){
@@ -135,6 +136,7 @@ Page({
       paras.page=page;
       paras.rows=rows;
       paras.tId=-1;
+      paras.areaFlag=wx.getStorageSync('areaFlag');
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',
@@ -188,6 +190,7 @@ Page({
     paras.page=that.data.page;
     paras.rows=that.data.rows;
     paras.tId=-1;
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     wx.request({
       url: baseUrl+"commodity/queryCommodityByPage",
       method: 'get',

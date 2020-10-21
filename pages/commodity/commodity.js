@@ -28,12 +28,7 @@ Page({
     topH:150,
     isPhone:1
   },
-  onLoad:function(options){
-    if (options.scene) {
-      console.log('小程序码扫码进入');
-      var scen = decodeURIComponent(options.scene);
-      console.info(scen)
-    }
+  onLoad:function(){
     var baseUrl = app.globalData.baseUrl;
     wx.request({
       url: baseUrl+"commodity/queryCategoryList",
@@ -97,6 +92,7 @@ Page({
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
     paras.tId=-1;
+    paras.areaFlag = wx.getStorageSync('areaFlag');
     that.queryCommodity(that,paras,baseUrl);
   },
   getCarNum:function(paras,baseUrl){
@@ -153,6 +149,7 @@ Page({
       paras.rows=rows;
       paras.userId=wx.getStorageSync('uId');
       paras.tId=-1;
+      paras.areaFlag = wx.getStorageSync('areaFlag');
       wx.request({
         url: baseUrl+"commodity/queryCommodityByPage",
         method: 'get',

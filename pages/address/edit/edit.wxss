@@ -11,6 +11,20 @@ page{
   margin-right:10px;
   border-bottom: 0.5px solid #E5E5E5;
 }
+.left{
+  width:100px;
+  color:#666666;
+}
+
+.row-city{
+  display: flex;  
+  flex-direction: row  ;
+  height:75px;
+  margin-left:10px;
+  margin-right:10px;
+  border-bottom: 0.5px solid #E5E5E5;
+}
+
 .row-end{
   display: flex;  
   align-items: center;
@@ -18,11 +32,6 @@ page{
   height:42px;
   margin-left:10px;
   margin-right:10px;
-}
-.left{
-  display:flex;
-  width:20%;
-  color:#666666;
 }
 
 

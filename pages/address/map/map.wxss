@@ -1,9 +1,0 @@
-/* pages/address/map/map.wxss */
-page{
-  height: 100%;
-  width: 100%;
-}
-.maMap{
-  height: 50%;
-  width: 100%;
-}

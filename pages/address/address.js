@@ -72,6 +72,7 @@ Page({
           that.setData({
             address:address
           })
+          wx.setStorageSync('areaFlag', res.data.data)
           var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
           var prevPage = pages[ pages.length - 2 ];  
           //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。

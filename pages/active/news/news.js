@@ -37,7 +37,7 @@ Page({
     this.setData({
       baseUrl:baseUrl,
       bannerH:bannerH,
-      busPos:busPos,
+      busPos:busPos
     })
   },
   onShow:function(){
@@ -55,6 +55,7 @@ Page({
     var paras = {};
     paras.userId=wx.getStorageSync('uId');
     paras.status=2;
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     wx.request({
       url: baseUrl+"commodity/queryActive",
       method: 'get',

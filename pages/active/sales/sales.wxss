@@ -14,6 +14,40 @@ page{
   background-color: #ffffff;
 }
 
+
+.row-img{
+  width:140px;
+  height:128px;
+}
+
+.row-imgBlack{
+  width:140px;
+  height:128px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: black;
+  opacity: 0.4;
+}
+
+.row-text{
+  border-radius: 100px;
+  width: 100px;
+  height: 35px;  
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  background: black;
+  opacity: 0.6;
+  color:white;
+  font-size:10px;
+}
+
 .row_name{
   font-weight: 500;
   font-size:16px;

@@ -58,41 +58,48 @@ Page({
     })
   },
   getUser:function(e){
-    wx.showLoading({
-      title: '授权中...',
-    })
     var that = this;
-    var baseUrl = that.data.baseUrl;
-    var data={};
-    data.encryptedData = e.detail.encryptedData;
-    data.iv = e.detail.iv;
-    data.token=wx.getStorageSync('token');
-    wx.request({
-      url: baseUrl+"mini/getUserInfo",
-      method: 'get',
-      data: data,
-      success(res) {
-        if(res.data.code==200){
-          that.onLoad();
-          wx.showToast({
-            icon:'none',
-            title: '授权成功',
-            duration:1500
+    wx.getSetting({
+      success (res) {
+        if(res.authSetting["scope.userInfo"]){
+          wx.showLoading({
+            title: '授权中...',
           })
-        }else{
-          wx.showModal({
-            content: '请重新授权',
-            showCancel:false
+          var baseUrl = that.data.baseUrl;
+          var data={};
+          data.encryptedData = e.detail.encryptedData;
+          data.iv = e.detail.iv;
+          data.token=wx.getStorageSync('token');
+          wx.request({
+            url: baseUrl+"mini/getUserInfo",
+            method: 'get',
+            data: data,
+            success(res) {
+              if(res.data.code==200){
+                that.onShow();
+                wx.showToast({
+                  icon:'none',
+                  title: '授权成功',
+                  duration:1500
+                })
+              }else{
+                wx.showModal({
+                  content: '请重新授权',
+                  showCancel:false
+                })
+              }
+            },
+            fail(res) {
+              wx.showModal({
+                content: '请重新授权',
+                showCancel:false
+              })
+            }
           })
-        }
-      },
-      fail(res) {
-        wx.showModal({
-          content: '请重新授权',
-          showCancel:false
-        })
+        } 
       }
     })
+    
   },
   //跳转地址管理
   toAddress:function(){

@@ -18,7 +18,12 @@
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view wx:if="{{idx%2==0}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 12px;  ">
           <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
-            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl+'upload/'+commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view class="goods-imgParent">
+              <image class="{{commodity[idx].areaFlag!=0?'goods-img':'goods-imgBlack'}}" mode="widthFix" src="{{baseUrl+'upload/'+commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+              <view hidden="{{commodity[idx].areaFlag!=0}}">
+                <view class="goods-text">不在配送范围</view>
+              </view>
+            </view>
             <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
             <view class="goods-name">{{commodity[idx].s_name}}</view>
           </view>
@@ -27,7 +32,7 @@
             <text style="font-size:14px;color:#666666;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
             <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
-            <view style="margin-right:10px;float:right;">
+            <view style="margin-right:10px;float:right;" hidden="{{commodity[idx].areaFlag==0}}">
               <view wx:if="{{isPhone==0}}">
                 <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
               </view>
@@ -45,7 +50,12 @@
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
         <view  wx:if="{{idx%2!=0}}" style="padding-bottom:5px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 12px;  ">
           <view bindtap="toDetail" data-sid="{{commodity[idx].s_id}}">
-            <image style="width:100%;border-top-left-radius:12px ;border-top-right-radius:12px ;" mode="widthFix" src="{{baseUrl+'upload/'+commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view class="goods-imgParent">
+              <image class="{{commodity[idx].areaFlag!=0?'goods-img':'goods-imgBlack'}}" mode="widthFix" src="{{baseUrl+'upload/'+commodity[idx].coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+              <view hidden="{{commodity[idx].areaFlag!=0}}">
+                <view class="goods-text">不在配送范围</view>
+              </view>
+            </view>
             <view style="font-size:10px;color:#999999;margin-left:10px;">{{commodity[idx].s_corporate_name}}</view>
             <view class="goods-name">{{commodity[idx].s_name}}</view>
           </view>
@@ -54,7 +64,7 @@
             <text style="font-size:14px;color:#666666;" hidden="{{item.is_active==3}}">{{commodity[idx].unit}}</text>
             <text decode="true"  hidden="{{item.is_active!=3}}">&nbsp;</text>
             <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{item.is_active!=3}}">￥{{item.original_price}}</text>
-            <view style="margin-right:10px;float:right;">
+            <view style="margin-right:10px;float:right;" hidden="{{commodity[idx].areaFlag==0}}">
               <view wx:if="{{isPhone==0}}">
                 <image catchtap="showCar" data-idx="{{idx}}" src="{{commodity[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;"></image>
               </view>

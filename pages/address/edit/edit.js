@@ -10,17 +10,11 @@ Page({
     baseUrl:'',
     //0:新增，1:修改
     flag:false,
-    region: [],
-    switch1Checked: false,
-    chooseAddress: '',
-    IDNo: '',
-    lng: '',
-    lat: '',
-    isshop: true, //判断来源
-    i:''
+    region: []
   },
 
   onLoad:function(e) {
+   
     var flag = e.flag==1?true:false;
     var text = e.flag==1?'编辑地址':'新增地址';
     wx.setNavigationBarTitle({
@@ -39,97 +33,178 @@ Page({
     var that = this;
     var baseUrl = that.data.baseUrl;
     var address = e.detail.value;
-
     if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(address.phone))){ 
       wx.showToast({
         icon:'none',
         title: '手机号输入有误',
       })
       return false; 
+    }
+    if(address.aCity==''){
+      wx.showToast({
+        icon:'none',
+        title: '所在地区不能为空',
+      })
+      return false; 
+    } 
+    if(address.aDetail==''){
+      wx.showToast({
+        icon:'none',
+        title: '详细地址不能为空',
+      })
+      return false; 
     } 
     if(that.data.flag){
       address.aId=that.data.address.aId;
     }
-    address.isUsed=1;
-    var json = JSON.stringify(address);
-    wx.request({
-      url: baseUrl+"user/saveAddress",
-      method: 'post',
-      data: json,
-      success(res) {
-        if(res.data.code==200){
-          wx.navigateBack({
-            delta: 1
-          })
-        }else{
-          wx.showToast({
-            icon:'none',
-            title: '服务器异常'
-          })
-        }
-      },fail(res){
-        wx.showToast({
-          icon:'none',
-          title: '服务器异常'
-        })
-      }
-    })
 
-  },
-  focusValue:function(){
-    this.setData({
-      flag:true
+    qqMap.geocoder({
+      address: address.aCity+address.aDetail,
+      complete: (res => {
+        address.latitude = res.result.location.lat;
+        address.longitude = res.result.location.lng;
+        var toParam = address.latitude+','+address.longitude;
+        // var fromParam = wx.getStorageSync('lat')+','+wx.getStorageSync('lng');
+        var fromParam = '39.889236,116.270721';
+        qqMap.calculateDistance({
+          //mode: 'driving',//可选值：'driving'（驾车）、'walking'（步行），不填默认：'walking',可不填
+          //from参数不填默认当前地址
+          //获取表单提交的经纬度并设置from和to参数（示例为string格式）
+          from: fromParam, //若起点有数据则采用起点坐标，若为空默认当前地址
+          to: toParam, //终点坐标
+          success: function(res) {//成功后的回调
+            var distance = res.result.elements[0].distance;
+            address.distance=distance;
+            var json = JSON.stringify(address);
+            wx.request({
+              url: baseUrl+"user/saveAddress",
+              method: 'post',
+              data: json,
+              success(res) {
+                if(res.data.code==200){
+                  if(address.isUsed==1){
+                    wx.setStorageSync('areaFlag', res.data.data);
+                  }
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }else{
+                  wx.showToast({
+                    icon:'none',
+                    title: '服务器异常'
+                  })
+                }
+              },fail(res){
+                wx.showToast({
+                  icon:'none',
+                  title: '服务器异常'
+                })
+              }
+            })
+          }
+        });
+      })
     })
   },
-  changeValue:function(e){
+  changeName(e){
     var that = this;
-    if(e.detail.value==''){
-      that.setData({
-        flag:false
-      })
-    }else{
-      that.setData({
-        flag:true
-      })
-    }
+    var address =that.data.address;
+    address.name=e.detail.value;
+    that.setData({
+      address:address
+    })
   },
-  toMap:function(){
-    wx.navigateTo({
-      url: '/pages/address/map/map'
+  changePhone(e){
+    var that = this;
+    var address =that.data.address;
+    address.phone=e.detail.value;
+    that.setData({
+      address:address
+    })
+  },
+  changeSwitch(e){
+    var that = this;
+    var address = that.data.address;
+    if(e.detail.value){
+      address.isUsed=1;
+    }else{
+      address.isUsed=0;
+    }
+    that.setData({
+      address:address
     })
   },
   //地区选择
   bindRegionChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e)
-    this.setData({
-      region: e.detail.value
-    })
-    console.log(e.detail.value[0] + e.detail.value[1] + e.detail.value[2])
-    qqMap.geocoder({
-      address: e.detail.value[0] + e.detail.value[1] + e.detail.value[2],
-      complete: (res => {
-        console.log(res.result.location); //经纬度对象
-        this.setData({
-          lng: res.result.location.lng,
-          lat: res.result.location.lat
-        })
-      })
+    var that = this;
+    var _address = that.data.address;
+    _address.aCity = e.detail.value[0] + e.detail.value[1] + e.detail.value[2];
+    that.setData({
+      address:_address
     })
   },
   //移动选点
   onChangeAddress: function() {
     var _page = this;
-    wx.chooseLocation({
-      latitude: _page.data.lat,
-      longitude: _page.data.lng,
-      success: function(res) {
-        _page.setData({
-          chooseAddress: res.name
-        });
-      },
-      fail: function(err) {
-        console.log(err)
+    var address = _page.data.address;
+    wx.getSetting({
+      success (res) {
+        if(res.authSetting["scope.userLocation"]==false){
+          wx.openSetting({
+            success(res) {
+              if (res.authSetting["scope.userLocation"]) {
+                wx.chooseLocation({
+                  latitude: _page.data.lat,
+                  longitude: _page.data.lng,
+                  success: function(res) {
+                    address.aCity=res.address+res.name;
+                    _page.setData({
+                      address: address
+                    });
+                  }
+                });
+              }
+            }
+          })
+        }else{
+          wx.chooseLocation({
+            latitude: _page.data.lat,
+            longitude: _page.data.lng,
+            success: function(res) {
+              address.aCity=res.address+res.name;
+              _page.setData({
+                address: address
+              });
+            }
+          });
+        }
       }
-    });
-  }
+    })
+
+    
+    
+  },
+  weChat() {
+    var that = this;
+    wx.chooseAddress({
+      success(res) {
+        var address = that.data.address;
+        address.name=res.userName;
+        address.phone=res.telNumber;
+        var aCity = res.provinceName+res.cityName+res.countyName;
+        address.aCity = aCity;
+        address.aDetail = res.detailInfo;
+        qqMap.geocoder({
+          address: aCity,
+          complete: (res => {
+            address.latitude = res.result.location.lat;
+            address.longitude = res.result.location.lng;
+            that.setData({
+              address:address
+            })
+          })
+        });
+      }
+    })
+  },
 })

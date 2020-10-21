@@ -53,7 +53,8 @@ Page({
   showData:function(that){
     var baseUrl = that.data.baseUrl;
     var paras = {};
-    paras.userId=4;
+    paras.userId=wx.getStorageSync('uId');
+    paras.areaFlag=wx.getStorageSync('areaFlag');
     wx.request({
       url: baseUrl+"commodity/queryOnSales",
       method: 'get',

@@ -28,6 +28,29 @@ page{
   margin-left: -50px;
 }
 
+.address-acity{
+  font-size:14px;
+  margin-right:10px;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.address-name{
+  color:#666666;
+  font-size:14px;
+  margin-top:10px;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .page_bottom{
   width:90%;
   height:45px;

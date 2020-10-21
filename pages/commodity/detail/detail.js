@@ -75,7 +75,6 @@ Page({
             shareUrl:baseUrl+'upload/'+result.s_address_img.split('~')[0],
             isPhone:wx.getStorageSync('isPhone')
           })
-          var price = result.price+result.unit;
         }else{
           wx.showToast({
             title: "服务器异常"
