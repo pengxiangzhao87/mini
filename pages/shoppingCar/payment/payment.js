@@ -23,11 +23,28 @@ Page({
   onLoad:function(e) {
     var that = this;
     var baseUrl = app.globalData.baseUrl;
-    var postage = e.postage;
-    var totalPrice = e.totalPrice;
-    var detailList = JSON.parse(e.json);
+    var supId = e.supid;
     var paras={};
-    paras.userId=wx.getStorageSync('uId');
+    paras.userId = wx.getStorageSync('uId');
+    paras.areaFlag = wx.getStorageSync('areaFlag');
+    paras.supId = supId;
+    wx.request({
+      url: baseUrl+"shoppingCart/queryShoppingCartList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        console.info(res.data.data)
+        that.setData({
+          detailList:res.data.data
+        })
+         
+      },
+      fail(res) {
+        wx.showToast({
+          title: "服务器异常"
+        })
+      }
+    })
     paras.isUsed=1;
     wx.request({
       url: baseUrl+"user/queryAddressList",
@@ -36,11 +53,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           that.setData({
-            detailList:detailList,
             baseUrl:baseUrl,
-            postage:postage,
-            totalPrice:totalPrice,
-            allPrice:totalPrice,
             address:res.data.data[0]
           })
         }else{

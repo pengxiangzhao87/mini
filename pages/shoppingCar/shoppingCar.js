@@ -4,67 +4,29 @@ var app = getApp();
 Page({
   data: {
     shoppingCar:[],
-    baseUrl:"",
-    //是否全选
-    selectedAll:false,
-    //选择的总价
-    totalPrice:0,
-    //是否可以删除
-    isDelete:false,
-    //已选择商品数量
-    checkNum:0,
-  },
-  onLoad: function(){
-
+    baseUrl:""
   },
   onShow:function(){
     var that = this;
     var baseUrl = app.globalData.baseUrl;
     var paras=[];
     paras.userId = wx.getStorageSync('uId');
+    paras.areaFlag = wx.getStorageSync('areaFlag');
     wx.request({
       url: baseUrl+"shoppingCart/queryShoppingCartList",
       method: 'get',
       data: paras,
       success(res) {
+        console.info(res.data.data)
         if(res.data.code==200){
-          var list = res.data.data;
-          var totalPrice = parseFloat(0);
-          var checkNum = parseInt(0);
-          var selectedAll = true;
-          var isDelete = false;
-          for(var idx in list){
-            var detail = list[idx];
-            for(var index in detail.goods){
-              var item = detail.goods[index];
-              item.isTouchMove = false;
-              if(item.init_unit==0 && item.s_num<=50 || item.init_unit==1 && item.s_num==1){
-                item.disabled = true;
-              }else{
-                item.disabled = false;
-              }
-              if(item.state==1){
-                if(item.is_check==1){
-                  var sum = item.init_unit==0?item.s_num/50:item.s_num;
-                  totalPrice += parseFloat((item.price_unit*sum).toFixed(2));
-                  ++checkNum;
-                  isDelete = true;
-                }else{
-                  selectedAll = false;
-                }
-              }
-              item.totalPrice = item.totalPrice.toFixed(2);
-            }
-          }
           that.setData({
             baseUrl:baseUrl,
-            shoppingCar:list,
-            totalPrice:totalPrice.toFixed(2),
-            checkNum:checkNum,
-            selectedAll:selectedAll,
-            isDelete:isDelete
+            shoppingCar:res.data.data
           })
-          that.getCarNum(baseUrl);
+          var paras = {};
+          paras.userId= wx.getStorageSync('uId');
+          paras.areaFlag=wx.getStorageSync('areaFlag');
+          util.getCarNum(that,paras,baseUrl)
         }else{
           wx.showToast({
             icon:'none',
@@ -77,45 +39,6 @@ Page({
           title: "服务器异常"
         })
       }
-    })
-  },
-  getCarNum:function(baseUrl){
-    var paras = {};
-    paras.userId= wx.getStorageSync('uId');
-    wx.request({
-      url: baseUrl+"shoppingCart/queryShoppingCartList",
-      method: 'get',
-      data: paras,
-      success(res) {
-        if(res.data.code==200){
-          var list = res.data.data;
-          var checkNum = parseInt(0);
-          for(var idx in list){
-            var detail = list[idx];
-            for(var index in detail.goods){
-              var item = detail.goods[index];
-              if(item.is_check==1){
-                ++checkNum;
-              }
-            }
-          }
-          if(checkNum!=0){
-            wx.setTabBarBadge({//tabbar右上角添加文本
-              index: 1,//tabbar下标
-              text: checkNum+'' //显示的内容,必须为字符串
-            })
-          }else{
-            wx.removeTabBarBadge({
-              index: 1,
-            })
-          }
-        }
-      }
-    })
-  },
-  closePostage:function(){
-    this.setData({
-      hidden:true
     })
   },
   //微调
@@ -206,25 +129,20 @@ Page({
     })
   },
   //选择所有
-  checkAll:function(){
+  checkAll:function(e){
     var that = this;
     var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
-    if(list.length==0){
-      return;
-    }
-    var selectedAll = that.data.selectedAll;
+    var idx = e.currentTarget.dataset.idx;
+    var detail = list[idx];
     var id = '';
-    for(var idx in list){
-      var detail = list[idx];
-      for(var index in detail.goods){
-        var item = detail.goods[index];
-        id += item.id+',';
-      }
+    for(var index in detail.goods){
+      var item = detail.goods[index];
+      id += item.id+',';
     }
     var paras = [];
     paras.id=id.substring(0,id.length-1);
-    paras.isCheck=selectedAll?0:1;
+    paras.isCheck=detail.selectedAll?0:1;
     wx.request({
       url: baseUrl+"shoppingCart/checkCommodity",
       method: 'get',
@@ -246,29 +164,25 @@ Page({
       }
     })
   },
-  deleteFn:function(){ 
+  deleteFn:function(e){ 
     var that = this;
     var baseUrl = that.data.baseUrl;
     var list = that.data.shoppingCar;
-    var isDelete = that.data.isDelete;
-    if(!isDelete){
+    var idx = e.currentTarget.dataset.idx;
+    var detail = list[idx];
+    var ids = '';
+    for(var index in detail.goods){
+      var item = detail.goods[index];
+      ids += item.id+',';
+    }
+    if(ids==''){
       return;
     }else{
       wx.showModal({
         title: '提示',
-        content: '确定删除选中的商品吗？',
+        content: '确定清空所有商品吗？',
         success: function (sm) {
           if (sm.confirm) {
-            var ids = '';
-            for(var idx in list){
-              var detail = list[idx];
-              for(var index in detail.goods){
-                var item = detail.goods[index];
-                if(item.is_check==1){
-                  ids += item.id+',';
-                }
-              }
-            }
             var paras = [];
             paras.ids=ids.substring(0,ids.length-1);
             wx.request({
@@ -300,44 +214,40 @@ Page({
     }
     
   },
-  toPayment:function(){
-    var that = this;
-    var checkNum = that.data.checkNum;
-    var restPrice = that.data.restPrice;
-    if(checkNum==0){
-      wx.showToast({
-        icon:'none',
-        title: '请先选择商品'
-      })
-    }else{
-      var list = that.data.shoppingCar;
-      var detailList=[];
-      // detailList.a=1;
-      for(var idx in list){
-        var supplier = list[idx].supplier;
-        var goods = list[idx].goods
-        var detail = [];
-        for(var index in goods){
-          var item = goods[index];
-          if(item.is_check==1){
-            detail[detail.length] = item;
-          }
-        }
-        if(detail.length>0){
-          var result={};
-          result.supplier = supplier;
-          result.goods = detail;
-          detailList.push(result);
-        } 
-      }
-      var json = JSON.stringify(detailList);
-      var postage = 1;
-      if(restPrice==0 || restPrice==30){
-        postage = 0;
-      }
-      wx.navigateTo({
-        url: 'payment/payment?json='+json+'&postage='+postage+'&totalPrice='+that.data.totalPrice
-      })
+  toPayment:function(e){
+    var btn = e.currentTarget.dataset.btn; 
+    var supId = e.currentTarget.dataset.supid; 
+    wx.navigateTo({
+      url: 'payment/payment?supid='+supId
+    })
+    if(btn){
+    
+      // var list = that.data.shoppingCar;
+      // var item = list[idx];
+      // var detailList=[];
+      // var supplier = item.supplier;
+      // var goods = item.goods
+      // var detail = [];
+      // for(var index in goods){
+      //   var item = goods[index];
+      //   if(item.is_check==1){
+      //     detail[detail.length] = item;
+      //   }
+      // }
+      // if(detail.length>0){
+      //   var result={};
+      //   result.supplier = supplier;
+      //   result.goods = detail;
+      //   detailList.push(result);
+      // } 
+      // var json = JSON.stringify(detailList);
+      // var postage = 1;
+      // if(restPrice==0 || restPrice==30){
+      //   postage = 0;
+      // }
+      // wx.navigateTo({
+      //   url: 'payment/payment?json='+json+'&postage='+postage+'&totalPrice='+that.data.totalPrice
+      // })
     }
   },
   deleteLose:function(){

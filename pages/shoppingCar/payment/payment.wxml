@@ -43,9 +43,12 @@
     </view>
   </view>
 
-  <view style="height:61px;width:100%;color:#333333;">
+  <view style="height:65px;width:100%;color:#333333;">
+    <view style="  display: flex;align-items: center;margin-top:10px; ">
+      <view style="margin-left:5px;font-weight:500;font-size:14px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;font-weight:500;font-size:18px;">￥{{detailList[0].totalPrice}}</text>
+    </view>
     <view style="  display: flex;align-items: center;justify-content: center;margin-top:10px; ">
-      <view style="margin-left:5px;font-weight:500;font-size:14px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;font-weight:500;font-size:18px;">￥{{totalPrice}}</text>
+      <view style="margin-left:5px;font-weight:500;font-size:14px;">运输费</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;font-weight:500;font-size:18px;">￥{{detailList[0].postage}}</text>
     </view>
   </view>
 
@@ -53,7 +56,7 @@
 
 <view class="page_bottom" bindtap="toPayment">
   <view  style="margin-right:5px;margin-left:auto; display: flex;align-items: center;justify-content: center;  color:#333333;font-size:16px;">
-    <view style="margin-right:10px;font-size:14px;color:#999999 ;">待支付 <text style="font-size:22px;color:#FF1907;font-weight:500;">￥{{allPrice}}</text></view>
+    <view style="margin-right:10px;font-size:14px;color:#999999 ;">待支付 <text style="font-size:22px;color:#FF1907;font-weight:500;">￥{{detailList[0].totalPrice+detailList[0].postage}}</text></view>
     <view class="toPayment" >微信支付</view>
   </view>
 </view>

@@ -88,45 +88,15 @@ Page({
     var page = that.data.page;
     paras.rows=data.rows*page;
     paras.userId=wx.getStorageSync('uId');
-    that.getCarNum(paras,baseUrl);
+    paras.areaFlag = wx.getStorageSync('areaFlag');
+    util.getCarNum(that,paras,baseUrl);
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
     paras.tId=-1;
-    paras.areaFlag = wx.getStorageSync('areaFlag');
+    
     that.queryCommodity(that,paras,baseUrl);
   },
-  getCarNum:function(paras,baseUrl){
-    wx.request({
-      url: baseUrl+"shoppingCart/queryShoppingCartList",
-      method: 'get',
-      data: paras,
-      success(res) {
-        if(res.data.code==200){
-          var list = res.data.data;
-          var checkNum = parseInt(0);
-          for(var idx in list){
-            var detail = list[idx];
-            for(var index in detail.goods){
-              var item = detail.goods[index];
-              if(item.is_check==1){
-                ++checkNum;
-              }
-            }
-          }
-          if(checkNum!=0){
-            wx.setTabBarBadge({//tabbar右上角添加文本
-              index: 1,//tabbar下标
-              text: checkNum+'' //显示的内容,必须为字符串
-            })
-          }else{
-            wx.removeTabBarBadge({
-              index: 1,
-            })
-          }
-        }
-      }
-    })
-  },
+   
   //上拉获取新数据
   onReachBottom:function(){
     var that = this;

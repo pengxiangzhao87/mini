@@ -1,22 +1,17 @@
 <!--pages/shoppingCar/shoppingCar.wxml-->
-
-  <!-- <view class="head">
-    <view style="font-size:18px;color:#333333;margin-left:10px;">购物车</view>
-    <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
-  </view>  -->
-
 <view  wx:for="{{shoppingCar}}" wx:for-index="idx" wx:key="s_id" wx:for-item="detail">
-  <view style="margin-top:10px;margin-left:10px;padding-bottom:10px;margin-right:10px;border-radius: 10px;background-color:#ffffff">
+  <view style="margin-top:10px;margin-left:10px;margin-right:10px;border-radius: 10px;background-color:#ffffff">
 
-    <view style="display:flex;flex-direction:row;align-items: center;height:30px;font-size:12px;">
-      <image style="width:16px;height:16px;margin-left:10px;" src="/image/icon_gouwuche_default@3x.png"></image>
-      <view style="margin-left:10px;">{{detail.supplier}}</view>
+    <view style="display:flex;flex-direction:row;align-items: center;height:30px;font-size:14px;">
+      <image data-idx="{{idx}}" bindtap="checkAll" style="width:16px;height:16px;margin-left:10px;" src="{{detail.selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+      <view style="margin-left:10px;font-weight:bolder;">{{detail.supplier}}</view>
       <image style="margin-left:10px;height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
-      <view class="deleteFn {{isDelete?'':'disabled'}}" bindtap="deleteFn">删除</view>
+      <!-- <image class="deleteFn" src="/image/lajitong.png"  data-idx="{{idx}}" bindtap="deleteFn"></image> -->
+      <view class="deleteFn" data-idx="{{idx}}" bindtap="deleteFn">清空</view>
     </view>
     
     <view  wx:for="{{detail.goods}}" wx:for-index="index" wx:key="s_id" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" data-idx="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
-      <view class="list" bindtap="toDetail" data-sid="{{item.s_id}}">
+      <view class="{{item.state==1?'list':'list-disabled'}}"  bindtap="toDetail" data-sid="{{item.s_id}}">
 
         <view style="width:16px;height:16px;margin-left:10px;margin-right:10px;display: flex;align-items: center;justify-content: center;">
           <view wx:if="{{item.state==1}}">
@@ -27,17 +22,15 @@
           </view>
         </view>
 
-        
-        <image style="width:66px;height:66px;" mode="widthFix" src="{{baseUrl+'upload/'+item.imgUrl}}"></image>
+        <image style="{{item.state==1?'width:84px;height:84px;':'width:66px;height:66px;'}}" mode="widthFix" src="{{baseUrl+'upload/'+item.imgUrl}}"></image>
      
-
-        <view style="height:94px;margin-left:10px;width:100%;">
-          <view class="title_name" style="{{item.state==0?'color:#bebebe':''}}">{{item.s_name}}</view>
-          <view style="{{item.state==0?'color:#bebebe;':'color:#333333;'}}margin-right:10px;margin-left:auto;font-size:14px;height:40px;padding-top:0px;">{{item.sell}}</view>
-          <view style="display:flex;flex-direction:row;height:30px;margin-top:10px;">
-            <view style="{{item.state==0?'color:#bebebe;':'color:#FF1907;'}}font-size:18px;font-weight:bolder;">￥{{item.totalPrice}}</view>
-            <view hidden="{{item.state==0}}" style="width:100%;">
-              <view style="display:flex;flex-direction:row;align-items: center;width:50%;margin-right:10px;margin-left:auto;">
+        <view style="{{item.state==1?'height:94px;':'height:66px;'}}margin-left:10px;width:100%;">
+          <view class="{{item.state==1?'title_name':'title_name-disabled'}}">{{item.s_name}}</view>
+          
+          <view  class="{{item.state==1?'bottom_price':'bottom_price-disabled'}}">
+            <view style="{{item.state==0?'color:#bebebe;font-size:16px;':'color:#FF1907;font-size:18px;'}}font-weight:bolder;">￥{{item.totalPrice}}</view>
+            <view hidden="{{item.state==0}}" style="margin-left:auto;margin-right:10px;">
+              <view style="display:flex;flex-direction:row;align-items: center;">
                 <view class="btn {{item.disabled?'btn_disabled':''}}" catchtap="fineTuning" data-id="{{item.id}}" data-flag="0">{{item.init_unit==0?50:1}}</view>
                 <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:5px;height:1.3px;width:10px"></image>
                 <view style="font-size:14px;color:#333333;display:flex;align-items: center;justify-content: center;width:47px;"><text style="font-size:16px">{{item.s_num}}</text><text decode="true">&nbsp;{{item.init_unit==0?'g':'个'}}</text></view>
@@ -47,10 +40,20 @@
             </view>
           </view>
         </view>
-
       </view>
-      <view class="del" catchtap="del" data-id="{{item.id}}">删 除</view>
+
+      <view class="{{item.state==1?'del':'del-disabled'}}" catchtap="del" data-id="{{item.id}}">删 除</view>
     </view>  
+
+    <view hidden="{{detail.btnMsg==''}}">
+      <view class="list_bottom" >
+        <view style="margin-left:auto;margin-right:10px;color:#999999 ;">
+          <view hidden="{{detail.totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:18px;color:#FF1907;font-weight:bolder;">￥{{detail.totalPrice}}</text></view>
+        </view>
+        <view class="{{detail.canBtn?'canBtn':'canBtn-disabled'}}" data-btn="{{detail.canBtn}}" data-supid="{{detail.supId}}" bindtap="toPayment">{{detail.btnMsg}}</view>
+      </view>  
+    </view>
+
   </view>
 </view>
  
@@ -62,16 +65,6 @@
   <view style="display:flex;justify-content:center;color:#666666;font-size:16px;margin-top:10px;">购物车空空如也~</view>
 </view>
 
-<view class="page_bottom" >
-  <image style="height:16px;width:16px;margin-left:15px;" bindtap="checkAll" src="{{selectedAll?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-  <view style="margin-left:5px;color:#333333;font-size:14px;" bindtap="checkAll">全选</view>
-  <view style="  display: flex;align-items: center; justify-content: center;margin-right:10px;margin-left:auto;">
-    <view style="margin-right:10px;color:#999999 ;">
-      <view hidden="{{totalPrice==0?true:false}}" style="font-size:14px;color:#666666">合计:<text style="font-size:20px;color:#FF1907;font-weight:bolder;">￥{{totalPrice}}</text></view>
-    </view>
-    <view class="checkNum" bindtap="toPayment">结算{{checkNum==0?'':'('+checkNum+')'}}</view>
-  </view>
-</view>   
 
 
 
