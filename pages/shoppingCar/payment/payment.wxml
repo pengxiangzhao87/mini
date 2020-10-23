@@ -20,18 +20,20 @@
 </view>
 
 <view class="body">
-
-  <view style="display:flex;align-items:center;height:43px;width:100%;border-bottom: 0.5px solid #E5E5E5;" >
-    <view style="font-size:14px;margin:14px 0px 14px 5px;">预计送达时间</view>
-    <view style="font-size:14px;margin-right:5px;margin-left:auto;" bindtap="showModal">
-      <text style="margin-right:5px;font-weight: bolder;color:#FFD52E;">{{dateRange}}</text>
-      <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+  <view style="height:43px;width:100%;border-bottom: 0.5px solid #E5E5E5;" hidden="{{hideArea}}">
+    <view style="display:flex;align-items:center;" >
+      <view style="font-size:14px;margin:14px 0px 14px 5px;">预计送达时间</view>
+      <view style="font-size:14px;margin-right:5px;margin-left:auto;" bindtap="showModal">
+        <text style="margin-right:5px;font-weight: bolder;color:#FFD52E;">{{dateRange}}</text>
+        <image  style="height:11.9px;width:6.9px;" src="/image/zhifu_xiayibu@3x.png"></image>
+      </view>
     </view>
   </view>
 
+
   <view style="border-bottom: 0.5px solid #E5E5E5;">
     <view  wx:for="{{detailList}}" wx:for-index="idxx" wx:key="s_id" wx:for-item="detail">
-      <view style="margin-left:5px;padding-top:5px;font-size:12px;color:#999999;padding-bottom:3px;">{{detail.supplier}}</view>
+      <view style="margin-left:5px;padding-top:5px;font-size:14px;padding-bottom:3px;">{{detail.supplier}}</view>
       <view style="height:70px;display:flex;align-items: center; white-space: nowrap;">
         <scroll-view scroll-x style="width:85%;">
           <view wx:for="{{detail.goods}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
@@ -44,11 +46,11 @@
   </view>
 
   <view style="height:65px;width:100%;color:#333333;">
-    <view style="  display: flex;align-items: center;margin-top:10px; ">
-      <view style="margin-left:5px;font-weight:500;font-size:14px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;font-weight:500;font-size:18px;">￥{{detailList[0].totalPrice}}</text>
+    <view style="  display: flex;align-items: center;margin-top:10px; font-weight:500;font-size:14px;">
+      <view style="margin-left:5px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;">￥{{detailList[0].totalPrice}}</text>
     </view>
-    <view style="  display: flex;align-items: center;justify-content: center;margin-top:10px; ">
-      <view style="margin-left:5px;font-weight:500;font-size:14px;">运输费</view><text style="margin-right:5px;margin-left:auto;color:#FF1907;font-weight:500;font-size:18px;">￥{{detailList[0].postage}}</text>
+    <view style="  display: flex;align-items: center;justify-content: center;margin-top:10px;font-weight:500;font-size:14px; ">
+      <view style="margin-left:5px;">运输费</view><text style="margin-right:5px;margin-left:auto;">￥{{detailList[0].postage}}</text>
     </view>
   </view>
 

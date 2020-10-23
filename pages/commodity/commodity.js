@@ -1,6 +1,10 @@
 // pages/commodity.js
 var util= require('../../utils/util.js');
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp();
+var qqMap = new QQMapWX({
+  key: '5ZNBZ-VAPWP-THWD3-LBXL6-UK6GQ-UZBGN' // 必填
+});
 Page({
   data: {
     address:"填写收货地址", 
@@ -74,7 +78,61 @@ Page({
     })
     if(!wx.getStorageSync('uId')){
       app.wxGetOpenID().then(function(){
-        that.showData(that);
+        if(!wx.getStorageSync('areaFlag')){
+          //没有收获信息时，获取当前坐标
+          wx.getLocation({
+            type:'gcj02 ',
+            complete(res){
+              var latitude = res.latitude;
+              var longitude = res.longitude;
+              if(latitude!=undefined){
+                //根据坐标获取所在省份
+                qqMap.reverseGeocoder({ //  调用解析SDK
+                  location: {
+                      latitude: latitude,
+                      longitude: longitude
+                  },
+                  success: function (res) {
+                    var adcode = res.result.ad_info.adcode;
+                    if(adcode.indexOf('11')!=0 && adcode.indexOf('12')!=0 && adcode.indexOf('13')!=0){
+                      wx.setStorageSync('areaFlag', '3');
+                      that.showData(that);
+                    }else{
+                      if(adcode.indexOf('11')!=0 ){
+                        wx.setStorageSync('areaFlag', '2,3');
+                        that.showData(that);
+                      }else{
+                        var toParam = latitude+','+longitude;
+                        var fromParam = '39.889236,116.270721';
+                        //在北京，获取距离
+                        qqMap.calculateDistance({
+                          from: fromParam, //若起点有数据则采用起点坐标，若为空默认当前地址
+                          to: toParam, //终点坐标
+                          success: function(res) {
+                            var distance = res.result.elements[0].distance;
+                            if(distance>4000){
+                              wx.setStorageSync('areaFlag', '1,2,3');
+                              that.showData(that);
+                            }else{
+                              wx.setStorageSync('areaFlag', '0,1,2,3');
+                              that.showData(that);
+                            }
+                          }
+                        })
+                      }
+                    }
+                  }
+                }) 
+              }else{
+                wx.setStorageSync('areaFlag', '0,1,2,3');
+                that.showData(that);
+              }
+            }
+          })
+        }else{
+          that.showData(that);
+        }
+        
       })
     }else{
       that.showData(that);
@@ -554,7 +612,7 @@ Page({
   //跳转地址
   toAddress:function(){
     wx.navigateTo({
-      url: '/pages/address/address'
+      url: '/pages/address/address?flag=2'
     })
   },
 

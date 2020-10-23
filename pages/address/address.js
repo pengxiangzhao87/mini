@@ -5,11 +5,15 @@ Page({
 
   data: {
     baseUrl:'',
-    address:[]
+    address:[],
+    flag:0
   },
 
-  onLoad:function (){   
-    
+  onLoad:function (e){   
+    var flag = e.flag ;
+    this.setData({
+      flag:flag==undefined?0:flag
+    })
   },
   onShow:function(){
     var that =  this;
@@ -48,41 +52,96 @@ Page({
   check:function(e){
     var aId = e.currentTarget.dataset.aid;
     var that = this;
+    var flag = that.data.flag;
     var baseUrl = that.data.baseUrl;
     var paras={};
     paras.uId=wx.getStorageSync('uId');
     paras.aId=aId;
+    if(flag==0 || flag==2){
+      wx.request({
+        url: baseUrl+"user/checkAddress",
+        method: 'get',
+        data: paras,
+        success(res) {
+          if(res.data.code==200){
+            that.onShow();
+            wx.setStorageSync('areaFlag', res.data.data)
+          }else{
+            wx.showToast({
+              icon:'none',
+              title: '服务器异常'
+            })
+          }
+        },fail(res){
+          wx.showToast({
+            icon:'none',
+            title: '服务器异常'
+          })
+        }
+      })
+    }else{
+      var idx = e.currentTarget.dataset.idx;
+      var address = that.data.address[idx];
+      var code = address.code;
+      var distance = address.distance;
+      var areaFlag = wx.getStorageSync('areaFlag');
+      if(code.indexOf('11')>-1 && distance>4000 && areaFlag.indexOf('0')>-1){
+        wx.showModal({
+          content: '变更地址需要重新选择商品',
+          success (res) {
+            if (res.confirm) {
+              that.checkAddress(baseUrl,paras,false,address);
+            }
+          }
+        })
+      }else if((code.indexOf('12')>-1 || code.indexOf('13')>-1) && (areaFlag.indexOf('0')>-1 || areaFlag.indexOf('1')>-1)){
+        wx.showModal({
+          content: '变更地址需要重新选择商品',
+          success (res) {
+            if (res.confirm) {
+              that.checkAddress(baseUrl,paras,false,address);
+            }
+          }
+        })
+      }else if(code.indexOf('11')==-1 && code.indexOf('12')==-1 && code.indexOf('13')==-1 && areaFlag!='3'){
+        wx.showModal({
+          content: '变更地址需要重新选择商品',
+          success (res) {
+            if (res.confirm) {
+              that.checkAddress(baseUrl,paras,false,address);
+            }
+          }
+        })
+      }else{
+        that.checkAddress(baseUrl,paras,true,address);
+      }
+
+    }
+    
+  },
+  checkAddress(baseUrl,paras,returnPre,address){
     wx.request({
       url: baseUrl+"user/checkAddress",
       method: 'get',
       data: paras,
       success(res) {
         if(res.data.code==200){
-          var address = that.data.address;
-          var result = {};
-          for(var idx in address){
-            var item = address[idx];
-            if(item.aId==aId){
-              item.isUsed=1;
-              result = item;
-            }else{
-              item.isUsed=0;
-            }
+          wx.setStorageSync('areaFlag', res.data.data);
+          if(returnPre){
+            var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+            var prevPage = pages[ pages.length - 2 ];  
+            //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
+            prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+              address:address
+            })
+            wx.navigateBack({
+              delta: 1
+            })
+          }else{
+            wx.switchTab({
+              url: '/pages/shoppingCar/shoppingCar',
+            })
           }
-          that.setData({
-            address:address
-          })
-          wx.setStorageSync('areaFlag', res.data.data)
-          var pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
-          var prevPage = pages[ pages.length - 2 ];  
-          //prevPage 是获取上一个页面的js里面的pages的所有信息。 -2 是上一个页面，-3是上上个页面以此类推。
-          prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
-            nextFlag:1,
-            address:result
-          })
-          wx.navigateBack({
-            delta: 1
-          })
         }else{
           wx.showToast({
             icon:'none',
@@ -96,7 +155,6 @@ Page({
         })
       }
     })
-
   },
   //编辑
   toEdit:function(e){

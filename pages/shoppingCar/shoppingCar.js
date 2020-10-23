@@ -17,7 +17,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res.data.data)
         if(res.data.code==200){
           that.setData({
             baseUrl:baseUrl,

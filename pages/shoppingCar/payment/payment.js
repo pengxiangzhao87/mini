@@ -6,19 +6,12 @@ Page({
     dateRange:'',
     detailList:[],
     address:{},
-    totalPrice:0,
-    postage:0,
-    allPrice:0,
-    //是否下一页返回，1：是
-    nextFlag:0,
     rangeList:[],
     range:[],
     today:0,
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
-    hidePay:true,
-    method:1,
-    oId:0
+    hideArea:false
   },
   onLoad:function(e) {
     var that = this;
@@ -33,11 +26,10 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res.data.data)
         that.setData({
-          detailList:res.data.data
+          detailList:res.data.data,
+          hideArea:wx.getStorageSync('areaFlag').indexOf('0')==-1
         })
-         
       },
       fail(res) {
         wx.showToast({
@@ -98,7 +90,7 @@ Page({
   //跳转地址
   toAddress:function(){
     wx.navigateTo({
-      url: '/pages/address/address'
+      url: '/pages/address/address?flag=1'
     })
   },
 
@@ -204,31 +196,6 @@ Page({
     })
     that.hideModal();
   },
-  chechMethod:function(e){
-    var method = e.currentTarget.dataset.method;
-    this.setData({
-      method:method
-    })
-  },
-  //下单 TODO
-  // toPayment:function(){
-  //   var that = this;
-  //   wx.getSetting({
-  //     withSubscriptions: true,
-  //     complete(res){
-  //       if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
-  //          that.toOrder(that);
-  //       }else{
-  //         wx.requestSubscribeMessage({
-  //           tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
-  //           complete (res) { 
-  //             that.toOrder(that);
-  //           }
-  //         })
-  //       }
-  //     }
-  //   })
-  // },
   toPayment:function(){
     var that = this;
     var range = '';
@@ -260,28 +227,26 @@ Page({
     wx.showLoading({
       title: '生成订单中...',
     })
-    var allPrice = that.data.allPrice;
     var baseUrl = that.data.baseUrl;
     var list = that.data.detailList;
+    var basic = list[0];
     var data = {};
     data.rangeTime = range;
     data.uId=wx.getStorageSync('uId');
-    data.totalPrice = allPrice;
+    data.totalPrice = basic.totalPrice;
     data.name = address.name;
     data.phone = address.phone;
     data.address = address.aCity+address.aDetail;
     data.channel = 1;
     var detail = [];
-    for(var idx in list){
-      var goods = list[idx].goods;
-      for(var index in goods){
-        var item = goods[index];
-        var result = {};
-        result.sId=item.s_id;
-        result.paymentPrice=item.totalPrice;
-        result.orderNum=item.s_num;
-        detail[detail.length]=result;
-      }
+    var goods = basic.goods;
+    for(var index in goods){
+      var item = goods[index];
+      var result = {};
+      result.sId=item.s_id;
+      result.paymentPrice=item.totalPrice;
+      result.orderNum=item.s_num;
+      detail[detail.length]=result;
     }
     data.details = detail;
     data.token=wx.getStorageSync('token');

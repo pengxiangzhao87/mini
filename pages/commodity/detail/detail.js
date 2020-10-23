@@ -235,7 +235,6 @@ Page({
             title: '授权成功',
             duration:1500
           })
-          console.info(res)
           that.setData({
             avatarUrl:res.data.msg
           })

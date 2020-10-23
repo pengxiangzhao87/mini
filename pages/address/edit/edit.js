@@ -1,5 +1,5 @@
 // pages/address/edit/edit.js
-const QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp();
 var qqMap = new QQMapWX({
   key: '5ZNBZ-VAPWP-THWD3-LBXL6-UK6GQ-UZBGN' // 必填
@@ -8,13 +8,13 @@ Page({
   data: {
     address:{},
     baseUrl:'',
-    //0:新增，1:修改
+    //false:新增,true:修改
     flag:false,
     region: []
   },
 
   onLoad:function(e) {
-   
+    //0:新增，1:修改
     var flag = e.flag==1?true:false;
     var text = e.flag==1?'编辑地址':'新增地址';
     wx.setNavigationBarTitle({
@@ -54,10 +54,6 @@ Page({
       })
       return false; 
     } 
-    if(that.data.flag){
-      address.aId=that.data.address.aId;
-    }
-
     qqMap.geocoder({
       address: address.aCity+address.aDetail,
       complete: (res => {
@@ -75,29 +71,40 @@ Page({
           success: function(res) {//成功后的回调
             var distance = res.result.elements[0].distance;
             address.distance=distance;
-            var json = JSON.stringify(address);
-            wx.request({
-              url: baseUrl+"user/saveAddress",
-              method: 'post',
-              data: json,
-              success(res) {
-                if(res.data.code==200){
-                  if(address.isUsed==1){
-                    wx.setStorageSync('areaFlag', res.data.data);
+            //坐标获取省份行政码值
+            qqMap.reverseGeocoder({ //  调用解析SDK
+              location: {
+                  latitude: address.latitude,
+                  longitude: address.longitude
+              },
+              success: function (res) {
+                var adcode = res.result.ad_info.adcode;
+                address.code = adcode;
+                var json = JSON.stringify(address);
+                wx.request({
+                  url: baseUrl+"user/saveAddress",
+                  method: 'post',
+                  data: json,
+                  success(res) {
+                    if(res.data.code==200){
+                      if(address.isUsed==1){
+                        wx.setStorageSync('areaFlag', res.data.data);
+                      }
+                      wx.navigateBack({
+                        delta: 1
+                      })
+                    }else{
+                      wx.showToast({
+                        icon:'none',
+                        title: '服务器异常'
+                      })
+                    }
+                  },fail(res){
+                    wx.showToast({
+                      icon:'none',
+                      title: '服务器异常'
+                    })
                   }
-                  wx.navigateBack({
-                    delta: 1
-                  })
-                }else{
-                  wx.showToast({
-                    icon:'none',
-                    title: '服务器异常'
-                  })
-                }
-              },fail(res){
-                wx.showToast({
-                  icon:'none',
-                  title: '服务器异常'
                 })
               }
             })

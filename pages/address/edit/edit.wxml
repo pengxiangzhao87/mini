@@ -44,6 +44,7 @@
   <input hidden="true" name="uId" value="{{address.uId}}"/>
   <input hidden="true" name="latitude" value="{{address.latitude}}"/>
   <input hidden="true" name="longitude" value="{{address.longitude}}"/>
+  <input hidden="true" name="aId" value="{{address.aId}}"/>
   <button class="page_bottom" style="width:90%;height:40px;margin-left:5%;" form-type="submit">保存收货地址</button> 
 
 </form>
