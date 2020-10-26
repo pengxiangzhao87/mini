@@ -11,7 +11,8 @@ Page({
     today:0,
     hideFlag: true,//true-隐藏  false-显示
     animationData: {},
-    hideArea:false
+    hideArea:false,
+    containPost:false
   },
   onLoad:function(e) {
     var that = this;
@@ -44,9 +45,12 @@ Page({
       data: paras,
       success(res) {
         if(res.data.code==200){
+          var address = res.data.data[0];
+          var containPost = (address.a_city+address.a_detail).indexOf('大成郡')>-1;
           that.setData({
             baseUrl:baseUrl,
-            address:res.data.data[0]
+            address:address,
+            containPost:containPost
           })
         }else{
           wx.showToast({
@@ -234,10 +238,12 @@ Page({
     data.rangeTime = range;
     data.uId=wx.getStorageSync('uId');
     data.totalPrice = basic.totalPrice;
+    data.postCost = containPost?0:basic.postage;
     data.name = address.name;
     data.phone = address.phone;
     data.address = address.aCity+address.aDetail;
     data.channel = 1;
+    data.isExpress = wx.getStorageSync('keareaFlagy').indexOf('0')>-1?1:0
     var detail = [];
     var goods = basic.goods;
     for(var index in goods){

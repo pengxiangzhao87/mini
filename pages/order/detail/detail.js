@@ -12,7 +12,8 @@ Page({
     animationData: {},
     status:1,
     urls:[],
-    hideExtra:true
+    hideExtra:true,
+    express:[]
   },
   onLoad:function(e){
     var baseUrl = app.globalData.baseUrl;
@@ -72,6 +73,7 @@ Page({
         }
       }
     })
+    
   },
   //倒计时
   countDown:function(){
@@ -216,24 +218,6 @@ Page({
       success (res) {}
     })
   },
-  // continuePayment:function(e){
-  //   var that = this;
-  //   wx.getSetting({
-  //     withSubscriptions: true,
-  //     complete(res){
-  //       if(typeof(res.subscriptionsSetting.itemSettings)=='object' ){
-  //          that.toContinuePayment(that,e);
-  //       }else{
-  //         wx.requestSubscribeMessage({
-  //           tmplIds: ['c-wwagnYAUYK0dj5QeEjvT64J_P39vNTnXiHs3EXVgA','jq5UENIsQBT7dg8AwBj2MVd7GJpcEl8oQm7ztx_FPDA','xq__fUa5dSTSkOautbRcm9R9Y9ynSOeD4Ooh8roxctc'],
-  //           complete (res) { 
-  //             that.toContinuePayment(that,e);
-  //           }
-  //         })
-  //       }
-  //     }
-  //   })
-  // },
   //继续支付
   continuePayment:function(e){
     var that = this;
@@ -500,5 +484,20 @@ Page({
     var detailList = {};
     detailList[item]='/image/moren.png';
     this.setData(detailList);
+  },
+  expressInfo(){
+    var paras={};
+    paras.no='780098068058';
+    paras.type='zto';
+    wx.request({
+      url: baseUrl+"order/getExpressInfo",
+      method: 'get',
+      data: paras,
+      success(res) {
+        that.setData({
+          express:res.data.data
+        })
+      }
+    })
   }
 })

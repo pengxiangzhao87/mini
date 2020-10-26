@@ -1,5 +1,8 @@
 <!--pages/my/order/detail/detail.wxml-->
 <view style="height:100%;">
+<view bindtap="expressInfo">
+  查看物流信息
+</view>
 
 <view class="head">
   <view>
@@ -49,7 +52,11 @@
 <view style="padding-top:10px; padding-bottom:10px;background-color: #FFFFFF;color:#666666;font-size:14px;">
   <view class="foot-item">
     <view class="foot-item-left">商品总金额</view>
-    <view class="foot-item-right" style="color:#FF1F1F">￥{{goodsPrice}}</view>
+    <view class="foot-item-right" style="color:#FF1F1F">￥{{info.total_price}}</view>
+  </view>
+  <view class="foot-item" hidden="{{info.post_cost==undefined}}">
+    <view class="foot-item-left">配送费</view>
+    <view class="foot-item-right" style="color:#FF1F1F">￥{{info.post_cost}}</view>
   </view>
   <view class="foot-item" hidden="{{info.extra_status!=1 && info.extra_status!=3}}">
     <view class="foot-item-left">支付差价</view>
