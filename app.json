@@ -1,7 +1,7 @@
 {
   "pages":[
     "pages/commodity/commodity",
-    "pages/commodity/category/category",
+    "pages/category/category",
     "pages/commodity/search/search",
     "pages/commodity/search/history/history",
     "pages/my/my",
@@ -39,6 +39,12 @@
         "iconPath":"image/tab_shouye_default@3x.png",
         "selectedIconPath":"image/tab_shouye_huidingbu@3x.png",
         "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath":"image/tab_shouye_default@3x.png",
+        "selectedIconPath":"image/tab_shouye_huidingbu@3x.png",
+        "text": "发现"
       },
       {
         "pagePath": "pages/shoppingCar/shoppingCar",

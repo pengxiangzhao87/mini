@@ -8,8 +8,9 @@ var qqMap = new QQMapWX({
 Page({
   data: {
     address:"填写收货地址", 
-    firstType:[],
-    secondType:[],
+    supplier:[],
+    // firstType:[],
+    // secondType:[],
     commodity:[],
     page:1,
     rows:20,
@@ -34,42 +35,30 @@ Page({
   },
   onLoad:function(){
     var baseUrl = app.globalData.baseUrl;
-    wx.request({
-      url: baseUrl+"commodity/queryCategoryList",
-      method: 'get',
-      success(res) {
-        if(res.data.code==200){
-          var data = res.data.data;
-          var firstType = [];
-          var secondType = [];
-          for(var index in data){
-            var item = data[index];
-            if(index<4){
-              firstType.push(item);
-            }else{
-              secondType.push(item)
-            }
-          }
-          that.setData({
-            firstType:firstType,
-            secondType:secondType
-          })
-        }
-      }
-    })
     var that = this;
+    that.setData({
+      baseUrl:baseUrl,
+    })
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = app.globalData.ww*0.5;
     busPos['y'] = app.globalData.hh;
   
     var bannerH = app.globalData.ww*0.94*495/1530;
-    that.setData({
-      busPos:busPos,
-      baseUrl:baseUrl,
-      bannerH:bannerH,
-      topH:bannerH+40
+    wx.request({
+      url: baseUrl+"supplier/querySupplier",
+      method: 'get',
+      success(res) {
+        var data = res.data.data;
+        that.setData({
+          busPos:busPos,
+          bannerH:bannerH,
+          supplier:data,
+          topH:bannerH+40
+        })
+      }
     })
+
   },
   onShow:function(){
     var that = this;
@@ -274,12 +263,12 @@ Page({
     })
   },
   //跳转分类
-  toCategory:function(e){
-    var tid = e.currentTarget.dataset.tid;
-    wx.navigateTo({
-      url: 'category/category?tid='+tid
-    })
-  },
+  // toCategory:function(e){
+  //   var tid = e.currentTarget.dataset.tid;
+  //   wx.navigateTo({
+  //     url: 'category/category?tid='+tid
+  //   })
+  // },
   //跳转详情
   toDetail:function(e){
     var sid = e.currentTarget.dataset.sid;

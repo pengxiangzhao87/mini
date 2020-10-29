@@ -26,7 +26,7 @@
 
 <image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
 
-
+<!-- 
 <view class="icon">
   <view class="icon_first" >
     <view wx:for="{{firstType}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item">
@@ -45,6 +45,19 @@
     </view>
   </view>
  
+</view> -->
+
+<view style="margin-top:50px;">
+  <view style="display:flex;align-items: center; white-space: nowrap;">
+    <scroll-view scroll-x style="width:100%;">
+      <view wx:for="{{supplier}}" style=" display: inline-block;" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
+        <view style="margin-left:20px;">
+          <image style="display:block;height:100px;width:130px; border-top-left-radius: 5px;border-top-right-radius: 5px;" src="{{baseUrl+'upload/'+item.bgImg}}" binderror="errorPic" data-idx="{{idx}}" data-idxx="{{idxx}}"></image>
+          <view style="height:60px;width:130px;display: flex;align-items: center;justify-content: center;background-color:#FFF6DD;font-weight:bolder;color:#FF9E3E;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">{{item.sCorporateName}}</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
 </view>
 
 <view class="hotTitle">

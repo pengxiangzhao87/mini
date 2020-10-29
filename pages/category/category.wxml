@@ -1,4 +1,4 @@
-<!--pages/commodity/category/category.wxml-->
+<!--pages/category/category.wxml-->
 
 <view class="scroll_box"> 
   <scroll-view scroll-x>

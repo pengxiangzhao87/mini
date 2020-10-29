@@ -1,9 +1,9 @@
-// pages/commodity/category/category.js
-var util= require('../../../utils/util.js');
+// pages/category/category.js
+var util= require('../../utils/util.js');
 var app = getApp();
 Page({
   data: {
-    tid:-1,
+    tid:1,
     commodity:[],
     category:[],
     page:1,
@@ -26,8 +26,7 @@ Page({
     isPhone:1
   },
 
-  onLoad:function(e) {
-    var tid = e.tid;
+  onLoad:function() {
     //首先计算购物车的位置
     var busPos = [];
     busPos['x'] = 40;
@@ -36,16 +35,10 @@ Page({
     var that = this;
     that.setData({
       busPos:busPos,
-      baseUrl:baseUrl,
-      tid:tid
+      baseUrl:baseUrl
     })
     var paras={};
     paras.userId=4
-    that.getCategory(that,baseUrl,tid);
-    //获取类别下的商品
-    
-  },
-  getCategory(that,baseUrl,tid){
     wx.request({
       url: baseUrl+"commodity/queryCategoryList",
       method: 'get',
@@ -54,7 +47,7 @@ Page({
           var list = res.data.data;
           for(var idx in list){
             var item = list[idx];
-            if(item.tId==tid){
+            if(item.tId==1){
               item.selected = true;
             }else{
               item.selected = false;
@@ -63,7 +56,7 @@ Page({
           that.setData({
             baseUrl:baseUrl,
             category:list,
-            tid:tid
+            tid:that.data.tid
           })
         }else{
           wx.showToast({
