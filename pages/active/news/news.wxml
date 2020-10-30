@@ -25,7 +25,7 @@
       <view class="row_name" >{{item.s_name}}</view>
       <view style="margin-top:20px;display:flex;flex-direction:row;" >
         <text style="font-size:22px;color:#FF1907;font-weight:bolder;"><text style="font-size:14px">￥</text>{{item.s_price}}</text><text style="font-size:14px;color:#333333;margin-top:5px;" >{{item.unit}}</text>
-        <view style="width:30px;height:30px;margin-right:0px;margin-left:auto;" hidden="{{item.delivery_area==0}}">
+        <view style="width:30px;height:30px;margin-right:0px;margin-left:auto;" hidden="{{item.areaFlag==0}}">
           <view wx:if="{{isPhone==0}}">
             <image catchtap="showCar" data-idx="{{idx}}" src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:30px;height:30px;margin-right:0px;margin-left:auto;"></image>
           </view>
@@ -62,7 +62,7 @@
 
 
 
-<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(246, 246, 246)" hidden="{{addFlag}}">
   <view class="modal-cancel" bindtap="hideAddModal" ></view>
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view class="hotGoods" style="margin-left:20px;margin-top:20px;">

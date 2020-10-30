@@ -3,16 +3,23 @@
 <view class="scroll_box"> 
   <scroll-view scroll-x>
     <view wx:for="{{category}}" class="item_list" wx:for-index="idx" wx:key="s_id" wx:for-item="item">
-      <view bindtap="changeCategory" data-tid="{{item.tId}}"> 
-        <image src="{{item.tId==1?(item.selected?'/image/shouye_shuiguo_checked@3x.png':'/image/shouye_shuiguo@3x.png'):(item.tId==2?(item.selected?'/image/shouye_shucai_checked@3x.png':'/image/shouye_shucai@3x.png'):(item.tId==3?(item.selected?'/image/shouye_haixian_checked@3x.png':'/image/shouye_haixian@3x.png'):(item.tId==4?(item.selected?'/image/shouye_roulei_checked@3x.png':'/image/shouye_roulei@3x.png'):(item.tId==5?(item.selected?'/image/shouye_ganguo_checked@3x.png':'/image/shouye_ganguo@3x.png'):(item.tId==6?(item.selected?'/image/shouye_direliang_checked@3x.png':'/image/shouye_direliang@3x.png'):(item.tId==7?(item.selected?'/image/shouye_lingshi_checked@3x.png':'/image/shouye_lingshi@3x.png'):(item.selected?'/image/shouye_qita_checked@2x.png':'/image/shouye_qita@3x.png')))))))}}" style="height:36px;width:36px;"></image>
-        <view style="font-size:14px;height:18px;display: flex;justify-content: center;font-weight: 500;"><text class="tname {{item.selected?'nameChecked':''}}">{{item.tName}}</text></view>
+      <view bindtap="changeCategory" data-id="{{idx<category.length-2?item.tId:item.sId}}"  data-idx="{{idx}}"> 
+        <view wx:if="{{idx<category.length-2}}">
+          <view class="title {{item.selected?'checked':''}}">{{item.tName}}</view>
+        </view>
+        <view wx:elif="{{idx>category.length-3}}">
+          <view style="display: flex;justify-content: center;align-items: center;width:80px;height:40px;background-color:rgb(246, 246, 246);border-radius:5px;margin-left:10px;font-size:12px;color:#1296db;font-weight: 500;">
+            {{item.tName}}
+          </view>
+        </view>
       </view>
     </view>
+
   </scroll-view>
 </view>
 
 
-<view style="background-color:rgb(245, 245, 245);height:100%;">
+<view style="background-color:rgb(246, 246, 246);height:100%;">
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
@@ -103,7 +110,7 @@
 
 <view class="floorstatus" hidden="{{floorstatus}}" bindtap="goTop">回到顶部</view>
 
-<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(246, 246, 246)" hidden="{{addFlag}}">
   <view class="modal-cancel" bindtap="hideAddModal" ></view>
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view class="hotGoods" style="margin-left:20px;margin-top:20px;">

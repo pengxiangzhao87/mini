@@ -1,6 +1,6 @@
 /* pages/shoppingCar/shoppingCar.wxss */
 page{
-  background-color:rgb(245, 245, 245);
+  background-color:rgb(246, 246, 246);
   width:100%;
 }
 .deleteFn{
@@ -107,7 +107,7 @@ page{
 .list_bottom{
   width:100%;
   height:55px;
-  border-top: 1px solid rgb(245, 245, 245);
+  border-top: 1px solid rgb(246, 246, 246);
   background-color: #FFFFFF;
   display: flex;  
   flex-direction:row ;
@@ -312,8 +312,8 @@ page{
   height:55px;
   position:fixed; 
   bottom:0;
-  border-top: 1px solid rgb(245, 245, 245);
-  border-bottom: 1px solid rgb(245, 245, 245);
+  border-top: 1px solid rgb(246, 246, 246);
+  border-bottom: 1px solid rgb(246, 246, 246);
   background-color: #FFFFFF;
   display: flex;  
   flex-direction:row ;

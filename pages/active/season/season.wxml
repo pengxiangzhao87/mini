@@ -64,7 +64,7 @@
 
 
 
-<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(246, 246, 246)" hidden="{{addFlag}}">
   <view class="modal-cancel" bindtap="hideAddModal" ></view>
   <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
     <view class="hotGoods" style="margin-left:20px;margin-top:20px;">

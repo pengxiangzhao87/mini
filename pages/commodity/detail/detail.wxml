@@ -116,7 +116,7 @@
   <view class="modal-cancel" bindtap="hideModal"></view>
   <view class="bottom-dialog-body bottom-positon" style="height:480px;" animation="{{animationData}}">
     <view>
-      <canvas canvas-id="shareCanvas" style="width:250px;height:400px;"></canvas>
+      <canvas canvas-id="shareCanvas" style="width:246px;height:400px;"></canvas>
     </view>
     <view class="share_bottom">
       <view style="margin-left:10px;margin-right:10px;">

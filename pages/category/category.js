@@ -37,8 +37,6 @@ Page({
       busPos:busPos,
       baseUrl:baseUrl
     })
-    var paras={};
-    paras.userId=4
     wx.request({
       url: baseUrl+"commodity/queryCategoryList",
       method: 'get',
@@ -52,6 +50,12 @@ Page({
             }else{
               item.selected = false;
             }
+          }
+          list[list.length] = {
+            sId:1,tName:'田园生鲜',selected:false
+          }
+          list[list.length] = {
+            sId:2,tName:'水晶食品',selected:false
           }
           that.setData({
             baseUrl:baseUrl,
@@ -173,54 +177,62 @@ Page({
   },
   //切换类别
   changeCategory:function(e){
-    var tid = e.currentTarget.dataset.tid;
+    var id = e.currentTarget.dataset.id;
+    var idx = e.currentTarget.dataset.idx;
     var that = this;
     var data = that.data;
     var category = data.category;
-    var baseUrl = data.baseUrl;
-    for(var idx in category){
-      var item = category[idx];
-      if(item.tId==tid){
-        item.selected = true;
-      }else{
-        item.selected = false;
-      }
-    }
-    var paras={};
-    paras.tId=tid;
-    paras.userId=wx.getStorageSync('uId');
-    paras.page=1;
-    paras.rows=data.rows;
-    paras.areaFlag=wx.getStorageSync('areaFlag');
-    wx.request({
-      url: baseUrl+"commodity/queryCommodityByPage",
-      method: 'get',
-      data: paras,
-      success(res) {
-        if(res.data.code==200){
-          var list = res.data.data.list;
-          var totalPage = res.data.data.totalPage;
-          that.setData({
-            commodity:list,
-            totalPage:totalPage,
-            category:category,
-            tid:tid,
-            page:1
-          })
+    if(idx<category.length-2){
+      var baseUrl = data.baseUrl;
+      for(var idx in category){
+        var item = category[idx];
+        if(item.tId==id){
+          item.selected = true;
         }else{
+          item.selected = false;
+        }
+      }
+      var paras={};
+      paras.tId=id;
+      paras.userId=wx.getStorageSync('uId');
+      paras.page=1;
+      paras.rows=data.rows;
+      paras.areaFlag=wx.getStorageSync('areaFlag');
+      wx.request({
+        url: baseUrl+"commodity/queryCommodityByPage",
+        method: 'get',
+        data: paras,
+        success(res) {
+          if(res.data.code==200){
+            var list = res.data.data.list;
+            var totalPage = res.data.data.totalPage;
+            that.setData({
+              commodity:list,
+              totalPage:totalPage,
+              category:category,
+              tid:id,
+              page:1
+            })
+          }else{
+            wx.showToast({
+              icon:'none',
+              title: '服务器异常'
+            })
+          }
+        },
+        fail(res) {
           wx.showToast({
             icon:'none',
             title: '服务器异常'
           })
         }
-      },
-      fail(res) {
-        wx.showToast({
-          icon:'none',
-          title: '服务器异常'
-        })
-      }
-    })
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/store/store?sid='+id
+      })
+    }
+    
   },
   //跳转详情
   toDetail:function(e){

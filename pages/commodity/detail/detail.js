@@ -398,7 +398,7 @@ Page({
         }
 
         // 底图
-        ctx.drawImage(res[0].path, 0, 0, 250, 400);
+        ctx.drawImage(res[0].path, 0, 0, 246, 400);
         
         //头像
         ctx.drawImage(res[3].path, 35, 35, 30, 30);

@@ -79,7 +79,6 @@ Page({
         })
       }
     })
-    that.getCarNum(that,paras,baseUrl);
     util.getCarNum(that,baseUrl, paras)
   },
 

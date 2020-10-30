@@ -1,0 +1,46 @@
+<!--pages/store/store.wxml-->
+<view style="width:100%;height:120px;">
+  <image src="{{baseUrl+'upload/'+goods[0].bg_img}}" style="width:100%;height:120px;" mode="aspectFill"></image>
+  <view class="head">田园鲜果</view>
+</view>
+
+<view style="display:flex; flex-direction:row;height:{{hh}}px;">
+  <view style="height:{{hh}}px;width:100%;white-space: nowrap;" catchtouchmove="disableRoll">
+    <scroll-view scroll-y style="height:100%;">
+      <view wx:for="{{categoryList}}" class="body-left" wx:for-index="idx" wx:key="idx" wx:for-item="item">
+        <view bindtap="checkType" class="{{item.selected?'left-item':'left-item-none'}}" data-tid="{{item.tId}}">{{item.tName}}</view>
+      </view>
+    </scroll-view>
+  </view>
+  <view style="width:100%;height:{{hh}}px;background-color:#FFFFFF;white-space: nowrap;" catchtouchmove="disableRoll">
+    <scroll-view scroll-y style="height:100%;">
+      <view wx:for="{{goods}}"  wx:for-index="idx" wx:key="idx" wx:for-item="item">
+        <view class="row" >
+          <view style="width:100px;height:80px;position: relative;" bindtap="toDetail" data-sid="{{item.s_id}}">
+            <image class="{{item.areaFlag!=0?'row-img':'row-imgBlack'}}" mode="aspectFit" src="{{baseUrl+'upload/'+item.coverUrl}}" binderror="errorPic" data-idx="{{idx}}"></image>
+            <view hidden="{{item.areaFlag!=0}}">
+              <view class="row-text">不在配送范围</view>
+            </view>
+          </view>
+          <view style="margin-left:10px;margin-right:10px;height:80px;width:{{ww}}px" bindtap="toDetail" data-sid="{{item.s_id}}">
+            <view class="row_name" >{{item.s_name}}</view>
+            <view style="margin-top:10px;display:flex;flex-direction:row;width:100%;" >
+              <text style="font-size:18px;color:#FF1907;font-weight:bolder;"><text style="font-size:14px">￥</text>{{item.s_price}}</text><text style="font-size:14px;color:#333333;margin-top:5px;" >{{item.unit}}</text>
+              <view style="width:20px;height:20px;margin-right:0px;margin-left:auto;" hidden="{{item.areaFlag==0}}">
+                <view wx:if="{{isPhone==0}}">
+                  <image catchtap="showCar" data-idx="{{idx}}" src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:20px;height:20px;margin-right:0px;margin-left:auto;"></image>
+                </view>
+                <view wx:elif="{{isPhone==1}}">
+                  <button open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" data-idx="{{idx}}"  style="width:20px;height:20px;padding:0 0 0 0 ;margin-right:0px;margin-left:auto;">
+                    <image  src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:20px;height:20px;"></image>
+                  </button>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view style="height:1px;background-color:rgb(246,246,246);width:100%;margin-left:100px;"></view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -10,14 +10,34 @@
   overflow:hidden;
 }
 .item_list{
-  margin-top:20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: inline-block;
 }
-.tname.nameChecked{
-  border-bottom: 2px solid #FFD52E ;
+
+.title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  border-right:2px solid rgb(246, 246, 246);
+  color:black;
+  width: 80px;
+  height:20px;
+  letter-spacing: 1px;
 }
+
+.title.checked{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  border-right:2px solid rgb(246, 246, 246);
+  color:#FFD52E;
+  width: 80px;
+  height:20px;
+  letter-spacing: 1px;
+}
+
 
 .hotGoods{
   display: flex;  

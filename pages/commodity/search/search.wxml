@@ -5,7 +5,7 @@
     <input style="width:100%;color:#333333;font-size:14px;color:#666666" type="text" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
   </view > 
 
-<view style="background-color:rgb(245, 245, 245);height:100%;">
+<view style="background-color:rgb(246, 246, 246);height:100%;">
   <view class="hotGoods" >
     <view class="goods" >
       <view wx:for="{{commodity}}" wx:for-index="idx" wx:key="s_id">
@@ -103,7 +103,7 @@
  
  
 <view class="wrap">
-  <view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(245, 245, 245)" hidden="{{addFlag}}">
+  <view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(246, 246, 246)" hidden="{{addFlag}}">
     <view class="modal-cancel" bindtap="hideAddModal" ></view>
     <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
       <view class="hotGoods" style="margin-left:10px;margin-top:10px;">

@@ -604,5 +604,11 @@ Page({
       url: '/pages/address/address?flag=2'
     })
   },
+  toStore:function(e){
+    var sid= e.currentTarget.dataset.sid;
+    wx.navigateTo({
+      url: '/pages/store/store?sid='+sid
+    })
+  }
 
 })
