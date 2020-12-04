@@ -46,7 +46,10 @@ Page({
       success(res) {
         if(res.data.code==200){
           var address = res.data.data[0];
-          var containPost = (address.a_city+address.a_detail).indexOf('大成郡')>-1;
+          var containPost = true;
+          if(address!=undefined){
+            containPost = (address.a_city+address.a_detail).indexOf('大成郡')>-1;
+          }
           that.setData({
             baseUrl:baseUrl,
             address:address,

@@ -606,8 +606,9 @@ Page({
   },
   toStore:function(e){
     var sid= e.currentTarget.dataset.sid;
+    var name= e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: '/pages/store/store?sid='+sid
+      url: '/pages/store/store?sid='+sid+'&name='+name
     })
   }
 

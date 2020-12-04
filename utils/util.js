@@ -34,7 +34,7 @@ function getCarNum(that,paras,baseUrl){
         }
         if(checkNum!=0){
           wx.setTabBarBadge({//tabbar右上角添加文本
-            index: 1,//tabbar下标
+            index: 2,//tabbar下标
             text: checkNum+'' //显示的内容,必须为字符串
           })
           that.setData({

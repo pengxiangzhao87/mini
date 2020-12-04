@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/homePage/homePage",
     "pages/commodity/commodity",
     "pages/category/category",
     "pages/commodity/search/search",
@@ -35,7 +36,7 @@
     "borderStyle":"white",
     "list": [
       {
-        "pagePath": "pages/commodity/commodity",
+        "pagePath": "pages/homePage/homePage",
         "iconPath":"image/tab_shouye_default@3x.png",
         "selectedIconPath":"image/tab_shouye_huidingbu@3x.png",
         "text": "首页"

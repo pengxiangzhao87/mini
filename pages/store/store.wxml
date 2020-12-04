@@ -1,19 +1,17 @@
 <!--pages/store/store.wxml-->
-<view style="width:100%;height:120px;">
-  <image src="{{baseUrl+'upload/'+goods[0].bg_img}}" style="width:100%;height:120px;" mode="aspectFill"></image>
-  <view class="head">田园鲜果</view>
-</view>
 
-<view style="display:flex; flex-direction:row;height:{{hh}}px;">
-  <view style="height:{{hh}}px;width:100%;white-space: nowrap;" catchtouchmove="disableRoll">
+<view class="head">{{name}}</view>
+
+<view style="display:flex; flex-direction:row;height:100%;">
+  <view style="height:100%;width:80px;white-space: nowrap;" catchtouchmove="disableRoll">
     <scroll-view scroll-y style="height:100%;">
       <view wx:for="{{categoryList}}" class="body-left" wx:for-index="idx" wx:key="idx" wx:for-item="item">
         <view bindtap="checkType" class="{{item.selected?'left-item':'left-item-none'}}" data-tid="{{item.tId}}">{{item.tName}}</view>
       </view>
     </scroll-view>
   </view>
-  <view style="width:100%;height:{{hh}}px;background-color:#FFFFFF;white-space: nowrap;" catchtouchmove="disableRoll">
-    <scroll-view scroll-y style="height:100%;">
+  <view style="width:100%;height:100%;background-color:#FFFFFF;white-space: nowrap;" catchtouchmove="disableRoll">
+    <scroll-view scroll-y style="height:100%;" bindscrolltolower="findByPage">
       <view wx:for="{{goods}}"  wx:for-index="idx" wx:key="idx" wx:for-item="item">
         <view class="row" >
           <view style="width:100px;height:80px;position: relative;" bindtap="toDetail" data-sid="{{item.s_id}}">
@@ -42,5 +40,54 @@
         <view style="height:1px;background-color:rgb(246,246,246);width:100%;margin-left:100px;"></view>
       </view>
     </scroll-view>
+  </view>
+</view>
+
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
+
+<view class="carImg" bindtap="toShoppingCar">
+  <image src="/image/carIcon.png" style="margin-left:8px;width:21px;height:16px;"></image>
+  <view hidden="{{carSum==0}}">
+    <view class="carSum" >{{carSum}}</view>
+  </view>
+</view>
+
+<!-- <view class="floorstatus" hidden="{{floorstatus}}" bindtap="goTop">回到顶部</view> -->
+
+<view class="modal modal-bottom-dialog" catchtouchmove="disableRoll" style="border-bottom:1px solid rgb(246, 246, 246)" hidden="{{addFlag}}">
+  <view class="modal-cancel" bindtap="hideAddModal" ></view>
+  <view class="bottom-dialog-body bottom-positon" animation="{{animationData}}">
+    <view class="hotGoods" style="margin-left:20px;margin-top:20px;">
+      <view style="width:100px;height:100px;">
+        <image style="width:100px;height:100px;border-radius:5px;border:0.5px solid #E5E5E5" mode="aspectFit" src="{{baseUrl+'upload/'+goods[idxFlag].coverUrl}}" binderror="errorPic" data-idx="{{idxFlag}}"></image>
+      </view>
+      <view style="width:100%;margin-right:10px;">
+        <view class="page_bottom_name">{{goods[idxFlag].s_name}}</view>
+        <view style="margin-left:10px;margin-top:20px;">
+          <text style="color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:14px;">￥</text>{{goods[idxFlag].s_price}}</text>
+          <text style="font-size:14px;color:#666666;" decode="true">{{goods[idxFlag].unit}}&nbsp;</text>
+          <text style="text-decoration:line-through;color:#666666;font-size:14px;" hidden="{{goods[idxFlag].is_active!=3}}">￥{{goods[idxFlag].original_price}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="specification">
+      <view style="margin-left:20px;font-size:14px;">规格</view>
+      <view style="display:flex;flex-direction:row;align-items: center;margin-right:10px;margin-left:auto;">
+        <view class="btn {{disabled?'btn_disabled':''}}"  bindtap="subtract" disabled="{{disabled}}">{{goods[idxFlag].init_unit==0?50:1}}</view>
+        <image src="/image/shouye_xq_sub@3x.png" style="margin-left:5px;margin-right:7px;height:1.3px;width:10px"></image>
+        <view style="font-size:14px;display:flex;align-items: center;"><text style="font-size:16px">{{totalSum}}</text><text decode="true">&nbsp;{{goods[idxFlag].init_unit==0?'g':'个'}}</text></view>
+        <image src="/image/shouye_xq_add@3x.png" style="margin-left:7px;margin-right:5px;height:10px;width:10px"></image>
+        <view class="btn" bindtap="add">{{goods[idxFlag].init_unit==0?50:1}}</view>
+      </view>
+    </view>
+    <view class="page_bottom">
+      <view style="margin-right:10px;margin-left:auto;">
+        <view style="display:flex;align-items: center;justify-content: center;  ">
+          <view style="color:#FF1907;margin-right:10px;font-size:18px;margin-bottom:10px;font-weight:bolder;">￥{{totalPrice}}</view>
+          <view class="addShoppingCar" bindtap="addShoppingCar"><text style="font-size:13px;color:#333333;font-weight: 500;">加入购物车</text></view>
+        </view>
+      </view>
+    </view>   
   </view>
 </view>

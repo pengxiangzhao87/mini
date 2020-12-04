@@ -50,7 +50,7 @@
       <view style="margin-left:5px;">商品总金额</view><text style="margin-right:5px;margin-left:auto;">￥{{detailList[0].totalPrice}}</text>
     </view>
     <view style="  display: flex;align-items: center;justify-content: center;margin-top:10px;font-weight:500;font-size:14px; ">
-      <view style="margin-left:5px;">运输费</view><text style="margin-right:5px;margin-left:auto;">containPost?'￥0.00':￥{{detailList[0].postage}}</text>
+      <view style="margin-left:5px;">运输费</view><text style="margin-right:5px;margin-left:auto;">{{containPost?'￥0.00':'￥detailList[0].postage'}}</text>
     </view>
   </view>
 
