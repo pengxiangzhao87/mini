@@ -1,0 +1,90 @@
+<!--pages/homePage/homePage.wxml-->
+<view style="background-color: #FFD52E;padding-bottom:10px;height:{{topH}}px;">
+  <view style="font-size:14px;margin-left:10px;display:flex; align-items: center;margin-bottom:5px;" bindtap="toAddress">
+    <image src="/image/nav_shouye_dizhi@3x.png" style="width:16px;height:18px;"></image>
+    <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;font-weight: bolder;">送至：{{address}}</text>
+  </view>
+  <navigator class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history">  
+    <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input style="width:60%;" type="text" placeholder="搜索商品" placeholder-style="color:#999999;font-size:12px;" value="" disabled="true"/> 
+  </navigator >  
+ 
+  <view class="carousel" >
+    <swiper autoplay="true" interval="5000" indicator-dots="true" indicator-active-color="#ffffff" style="width:100%;height:{{bannerH}}px;">
+      <swiper-item>
+        <image mode="aspectFit" bindtap="toSeason" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-fruite@3x.png"></image>
+      </swiper-item>
+      <swiper-item>
+        <image mode="aspectFit" bindtap="toNews" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-news@3x.png"></image>
+      </swiper-item>
+      <swiper-item>
+        <image mode="aspectFit" bindtap="toSale" style="height:100%;width:100%;" src="{{baseUrl}}upload/banner-sale@3x.png"></image>
+      </swiper-item>
+    </swiper >
+  </view>
+</view>
+
+<view class="icon">
+  <view class="icon_first" >
+    <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item"  wx:if="{{item.c_id<5}}">
+      <view  data-tId="{{item.c_id}}" bindtap="toCategory" >
+        <image src="/image/{{item.c_sort==1?'shouye_shuiguo@3x.png':(item.c_sort==2?'shouye_shucai@3x.png':(item.c_sort==3?'shouye_haixian@3x.png':'shouye_roulei@3x.png'))}}" style="height:50px;width:50px;"></image>
+        <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="icon_second">
+    <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item" wx:if="{{item.c_id>4}}">
+      <view data-tId="{{item.c_id}}" bindtap="toCategory" >
+        <image src="/image/{{item.c_sort==5?'shouye_ganguo@3x.png':(item.c_sort==6?'shouye_direliang@3x.png':(item.c_sort==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))}}" style="height:50px;width:50px;"></image>
+        <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
+      </view>
+    </view>
+  </view>
+ 
+</view> 
+
+<view class="hotTitle">
+  <image src="/image/shouye_rexiao@3x.png" style="width:17.6px;height:21px;"/>
+  <text style="font-size:20px;color:#333333;" decode="true">&nbsp;&nbsp;热销商品&nbsp;&nbsp;</text>
+  <image src="/image/shouye_rexiao@3x.png" style="width:17.6px;height:21px;"/>
+</view>
+
+<view style="background-color:rgb(246, 246, 246);height:100%;">
+  <view class="hotGoods" >
+    <view class="goods" >
+      <view wx:for="{{menuList}}" wx:for-index="idx" wx:key="m_id">
+        <view  wx:if="{{idx%2==0}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 5px;">
+          <view bindtap="toDetail" data-mid="{{menuList[idx].m_id}}">
+            <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+menuList[idx].m_img_adr}}"  ></image>
+            <view style=" display: flex;  flex-direction: row;">
+              <view class="goods-name" >{{menuList[idx].m_name}}</view>
+              <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
+            </view>
+            <view style=" display:flex;flex-direction: row;margin-top:10px;">
+              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+              <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="goods" >
+      <view wx:for="{{menuList}}" wx:for-index="idx" wx:key="m_id">
+        <view  wx:if="{{idx%2!=0}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 5px;  ">
+          <view bindtap="toDetail" data-mid="{{menuList[idx].m_id}}">
+            <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+menuList[idx].m_img_adr}}"  ></image>
+            <view style=" display:flex;flex-direction: row;">
+              <view class="goods-name" >{{menuList[idx].m_name}}</view>
+              <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
+            </view>
+            <view style=" display:flex;flex-direction: row;margin-top:10px;">
+              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+              <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
+            </view>
+          </view>
+        </view>
+      </view> 
+    </view>
+  </view> 
+</view>  
