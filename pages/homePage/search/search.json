@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {},
+  "onReachBottomDistance":10,
+  "navigationBarBackgroundColor": "#ffffff",
+  "enablePullDownRefresh":false
+}

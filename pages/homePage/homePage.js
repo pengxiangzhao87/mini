@@ -36,7 +36,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
         that.setData({
           menuList:res.data.data.list
         })
@@ -46,13 +45,19 @@ Page({
       url: baseUrl+"menu/queryHomePageCategory",
       method: 'get',
       success(res) {
-        console.info(res)
         that.setData({
           categoryList:res.data.data
         })
       }
     })
 
-  }
+  },
+  toDetail:function(e){
+    var mid = e.currentTarget.dataset.mid;
+    wx.navigateTo({
+      url: 'detail/detail?mid='+mid
+    })
+
+  },
   
 })
