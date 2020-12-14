@@ -57,11 +57,11 @@
         <view  wx:if="{{idx%2==0}}" style="padding-bottom:10px;margin-bottom:8px;background-color: #FFFFFF ;border-radius: 5px;">
           <view bindtap="toDetail" data-mid="{{menuList[idx].m_id}}">
             <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+menuList[idx].m_img_adr}}"  ></image>
-            <view style=" display: flex;  flex-direction: row;">
+            <view style=" display: flex;  flex-direction: row;height:40px; ">
               <view class="goods-name" >{{menuList[idx].m_name}}</view>
               <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
             </view>
-            <view style=" display:flex;flex-direction: row;margin-top:10px;">
+            <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
               <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
               <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>
@@ -74,11 +74,11 @@
         <view  wx:if="{{idx%2!=0}}" style="padding-bottom:10px;margin-bottom:8px;  background-color: #FFFFFF ;border-radius: 5px;  ">
           <view bindtap="toDetail" data-mid="{{menuList[idx].m_id}}">
             <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+menuList[idx].m_img_adr}}"  ></image>
-            <view style=" display:flex;flex-direction: row;">
+            <view style=" display:flex;flex-direction: row;height:40px;">
               <view class="goods-name" >{{menuList[idx].m_name}}</view>
               <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
             </view>
-            <view style=" display:flex;flex-direction: row;margin-top:10px;">
+            <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
               <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
               <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>

@@ -78,6 +78,7 @@
   font-weight: bolder;
   font-size:14px;
   margin-left:10px;
+  width:60%;
   margin-top:2px;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;

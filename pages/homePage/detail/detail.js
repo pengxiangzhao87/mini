@@ -45,7 +45,6 @@ Page({
           data:{'menuId':e.mid},
           success(res) {
             var optionList = res.data.data;
-            console.info(optionList)
             for(var idx in optionList){
               var totalPrice = optionList[idx].totalPrice*1;
               allPrice += totalPrice;
@@ -194,5 +193,8 @@ Page({
   },
   addCart(){
     console.info('cart')
+  },
+  addMenuToCart(){
+    
   }
 })
