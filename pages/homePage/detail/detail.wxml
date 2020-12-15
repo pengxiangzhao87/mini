@@ -69,13 +69,18 @@
       </view>
     </view>
   </scroll-view>
-
-  
 </view>
 
-<view style="margin-top:10px;margin-left:10px;font-size:14px;color:#666666;">配料免费提供</view>
+<view style="margin-left:10px;margin-right:10px;margin-top:10px;background-color:#ffffff;border-radius:5px;height:100px;padding:10px;">
+  <view style="font-size:14px;color:#999999;">备注</view>
+  <view style="border-radius:5px;border:0.5px solid #e9e9e9;padding:5px;margin-top:10px;height:60px;" >
+    <textarea name="remark" style="width:100%;height:100%;font-size:14px;" focus="true" auto-focus="true" placeholder="请输入口味、偏好等要求..." placeholder-style="color:#999999;font-size:12px;"></textarea>
+  </view>
+</view>
 
-<view style="display:flex;align-items: center; white-space: nowrap;margin-top:10px;margin-bottom:100px;">
+<view style="margin-top:10px;margin-left:10px;font-size:14px;color:#999999;">佐料免费提供</view>
+
+<view style="display:flex;align-items: center; white-space: nowrap;margin-top:10px;margin-bottom:10px;">
   <scroll-view scroll-x style="width:100%;">
     <view wx:for="{{freeList}}" style=" display: inline-block;margin-left:7px;width:100px;border-radius:5px;background-color:#ffffff" wx:for-index="idx" wx:key="f_id" wx:for-item="item" 
     bindtap="toFoodDetail" data-foodid="{{item.f_id}}">
@@ -90,6 +95,8 @@
     </view>
   </scroll-view>
 </view>
+
+<view style="height:50px;"></view>
 
 <view class="page_bottom" bindtap="addMenuToCart">
   <view style="display: flex;  flex-direction:row ;align-items: center;margin-left:30px;font-weight: bolder;">

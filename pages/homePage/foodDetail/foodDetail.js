@@ -65,6 +65,12 @@ Page({
       detail:detail
     })
   },
+  moreMenu(e){
+    var foodid = e.currentTarget.dataset.foodid;
+    wx.navigateTo({
+      url: '../moreMenu/moreMenu?foodid='+foodid
+    })
+  },
   toMenuDetail(e){
     var menuid = e.currentTarget.dataset.menuid;
     wx.navigateTo({

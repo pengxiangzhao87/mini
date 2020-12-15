@@ -28,6 +28,7 @@ Page({
   onLoad:function(e){
     var that = this;
     var sName = e.sName; 
+    console.info(e)
     var inputName = sName.replace(/\s*/g,"");
     var baseUrl = app.globalData.baseUrl;
     var busPos = [];

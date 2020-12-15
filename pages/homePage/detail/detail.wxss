@@ -73,7 +73,7 @@ page{
   height:45px;
   margin-left:5%;
   position:fixed; 
-  bottom:20px;
+  bottom:10px;
   background-color: #FFD52E;
   border-radius: 50px;
   display: flex;  

@@ -2,16 +2,18 @@
 var app = getApp();
 Page({
   data: {
+    flag:0,
     searchList:[],
     name:''
   },
-  onLoad:function() {
-    
-  },
-  onShow:function(){
+  onLoad:function(e) {
     this.setData({
+      flag:e.flag,
       searchList:app.globalData.searchList
     })
+  },
+  onShow:function(){
+    
   },
   toSearch:function(e){
     var that = this;

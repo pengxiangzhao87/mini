@@ -1,0 +1,30 @@
+/* pages/homePage/moreMenu/moreMenu.wxss */
+page{
+  background-color:rgb(246, 246, 246);
+  width:100%;
+  height:100%;
+}
+.search_arr {  
+  margin-top:10px;
+  border-radius: 110px;  
+  margin-left: 3%;  
+  width:94%;
+  display: flex;  
+  flex-direction: row  ;
+  align-items: center;
+}  
+.searchcion {  
+  margin-left:35%;
+  width: 15px;  
+  height: 15px;  
+}   
+
+.goods-name{
+  width:60%;
+  overflow: hidden;
+  display: -webkit-box;
+  word-wrap : break-word ;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height:45px;
+}
