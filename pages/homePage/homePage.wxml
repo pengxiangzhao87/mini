@@ -4,7 +4,7 @@
     <image src="/image/nav_shouye_dizhi@3x.png" style="width:16px;height:18px;"></image>
     <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;font-weight: bolder;">送至：{{address}}</text>
   </view>
-  <navigator class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history">  
+  <navigator class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history?type=0">  
     <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
     <input style="width:60%;" type="text" placeholder="搜索" placeholder-style="color:#999999;font-size:12px;" value="" disabled="true"/> 
   </navigator >  
@@ -27,7 +27,7 @@
 <view class="icon">
   <view class="icon_first" >
     <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item"  wx:if="{{item.c_id<5}}">
-      <view  data-tId="{{item.c_id}}" bindtap="toCategory" >
+      <view  data-cid="{{item.c_id}}" data-type="{{item.c_type}}" bindtap="toCategory" >
         <image src="/image/{{item.c_sort==1?'shouye_shuiguo@3x.png':(item.c_sort==2?'shouye_shucai@3x.png':(item.c_sort==3?'shouye_haixian@3x.png':'shouye_roulei@3x.png'))}}" style="height:50px;width:50px;"></image>
         <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
       </view>
@@ -35,7 +35,7 @@
   </view>
   <view class="icon_second">
     <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item" wx:if="{{item.c_id>4}}">
-      <view data-tId="{{item.c_id}}" bindtap="toCategory" >
+      <view data-cid="{{item.c_id}}" data-type="{{item.c_type}}" bindtap="toCategory" >
         <image src="/image/{{item.c_sort==5?'shouye_ganguo@3x.png':(item.c_sort==6?'shouye_direliang@3x.png':(item.c_sort==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))}}" style="height:50px;width:50px;"></image>
         <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
       </view>

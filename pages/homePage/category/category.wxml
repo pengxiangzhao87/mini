@@ -1,17 +1,57 @@
 <!--pages/homePage/category/category.wxml-->
-<view wx:for="{{menuList}}" style="margin:10px;border-radius:10px;height:160px;  position: relative;" wx:for-index="idx" wx:key="m_id" wx:for-item="item" 
-    bindtap="toMenuDetail" data-menuid="{{item.m_id}}">
-  <image src="{{baseUrl+'upload/'+item.m_img_adr}}"  mode="aspectFill" style="width:100%;;height:160px;border-radius:10px;"></image>
-  <view style="height:70px;width:100%;  position: absolute;background: black; bottom: 0; opacity: 0.6;color:white;font-size:14px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;font-size:16px;font-weight:500;">
-    <view style="display:flex;flex-direction: row;margin-left:20px;margin-top:10px;">
-      <view class="goods-name">{{item.m_name}}</view>
-      <view style="margin-left:auto;margin-right:20px;">{{item.m_cook_time}}分钟</view>
+<view  style=" overflow: hidden; white-space: nowrap;display:flex;  flex-direction: row  ;align-items: center;padding-bottom:10px;background-color:rgb(245,245,245)">
+  <scroll-view scroll-x style="width:{{ww}}px;margin-top:10px;margin-left:10px;">
+    <view wx:for="{{categoryList}}" style="display: inline-block;margin-left:auto;margin-right:15px;" wx:for-index="idx" wx:key="c_id" wx:for-item="item" 
+    bindtap="chooseFirst" data-cid="{{item.c_id}}" data-type="{{item.c_type}}">
+      <image style="height:50px;width:50px;border-color:{{item.c_id==category1?'#FFD52E':'none'}};"  mode="widthFix" src="/image/{{item.c_img_adr}}" ></image>
+      <view style="width:50px;font-size:10px;font-weight:500;display:flex;justify-content: center;align-items: center;color:{{item.c_id==category1?'#FFD52E':'#999999'}};">{{item.c_name}}</view>
     </view>
-    <view style="display:flex;flex-direction: row;margin-left:20px;margin-top:5px;">
-      <view ><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:22px;color:#FF1907;">{{item.m_cook_price}}</text></view>
-      <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:22px;height:22px;margin-right:20px;margin-left:auto;opacity: 1;"></image>
-    </view>
-    
-  </view>
+  </scroll-view>
+  <image src="/image/newss.png" style="height:25px;width:25px;margin-left:auto;margin-right:10px;" bindtap="toSearch"></image>
 </view>
 
+<view style="background:#ffffff;display:flex;  flex-direction: row  ;">
+  <scroll-view scroll-y style="width:90px;height:{{hh}}px;display:flex;justify-content: center;background-color:rgb(245,245,245);">
+    <view wx:for="{{categoryList}}" wx:if="{{item.c_id==category1}}"  wx:for-index="idx" wx:key="c_id" wx:for-item="item">
+      <view wx:for="{{item.category2List}}" bindtap="chooseSecond" data-cid="{{detail.c_id}}" style="width:90px;height:50px;display:flex;justify-content: center;align-items: center;background-color:{{detail.c_id==category2?'#ffffff':'rgb(245,245,245)'}}"  wx:for-index="idx" wx:key="c_id" wx:for-item="detail">
+        <view style="width:90px;font-size:14px;font-weight:500;display:flex;justify-content: center;align-items: center;color:{{detail.c_id==category2?'#FFD52E':'#666666'}}">{{detail.c_name}}</view>
+      </view>
+    </view>
+  </scroll-view>
+  <scroll-view scroll-y style="width:100%;height:{{hh}}px;">
+    <view style="width:100%;height:100%;">
+      <view wx:if="{{type==0}}">
+        <view wx:for="{{menuList}}" style="margin-top:5px;margin-left:5px;margin-right:5px;border-radius:10px;height:120px;  position: relative;"  wx:for-index="idx" wx:key="m_id" wx:for-item="item"
+        bindtap="toMenuDetail" data-mid="{{item.m_id}}">
+          <image src="{{baseUrl+'upload/'+item.m_img_adr}}"  mode="aspectFill" style="width:100%;;height:120px;border-radius:10px;"></image>
+          <view style="height:60px;width:100%;  position: absolute;background: black; bottom: 0; opacity: 0.6;color:white; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;font-size:16px;font-weight:500;">
+            <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:5px;font-size:14px;">
+              <view class="menu-name">{{item.m_name}}</view>
+              <view style="margin-left:auto;margin-right:10px;">{{item.m_cook_time}}分钟</view>
+            </view>
+            <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:5px;align-items: center;">
+              <view ><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.m_cook_price}}</text></view>
+              <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:20px;height:20px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:elif="{{type==1}}">
+        <view wx:for="{{foodList}}" style="display:flex;flex-direction: row;margin-top:5px;margin-left:5px;margin-right:5px;border-radius:10px;height:90px;" wx:for-index="idx" wx:key="f_id" wx:for-item="item" 
+        bindtap="tofoodDetail" data-fid="{{item.f_id}}">
+          <image src="{{baseUrl+'upload/'+item.f_img_adr}}"  mode="aspectFit" style="width:120px;height:90px;border-radius:10px;display: flex;justify-content: center;align-items: center;"></image>
+          <view style="width:100%;height:90px;border-weight:500;margin-left:10px;font-size:14px;border-bottom:1px solid rgb(243,243,243)">
+            <view class="food-name">{{item.f_name}}</view>
+            <view style="display:flex;flex-direction:row;align-items:center;margin-top:10px;font-weight:500;">
+              <view style="font-weight: 500;"><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.f_price}}</text><text style="font-size:14px;color:#666666;">/{{item.f_unit}}</text></view>
+              <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:20px;height:20px;margin-right:10px;margin-left:auto;"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  
+</view>
+ 
+ 

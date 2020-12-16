@@ -1,1 +1,21 @@
 /* pages/homePage/category/category.wxss */
+.menu-name{
+  width:60%;
+  overflow: hidden;
+  display: -webkit-box;
+  word-wrap : break-word ;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  height:20px;
+}
+
+.food-name{
+  width:80%;
+  overflow: hidden;
+  display: -webkit-box;
+  word-wrap : break-word ;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height:40px;
+  margin-top:5px;
+}

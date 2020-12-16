@@ -57,7 +57,15 @@ Page({
     wx.navigateTo({
       url: 'detail/detail?mid='+mid
     })
-
   },
+  toCategory(e){
+    var cid = e.currentTarget.dataset.cid;
+    var type = e.currentTarget.dataset.type;
+    app.globalData.cid=cid;
+    app.globalData.type=type;
+    wx.switchTab({
+      url: 'category/category'
+    })
+  }
   
 })

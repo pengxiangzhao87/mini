@@ -50,7 +50,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-top:10px;
-  height:100px;
+
 }
 
 .content{

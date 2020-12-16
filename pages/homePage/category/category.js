@@ -4,22 +4,30 @@ Page({
 
   data: {
     baseUrl:'',
-    flag:0,//0:美食，1：食材
-    category1:-1,
-    category2:-1,
+    type:0,//0:美食，1：食材
+    category1:1,
+    category2:1,
     categoryList:[],
     menuList:[],
-    foodList:[]
+    foodList:[],
+    ww:0,
+    hh:0
 
   },
 
-  onLoad(e) {
+  onLoad() {
     var baseUrl = app.globalData.baseUrl;
+    var ww = app.globalData.ww;
+    var hh = app.globalData.hh;
+    var cid = app.globalData.cid;
+    var type = app.globalData.type;
     var that = this;
     that.setData({
       baseUrl:baseUrl,
-      flag:e==undefined?0:e.flag,
-      category1:e==undefined?-1:e.category1
+      type:type,
+      category1:cid,
+      ww:ww-55,
+      hh:hh-90
     })
     wx.request({
       url: baseUrl+"menu/queryCategoryList",
@@ -27,7 +35,7 @@ Page({
       success(res) {
         console.info(res)
         that.setData({
-          categoryList:res.data.data.list
+          categoryList:res.data.data
         })
       }
     })
@@ -36,49 +44,97 @@ Page({
     var that = this;
     var category1 = that.data.category1;
     var category2 = that.data.category2;
-    var flag = that.data.flag;
-    if(flag == 0){
-      var paras={};
-      paras.page=1;
-      paras.rows=10;
-      if(category1!=-1){
-        paras.category1Id = category1;
-      }
-      if(category2!=-1){
-        paras.category2Id = category2;
-      }
-      wx.request({
-        url: baseUrl+"menu/queryMenuList",
-        method: 'get',
-        data: paras,
-        success(res) {
-          that.setData({
-            menuList:res.data.data.list
-          })
-        }
-      })
+    var type = that.data.type;
+    var baseUrl = that.data.baseUrl;
+    var paras={};
+    paras.page=1;
+    paras.rows=10;
+    paras.category1Id = category1;
+    paras.category2Id = category2;
+    if(type == 0){
+      that.queryMenu(that,baseUrl,paras);
     }else{
-      var paras={};
-      paras.page=1;
-      paras.rows=10;
-      if(category1!=-1){
-        paras.category1Id = category1;
-      }
-      if(category2!=-1){
-        paras.category2Id = category2;
-      }
-      wx.request({
-        url: baseUrl+"menu/queryFoodList",
-        method: 'get',
-        data: paras,
-        success(res) {
-      
-          that.setData({
-            foodList:res.data.data.list
-          })
-        }
-      })
+      that.queryFood(that,baseUrl,paras);
     }
-    
+  },
+  queryMenu(that,baseUrl,paras){
+    wx.request({
+      url: baseUrl+"menu/queryMenuList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        console.info(res)
+        that.setData({
+          menuList:res.data.data.list
+        })
+      }
+    })
+  },
+  queryFood(that,baseUrl,paras){
+    wx.request({
+      url: baseUrl+"menu/queryFoodList",
+      method: 'get',
+      data: paras,
+      success(res) {
+        console.info(res)
+        that.setData({
+          foodList:res.data.data.list
+        })
+      }
+    })
+  },
+  chooseFirst(e){
+    var cid = e.currentTarget.dataset.cid;
+    var type = e.currentTarget.dataset.type;
+    var that = this;
+    var categoryList = that.data.categoryList;
+    var category2 = 0;
+    for(var idx in categoryList){
+      var item = categoryList[idx];
+      if(item.c_id==cid){
+        var detail = item.category2List;
+        if(detail.length>0){
+          category2 = detail[0].c_id;
+        }
+        break;
+      }
+    }
+    that.setData({
+      type:type,
+      category1:cid,
+      category2:category2
+    })
+    that.onShow();
+  },
+  chooseSecond(e){
+    var that = this;
+    var cid = e.currentTarget.dataset.cid;
+    that.setData({
+      category2:cid
+    })
+    that.onShow();
+  },
+  toMenuDetail(e){
+    var mid = e.currentTarget.dataset.mid;
+    wx.navigateTo({
+      url: '../detail/detail?mid='+mid
+    })
+  },
+  tofoodDetail(e){
+    var fid = e.currentTarget.dataset.fid;
+    wx.navigateTo({
+      url: '../foodDetail/foodDetail?foodid='+fid
+    })
+  },
+  toSearch(){
+    var type = this.data.type;
+    wx.navigateTo({
+      url: '../search/history/history?type='+type
+    })
+  },
+  toCart(){
+    wx.switchTab({
+      url: 'category/category'
+    })
   }
 })
