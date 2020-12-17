@@ -31,7 +31,7 @@
             </view>
             <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:5px;align-items: center;">
               <view ><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.m_cook_price}}</text></view>
-              <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:20px;height:20px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
+              <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:20px;height:20px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
             </view>
           </view>
         </view>
@@ -44,7 +44,7 @@
             <view class="food-name">{{item.f_name}}</view>
             <view style="display:flex;flex-direction:row;align-items:center;margin-top:10px;font-weight:500;">
               <view style="font-weight: 500;"><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.f_price}}</text><text style="font-size:14px;color:#666666;">/{{item.f_unit}}</text></view>
-              <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:20px;height:20px;margin-right:10px;margin-left:auto;"></image>
+              <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addFoodToCart" data-foodid="{{item.f_id}}" data-num="{{item.f_init_number}}" style="width:20px;height:20px;margin-right:10px;margin-left:auto;"></image>
             </view>
           </view>
         </view>

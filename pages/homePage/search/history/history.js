@@ -5,20 +5,21 @@ Page({
     type:0,
     searchList:[],
     hotList:[],
-    name:''
+    name:'',
+    ww:0,
   },
   onLoad:function(e) {
     var that = this;
     that.setData({
       type:e.type,
-      searchList:app.globalData.searchList
+      searchList:app.globalData.searchList,
+      ww:app.globalData.ww-55
     })
     var baseUrl = app.globalData.baseUrl;
     wx.request({
       url: baseUrl+"menu/queryHotSearch",
       method: 'get',
       success(res) {
-        console.info(res)
         that.setData({
           hotList:res.data.data,
         })
@@ -45,7 +46,6 @@ Page({
       }
       if(can){
         searchList.unshift(inputName);
-        console.info('searchList',searchList)
         app.globalData.searchList=searchList;
       }
       
@@ -67,6 +67,11 @@ Page({
     app.globalData.searchList=[];
     this.setData({
       searchList:[]
+    })
+  },
+  turnSearch(){
+    this.setData({
+      type:this.data.type==0?1:0
     })
   }
 })

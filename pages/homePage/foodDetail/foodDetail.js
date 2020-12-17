@@ -77,8 +77,17 @@ Page({
       url: '../detail/detail?mid='+menuid
     })
   },
-  addMenuToCart(e){
-    var menuid = e.currentTarget.dataset.menuid;
-
-  }
+  addMenuDefaultToCart(e){
+    var that = this;
+    var mid = e.currentTarget.dataset.mid;
+    var baseUrl = that.data.baseUrl;
+    wx.request({
+      url: baseUrl+"menu/addMenuDefaultToCart",
+      method: 'get',
+      data: {'menuId':mid,'uId':wx.getStorageSync('uId')},
+      success(res) {
+        console.info(res)
+      }
+    })
+  },
 })

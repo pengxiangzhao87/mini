@@ -132,9 +132,36 @@ Page({
       url: '../search/history/history?type='+type
     })
   },
-  toCart(){
-    wx.switchTab({
-      url: 'category/category'
+  addMenuDefaultToCart(e){
+    var that = this;
+    var mid = e.currentTarget.dataset.mid;
+    var baseUrl = that.data.baseUrl;
+    wx.request({
+      url: baseUrl+"menu/addMenuDefaultToCart",
+      method: 'get',
+      data: {'menuId':mid,'uId':wx.getStorageSync('uId')},
+      success(res) {
+        console.info(res)
+      }
     })
-  }
+  },
+  addFoodToCart(e){
+    var foodid = e.currentTarget.dataset.foodid;
+    var num = e.currentTarget.dataset.num;
+    var that = this;
+    var data = {};
+    data.foodId = foodid;
+    data.cNumber = num;
+    data.userId = wx.getStorageSync('uId');
+    console.info(data)
+    var baseUrl = that.data.baseUrl;
+    wx.request({
+      url: baseUrl+"menu/addFoodToCart",
+      method: 'post',
+      data: data,
+      success(res) {
+        console.info(res)
+      }
+    })
+  },
 })

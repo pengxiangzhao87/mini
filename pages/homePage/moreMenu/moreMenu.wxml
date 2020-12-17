@@ -14,7 +14,7 @@
     </view>
     <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:10px;  align-items: center;">
       <view ><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:22px;color:#FF1907;">{{item.m_cook_price}}</text></view>
-      <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addCart" style="width:22px;height:22px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
+      <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:22px;height:22px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
     </view>
   </view>
 </view>

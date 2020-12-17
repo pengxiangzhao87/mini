@@ -2,6 +2,7 @@
   "pages":[
     "pages/homePage/homePage",
     "pages/homePage/category/category",
+    "pages/homePage/cart/cart",
     "pages/commodity/commodity",
     "pages/category/category",
     "pages/commodity/search/search",
@@ -49,7 +50,7 @@
         "text": "发现"
       },
       {
-        "pagePath": "pages/shoppingCar/shoppingCar",
+        "pagePath": "pages/homePage/cart/cart",
         "iconPath":"image/tab_gouwuche_default@3x.png",
         "selectedIconPath":"image/tab_gouwuche_select@3x.png",
         "text": "购物车"

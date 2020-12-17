@@ -13,7 +13,8 @@ Page({
     group:-1,
     foodId:'',
     allPrice:0,
-    standard:0//0:常规，1:一人食
+    standard:0,//0:常规，1:一人食
+    remark:''
   },
 
   /**
@@ -191,10 +192,56 @@ Page({
       showCancel:false
     })
   },
-  addCart(){
-    console.info('cart')
+  
+  saveRemark(e){
+    this.setData({
+      remark:e.detail.value
+    })
   },
   addMenuToCart(){
-    
-  }
+    var that = this;
+    var detail = that.data.detail;
+    var optionList = that.data.optionList;
+    var remark = that.data.remark;
+    var data = {};
+    data.mId = detail.mId;
+    data.remark = remark;
+    data.uId = wx.getStorageSync('uId');
+    var foodList = [];
+    for(var idx in optionList){
+      var item = optionList[idx];
+      var food = {};
+      food.foodId = item.f_id;
+      food.cNumber = item.m_number;
+      foodList[foodList.length]=food;
+    }
+    data.list = foodList;
+    var baseUrl = that.data.baseUrl;
+    wx.request({
+      url: baseUrl+"menu/addMenuToCart",
+      method: 'post',
+      data: data,
+      success(res) {
+        console.info(res)
+      }
+    })
+  },
+  addFoodToCart(e){
+    var foodid = e.currentTarget.dataset.foodid;
+    var num = e.currentTarget.dataset.num;
+    var that = this;
+    var data = {};
+    data.foodId = foodid;
+    data.cNumber = num;
+    data.userId = wx.getStorageSync('uId');
+    var baseUrl = that.data.baseUrl;
+    wx.request({
+      url: baseUrl+"menu/addFoodToCart",
+      method: 'post',
+      data: data,
+      success(res) {
+        console.info(res)
+      }
+    })
+  },
 })
