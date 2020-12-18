@@ -1,1 +1,79 @@
 /* pages/homePage/cart/cart.wxss */
+page{
+  background-color:rgb(246, 246, 246);
+  width:100%;
+  height:100%;
+}
+.category{
+  font-weight: 500;
+  height:30px;
+  margin-left:10px;
+  font-size:14px;
+  color:#999999;
+  display:flex;
+  align-items: center;
+}
+.row{
+  width:100%;
+  height:90px;
+  background-color:#ffffff;
+  display:flex;
+  flex-direction: row  ;
+  align-items: center;
+ 
+}
+.food-name{
+  width:80%;
+  overflow: hidden;
+  display: -webkit-box;
+  word-wrap : break-word ;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height:40px;
+  margin-top:10px;
+  font-size:14px;
+}
+
+.fine{
+  margin-left:auto;
+  margin-right:10px;
+  font-size:14px;
+  color:#666666;
+}
+
+.menuNum{
+  height:20px;
+  width:30px;
+  border:1px solid #bfbfbf;
+  border-radius:5px;
+  display:flex;
+  align-items: center;
+  justify-content:center;
+ 
+}
+
+.page_bottom{
+  width:100%;
+  height:55px;
+  position:fixed; 
+  bottom:0;
+  border-top: 1px solid #ececec;
+  background-color: #ffffff;
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+}
+
+.balance{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  justify-content: center;  
+  margin-right:10px;
+  font-size:16px;
+  color:#ffffff;
+  background-color:#FFD52E;
+  height:40px;
+  width:100px;
+  border-radius: 40px;
+}

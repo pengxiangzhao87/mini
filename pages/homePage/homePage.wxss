@@ -75,7 +75,6 @@
 
 
 .goods-name{
-  font-weight: bolder;
   font-size:14px;
   margin-left:10px;
   width:60%;
@@ -90,7 +89,6 @@
 }
 
 .goods-time{
-  font-weight: 500;
   font-size:14px;
   margin-right:10px;
   margin-left:auto;

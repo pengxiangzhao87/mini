@@ -9,7 +9,7 @@
 </view>
 
 
-<view style="background-color:rgb(246, 246, 246);height:1000px;margin-top:45px;">
+<view style="background-color:rgb(246, 246, 246);height:100%;margin-top:45px;">
   <view class="hotGoods" >
     <view class="goods" >
 
@@ -23,7 +23,7 @@
                 <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
               </view>
               <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-                <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+                <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
                 <image catchtap="addMenuDefaultToCart" data-mid="{{menuList[idx].m_id}}"  src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}"  style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
               </view>
             </view>
@@ -37,7 +37,7 @@
               <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+foodList[idx].f_img_adr}}"  ></image>
               <view class="goods-name" >{{foodList[idx].f_name}}</view>
               <view style="display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-                <view style="margin-left:10px;font-weight: 500;"><text style="font-size:10px;color:#FF1907;">￥</text><text style="font-size:18px;color:#FF1907;">{{foodList[idx].f_price}}</text><text style="font-size:10px;color:#666666;">/{{foodList[idx].f_unit}}</text></view>
+                <view style="margin-left:10px;font-weight:500"><text style="font-size:12px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{foodList[idx].f_price}}</text><text style="font-size:12px;color:#999999;">/{{foodList[idx].f_unit}}</text></view>
                 <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addFoodToCart" data-foodid="{{item.f_id}}" data-num="{{foodList[idx].f_init_number}}" style="width:20px;height:20px;margin-right:10px;margin-left:auto;"></image>
               </view>
             </view>
@@ -57,7 +57,7 @@
                 <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
               </view>
               <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-                <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+                <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
                 <image catchtap="addMenuDefaultToCart" data-mid="{{menuList[idx].m_id}}"  src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
               </view>
             </view>
@@ -71,7 +71,7 @@
               <image class="goods-imgParent" mode="widthFix" src="{{baseUrl+'upload/'+foodList[idx].f_img_adr}}"  ></image>
               <view class="goods-name" >{{foodList[idx].f_name}}</view>
               <view style="display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-                <view style="margin-left:10px;font-weight: 500;"><text style="font-size:10px;color:#FF1907;">￥</text><text style="font-size:18px;color:#FF1907;">{{foodList[idx].f_price}}</text><text style="font-size:10px;color:#666666;">/{{foodList[idx].f_unit}}</text></view>
+                <view style="margin-left:10px;font-weight:500"><text style="font-size:12px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{foodList[idx].f_price}}</text><text style="font-size:12px;color:#999999;">/{{foodList[idx].f_unit}}</text></view>
                 <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addFoodToCart" data-foodid="{{item.f_id}}" data-num="{{foodList[idx].f_init_number}}" style="width:20px;height:20px;margin-right:10px;margin-left:auto;"></image>
               </view>
             </view>

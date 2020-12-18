@@ -8,7 +8,7 @@
 </view>
 
 <view class="title">
-  <view style="margin-left:10px;color:#333333;font-size:14px;">搜索历史</view> 
+  <view style="margin-left:10px;color:#666666;font-size:14px;font-weight:500">搜索历史</view> 
   <view style="margin-left:auto;margin-right:12px;color:#999999;font-size:14px;" bindtap="empty">清空</view>
 </view>
 <view class="history">
@@ -17,7 +17,7 @@
   </view>
 </view>
 
-<view style="margin-left:10px;margin-top:20px;color:#FF1907;font-size:16px;">热门推荐</view> 
+<view style="margin-left:10px;margin-top:20px;color:#FF1907;font-size:16px;font-weight:500">热门推荐</view> 
 <view class="history">
   <view  wx:for="{{hotList}}" wx:for-index="idx" wx:key="idx" wx:for-item="item" >
     <text class="content" style="color:#FF1907;" bindtap="checkItem" data-name="{{item.s_name}}" data-type="{{item.s_type}}">{{item.s_name}}</text>

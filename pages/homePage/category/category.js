@@ -33,7 +33,7 @@ Page({
       url: baseUrl+"menu/queryCategoryList",
       method: 'get',
       success(res) {
-        console.info(res)
+    
         that.setData({
           categoryList:res.data.data
         })
@@ -63,7 +63,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
         that.setData({
           menuList:res.data.data.list
         })
@@ -76,7 +75,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res)
         that.setData({
           foodList:res.data.data.list
         })
@@ -141,7 +139,7 @@ Page({
       method: 'get',
       data: {'menuId':mid,'uId':wx.getStorageSync('uId')},
       success(res) {
-        console.info(res)
+
       }
     })
   },
@@ -153,14 +151,14 @@ Page({
     data.foodId = foodid;
     data.cNumber = num;
     data.userId = wx.getStorageSync('uId');
-    console.info(data)
+
     var baseUrl = that.data.baseUrl;
     wx.request({
       url: baseUrl+"menu/addFoodToCart",
       method: 'post',
       data: data,
       success(res) {
-        console.info(res)
+ 
       }
     })
   },

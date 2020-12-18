@@ -2,7 +2,7 @@
 <view style="background-color: #FFD52E;padding-bottom:10px;height:{{topH}}px;">
   <view style="font-size:14px;margin-left:10px;display:flex; align-items: center;margin-bottom:5px;" bindtap="toAddress">
     <image src="/image/nav_shouye_dizhi@3x.png" style="width:16px;height:18px;"></image>
-    <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;font-weight: bolder;">送至：{{address}}</text>
+    <text style="font-size:14px;color:#333333;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:40%;font-weight: 500;">送至：{{address}}</text>
   </view>
   <navigator class="search_arr" style="background-color: #FFFFFF ;" url="search/history/history?type=0">  
     <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
@@ -62,7 +62,7 @@
               <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
             </view>
             <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
               <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>
           </view>
@@ -79,7 +79,7 @@
               <view class="goods-time">{{menuList[idx].m_cook_time}}分钟</view>
             </view>
             <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
-              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:bolder;"><text style="font-size:16px;">￥</text>{{menuList[idx].m_cook_price}}</view>
+              <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
               <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>
           </view>
