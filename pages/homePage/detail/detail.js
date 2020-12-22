@@ -213,6 +213,7 @@ Page({
       var food = {};
       food.foodId = item.f_id;
       food.cNumber = item.m_number;
+      food.cGroup = item.m_group;
       foodList[foodList.length]=food;
     }
     data.list = foodList;
@@ -234,6 +235,7 @@ Page({
     data.foodId = foodid;
     data.cNumber = num;
     data.userId = wx.getStorageSync('uId');
+    data.cType=that.data.standard;
     var baseUrl = that.data.baseUrl;
     wx.request({
       url: baseUrl+"menu/addFoodToCart",

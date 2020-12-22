@@ -1,2 +1,86 @@
 <!--pages/homePage/cart/option/option.wxml-->
-<text>pages/homePage/cart/option/option.wxml</text>
+<view style="display: flex; flex-direction: row  ; align-items: center;margin-top:10px; ">
+  <image style="height:15px;width:15px;margin-left:10px;" src="/image/time.png"></image>
+  <view style="font-size:18px;margin-left:5px;">{{menuInfo.m_cook_time}}分钟</view>
+  <image style="height:15px;width:15px;margin-left:50px;" src="/image/price.png"></image>
+  <view style="font-size:20px;color:#FF1907;margin-left:5px;"><text style="font-size:12px;">￥</text>{{menuInfo.m_cook_price}}</view>
+</view>
+<view style="display: flex; flex-direction: row  ;margin-top:10px; ">
+  <view class="{{menuInfo.c_type==0?'standard-selected':'standard'}}" bindtap="chooseStandard" data-standard="0" style="margin-left:10px;">常规</view>
+  <view class="{{menuInfo.c_type==1?'standard-selected':'standard'}}" bindtap="chooseStandard" data-standard="1" style="margin-left:15px;">一人食</view>
+  <image style="height:10px;width:10px;margin-top:0px;margin-left:5px;" bindtap="showTip" src="/image/wh.png"></image>
+</view>
+
+<view style="display: flex;align-items: center;padding-left:10px;font-size:12px;color:#FF6633;margin-top:10px; ">由于重量产生的差价，实行多退少补原则</view>
+
+<view wx:for="{{menuInfo.optionList}}" class="row" wx:for-index="idx" wx:key="f_id" wx:for-item="item">
+  <view style="display:flex;flex-direction:row;width:100%;" bindtap="toFoodDetail" data-foodid="{{item.f_id}}">
+    <image style="height:80px;width:80px;margin-left:10px;"  mode="widthFix" src="{{baseUrl+'upload/'+item.f_img_adr}}" ></image>
+    <view style="margin-left:10px;width:100%;">
+      <view style="display:flex;flex-direction:row;height:40px;padding-right:10px;">
+        <view style="font-size:14px;width:70%;overflow: hidden;display: -webkit-box;word-wrap : break-word ;-webkit-box-orient: vertical;-webkit-line-clamp: 2;">{{item.f_name}}</view>
+        <view style="margin-left:auto;margin-right:10px;color:#FFD52E;font-size:12px;" catchtap="otherOption" data-foodid="{{item.f_id}}" data-menuid="{{item.menu_id}}" data-group="{{item.c_group}}">{{group!=item.c_group?'其他':'收起'}}</view>
+      </view>
+      
+      <view style="display:flex;flex-direction:row;margin-top:10px;">
+        <view style="font-size:18px;color:#FF1907;font-weight:500;"><text style="font-size:10px;">￥</text><text style="font-size:18px;">{{item.totalPrice}}</text></view>
+        <view style="margin-right:10px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
+          <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246) " catchtap="sub" data-idx="{{idx}}">
+            <image style="height:10px;width:10px;" src="/image/sub.png"></image>
+          </view>
+          <view style="margin-left:10px;font-size:14px"><text decode="true">{{item.c_number}}&nbsp;</text><text style="color:#b1b1b1">{{item.f_unit}}</text></view>
+          <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246);margin-left:10px; " catchtap="add" data-idx="{{idx}}">
+            <image style="height:10px;width:10px;" src="/image/add.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view hidden="{{group!=item.c_group}}" scroll-x style="width:100%;white-space: nowrap;margin-top:10px;">
+    <view wx:for="{{otherOptionList}}" bindtap="chooseFood" data-idx="{{idx}}" data-group="{{group}}" style=" display: inline-block;margin-left:7px;width:100px;border-radius:5px;border:{{foodid==detail.f_id?'1.5px':'1px'}} solid {{foodid==detail.f_id?'#03BE5E':'rgb(246, 246, 246)'}}" wx:for-index="idx" wx:key="f_id" wx:for-item="detail" >
+      <image style="height:80px;width:100px;border-top-left-radius:5px ;border-top-right-radius:5px ; "  mode="widthFix" src="{{baseUrl+'upload/'+detail.f_img_adr}}" ></image>
+      <view style="white-space: normal;font-size:12px;margin-top:5px;margin-left:5px;margin-right:5px;width:100px;height:40px;">
+        <view class="goods-name" >{{detail.f_name}}</view>
+      </view>
+      <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;margin-bottom:5px;width:100px;">
+        <view style="margin-left:5px;font-weight:500;color:#FF1907;"><text style="font-size:10px;">￥</text><text style="font-size:18px;">{{detail.f_price}}</text><text style="font-size:10px;color:#999999;">/{{detail.f_unit}}</text></view>
+        <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addFoodToCart" data-foodid="{{detail.f_id}}" data-num="{{detail.f_init_number}}" style="width:20px;height:20px;margin-right:5px;margin-left:auto;"></image>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view style="margin-left:10px;margin-right:10px;margin-top:10px;background-color:#ffffff;border-radius:5px;height:100px;padding:10px;">
+  <view style="font-size:14px;color:#999999;">备注</view>
+  <view style="border-radius:5px;border:0.5px solid #e9e9e9;padding:5px;margin-top:10px;height:60px;" >
+    <textarea bindconfirm="saveRemark" value="{{menuInfo.c_remark}}" name="remark" style="width:100%;height:100%;font-size:14px;" focus="true" auto-focus="true" placeholder="请输入口味、偏好等要求..." placeholder-style="color:#999999;font-size:12px;"></textarea>
+  </view>
+</view>
+
+<view style="margin-top:10px;margin-left:10px;font-size:14px;color:#999999;">佐料免费提供</view>
+
+<view style="display:flex;align-items: center; white-space: nowrap;margin-top:10px;margin-bottom:10px;">
+  <scroll-view scroll-x style="width:100%;">
+    <view wx:for="{{menuInfo.freeList}}" style=" display: inline-block;margin-left:7px;width:100px;border-radius:5px;background-color:#ffffff" wx:for-index="idx" wx:key="f_id" wx:for-item="item" 
+    bindtap="toFoodDetail" data-foodid="{{item.f_id}}">
+      <image style="height:100px;width:100px;border-top-left-radius:5px ;border-top-right-radius:5px ; "  mode="widthFix" src="{{baseUrl+'upload/'+item.f_img_adr}}" ></image>
+      <view style="white-space: normal;font-size:12px;margin-top:5px;margin-left:5px;width:100px;height:40px;">
+        <view class="goods-name">{{item.f_name}}</view>
+      </view>
+      <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;margin-bottom:5px;width:100px;">
+        <view style="margin-left:5px;font-weight:500"><text style="font-size:10px;color:#FF1907;">￥</text><text style="font-size:18px;color:#FF1907;">{{item.f_price}}</text><text style="font-size:10px;color:#999999;">/{{item.f_unit}}</text></view>
+        <image src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addFoodToCart" data-foodid="{{item.f_id}}" data-num="{{item.f_init_number}}" style="width:20px;height:20px;margin-right:5px;margin-left:auto;"></image>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view style="height:50px;"></view>
+
+<view class="page_bottom" >
+  <view style="display: flex;flex-direction:row ;align-items: center;margin-right:20px;margin-left:auto;">
+    <view style="font-weight: 500;"><text style="margin-left:auto;margin-right:5px;font-size:14px;color:#333333">总计</text><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{allPrice}}</text></view>
+  </view>
+  <view  class="balance" bindtap="saveMenu">保存</view>
+</view>  

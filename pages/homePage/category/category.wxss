@@ -19,3 +19,53 @@
   height:40px;
   margin-top:5px;
 }
+
+/* ---------------------------- */
+/*模态框*/
+.modal{position:fixed; top:0; right:0; bottom:0; left:0; z-index:1000;}
+.modal-cancel{position:absolute; z-index:2000; top:0; right:0; bottom: 0; left:0; background:rgba(0,0,0,0.7);}
+.bottom-dialog-body{width:100%; position:absolute; z-index:3000; bottom:0; left:0;background:#dfdede;}
+/*动画前初始位置*/
+.bottom-positon{
+  -webkit-transform:translateY(100%);
+  transform:translateY(100%);
+  height:210px;
+  background-color: #FFFFFF;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.hotGoods{
+  display: flex;  
+  flex-direction: row  ;
+}
+.page_bottom{
+  display: flex;  
+  flex-direction:row ;
+  align-items: center;
+  position:fixed; 
+  bottom:0;
+  align-items: center;
+  margin-left:auto;
+  margin-right:20px;
+  width:100%;
+  height:45px;
+}
+.addShoppingCar{
+  width:120px;
+  height:35px;
+  background-color:#FFD52E;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  margin-bottom:10px;
+}
+.addImg{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
+
+}

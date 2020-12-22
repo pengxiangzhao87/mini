@@ -95,5 +95,11 @@
   margin-top:2px;
 
 }
+.addImg{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
 
-
+}

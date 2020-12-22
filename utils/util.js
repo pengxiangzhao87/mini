@@ -14,24 +14,51 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+// function getCarNum(that,paras,baseUrl){
+//   wx.request({
+//     url: baseUrl+"shoppingCart/queryShoppingCartList",
+//     method: 'get',
+//     data: paras,
+//     success(res) {
+//       if(res.data.code==200){
+//         var list = res.data.data;
+//         var checkNum = parseInt(0);
+//         for(var idx in list){
+//           var detail = list[idx];
+//           for(var index in detail.goods){
+//             var item = detail.goods[index];
+//             if(item.is_check==1 && item.state==1){
+//               ++checkNum;
+//             }
+//           }
+//         }
+//         if(checkNum!=0){
+//           wx.setTabBarBadge({//tabbar右上角添加文本
+//             index: 2,//tabbar下标
+//             text: checkNum+'' //显示的内容,必须为字符串
+//           })
+//           that.setData({
+//             carSum:checkNum
+//           })
+//         }else{
+//           wx.removeTabBarBadge({
+//             index: 1,
+//           })
+//         }
+//       }
+//     }
+//   })
+// }
+
+
 function getCarNum(that,paras,baseUrl){
   wx.request({
-    url: baseUrl+"shoppingCart/queryShoppingCartList",
+    url: baseUrl+"menu/queryCartNum",
     method: 'get',
     data: paras,
     success(res) {
       if(res.data.code==200){
-        var list = res.data.data;
-        var checkNum = parseInt(0);
-        for(var idx in list){
-          var detail = list[idx];
-          for(var index in detail.goods){
-            var item = detail.goods[index];
-            if(item.is_check==1 && item.state==1){
-              ++checkNum;
-            }
-          }
-        }
+        var checkNum = res.data.data;
         if(checkNum!=0){
           wx.setTabBarBadge({//tabbar右上角添加文本
             index: 2,//tabbar下标

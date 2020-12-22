@@ -28,7 +28,7 @@
   <view class="icon_first" >
     <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item"  wx:if="{{item.c_id<5}}">
       <view  data-cid="{{item.c_id}}" data-type="{{item.c_type}}" bindtap="toCategory" >
-        <image src="/image/{{item.c_sort==1?'shouye_shuiguo@3x.png':(item.c_sort==2?'shouye_shucai@3x.png':(item.c_sort==3?'shouye_haixian@3x.png':'shouye_roulei@3x.png'))}}" style="height:50px;width:50px;"></image>
+        <image src="/image/{{item.c_img_adr}}" style="height:50px;width:50px;"></image>
         <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
       </view>
     </view>
@@ -36,7 +36,7 @@
   <view class="icon_second">
     <view wx:for="{{categoryList}}" style="margin-left:9%;" wx:for-index="index" wx:key="tId" wx:for-item="item" wx:if="{{item.c_id>4}}">
       <view data-cid="{{item.c_id}}" data-type="{{item.c_type}}" bindtap="toCategory" >
-        <image src="/image/{{item.c_sort==5?'shouye_ganguo@3x.png':(item.c_sort==6?'shouye_direliang@3x.png':(item.c_sort==7?'shouye_lingshi@3x.png':'shouye_qita@3x.png'))}}" style="height:50px;width:50px;"></image>
+        <image src="/image/{{item.c_img_adr}}" style="height:50px;width:50px;"></image>
         <view style="width:50px;display: flex;justify-content: center;font-size:13px;">{{item.c_name}}</view>
       </view>
     </view>
@@ -63,7 +63,7 @@
             </view>
             <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
               <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
-              <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
+              <image catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}"  src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>
           </view>
         </view>
@@ -80,7 +80,7 @@
             </view>
             <view style=" display:flex;flex-direction: row;margin-top:10px;  align-items: center;">
               <view style="margin-left:10px;color:#FF1907;font-size:20px;font-weight:500;"><text style="font-size:12px;">￥</text>{{menuList[idx].m_cook_price}}</view>
-              <image catchtap="showCar" data-idx="{{idx}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
+              <image catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" src="{{menuList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" style="width:23px;height:23px;margin-right:10px;margin-left:auto;"></image>
             </view>
           </view>
         </view>
@@ -88,3 +88,5 @@
     </view>
   </view> 
 </view>  
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>

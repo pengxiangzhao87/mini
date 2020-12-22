@@ -1,10 +1,12 @@
 // pages/homePage/cart/cart.js
+var util= require('../../../utils/util.js');
 var app = getApp();
 Page({
   data: {
     baseUrl:'',
     cart:{},
-    ww:0
+    ww:0,
+    cIds:''
   },
   /**
    * 组件的方法列表
@@ -17,10 +19,18 @@ Page({
       method: 'get',
       data: {'uId':wx.getStorageSync('uId')},
       success(res) {
-        console.info(res)
+        var cIds = that.data.cIds;
+        var cart = res.data.data;
+        var menuList = cart.menuList;
+        for(var idx in menuList){
+          var item = menuList[idx];
+          if(cIds.indexOf(item.cId)!=-1){
+            item.isHidden = 0;
+          }
+        }
         that.setData({
           baseUrl:baseUrl,
-          cart:res.data.data,
+          cart:cart,
           ww:app.globalData.ww
         })
       }
@@ -33,9 +43,10 @@ Page({
     })
   },
   toMenuOption(e){
+    var cid = e.currentTarget.dataset.cid;
     var mid = e.currentTarget.dataset.mid;
     wx.navigateTo({
-      url: 'option/option?mid='+mid
+      url: 'option/option?cid='+cid+'&mid='+mid
     })
   },
   toFoodDetail(e){
@@ -76,14 +87,14 @@ Page({
     })
   },
   switchMenuNum(e){
-    var idx = e.currentTarget.dataset.idx;
+    var cid = e.currentTarget.dataset.cid;
     var that = this;
-    var cart = that.data.cart;
-    var item = cart.menuList[idx];
-    item.isHidden=0;
+    var cIds = that.data.cIds;
+    cIds = cIds +','+cid;
     that.setData({
-      cart:cart
+      cIds:cIds
     })
+    that.onShow();
   },
   sub(e){
     var num = e.currentTarget.dataset.num;
@@ -91,12 +102,13 @@ Page({
       return;
     }
     var cid = e.currentTarget.dataset.cid;
+    var type = e.currentTarget.dataset.type;
     var that = this;
     var baseUrl = that.data.baseUrl;
     wx.request({
       url: baseUrl+"menu/fineCart",
       method: 'get',
-      data: {'cId':cid,'flag':1},
+      data: {'cId':cid,'flag':1,'type':type},
       success(res) {
         if(res.data.code==200){
           that.onShow();
@@ -106,12 +118,13 @@ Page({
   },
   add(e){
     var cid = e.currentTarget.dataset.cid;
+    var type = e.currentTarget.dataset.type;
     var that = this;
     var baseUrl = that.data.baseUrl;
     wx.request({
       url: baseUrl+"menu/fineCart",
       method: 'get',
-      data: {'cId':cid,'flag':0},
+      data: {'cId':cid,'flag':0,'type':type},
       success(res) {
         if(res.data.code==200){
           that.onShow();
@@ -120,5 +133,83 @@ Page({
     })
   },
 
+  del(e){
+    var that = this;
+    var baseUrl = that.data.baseUrl;
+    var cid = e.currentTarget.dataset.cid;
+    wx.request({
+      url: baseUrl+"menu/deleteCart",
+      method: 'get',
+      data: {'cIds':cid},
+      success(res) {
+        if(res.data.code==200){
+          that.onShow();
+          var paras = {};
+          paras.uId=wx.getStorageSync('uId');
+          util.getCarNum(that,paras,baseUrl);
+        }
+      }
+    })
+  },
 
+  delMore(e){
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定清空商品吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          var list = e.currentTarget.dataset.list;
+          var baseUrl = that.data.baseUrl;
+          var cids = '';
+          for(var idx  in list){
+            cids += list[idx].cId+',';
+          }
+          wx.request({
+            url: baseUrl+"menu/deleteCart",
+            method: 'get',
+            data: {'cIds':cids.substring(0,cids.length-1)},
+            success(res) {
+              if(res.data.code==200){
+                that.onShow();
+                var paras = {};
+                paras.uId=wx.getStorageSync('uId');
+                util.getCarNum(that,paras,baseUrl);
+              }
+            }
+          })
+        }
+      }
+    })
+    
+  },
+
+  //手指触摸动作开始 记录起点X坐标
+  touchstart: function(e) {
+    var cart = this.data.cart;
+    var menuList = cart.menuList;
+    var foodList = cart.foodList;
+    //开始触摸时 重置所有删除
+    util.touchStart(e, menuList);
+    util.touchStart(e, foodList);
+    this.setData({
+      cart: cart
+    })
+  },
+
+  //滑动事件处理
+  touchmove: function(e) {
+    var cart = this.data.cart;
+    var list = [];
+    var flag = e.currentTarget.dataset.flag;
+    if(flag==0){
+      list = cart.menuList;
+    }else{
+      list = cart.foodList;
+    }
+    list = util.touchMove(e, list);
+    this.setData({
+      cart: cart
+    })
+  },
 })

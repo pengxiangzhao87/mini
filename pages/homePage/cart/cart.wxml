@@ -1,24 +1,58 @@
 <!--pages/homePage/cart/cart.wxml-->
-<view wx:if="{{cart.menuList.length>0}}" class="category">美食</view>
-<view wx:for="{{cart.menuList}}" class="row" wx:for-index="idx" wx:key="mId" wx:for-item="item" >
-  <image data-cid="{{item.cId}}" data-check="{{item.isSelected}}"  bindtap="checkItem" style="width:16px;height:16px;margin-left:10px;" src="{{item.isSelected==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-  <view style="display:flex;flex-direction:row;align-items: center;margin-left:10px;height:90px;width:{{ww-36}}px;border-bottom:1px solid #F6F6F6;" bindtap="toMenuDetail" data-mid="{{item.mId}}">
-    <image src="{{baseUrl+'upload/'+item.mImg}}" style="height:80px;width:80px;"></image>
-    <view style="margin-left:10px;height:90px;width:{{ww-126}}px;">
-      <view style="display:flex;flex-direction:row;">
-        <view class="food-name">{{item.mName}}</view>
-        <view style="margin-top:10px;margin-left:auto;margin-right:10px;font-size:12px;color:#999999;" catchtap="toMenuOption" data-mid="{{item.mId}}">微调</view>
+<view wx:if="{{cart.menuList.length>0}}" class="category">
+  <view>美食</view>
+  <view style="margin-left:auto;margin-right:10px;" bindtap="delMore" data-list="{{cart.menuList}}" >清空</view>
+</view>
+<view wx:for="{{cart.menuList}}" wx:for-index="idx" wx:key="mId" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{idx}}" data-flag="0" bindtouchstart="touchstart" bindtouchmove="touchmove">
+  <view class="row">
+    <image data-cid="{{item.cId}}" data-check="{{item.isSelected}}"  bindtap="checkItem" style="width:16px;height:16px;margin-left:10px;" src="{{item.isSelected==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+    <view style="display:flex;flex-direction:row;align-items: center;margin-left:10px;height:90px;width:{{ww-36}}px;border-bottom:1px solid #F6F6F6;" bindtap="toMenuDetail" data-mid="{{item.mId}}">
+      <image src="{{baseUrl+'upload/'+item.mImg}}" mode="widthFix" style="height:80px;width:80px;"></image>
+      <view style="margin-left:10px;height:90px;width:{{ww-126}}px;">
+        <view style="display:flex;flex-direction:row;">
+          <view class="food-name">{{item.mName}}</view>
+          <view catchtap="toMenuOption" data-cid="{{item.cId}}" data-mid="{{item.mId}}" style="font-size:12px;color:#FFD52E;margin-left:auto;margin-right:10px;margin-top:10px;" >调整</view>
+        </view>
+        <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;">
+          <view style="font-weight:500;color:#FF1907;"><text style="font-size:12px;">￥</text><text style="font-size:20px;">{{item.totalPrice}}</text></view>
+          <view class="fine">
+            <view wx:if="{{item.isHidden==1}}" class="menuNum" catchtap="switchMenuNum" data-cid="{{item.cId}}">x{{item.num}}</view>
+            <view  wx:if="{{item.isHidden==0}}" style="margin-right:0px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
+              <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246) " catchtap="sub" data-cid="{{item.cId}}" data-num="{{item.num}}" data-type="0">
+                <image style="height:10px;width:10px;" src="/image/sub.png"></image>
+              </view>
+              <view style="margin-left:10px;font-size:14px;font-weight:500"><text decode="true">{{item.num}}&nbsp;</text><text style="font-size:14px;color:#b1b1b1">份</text></view>
+              <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246);margin-left:10px; " catchtap="add" data-cid="{{item.cId}}" data-type="0">
+                <image style="height:10px;width:10px;" src="/image/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
-      <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;">
-        <view style="font-weight:500;color:#FF1907;"><text style="font-size:12px;">￥</text><text style="font-size:20px;">{{item.totalPrice}}</text></view>
-        <view class="fine">
-          <view wx:if="{{item.isHidden==1}}" class="menuNum" catchtap="switchMenuNum" data-idx="{{idx}}">x{{item.num}}</view>
-          <view  wx:if="{{item.isHidden==0}}" style="margin-right:0px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
-            <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246) " catchtap="sub" data-cid="{{item.cId}}" data-num="{{item.num}}">
+    </view>
+  </view>
+  <view class="del" catchtap="del" data-cid="{{item.cId}}">删除</view>
+</view>
+
+<view wx:if="{{cart.foodList.length>0}}" class="category">
+  <view>食材</view>
+  <view style="margin-left:auto;margin-right:10px;" bindtap="delMore" data-list="{{cart.foodList}}">清空</view>
+</view>
+<view wx:for="{{cart.foodList}}" wx:for-index="idx" wx:key="fId" wx:for-item="item" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-flag="1" data-index="{{idx}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
+  <view class="row">
+    <image data-cid="{{item.cId}}" data-check="{{item.isSelected}}"  bindtap="checkItem" style="width:16px;height:16px;margin-left:10px;" src="{{item.isSelected==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
+    <view style="display:flex;flex-direction:row;align-items: center;margin-left:10px;height:90px;width:{{ww-36}}px;border-bottom:1px solid #F6F6F6;" bindtap="toFoodDetail" data-fid="{{item.fId}}">
+      <image src="{{baseUrl+'upload/'+item.fImg}}" mode="widthFix" style="height:80px;width:80px;"></image>
+      <view style="margin-left:10px;height:90px;width:{{ww-126}}px;">
+        <view class="food-name">{{item.fName}}</view>
+        <view style="display:flex;flex-direction:row;margin-top:5px;">
+          <view style="font-size:18px;color:#FF1907;font-weight:500;"><text style="font-size:10px;">￥</text><text style="font-size:18px;">{{item.totalPrice}}</text></view>
+          <view style="margin-right:10px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
+            <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246) " catchtap="sub" data-cid="{{item.cId}}" data-num="{{item.num}}" data-type="{{item.fType}}">
               <image style="height:10px;width:10px;" src="/image/sub.png"></image>
             </view>
-            <view style="margin-left:10px;font-size:14px;font-weight:500"><text decode="true">{{item.num}}&nbsp;</text><text style="font-size:14px;color:#b1b1b1">份</text></view>
-            <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246);margin-left:10px; " catchtap="add" data-cid="{{item.cId}}">
+            <view style="margin-left:10px;font-size:14px;font-weight:500"><text decode="true">{{item.num}}&nbsp;</text><text style="font-size:14px;color:#b1b1b1">{{item.unit}}</text></view>
+            <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246);margin-left:10px; " catchtap="add" data-cid="{{item.cId}}" data-type="{{item.fType}}">
               <image style="height:10px;width:10px;" src="/image/add.png"></image>
             </view>
           </view>
@@ -26,28 +60,7 @@
       </view>
     </view>
   </view>
-</view>
-<view wx:if="{{cart.foodList.length>0}}" class="category">食材</view>
-<view wx:for="{{cart.foodList}}" class="row" wx:for-index="idx" wx:key="fId" wx:for-item="item" >
-  <image data-cid="{{item.cId}}" data-check="{{item.isSelected}}"  bindtap="checkItem" style="width:16px;height:16px;margin-left:10px;" src="{{item.isSelected==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>
-  <view style="display:flex;flex-direction:row;align-items: center;margin-left:10px;height:90px;width:{{ww-36}}px;border-bottom:1px solid #F6F6F6;" bindtap="toFoodDetail" data-fid="{{item.fId}}">
-    <image src="{{baseUrl+'upload/'+item.fImg}}" style="height:80px;width:80px;"></image>
-    <view style="margin-left:10px;height:90px;width:{{ww-126}}px;">
-      <view class="food-name">{{item.fName}}</view>
-      <view style="display:flex;flex-direction:row;margin-top:5px;">
-        <view style="font-size:18px;color:#FF1907;font-weight:500;"><text style="font-size:10px;">￥</text><text style="font-size:18px;">{{item.totalPrice}}</text></view>
-        <view style="margin-right:10px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
-          <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246) " catchtap="sub" data-cid="{{item.cId}}" data-num="{{item.num}}">
-            <image style="height:10px;width:10px;" src="/image/sub.png"></image>
-          </view>
-          <view style="margin-left:10px;font-size:14px;font-weight:500"><text decode="true">{{item.num}}&nbsp;</text><text style="font-size:14px;color:#b1b1b1">{{item.unit}}</text></view>
-          <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246);margin-left:10px; " catchtap="add" data-cid="{{item.cId}}">
-            <image style="height:10px;width:10px;" src="/image/add.png"></image>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
+  <view class="del" catchtap="del" data-cid="{{item.cId}}">删 除</view>
 </view>
 
 <view class="page_bottom" >

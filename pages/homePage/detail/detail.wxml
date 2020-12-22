@@ -14,7 +14,7 @@
 <view style="margin-top:10px;">
   <view style="display: flex; flex-direction: row  ; align-items: center;">
     <image style="height:15px;width:15px;margin-left:10px;" src="/image/time.png"></image>
-    <view style="font-size:18px;margin-left:5px;color:#03BE5E">{{detail.mCookTime}}分钟</view>
+    <view style="font-size:18px;margin-left:5px;">{{detail.mCookTime}}分钟</view>
     <image style="height:15px;width:15px;margin-left:50px;" src="/image/price.png"></image>
     <view style="font-size:20px;color:#FF1907;margin-left:5px;"><text style="font-size:12px;">￥</text>{{detail.mCookPrice}}</view>
   </view>
@@ -39,7 +39,7 @@
     <view style="margin-left:10px;width:100%;">
       <view style="display:flex;flex-direction:row;height:40px;padding-right:10px;">
         <view style="font-size:14px;width:70%;overflow: hidden;display: -webkit-box;word-wrap : break-word ;-webkit-box-orient: vertical;-webkit-line-clamp: 2;">{{item.f_name}}</view>
-        <view style="margin-left:auto;margin-right:10px;color:#FFD52E;font-size:12px;" catchtap="otherOption" data-foodid="{{item.f_id}}" data-menuid="{{item.menu_id}}" data-group="{{item.m_group}}">{{group!=item.m_group?'其他':'收起'}}</view>
+        <view style="margin-left:auto;margin-right:10px;color:#FFD52E;font-size:12px;" catchtap="otherOption" data-foodid="{{item.f_id}}" data-menuid="{{item.menu_id}}" data-group="{{item.m_group}}">{{group!=item.m_group?'更多':'收起'}}</view>
       </view>
       
       <view style="display:flex;flex-direction:row;margin-top:10px;">
@@ -98,10 +98,10 @@
 
 <view style="height:50px;"></view>
 
-<view class="page_bottom" bindtap="addMenuToCart">
-  <view style="display: flex;flex-direction:row ;align-items: center;margin-left:10px;">
-    <view style="font-size:16px;font-weight: 500;">总计<text style="font-size:10px;color:#FF1907;">￥</text><text style="font-size:16px;color:#FF1907;">{{allPrice}}</text></view>
+<view class="page_bottom" >
+  <view style="display: flex;flex-direction:row ;align-items: center;margin-left:auto;margin-right:20px;">
+    <view style="font-weight: 500;"><text style="margin-left:auto;margin-right:5px;font-size:14px;color:#333333">总计</text><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{allPrice}}</text></view>
   </view>
-  <view  class="balance">加入购物车</view>
+  <view  class="balance" bindtap="addMenuToCart">加入购物车</view>
 </view>  
  

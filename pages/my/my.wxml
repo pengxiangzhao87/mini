@@ -82,7 +82,7 @@
 
 
 
- 
+<!--  
 <view class="mask" bindtap="hiddenModal" wx:if="{{showModal}}"></view>
 
 <form bindsubmit="feedBack"> 
@@ -107,4 +107,4 @@
     <text class="letter-row" decode="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;线上购物畅行了十余年，在一定程度上改变了人们的生活方式。然而，不管是盒某或者物某等等，售卖的单位永远是500g或一份，都是已定量的。用户无法按照自己的实际需求、购买适合自己的量。购买的水果为了不丢失新鲜度，必须在一两天内吃完；购买的蔬菜，炒了一盘菜，还有多出来的量，再炒一盘吧，量又不够，扔了又浪费，不得不来盘“大烩菜”。</text>
     <text class="letter-row" decode="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小夕提出了真正的随心购、随意购。你可以买10根香蕉或者一根，5个苹果或者一个苹果，一斤葡萄或者，50克。只要你有需求，本着多退少补的原则，"斤斤计较"保障大家共同的利益。</text>
   </view>
-</view>
+</view> -->
