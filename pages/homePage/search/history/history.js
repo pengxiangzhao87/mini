@@ -5,7 +5,6 @@ Page({
     type:0,
     searchList:[],
     hotList:[],
-    name:'',
     ww:0,
   },
   onLoad:function(e) {
@@ -13,7 +12,7 @@ Page({
     that.setData({
       type:e.type,
       searchList:app.globalData.searchList,
-      ww:app.globalData.ww-55
+      ww:app.globalData.ww
     })
     var baseUrl = app.globalData.baseUrl;
     wx.request({
@@ -34,18 +33,22 @@ Page({
   toSearch:function(e){
     var that = this;
     var sName = e.detail.value;
+    var type = that.data.type;
     var inputName = sName.replace(/\s*/g,"");
     if(inputName!=''){
       var searchList=that.data.searchList;
       var can = true;
       for(var idx in searchList){
         var item = searchList[idx];
-        if(item==inputName){
+        if(item.sName==inputName){
           can = false;
         }
       }
       if(can){
-        searchList.unshift(inputName);
+        var item = {};
+        item.sName = inputName;
+        item.type=type;
+        searchList.unshift(item);
         app.globalData.searchList=searchList;
       }
       
@@ -70,8 +73,35 @@ Page({
     })
   },
   turnSearch(){
-    this.setData({
-      type:this.data.type==0?1:0
+    var type = this.data.type;
+    this.animation_main = wx.createAnimation({
+      duration:500,
+      timingFunction:'linear'
     })
+    this.animation_back = wx.createAnimation({
+      duration:500,
+      timingFunction:'linear'
+    })
+    // 点击正面
+
+    if (type==0) {
+      this.animation_main.rotateX(180).step()
+      this.animation_back.rotateX(0).step()
+      this.setData({
+        animationMain: this.animation_main.export(),
+        animationBack: this.animation_back.export(),
+        type:1
+      })
+    }
+    // 点击背面
+    else{
+      this.animation_main.rotateX(0).step()
+      this.animation_back.rotateX(-180).step()
+      this.setData({
+        animationMain: this.animation_main.export(),
+        animationBack: this.animation_back.export(),
+        type:0
+      })
+    }
   }
 })

@@ -135,7 +135,7 @@ Page({
     paras.isUsed=1;
     paras.userId=wx.getStorageSync('uId');
     that.queryAddressList(that,paras,baseUrl);
-    util.getCarNum(that,paras,baseUrl);
+    util.getCarNum(that,paras,baseUrl,true);
   },
   //查询使用收货地址
   queryAddressList:function(that,data,baseUrl){

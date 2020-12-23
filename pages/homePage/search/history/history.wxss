@@ -1,11 +1,15 @@
 /* pages/commodity/search/history/history.wxss */
 .search{
+ 
   display: flex;  
   flex-direction: row  ;
   align-items: center;
   width:100%;
+  height:30px;
+ 
 }
-.search_arr {  
+
+.search_front {  
   border-radius: 110px;  
   margin-left: 10px;  
   margin-top:10px;
@@ -13,12 +17,48 @@
   display: flex;  
   flex-direction: row  ;
   align-items: center;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
 }  
-.search_arr input{  
+
+ 
+
+.search_img_front{
+  height:25px;
+  width:25px;
+  margin-top:10px;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+}
+
+.search_back {  
+ 
+  border-radius: 110px;  
   margin-left: 10px;  
-  height: 32px;  
-  border-radius: 5px;  
-}  
+  margin-top:10px;
+  margin-bottom: 10px;
+  display: flex;  
+  flex-direction: row  ;
+  align-items: center;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+} 
+
+.search_img_back{
+  height:25px;
+  width:25px;
+  margin-top:10px;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+}
 
 .searchcion {  
   margin-left:10px;
@@ -36,7 +76,7 @@
 }
 
 .title{
-  margin-top:15px;
+  margin-top:20px;
   display: flex;  
   flex-direction: row  ;
   align-items: center;

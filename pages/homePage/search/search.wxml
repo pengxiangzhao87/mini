@@ -6,12 +6,20 @@
       <view class="carSum" >{{carSum}}</view>
     </view>
   </view>
-  
-  <view class="search_arr" style="background-color: #EEEEEE ;width:{{ww}}px;" >  
-    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
-    <input style="width:100%;color:#333333;font-size:14px;color:#666666" type="text" placeholder-style="font-size:12px;color:#999999;" placeholder="{{type==0?'搜索美食':'搜索食材'}}" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
+
+  <!--正面-->
+  <view  class="search_front" animation="{{animationMain}}" style="background-color: #EEEEEE ;width:{{ww-90}}px;margin-left:45px;{{type==0?'':'transform: rotateX(-180deg)'}}" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png"></image>
+    <input wx:if="{{type==0}}" style="margin-left: 10px;height: 30px; border-radius: 5px;  width:100%;color:#333333;font-size:14px;color:#666666" type="text" placeholder-style="font-size:12px;color:#999999;" placeholder="寻找美食" value="{{sName}}" confirm-type="search" bindconfirm="toSearch"/> 
   </view > 
-  <image src="{{type==1?'/image/shicai.png':'/image/ms.png'}}" bindtap="turnSearch" style="height:25px;width:25px;margin-left:auto;margin-right:10px;"/>
+  <image  src="/image/ms.png" animation="{{animationMain}}" bindtap="turnSearch" class="search_img_front" style="margin-left:{{ww-35}}px;{{type==0?'':'transform: rotateX(-180deg)'}}"/>
+
+  <!--反面-->
+  <view class="search_back" animation="{{animationBack}}" style="background-color: #EEEEEE ;width:{{ww-90}}px;margin-left:45px;{{type==0?'transform: rotateX(-180deg)':''}}" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png"></image>
+    <input wx:if="{{type==1}}" style="margin-left: 10px;height: 30px; border-radius: 5px;width:100%;color:#333333;font-size:14px;color:#666666" type="text" placeholder-style="font-size:12px;color:#999999;" placeholder="挑选食材" value="{{sName}}" confirm-type="search" bindconfirm="toSearch"/> 
+  </view > 
+  <image src="/image/shicai.png" animation="{{animationBack}}" bindtap="turnSearch" class="search_img_back" style="margin-left:{{ww-35}}px;{{type==0?'transform: rotateX(-180deg)':''}}"/>
 </view>
 
 

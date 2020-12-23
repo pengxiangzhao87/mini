@@ -1,0 +1,35 @@
+
+
+<view class="search">
+  <view style="margin-left:10px;position: relative;">
+    <image style="height:25px;width:25px;" src="/image/newCart.png" bindtap="toCart"></image>
+    <view hidden="{{carSum==0}}">
+      <view class="carSum" >{{carSum}}</view>
+    </view>
+  </view>
+  
+  <view class="search_front" animation="{{animationMain}}" style="background-color: #EEEEEE ;width:200px;" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input wx:if="{{type==1}}" style="width:100%;color:#333333;font-size:14px;color:#666666" type="text" placeholder-style="font-size:12px;color:#999999;" placeholder="搜索食材" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
+  </view > 
+  <image src="/image/ms.png" animation="{{animationMain}}" bindtap="turnSearch" class="search_img_front"/>
+
+  <view class="search_back" animation="{{animationBack}}" style="background-color: #EEEEEE ;width:200px;" >  
+    <image class="searchcion" src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input wx:if="{{type==0}}" style="width:100%;color:#333333;font-size:14px;color:#666666" type="text" placeholder-style="font-size:12px;color:#999999;" placeholder="搜索美食" value="{{sName}}" confirm-type="search" bindconfirm="searchName"/> 
+  </view > 
+  <image src="/image/shicai.png" animation="{{animationBack}}" bindtap="turnSearch" class="search_img_back"/>
+  
+</view>
+
+
+<view class='main'>
+  
+   <view class="box b1" animation="{{animationMain}}" bindtap='rotateFn' data-id="1" >
+     <image src=""></image>
+   </view>
+   
+   <view class="box b2" animation="{{animationBack}}"  bindtap='rotateFn' data-id="2">
+     <image src=""></image>
+   </view>
+</view>

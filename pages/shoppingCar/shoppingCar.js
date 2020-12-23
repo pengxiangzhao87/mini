@@ -25,7 +25,7 @@ Page({
           var paras = {};
           paras.userId= wx.getStorageSync('uId');
           paras.areaFlag=wx.getStorageSync('areaFlag');
-          util.getCarNum(that,paras,baseUrl)
+          util.getCarNum(that,paras,baseUrl,true)
         }else{
           wx.showToast({
             icon:'none',

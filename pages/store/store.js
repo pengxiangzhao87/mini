@@ -110,7 +110,7 @@ Page({
             })
           }
         })
-        util.getCarNum(that,paras,baseUrl)
+        util.getCarNum(that,paras,baseUrl,false)
       }
     })
     

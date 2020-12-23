@@ -57,9 +57,16 @@
   <image style="width:100%;" mode="widthFix" src="{{baseUrl+'upload/'+item}}"></image>
 </view>
 
-<view class="page_bottom" bindtap="addFoodToCart">
-  <view style="display: flex;  flex-direction:row ;align-items: center;margin-left:30px;font-weight: bolder;">
-    <view style="font-size:14px;color:#FF1907"><text style="color:#ffffff" decode="true">总计&nbsp;</text><text style="font-weight: bolder;">￥</text><text style="font-size:24px;">{{detail.totalPrice}}</text></view>
+<view class="page_bottom" >
+  <view style="margin-left:10px;position: relative;">
+    <image style="height:30px;width:30px;" src="/image/newCart.png" bindtap="toCart"></image>
+    <view hidden="{{carSum==0}}">
+      <view class="carSum" >{{carSum}}</view>
+    </view>
   </view>
-  <view style="margin-left:auto;margin-right:30px;font-weight: bolder;font-size:14px;">加入购物车</view>
+  <view style="display: flex;flex-direction:row ;align-items: center;margin-left:auto;margin-right:20px;">
+    <view style="font-weight: 500;"><text style="margin-left:auto;margin-right:5px;font-size:14px;color:#333333">总计</text><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{detail.totalPrice}}</text></view>
+  </view>
+  <view  class="balance" bindtap="addFoodToCart">加入购物车</view>
 </view>  
+ 

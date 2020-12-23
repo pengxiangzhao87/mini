@@ -35,6 +35,9 @@ Page({
         })
       }
     })
+    var paras = {};
+    paras.uId=wx.getStorageSync('uId');
+    util.getCarNum(that,paras,baseUrl,true);
   },
   toMenuDetail(e){
     var mid = e.currentTarget.dataset.mid;
@@ -144,9 +147,7 @@ Page({
       success(res) {
         if(res.data.code==200){
           that.onShow();
-          var paras = {};
-          paras.uId=wx.getStorageSync('uId');
-          util.getCarNum(that,paras,baseUrl);
+      
         }
       }
     })
@@ -172,9 +173,6 @@ Page({
             success(res) {
               if(res.data.code==200){
                 that.onShow();
-                var paras = {};
-                paras.uId=wx.getStorageSync('uId');
-                util.getCarNum(that,paras,baseUrl);
               }
             }
           })

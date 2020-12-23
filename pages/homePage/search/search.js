@@ -25,7 +25,7 @@ Page({
     busPos['y'] = 13;
     that.setData({
       type:e.type,
-      ww:app.globalData.ww-90,
+      ww:app.globalData.ww,
       sName:e.sName,
       baseUrl:app.globalData.baseUrl,
       busPos:busPos
@@ -47,7 +47,7 @@ Page({
       that.queryFood(that,baseUrl,paras);
     }
     paras.uId=wx.getStorageSync('uId');
-    util.getCarNum(that,paras,baseUrl);
+    util.getCarNum(that,paras,baseUrl,false);
 
   },
   queryMenu(that,baseUrl,paras){
@@ -68,7 +68,6 @@ Page({
       method: 'get',
       data: paras,
       success(res) {
-        console.info(res.data.data.list)
         that.setData({
           foodList:res.data.data.list
         })
@@ -76,13 +75,42 @@ Page({
     })
   },
   turnSearch(){
-    this.setData({
-      sName:'',
-      type:this.data.type==0?1:0
+    var type = this.data.type;
+    this.animation_main = wx.createAnimation({
+      duration:500,
+      timingFunction:'linear'
     })
+    this.animation_back = wx.createAnimation({
+      duration:500,
+      timingFunction:'linear'
+    })
+    // 点击正面
+
+    if (type==0) {
+      this.animation_main.rotateX(180).step()
+      this.animation_back.rotateX(0).step()
+      this.setData({
+        animationMain: this.animation_main.export(),
+        animationBack: this.animation_back.export(),
+        type:1,
+        sName:'',
+      })
+    }
+    // 点击背面
+    else{
+      this.animation_main.rotateX(0).step()
+      this.animation_back.rotateX(-180).step()
+      this.setData({
+        animationMain: this.animation_main.export(),
+        animationBack: this.animation_back.export(),
+        type:0,
+        sName:'',
+      })
+    }
+    console.info(this.animation_main)
     this.onShow();
   },
-  searchName(e){
+  toSearch(e){
     this.setData({
       sName:e.detail.value
     })

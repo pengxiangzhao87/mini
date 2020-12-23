@@ -23,7 +23,7 @@ Page({
     paras.page=1;
     paras.rows=10;
     paras.foodId = that.data.foodId;
-    console.info(paras)
+
     wx.request({
       url: baseUrl+"menu/queryMenuList",
       method: 'get',

@@ -1,7 +1,7 @@
 <!--pages/homePage/moreMenu/moreMenu.wxml-->
-<navigator class="search_arr" style="background-color: rgb(250,250,250) ;" url="../search/search">  
+<navigator class="search_arr" style="background-color: rgb(250,250,250) ;" url="../search/history/history?type=0">  
   <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
-  <input style="width:60%;" type="text" placeholder="搜索美食" placeholder-style="color:#999999;font-size:12px;" value=" " disabled="true"/> 
+  <input style="width:60%;" type="text" placeholder="寻找美食" placeholder-style="color:#999999;font-size:12px;" disabled="true"/> 
 </navigator >  
 
 <view wx:for="{{menuList}}" style="margin:10px;border-radius:10px;height:100px;display:flex;flex-direction: row;background-color:#ffffff" wx:for-index="idx" wx:key="m_id" wx:for-item="item" 

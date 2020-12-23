@@ -1,4 +1,5 @@
 // pages/homePage/foodDetail/foodDetail.js
+var util= require('../../../utils/util.js')
 var app = getApp();
 Page({
  
@@ -33,6 +34,9 @@ Page({
         })
       }
     })
+    var paras = {};
+    paras.uId=wx.getStorageSync('uId');
+    util.getCarNum(that,paras,baseUrl,false);
   },
   sub(){
     var that = this;
@@ -88,6 +92,11 @@ Page({
       success(res) {
         console.info(res)
       }
+    })
+  },
+  toCart(){
+    wx.switchTab({
+      url: '../cart/cart'
     })
   },
 })

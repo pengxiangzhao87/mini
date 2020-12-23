@@ -58,7 +58,7 @@ Page({
     paras.rows=data.rows*page;
     paras.userId=wx.getStorageSync('uId');
     paras.areaFlag=wx.getStorageSync('areaFlag');
-    util.getCarNum(that,paras,baseUrl);
+    util.getCarNum(that,paras,baseUrl,false);
     paras.tId=-1;
     paras.sName = that.data.sName;
     that.queryCommodity(that,paras,baseUrl);

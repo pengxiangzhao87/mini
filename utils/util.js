@@ -51,7 +51,7 @@ const formatNumber = n => {
 // }
 
 
-function getCarNum(that,paras,baseUrl){
+function getCarNum(that,paras,baseUrl,flag){
   wx.request({
     url: baseUrl+"menu/queryCartNum",
     method: 'get',
@@ -60,10 +60,12 @@ function getCarNum(that,paras,baseUrl){
       if(res.data.code==200){
         var checkNum = res.data.data;
         if(checkNum!=0){
-          wx.setTabBarBadge({//tabbar右上角添加文本
-            index: 2,//tabbar下标
-            text: checkNum+'' //显示的内容,必须为字符串
-          })
+          if(flag){
+            wx.setTabBarBadge({//tabbar右上角添加文本
+              index: 2,//tabbar下标
+              text: checkNum+'' //显示的内容,必须为字符串
+            })
+          }
           that.setData({
             carSum:checkNum
           })

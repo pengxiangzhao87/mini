@@ -136,7 +136,7 @@ Page({
     paras.rows=data.rows*page;
     paras.userId=wx.getStorageSync('uId');
     paras.areaFlag = wx.getStorageSync('areaFlag');
-    util.getCarNum(that,paras,baseUrl);
+    util.getCarNum(that,paras,baseUrl,true);
     paras.isUsed=1;
     that.queryAddressList(that,paras,baseUrl);
     paras.tId=-1;

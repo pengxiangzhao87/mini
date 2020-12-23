@@ -79,7 +79,7 @@ Page({
         })
       }
     })
-    util.getCarNum(that,baseUrl, paras)
+    util.getCarNum(that,baseUrl, paras,false)
   },
 
   //手机号授权

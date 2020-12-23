@@ -1,4 +1,5 @@
 // pages/homePage/detail/detail.js
+var util= require('../../../utils/util.js')
 var app = getApp();
 Page({
 
@@ -14,7 +15,9 @@ Page({
     foodId:'',
     allPrice:0,
     standard:0,//0:常规，1:一人食
-    remark:''
+    remark:'',
+    animation:'',
+    carSum:0
   },
 
   /**
@@ -57,6 +60,7 @@ Page({
           }
         })
       }
+      
     })
     wx.request({
       url: baseUrl+"menu/queryMenuFreeFood",
@@ -68,7 +72,9 @@ Page({
         })
       }
     })
-    
+    var paras = {};
+    paras.uId=wx.getStorageSync('uId');
+    util.getCarNum(that,paras,baseUrl,false);
 
   },
   onShow(){
@@ -92,6 +98,7 @@ Page({
             group:group,
             foodId:foodid
           })
+          
         }
       })
     }else{
@@ -244,6 +251,11 @@ Page({
       success(res) {
         console.info(res)
       }
+    })
+  },
+  toCart(){
+    wx.switchTab({
+      url: '../cart/cart'
     })
   },
 })

@@ -57,8 +57,8 @@
     </view>
   </view>
 
-  <scroll-view hidden="{{group!=item.m_group}}" scroll-x style="width:100%;white-space: nowrap;margin-top:10px;">
-    <view wx:for="{{otherOptionList}}" bindtap="chooseFood" data-foodid="{{detail.f_id}}" data-menuid="{{item.menu_id}}" style=" display: inline-block;margin-left:7px;width:100px;border-radius:5px;border:{{foodId==detail.f_id?'1.5px':'1px'}} solid {{foodId==detail.f_id?'#03BE5E':'rgb(246, 246, 246)'}}" wx:for-index="idx" wx:key="f_id" wx:for-item="detail" >
+  <scroll-view hidden="{{group!=item.m_group}}" scroll-x style="width:100%;white-space: nowrap;margin-top:10px;" >
+    <view   wx:for="{{otherOptionList}}" bindtap="chooseFood" data-foodid="{{detail.f_id}}" data-menuid="{{item.menu_id}}" style="  height:185px;display: inline-block;margin-left:7px;width:100px;border-radius:5px;border:{{foodId==detail.f_id?'1.5px':'1px'}} solid {{foodId==detail.f_id?'#03BE5E':'rgb(246, 246, 246)'}}" wx:for-index="idx" wx:key="f_id" wx:for-item="detail" >
       <image style="height:80px;width:100px;border-top-left-radius:5px ;border-top-right-radius:5px ; "  mode="widthFix" src="{{baseUrl+'upload/'+detail.f_img_adr}}" ></image>
       <view style="white-space: normal;font-size:12px;margin-top:5px;margin-left:5px;margin-right:5px;width:100px;height:40px;">
         <view class="goods-name" >{{detail.f_name}}</view>
@@ -99,6 +99,12 @@
 <view style="height:50px;"></view>
 
 <view class="page_bottom" >
+  <view style="margin-left:10px;position: relative;">
+    <image style="height:30px;width:30px;" src="/image/newCart.png" bindtap="toCart"></image>
+    <view hidden="{{carSum==0}}">
+      <view class="carSum" >{{carSum}}</view>
+    </view>
+  </view>
   <view style="display: flex;flex-direction:row ;align-items: center;margin-left:auto;margin-right:20px;">
     <view style="font-weight: 500;"><text style="margin-left:auto;margin-right:5px;font-size:14px;color:#333333">总计</text><text style="font-size:14px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{allPrice}}</text></view>
   </view>

@@ -1,0 +1,129 @@
+.search{
+  display: flex;  
+  flex-direction: row  ;
+  align-items: center;
+  width:100%;
+
+
+  background-color:#ffffff;
+  height:45px;
+
+
+}
+
+.search_front {  
+  border-radius: 110px;  
+  margin-left: 45px;  
+  margin-bottom: 10px;
+  display: flex;  
+  flex-direction: row  ;
+  align-items: center;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+}  
+
+.search_img_front{
+  height:25px;
+  width:25px;
+  margin-left:250px;
+
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+}
+
+.search_back {  
+  border-radius: 110px;  
+  margin-left: 45px;  
+  margin-bottom: 10px;
+  display: flex;  
+  flex-direction: row  ;
+  align-items: center;
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+  transform: rotateX(-180deg);
+} 
+
+.search_img_back{
+  height:25px;
+  width:25px;
+  margin-left:250px;
+  
+  position: absolute;
+  transition: all 1s;
+  backface-visibility: hidden;
+  cursor: pointer;
+  transform: rotateX(-180deg);
+}
+
+.search_arr input{  
+  margin-left: 10px;  
+  height: 32px;  
+  border-radius: 5px;  
+}  
+
+.searchcion {  
+  margin-left:10px;
+  width: 15px;  
+  height: 15px;  
+}  
+.carSum{
+  width:12px;
+  height:12px;
+  background-color:#FF1907;
+  border:1px solid white;
+  color:white;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;  
+  font-size:10px;
+  top:0px;
+  right:-4px;
+  display: flex;
+  position: absolute;
+}
+
+
+
+
+
+
+.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%,-50%);
+  -webkit-perspective: 1500;
+  -moz-perspective: 1500;
+}
+ 
+.box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  transition: all 1s;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.box image{
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+}
+.b1{
+  background:skyblue;
+}
+.b2 {
+  background:tomato;
+  transform: rotateX(-180deg);
+}

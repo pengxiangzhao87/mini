@@ -1,4 +1,5 @@
 // pages/homePage/category/category.js
+var util= require('../../../utils/util.js');
 var app = getApp();
 Page({
 
@@ -67,6 +68,9 @@ Page({
     }else{
       that.queryFood(that,baseUrl,paras);
     }
+    var paras = {};
+    paras.uId=wx.getStorageSync('uId');
+    util.getCarNum(that,paras,baseUrl,true);
   },
   queryMenu(that,baseUrl,paras){
     wx.request({
