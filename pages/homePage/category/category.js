@@ -145,6 +145,14 @@ Page({
       url: '../search/history/history?type='+type
     })
   },
+  onPageScroll: function (e) {
+    var that = this;
+    var busPos = that.data.busPos;
+    busPos['y'] = app.globalData.hh+e.scrollTop;
+    that.setData({
+      busPos:busPos
+    })
+  },
   addMenuDefaultToCart(e){
     this.finger = {};
     this.finger['x'] = e.detail.x-10;
@@ -359,7 +367,7 @@ Page({
     var that = this;
     var busPos = that.data.busPos;
     var topPoint = {};
-    topPoint['y'] = this.finger['y']-50;
+    topPoint['y'] = this.finger['y']-100;
     if (this.finger['x'] < busPos['x']) {
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + this.finger['x'];
     } else {

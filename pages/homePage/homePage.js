@@ -112,6 +112,7 @@ Page({
     var paras={};
     paras.page=1;
     paras.rows=10;
+    paras.uId=wx.getStorageSync('uId');
     wx.request({
       url: baseUrl+"menu/queryMenuList",
       method: 'get',
@@ -131,7 +132,6 @@ Page({
         })
       }
     })
-    paras.uId=wx.getStorageSync('uId');
     paras.isUsed=1;
     paras.userId=wx.getStorageSync('uId');
     that.queryAddressList(that,paras,baseUrl);
@@ -223,7 +223,7 @@ Page({
     var that = this;
     var busPos = that.data.busPos;
     var topPoint = {};
-    topPoint['y'] = this.finger['y']-50;
+    topPoint['y'] = this.finger['y']-100;
     if (this.finger['x'] < busPos['x']) {
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + this.finger['x'];
     } else {

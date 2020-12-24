@@ -457,7 +457,7 @@ Page({
     if(that.finger['y']>busPos['y']){
       topPoint['y'] = busPos['y']-100;
     }else{
-      topPoint['y'] = that.finger['y']-50;
+      topPoint['y'] = that.finger['y']-100;
     }
     that.linePos = app.bezier([that.finger, topPoint, busPos], 150);
     that.startAnimation();

@@ -107,7 +107,6 @@ Page({
         sName:'',
       })
     }
-    console.info(this.animation_main)
     this.onShow();
   },
   toSearch(e){
@@ -118,15 +117,20 @@ Page({
   },
   onPageScroll: function (e) {
     var that = this;
+    var busPos = that.data.busPos;
+    busPos['y'] = app.globalData.hh+e.scrollTop;
     if (e.scrollTop > 500) {
       that.setData({
-        floorstatus: false
+        floorstatus: false,
+        busPos:busPos
       });
     } else {
       that.setData({
-        floorstatus: true
+        floorstatus: true,
+        busPos:busPos
       });
     }
+ 
   },
   //回到顶部
   goTop:function(){
@@ -314,7 +318,7 @@ Page({
     var that = this;
     var busPos = that.data.busPos;
     var topPoint = {};
-    topPoint['y'] = this.finger['y']+50;
+    topPoint['y'] = this.finger['y']+100;
     if (this.finger['x'] < busPos['x']) {
         topPoint['x'] = Math.abs(this.finger['x'] - busPos['x'])/2 + this.finger['x'];
     } else {

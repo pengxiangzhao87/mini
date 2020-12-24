@@ -11,7 +11,7 @@
       <view style="margin-left:10px;height:90px;width:{{ww-126}}px;">
         <view style="display:flex;flex-direction:row;">
           <view class="food-name">{{item.mName}}</view>
-          <view catchtap="toMenuOption" data-cid="{{item.cId}}" data-mid="{{item.mId}}" style="font-size:12px;color:#FFD52E;margin-left:auto;margin-right:10px;margin-top:10px;" >调整</view>
+          <view catchtap="toMenuOption" data-cid="{{item.cId}}" data-mid="{{item.mId}}" style="font-size:12px;color:#999999;margin-left:auto;margin-right:10px;margin-top:10px;" >调整</view>
         </view>
         <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;">
           <view style="font-weight:500;color:#FF1907;"><text style="font-size:12px;">￥</text><text style="font-size:20px;">{{item.totalPrice}}</text></view>
@@ -62,6 +62,8 @@
   </view>
   <view class="del" catchtap="del" data-cid="{{item.cId}}">删 除</view>
 </view>
+
+<view style="height:100px;"></view>
 
 <view class="page_bottom" >
   <image style="width:16px;height:16px;margin-left:10px;" bindtap="checkAll" src="{{cart.selectedAll==1?'/image/icon_gouwuche_xuanzhong@3x.png':'/image/icon_gouwuche_default@3x.png'}}"></image>

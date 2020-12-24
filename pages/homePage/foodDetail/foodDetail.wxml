@@ -12,10 +12,10 @@
 </view>
 
 <view style="margin-top:10px;">
-  <view style="margin-left:10px;"><text style="font-size:12px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{detail.f_price}}</text><text style="font-size:12px;color:#999999;">/{{detail.f_unit}}</text></view>
+  <view style="margin-left:10px;"><text style="font-size:12px;color:#FF1907;font-weight:500;">￥</text><text style="font-size:20px;color:#FF1907;font-weight:500;">{{detail.f_price}}</text><text style="font-size:12px;color:#999999;font-weight:500;">/{{detail.f_unit}}</text></view>
   <view style="width:85%;font-size:16px;margin-top:10px;margin-left:10px;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;font-weight:500">{{detail.f_name}}</view>
   <view style="display:flex;flex-direction:row;align-items: center;margin-top:10px;margin-left:10px;margin-right:10px;border-radius:5px;background-color:rgb(250, 250, 250);height:40px;">
-    <view style="font-size:14px;margin-left:10px;font-weight:500">规格</view>
+    <view style="font-size:14px;margin-left:10px;font-weight:500;color:#666666">规格</view>
     <view style="margin-right:10px;margin-left:auto;display:flex;flex-direction:row;align-items: center;">
       <view style="display: flex;align-items: center;justify-content: center;width:20px;height:20px;border:1px solid rgb(246, 246, 246); " catchtap="sub">
         <image style="height:10px;width:10px;" src="/image/sub.png"></image>
@@ -30,9 +30,9 @@
 
 <view class="row">
   <view style="display: flex;align-items: center;flex-direction:row;">
-    <view style="font-size:14px;margin-left:10px;font-weight:500">推荐美食</view>
-    <!-- <view style="margin-left:auto;margin-right:10px;font-size:12px;color:#999999;" bindtap="moreMenu" data-foodid="{{detail.f_id}}">更多推荐</view> -->
-    <image src="/image/zhifu_xiayibu@3x.png" style="height:15px;width:10px;margin-left:auto;margin-right:10px;" bindtap="moreMenu" data-foodid="{{detail.f_id}}"></image>
+    <view style="font-size:14px;margin-left:10px;font-weight:500;color:#666666">推荐美食</view>
+    <view style="margin-left:auto;margin-right:10px;font-size:12px;color:#999999;" bindtap="moreMenu" data-foodid="{{detail.f_id}}">更多</view>
+    <!-- <image src="/image/zhifu_xiayibu@3x.png" style="height:15px;width:10px;margin-left:auto;margin-right:10px;" bindtap="moreMenu" data-foodid="{{detail.f_id}}"></image> -->
   </view>
   <scroll-view  scroll-x style="width:100%;white-space: nowrap;margin-top:10px;">
     <view wx:for="{{detail.menuList}}" bindtap="toMenuDetail" data-menuid="{{item.m_id}}" style=" display: inline-block;margin-left:10px;width:120px;border-radius:5px;background-color:#ffffff" wx:for-index="idx" wx:key="f_id" wx:for-item="item" >
@@ -45,7 +45,7 @@
       </view>
       <view style="display:flex;flex-direction:row;align-items:center;margin-top:5px;margin-bottom:5px;width:120px;">
         <view style="margin-left:5px;"><text style="font-size:10px;color:#FF1907;">￥</text><text style="font-size:18px;color:#FF1907;">{{item.m_cook_price}}</text></view>
-        <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:20px;height:20px;margin-right:5px;margin-left:auto;"></image>
+        <image src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:20px;height:20px;margin-right:5px;margin-left:auto;"></image>
       </view>
     </view>
   </scroll-view>
@@ -69,4 +69,9 @@
   </view>
   <view  class="balance" bindtap="addFoodToCart">加入购物车</view>
 </view>  
+ 
+
+
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
  

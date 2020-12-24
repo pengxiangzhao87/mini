@@ -22,7 +22,6 @@ Page({
       method: 'get',
       data: {'cId':e.cid,'mId':e.mid},
       success(res) {
-        console.info(res.data.data)
         var menuInfo = res.data.data;
         var allPrice = menuInfo.m_cook_price*1;
         for(var idx in menuInfo.optionList){
@@ -121,7 +120,12 @@ Page({
       method: 'post',
       data: data,
       success(res) {
-        console.info(res)
+        if(res.data.code==200){
+          wx.showToast({
+            icon:'none',
+            title: '添加成功'
+          })
+        }
       }
     })
   },

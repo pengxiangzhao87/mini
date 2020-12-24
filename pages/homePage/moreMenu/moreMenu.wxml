@@ -1,20 +1,36 @@
 <!--pages/homePage/moreMenu/moreMenu.wxml-->
-<navigator class="search_arr" style="background-color: rgb(250,250,250) ;" url="../search/history/history?type=0">  
-  <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
-  <input style="width:60%;" type="text" placeholder="寻找美食" placeholder-style="color:#999999;font-size:12px;" disabled="true"/> 
-</navigator >  
-
-<view wx:for="{{menuList}}" style="margin:10px;border-radius:10px;height:100px;display:flex;flex-direction: row;background-color:#ffffff" wx:for-index="idx" wx:key="m_id" wx:for-item="item" 
-    bindtap="toMenuDetail" data-menuid="{{item.m_id}}">
-  <image src="{{baseUrl+'upload/'+item.m_img_adr}}"  mode="aspectFit" style="width:220px;height:100px;  border-top-left-radius:10px;border-bottom-left-radius:10px;"></image>
-  <view style="width:100%;height:100px;margin-left:10px;font-size:14px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;font-size:16px;">
-    <view style="display:flex;flex-direction: row;margin-top:10px;">
-      <view class="goods-name">{{item.m_name}}</view>
-      <view style="margin-left:auto;margin-right:10px;color:#666666">{{item.m_cook_time}}分钟</view>
-    </view>
-    <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:10px;  align-items: center;">
-      <view style="font-weight:500"><text style="font-size:12px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.m_cook_price}}</text></view>
-      <image src="{{otherOptionList[idx].isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:22px;height:22px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
+<view class="search">
+  <view style="margin-left:10px;position: relative;">
+    <image style="height:25px;width:25px;" src="/image/newCart.png" bindtap="toCart"></image>
+    <view hidden="{{carSum==0}}">
+      <view class="carSum" >{{carSum}}</view>
     </view>
   </view>
+
+  <navigator class="search_arr" style="background-color: rgb(250,250,250) ;" url="../search/history/history?type=0">  
+    <image src="/image/icon_shouye_sousuo@3x.png" class="searchcion"></image>
+    <input style="width:60%;" type="text" placeholder="寻找美食" placeholder-style="color:#999999;font-size:12px;" disabled="true"/> 
+  </navigator > 
 </view>
+ 
+<view style="margin-top:45px;">
+  <view wx:for="{{menuList}}" style="margin:10px;border-radius:10px;height:100px;display:flex;flex-direction: row;background-color:#ffffff" wx:for-index="idx" wx:key="m_id" wx:for-item="item" 
+    bindtap="toMenuDetail" data-menuid="{{item.m_id}}">
+    <image src="{{baseUrl+'upload/'+item.m_img_adr}}"  mode="aspectFit" style="width:220px;height:100px;  border-top-left-radius:10px;border-bottom-left-radius:10px;"></image>
+    <view style="width:100%;height:100px;margin-left:10px;font-size:14px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;font-size:16px;">
+      <view style="display:flex;flex-direction: row;margin-top:10px;">
+        <view class="goods-name">{{item.m_name}}</view>
+        <view style="margin-left:auto;margin-right:10px;color:#666666">{{item.m_cook_time}}分钟</view>
+      </view>
+      <view style="display:flex;flex-direction: row;margin-left:10px;margin-top:10px;  align-items: center;">
+        <view style="font-weight:500"><text style="font-size:12px;color:#FF1907;">￥</text><text style="font-size:20px;color:#FF1907;">{{item.m_cook_price}}</text></view>
+        <image src="{{item.isCar==1?'/image/shouye_gouwuche1@3x.png':'/image/shouye_gouwuche@3x.png'}}" catchtap="addMenuDefaultToCart" data-mid="{{item.m_id}}" style="width:22px;height:22px;margin-right:10px;margin-left:auto;opacity: 1;"></image>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+
+<image class="addImg" src="/image/add_point.png" hidden="{{pointHid}}"  style="left:{{bus_x}}px;top:{{bus_y}}px;"></image>
+ 
